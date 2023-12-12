@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "priority": 1100,
+  "package": "com.freezedown.metallurgica.foundation.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "refmap": "metallurgica.refmap.json",
+  "mixins": [
+    "DefaultOreFeaturesMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

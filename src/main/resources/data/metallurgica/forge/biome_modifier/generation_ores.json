@@ -1,0 +1,4 @@
+{
+  "__comment__": "Stops the generation of ores.",
+  "type": "metallurgica:generation_ores"
+}
