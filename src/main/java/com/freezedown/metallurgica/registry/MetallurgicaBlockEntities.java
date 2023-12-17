@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlockEn
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelRenderer;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlockEntity;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotRenderer;
+import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlockEntity;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorInstance;
@@ -53,6 +54,10 @@ public class MetallurgicaBlockEntities {
             .blockEntity("channel", ChannelBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.channelDepot)
             .renderer(() -> ChannelRenderer::new)
+            .register();
+    public static final BlockEntityEntry<FaucetBlockEntity> faucet = registrate
+            .blockEntity("faucet", FaucetBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.faucet)
             .register();
     public static void register() {}
 }

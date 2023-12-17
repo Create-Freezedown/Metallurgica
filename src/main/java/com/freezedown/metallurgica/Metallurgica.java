@@ -1,10 +1,7 @@
 package com.freezedown.metallurgica;
 
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
-import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
-import com.freezedown.metallurgica.registry.MetallurgicaItems;
-import com.freezedown.metallurgica.registry.MetallurgicaLangPartials;
+import com.freezedown.metallurgica.registry.*;
 import com.freezedown.metallurgica.world.biome_modifier.OreModifier;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -71,6 +68,7 @@ public class Metallurgica
         MetallurgicaBlockEntities.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
+        MetallurgicaPackets.registerPackets();
         registrate.registerEventListeners(modEventBus);
         
         //MetallurgicaOreFeatureConfigEntries.init();

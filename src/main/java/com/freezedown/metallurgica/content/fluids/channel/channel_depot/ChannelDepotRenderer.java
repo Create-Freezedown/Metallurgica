@@ -55,7 +55,7 @@ public class ChannelDepotRenderer extends SmartBlockEntityRenderer<ChannelDepotB
         fluidLevel = 1 - ((1 - fluidLevel) * (1 - fluidLevel));
         
         float xMin = 2 / 16f;
-        float xMax = 14 / 16f;
+        float xMax = 2 / 16f;
         final float yMin = 2 / 16f;
         final float yMax = yMin + 7 / 16f * fluidLevel;
         final float zMin = 2 / 16f;
