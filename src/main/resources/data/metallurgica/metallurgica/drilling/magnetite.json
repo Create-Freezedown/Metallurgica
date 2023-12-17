@@ -1,0 +1,6 @@
+{
+  "deposit": "metallurgica:magnetite_deposit",
+  "output": "metallurgica:magnetite",
+  "chance": 0.5,
+  "minRequiredEfficiency": 1.0
+}
