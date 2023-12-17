@@ -1,0 +1,14 @@
+{
+  "values": [
+    "metallurgica:drill_activator",
+    "metallurgica:drill_display",
+    "metallurgica:drill_tower",
+    "metallurgica:magnetite_deposit",
+    "metallurgica:magnetite_rich_stone",
+    "metallurgica:native_copper_deposit",
+    "metallurgica:native_copper_rich_stone",
+    "metallurgica:channel_depot",
+    "metallurgica:channel",
+    "metallurgica:faucet"
+  ]
+}

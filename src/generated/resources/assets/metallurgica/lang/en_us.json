@@ -1,0 +1,32 @@
+{
+
+	"_": "->------------------------]  Game Elements  [------------------------<-",
+
+	"block.metallurgica.channel": "Channel",
+	"block.metallurgica.channel_depot": "Channel Depot",
+	"block.metallurgica.drill_activator": "Drill Activator",
+	"block.metallurgica.drill_display": "Drill Display",
+	"block.metallurgica.drill_tower": "Drill Tower",
+	"block.metallurgica.faucet": "Faucet",
+	"block.metallurgica.magnetite_deposit": "Magnetite Deposit",
+	"block.metallurgica.magnetite_rich_stone": "Magnetite Rich Stone",
+	"block.metallurgica.native_copper_deposit": "Native Copper Deposit",
+	"block.metallurgica.native_copper_rich_stone": "Native Copper Rich Stone",
+
+	"item.metallurgica.magnetite": "Magnetite",
+	"item.metallurgica.native_copper": "Native Copper",
+
+
+	"_": "->------------------------]  UI & Messages  [------------------------<-",
+
+	"create.goggles.drill_activator.insufficient_efficiency": "Efficiency is too low. Try increasing the size of the drill.",
+	"create.goggles.drill_activator.height": "Height: %s",
+	"create.goggles.drill_activator.efficiency": "Efficiency: %s",
+	"create.goggles.drill_activator.deposit_location": "Deposit Location: %s",
+
+	"create.gui.goggles.drill_display": "Drill Display",
+	"create.gui.goggles.drill_activator": "Drill Status:",
+
+	"_": "Thank you for translating Metallurgica!"
+
+}
