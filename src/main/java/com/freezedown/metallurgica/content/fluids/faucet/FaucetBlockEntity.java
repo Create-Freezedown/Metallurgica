@@ -1,47 +1,36 @@
 package com.freezedown.metallurgica.content.fluids.faucet;
 
-import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
 import com.freezedown.metallurgica.foundation.util.WeakConsumerWrapper;
 import com.freezedown.metallurgica.registry.MetallurgicaPackets;
 import com.mojang.math.Vector3f;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.gantry.GantryContraptionEntity;
-import com.simibubi.create.content.contraptions.gantry.GantryContraptionUpdatePacket;
 import com.simibubi.create.content.fluids.FluidFX;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientChunkCache;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.NonNullConsumer;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.util.NonNullConsumer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.EmptyFluidHandler;
 
 import java.util.List;
-import java.util.Random;
 
 import static com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock.FACING;
 
@@ -385,7 +374,7 @@ public class FaucetBlockEntity extends SmartBlockEntity {
      */
     private void syncToClient(FluidStack fluid, boolean isPouring) {
         renderFluid = fluid.copy();
-        MetallurgicaPackets.getChannel().send(packetTarget(), new FaucetActivationPacket(worldPosition, fluid, isPouring));
+        MetallurgicaPackets.sendToClientsNear(new FaucetActivationPacket(worldPosition, fluid, isPouring), level, worldPosition);
     }
     @Override
     public void notifyUpdate() {

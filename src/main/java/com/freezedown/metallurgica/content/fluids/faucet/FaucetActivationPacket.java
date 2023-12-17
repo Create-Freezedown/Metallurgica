@@ -30,15 +30,18 @@ public class FaucetActivationPacket extends BlockEntityDataPacket<FaucetBlockEnt
         buffer.writeBlockPos(pos);
         buffer.writeFluidStack(fluid);
     }
-    
+    /** Safely runs client side only code in a method only called on client */
+    private static class HandleClient {
+        private static void handle(FaucetActivationPacket packet) {
+            assert Minecraft.getInstance().level != null;
+            BlockEntity te = Minecraft.getInstance().level.getBlockEntity(packet.pos);
+            if (te instanceof FaucetBlockEntity) {
+                ((FaucetBlockEntity) te).onActivationPacket(packet.fluid, packet.isPouring);
+            }
+        }
+    }
     @Override
     protected void handlePacket(FaucetBlockEntity blockEntity) {
-        if (Minecraft.getInstance().level == null) {
-            return;
-        }
-        BlockEntity te = Minecraft.getInstance().level.getBlockEntity(this.pos);
-        if (te instanceof FaucetBlockEntity) {
-            ((FaucetBlockEntity) te).onActivationPacket(this.fluid, this.isPouring);
-        }
+        HandleClient.handle(this);
     }
 }
