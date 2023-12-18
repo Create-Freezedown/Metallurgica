@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.fluids.faucet;
 
+import com.freezedown.metallurgica.foundation.util.BlockEntityHelper;
 import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -107,7 +108,7 @@ public class FaucetBlock extends Block implements IBE<FaucetBlockEntity> {
      * @return  Optional of faucet, empty if missing or wrong type
      */
     private Optional<FaucetBlockEntity> getFaucet(Level world, BlockPos pos) {
-        return this.getBlockEntityOptional(world, pos);
+        return BlockEntityHelper.get(FaucetBlockEntity.class, world, pos);
     }
     
     /* Display */

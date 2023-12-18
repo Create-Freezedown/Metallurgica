@@ -201,7 +201,7 @@ public class FaucetBlockEntity extends SmartBlockEntity {
         if (direction == Direction.DOWN)
             return;
         Vec3 directionVec = Vec3.atLowerCornerOf(direction.getNormal());
-        Vec3 outVec = VecHelper.getCenterOf(worldPosition).add(directionVec.add(0, 6 / 16f, 0));
+        Vec3 outVec = VecHelper.getCenterOf(worldPosition).add(directionVec.add(0, 1 / 16f, 0));
         Vec3 outMotion = directionVec.scale(1 / 16f).add(0, -1 / 16f, 0);
         
         for (int i = 0; i < 2; i++) {
