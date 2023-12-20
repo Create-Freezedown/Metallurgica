@@ -30,9 +30,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.LimitCount;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.IGeneratedBlockState;
@@ -80,7 +83,7 @@ public class MetallurgicaBlocks {
             .loot((p, b) -> p.add(b, RegistrateBlockLootTables.createSingleItemTable(Items.COBBLESTONE)
                     .withPool(RegistrateBlockLootTables.applyExplosionCondition(MetallurgicaItems.magnetite.get(), LootPool.lootPool()
                             .setRolls(UniformGenerator.between(2.0f, 5.0f))
-                            .add(LootItem.lootTableItem(MetallurgicaItems.magnetite.get()))))))
+                            .add(LootItem.lootTableItem(MetallurgicaItems.magnetite.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
             .simpleItem()
             .register();
     
@@ -89,7 +92,7 @@ public class MetallurgicaBlocks {
             .transform(TagGen.pickaxeOnly())
             .loot((lt, b) -> lt.add(b,
                     RegistrateBlockLootTables.createSilkTouchDispatchTable(b,
-                            RegistrateBlockLootTables.applyExplosionDecay(b, LootItem.lootTableItem(MetallurgicaItems.magnetite.get())
+                            RegistrateBlockLootTables.applyExplosionDecay(b, LootItem.lootTableItem(MetallurgicaItems.magnetite.get()).apply(LimitCount.limitCount(IntRange.range(0, 1)))
                                     .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
             .blockstate(BlockStateGen.naturalStoneTypeBlock("magnetite"))
             .item()
@@ -102,7 +105,7 @@ public class MetallurgicaBlocks {
             .loot((p, b) -> p.add(b, RegistrateBlockLootTables.createSingleItemTable(Items.COBBLESTONE)
                     .withPool(RegistrateBlockLootTables.applyExplosionCondition(MetallurgicaItems.nativeCopper.get(), LootPool.lootPool()
                             .setRolls(UniformGenerator.between(2.0f, 5.0f))
-                            .add(LootItem.lootTableItem(MetallurgicaItems.nativeCopper.get()))))))
+                            .add(LootItem.lootTableItem(MetallurgicaItems.nativeCopper.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
             .simpleItem()
             .register();
     
@@ -111,7 +114,7 @@ public class MetallurgicaBlocks {
             .transform(TagGen.pickaxeOnly())
             .loot((lt, b) -> lt.add(b,
                     RegistrateBlockLootTables.createSilkTouchDispatchTable(b,
-                            RegistrateBlockLootTables.applyExplosionDecay(b, LootItem.lootTableItem(MetallurgicaItems.nativeCopper.get())
+                            RegistrateBlockLootTables.applyExplosionDecay(b, LootItem.lootTableItem(MetallurgicaItems.nativeCopper.get()).apply(LimitCount.limitCount(IntRange.range(0, 1)))
                                     .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
             .blockstate(BlockStateGen.naturalStoneTypeBlock("native_copper"))
             .item()

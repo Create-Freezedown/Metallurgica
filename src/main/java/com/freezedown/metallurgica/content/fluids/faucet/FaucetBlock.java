@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.content.fluids.faucet;
 
 import com.freezedown.metallurgica.foundation.util.BlockEntityHelper;
 import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
+import com.freezedown.metallurgica.registry.MetallurgicaShapes;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.simibubi.create.foundation.block.IBE;
@@ -21,9 +22,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,11 +32,12 @@ import java.util.Optional;
 public class FaucetBlock extends Block implements IBE<FaucetBlockEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.FACING_HOPPER;
     private static final EnumMap<Direction,VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(
-            Direction.DOWN,  Shapes.join(box( 4, 10,  4, 12, 16, 12), box( 6, 10,  6, 10, 16, 10), BooleanOp.ONLY_FIRST),
-            Direction.NORTH, Shapes.join(box( 4,  4, 10, 12, 10, 16), box( 6,  6, 10, 10, 10, 16), BooleanOp.ONLY_FIRST),
-            Direction.SOUTH, Shapes.join(box( 4,  4,  0, 12, 10,  6), box( 6,  6,  0, 10, 10,  6), BooleanOp.ONLY_FIRST),
-            Direction.WEST,  Shapes.join(box(10,  4,  4, 16, 10, 12), box(10,  6,  6, 16, 10, 10), BooleanOp.ONLY_FIRST),
-            Direction.EAST,  Shapes.join(box( 0,  4,  4,  6, 10, 12), box( 0,  6,  6,  6, 10, 10), BooleanOp.ONLY_FIRST)));
+            Direction.DOWN,  MetallurgicaShapes.spoutputCeiling,
+            Direction.NORTH, MetallurgicaShapes.spoutputWallNorth,
+            Direction.SOUTH, MetallurgicaShapes.spoutputWallSouth,
+            Direction.WEST,  MetallurgicaShapes.spoutputWallWest,
+            Direction.EAST,  MetallurgicaShapes.spoutputWallEast
+    ));
     
     public FaucetBlock(Properties properties) {
         super(properties);

@@ -190,15 +190,17 @@ public class FaucetBlockEntity extends SmartBlockEntity {
     }
     private void createFluidParticles() {
         RandomSource r = level.random;
-        if (!renderFluid.isEmpty() && isPouring())
+        if (!renderFluid.isEmpty() && isPouring()) {
             createOutputFluidParticles(r);
+        }
     }
     private Vec3 spoutputOutVec(Direction direction, Vec3 directionVec) {
         return switch (direction) {
-            case SOUTH -> VecHelper.getCenterOf(worldPosition).add(0, 1 / 16f, -7/16f);
-            case EAST -> VecHelper.getCenterOf(worldPosition).add(-7/16f, 1 / 16f, 0);
-            case NORTH -> VecHelper.getCenterOf(worldPosition).add(0, 1 / 16f, 7/16f);
-            case WEST -> VecHelper.getCenterOf(worldPosition).add(7/16f, 1 / 16f, 0);
+            case SOUTH -> VecHelper.getCenterOf(worldPosition).add(0, 1 / 16f, -2/16f);
+            case EAST -> VecHelper.getCenterOf(worldPosition).add(-2/16f, 1 / 16f, 0);
+            case NORTH -> VecHelper.getCenterOf(worldPosition).add(0, 1 / 16f, 2/16f);
+            case WEST -> VecHelper.getCenterOf(worldPosition).add(2/16f, 1 / 16f, 0);
+            case DOWN -> VecHelper.getCenterOf(worldPosition).add(directionVec.add(0, 15 / 16f, 0));
             default -> VecHelper.getCenterOf(worldPosition).add(directionVec.add(0, 1 / 16f, 0));
         };
     }
@@ -208,8 +210,6 @@ public class FaucetBlockEntity extends SmartBlockEntity {
             return;
         Direction direction = blockState.getValue(FaucetBlock.FACING);
         Direction.Axis axis = direction.getAxis();
-        if (direction == Direction.DOWN)
-            return;
         Vec3 directionVec = Vec3.atLowerCornerOf(direction.getNormal());
         Vec3 outVec = spoutputOutVec(direction, directionVec);
         Vec3 outMotion = directionVec.scale(1 / 16f).add(0, -1 / 16f, 0);
