@@ -53,7 +53,7 @@ public class Metallurgica
     public static final CreativeModeTab itemGroup = new CreativeModeTab(ID) {
         @Override
         public @NotNull ItemStack makeIcon() {
-            return new ItemStack(MetallurgicaBlocks.drillDisplay.get());
+            return new ItemStack(MetallurgicaBlocks.drillExpansion.get());
         }
     };
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);

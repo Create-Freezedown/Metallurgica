@@ -5,18 +5,18 @@
     },
     "facing=east": {
       "model": "metallurgica:block/faucet/block_directional",
-      "y": 270
+      "y": 90
     },
     "facing=north": {
+      "model": "metallurgica:block/faucet/block_directional"
+    },
+    "facing=south": {
       "model": "metallurgica:block/faucet/block_directional",
       "y": 180
     },
-    "facing=south": {
-      "model": "metallurgica:block/faucet/block_directional"
-    },
     "facing=west": {
       "model": "metallurgica:block/faucet/block_directional",
-      "y": 90
+      "y": 270
     }
   }
 }

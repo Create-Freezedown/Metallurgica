@@ -3,6 +3,8 @@
 	"parent": "minecraft:block/block",
 	"textures": {
 		"0": "createindustry:block/aluminum_truss",
+		"1": "metallurgica:block/drill_bit_cast_iron",
+		"2": "createindustry:block/cast_iron_distillation_controller_top",
 		"particle": "createindustry:block/aluminum_block"
 	},
 	"elements": [
@@ -100,6 +102,18 @@
 				"west": {"uv": [0, 0, 0, 16], "texture": "#0"},
 				"up": {"uv": [0, 0, 12, 0], "texture": "#0"},
 				"down": {"uv": [0, 0, 12, 0], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 0, 5],
+			"to": [11, 16, 11],
+			"faces": {
+				"north": {"uv": [6, 0, 12, 16], "texture": "#1"},
+				"east": {"uv": [0, 0, 6, 16], "texture": "#1"},
+				"south": {"uv": [6, 0, 12, 16], "texture": "#1"},
+				"west": {"uv": [0, 0, 6, 16], "texture": "#1"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#2"},
+				"down": {"uv": [5, 5, 11, 11], "texture": "#2"}
 			}
 		}
 	]

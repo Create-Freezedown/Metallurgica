@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class DrillTowerBlock extends Block implements IBE<DrillTowerBlockEntity>, IWrenchable {
+public class DrillTowerBlock extends Block implements IWrenchable {
     public DrillTowerBlock(Properties pProperties) {
         super(pProperties);
     }
@@ -18,15 +18,5 @@ public class DrillTowerBlock extends Block implements IBE<DrillTowerBlockEntity>
     @Override
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         return pLevel.getBlockState(pPos.below()).getBlock() instanceof MineralDepositBlock || pLevel.getBlockState(pPos.below()).getBlock() instanceof DrillTowerBlock;
-    }
-    
-    @Override
-    public Class<DrillTowerBlockEntity> getBlockEntityClass() {
-        return DrillTowerBlockEntity.class;
-    }
-    
-    @Override
-    public BlockEntityType<? extends DrillTowerBlockEntity> getBlockEntityType() {
-        return MetallurgicaBlockEntities.drillTower.get();
     }
 }

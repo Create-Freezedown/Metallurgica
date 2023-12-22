@@ -1,12 +1,12 @@
 package com.freezedown.metallurgica.content.mineral.drill.drill_activator;
 
 import com.freezedown.metallurgica.content.mineral.deposit.DepositTypes;
+import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
-import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlockEntity;
+import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
@@ -28,8 +28,6 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
-import static com.freezedown.metallurgica.content.mineral.drill.drill_display.DrillDisplayBlock.getAttachedDirection;
 
 @SuppressWarnings("removal")
 public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
@@ -70,34 +68,70 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         if (this.level == null) {
             return;
         }
-        if (!(this.level.getBlockEntity(this.worldPosition.below()) instanceof DrillTowerBlockEntity)) {
+        
+        
+        findDeposit();
+        if (!(this.level.getBlockState(this.worldPosition.below()).getBlock() instanceof DrillTowerBlock) )
             canActivate = false;
-        }
-        if (this.level.getBlockEntity(this.worldPosition.below()) instanceof DrillTowerBlockEntity drillTower) {
-            height = drillTower.height;
-            depositPos = drillTower.depositPos;
-        }
+        
+        height = obtainTowerHeight();
+        
+        
         efficiency = (float) (1.1 * (height + 1) / 5);
         if (canActivate) {
             drillDeposit();
         }
         checkDrillsAndActivate();
     }
-    private void checkDrillsAndActivate() {
-        if (this.level == null) {
-            return;
+    
+    private int obtainTowerHeight() {
+        int height = 1;
+        for (int i = 0; i < this.getBlockPos().getY() + 64; i++) {
+            
+            BlockPos checkedPos = new BlockPos(this.getBlockPos().getX(), (this.getBlockPos().getY() + 1) + i, this.getBlockPos().getZ());
+            
+            if (level.getBlockState(new BlockPos(checkedPos)).is(MetallurgicaBlocks.drillExpansion.get())) {
+                height++;
+            }else break;
+            
+            
         }
-        int supposedHeight = 0;
-        for (int i = 0; i < height; i++) {
-            if (this.level.getBlockState(worldPosition.below(i)).getBlock() instanceof DrillTowerBlock) {
-                supposedHeight++;
+        
+        
+        return height;
+    }
+    
+    //DrMangoTea was there :3
+    public void findDeposit() {
+        for (int i = 0; i < this.getBlockPos().getY() + 64; i++) {
+            
+            BlockPos checkedPos = new BlockPos(this.getBlockPos().getX(), (this.getBlockPos().getY() - 1) - i, this.getBlockPos().getZ());
+            
+            if (level.getBlockState(new BlockPos(checkedPos)).getBlock() instanceof MineralDepositBlock) {
+                depositPos = checkedPos;
+                return;
             }
+            
+            if (!(level.getBlockState(new BlockPos(checkedPos)).is(MetallurgicaBlocks.drillTower.get()))) {
+                depositPos = null;
+                return;
+            }
+            
+            
         }
-        if (supposedHeight == height) {
-            canActivate = true;
-        } else {
-            canActivate = false;
-        }
+        depositPos = null;
+        
+        
+    }
+    
+    
+    private void checkDrillsAndActivate() {
+        
+        if(depositPos==null)
+            return;
+        
+        
+        canActivate = efficiency >= depositType(level.getBlockState(depositPos).getBlock()).getMinimumEfficiency();
     }
     public void drillDeposit() {
         if (this.level == null) {
@@ -167,6 +201,8 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         if (this.depositPos == null) {
             return false;
         }
+        if(!canActivate)
+            return false;
         DepositTypes deposit = depositType(this.level.getBlockState(depositPos).getBlock());
         Lang.translate("gui.goggles.drill_activator").forGoggles(tooltip);
         if (efficiency < deposit.getMinimumEfficiency()) {

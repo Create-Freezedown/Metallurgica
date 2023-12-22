@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fluids.capability.FluidHandlerBlockEntity;
 
 public enum DepositTypes {
-    magnetite(MetallurgicaBlocks.magnetiteDeposit.get(), MetallurgicaItems.magnetite.get(), 0.72f, 1.0f),
+    magnetite(MetallurgicaBlocks.magnetiteDeposit.get(), MetallurgicaItems.magnetite.get(), 0.21f, 1.0f),
     nativeCopper(MetallurgicaBlocks.nativeCopperDeposit.get(), MetallurgicaItems.nativeCopper.get(), 0.12f, 0.88f)
     ;
     private final Block depositBlock;
