@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.registry;
 
 import com.drmangotea.createindustry.CreateTFMG;
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.blast_furnace.HeavyBlastingRecipe;
+import com.freezedown.metallurgica.content.machines.blast_furnace.HeavyBlastingRecipe;
 import com.google.common.collect.ImmutableSet;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
@@ -36,7 +36,7 @@ public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
     private final Supplier<RecipeType<?>> type;
     public static final Set<ResourceLocation> RECIPE_DENY_SET = ImmutableSet.of(new ResourceLocation("occultism", "spirit_trade"), new ResourceLocation("occultism", "ritual"));
     
-    private MetallurgicaRecipeTypes(Supplier serializerSupplier, Supplier typeSupplier, boolean registerType) {
+    MetallurgicaRecipeTypes(Supplier serializerSupplier, Supplier typeSupplier, boolean registerType) {
         String name = Lang.asId(this.name());
         this.id = CreateTFMG.asResource(name);
         this.serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
@@ -50,7 +50,7 @@ public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
         
     }
     
-    private MetallurgicaRecipeTypes(Supplier serializerSupplier) {
+    MetallurgicaRecipeTypes(Supplier serializerSupplier) {
         String name = Lang.asId(this.name());
         this.id = CreateTFMG.asResource(name);
         this.serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);

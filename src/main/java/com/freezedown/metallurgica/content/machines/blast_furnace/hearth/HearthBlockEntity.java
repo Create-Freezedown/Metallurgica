@@ -1,8 +1,8 @@
-package com.freezedown.metallurgica.content.blast_furnace.hearth;
+package com.freezedown.metallurgica.content.machines.blast_furnace.hearth;
 
 import com.drmangotea.createindustry.blocks.machines.TFMGMachineBlockEntity;
 import com.drmangotea.createindustry.registry.TFMGItems;
-import com.freezedown.metallurgica.content.blast_furnace.HeavyBlastingRecipe;
+import com.freezedown.metallurgica.content.machines.blast_furnace.HeavyBlastingRecipe;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;

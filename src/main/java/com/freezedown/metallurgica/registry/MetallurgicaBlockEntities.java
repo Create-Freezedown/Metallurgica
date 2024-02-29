@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
-import com.freezedown.metallurgica.content.blast_furnace.hearth.HearthBlockEntity;
-import com.freezedown.metallurgica.content.blast_furnace.tuyere.TuyereBlockEntity;
+import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlockEntity;
+import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlockEntity;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlockEntity;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelRenderer;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlockEntity;

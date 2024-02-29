@@ -6,7 +6,8 @@
   "refmap": "metallurgica.refmap.json",
   "mixins": [
     "DefaultOreFeaturesMixin",
-    "OreVeinifierHijacker"
+    "OreVeinifierHijacker",
+    "TFMGBlastFurnaceBGone"
   ],
   "client": [
   ],

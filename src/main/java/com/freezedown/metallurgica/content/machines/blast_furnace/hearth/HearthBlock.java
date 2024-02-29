@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.blast_furnace.hearth;
+package com.freezedown.metallurgica.content.machines.blast_furnace.hearth;
 
 import com.freezedown.metallurgica.registry.misc.MetallurgicaBlockPatterns;
 import net.minecraft.core.BlockPos;

@@ -9,6 +9,9 @@
     "metallurgica:native_copper_rich_stone",
     "metallurgica:channel_depot",
     "metallurgica:channel",
-    "metallurgica:faucet"
+    "metallurgica:faucet",
+    "metallurgica:tuyere",
+    "metallurgica:hearth",
+    "metallurgica:carbon_brick"
   ]
 }
