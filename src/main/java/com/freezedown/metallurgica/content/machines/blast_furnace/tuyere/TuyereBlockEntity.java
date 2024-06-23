@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.blast_furnace.tuyere;
+package com.freezedown.metallurgica.content.machines.blast_furnace.tuyere;
 
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -24,9 +24,7 @@ public class TuyereBlockEntity extends SmartBlockEntity {
     protected LazyOptional<IFluidHandler> fluidCapability;
     public TuyereBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.fluidCapability = LazyOptional.of(() -> {
-            return this.tankInventory;
-        });
+        this.fluidCapability = LazyOptional.of(() -> this.tankInventory);
     }
     protected SmartFluidTank createInventory() {
         return new SmartFluidTank(4000, this::onFluidStackChanged) {

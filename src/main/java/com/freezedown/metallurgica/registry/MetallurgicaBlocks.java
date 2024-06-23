@@ -3,8 +3,8 @@ package com.freezedown.metallurgica.registry;
 import com.drmangotea.createindustry.registry.TFMGPaletteBlocks;
 import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.blast_furnace.hearth.HearthBlock;
-import com.freezedown.metallurgica.content.blast_furnace.tuyere.TuyereBlock;
+import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
+import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelGenerator;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
@@ -173,6 +173,7 @@ public class MetallurgicaBlocks {
             .blockstate((c, p) -> p.simpleBlock(c.get()))
             .addLayer(() -> RenderType::cutoutMipped)
             .simpleItem()
+            .lang("Tuyere")
             .register();
     public static final BlockEntry<HearthBlock> hearth = registrate.block("hearth", HearthBlock::new)
             .initialProperties(SharedProperties::stone)
@@ -181,6 +182,7 @@ public class MetallurgicaBlocks {
             .blockstate((c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/hearth"))))
             .addLayer(() -> RenderType::cutoutMipped)
             .simpleItem()
+            .lang("Hearth")
             .register();
     public static final BlockEntry<Block> carbonBrick = registrate.block("carbon_brick", Block::new)
             .initialProperties(SharedProperties::stone)
@@ -189,6 +191,7 @@ public class MetallurgicaBlocks {
             .blockstate((c, p) -> p.simpleBlock(c.get()))
             .addLayer(() -> RenderType::cutoutMipped)
             .simpleItem()
+            .lang("Carbon Brick")
             .register();
     
     public static final BlockEntry<CastingTable> castingTable = registrate.block("casting_table", CastingTable::new)

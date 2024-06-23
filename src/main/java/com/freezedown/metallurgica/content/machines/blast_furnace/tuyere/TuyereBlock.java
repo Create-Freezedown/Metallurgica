@@ -1,6 +1,5 @@
-package com.freezedown.metallurgica.content.blast_furnace.tuyere;
+package com.freezedown.metallurgica.content.machines.blast_furnace.tuyere;
 
-import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlockEntity;
 import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;

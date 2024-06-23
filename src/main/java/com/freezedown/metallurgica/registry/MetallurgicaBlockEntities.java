@@ -3,6 +3,8 @@ package com.freezedown.metallurgica.registry;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.blast_furnace.hearth.HearthBlockEntity;
 import com.freezedown.metallurgica.content.blast_furnace.tuyere.TuyereBlockEntity;
+import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlockEntity;
+import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlockEntity;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlockEntity;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelRenderer;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlockEntity;
@@ -38,6 +40,7 @@ import java.util.stream.Stream;
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public class MetallurgicaBlockEntities {
+    
     public static final BlockEntityEntry<DrillActivatorBlockEntity> drillActivator = registrate
             .blockEntity("drill_activator", DrillActivatorBlockEntity::new)
             .instance(() -> DrillActivatorInstance::new)

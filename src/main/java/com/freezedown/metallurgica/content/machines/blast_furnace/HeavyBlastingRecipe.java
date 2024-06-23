@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.blast_furnace;
+package com.freezedown.metallurgica.content.machines.blast_furnace;
 
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
