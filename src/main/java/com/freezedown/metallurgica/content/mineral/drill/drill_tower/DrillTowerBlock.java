@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.mineral.drill.drill_tower;
 
+import com.freezedown.metallurgica.content.mineral.deposit.DepositManager;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
@@ -17,6 +18,11 @@ public class DrillTowerBlock extends Block implements IWrenchable {
     
     @Override
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+        for (BlockState deposit : DepositManager.deposits) {
+            if (pLevel.getBlockState(pPos.below()).getBlock() == deposit.getBlock()) {
+                return true;
+            }
+        }
         return pLevel.getBlockState(pPos.below()).getBlock() instanceof MineralDepositBlock || pLevel.getBlockState(pPos.below()).getBlock() instanceof DrillTowerBlock;
     }
 }

@@ -1,5 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
+import com.drmangotea.createindustry.registry.TFMGPaletteBlocks;
+import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.blast_furnace.hearth.HearthBlock;
 import com.freezedown.metallurgica.content.blast_furnace.tuyere.TuyereBlock;
@@ -9,6 +11,7 @@ import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelD
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotGenerator;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
+import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
@@ -87,6 +90,7 @@ public class MetallurgicaBlocks {
                     RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
                             RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(MetallurgicaItems.magnetite.get()).apply(LimitCount.limitCount(IntRange.range(0, 1)))
                                     .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
+            .tag(MetallurgicaTags.AllBlockTags.DEPOSIT_REPLACEABLE_MAGNETITE.tag)
             .register();
     public static final BlockEntry<MineralDepositBlock> nativeCopperDeposit = registrate.block("native_copper_deposit", MineralDepositBlock::new)
             .transform(MBuilderTransformers.mineralDeposit())
@@ -101,6 +105,37 @@ public class MetallurgicaBlocks {
                     RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
                             RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(MetallurgicaItems.nativeCopper.get()).apply(LimitCount.limitCount(IntRange.range(0, 1)))
                                     .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
+            .tag(MetallurgicaTags.AllBlockTags.DEPOSIT_REPLACEABLE_NATIVE_COPPER.tag)
+            .register();
+    public static final BlockEntry<MineralDepositBlock> bauxiteDeposit = registrate.block("bauxite_deposit", MineralDepositBlock::new)
+            .transform(MBuilderTransformers.mineralDeposit())
+            .loot((p, bl) -> p.add(bl, RegistrateBlockLootTables.createSingleItemTable(TFMGPaletteStoneTypes.BAUXITE.getBaseBlock().get().asItem())
+                    .withPool(RegistrateBlockLootTables.applyExplosionCondition(MetallurgicaItems.bauxite.get(), LootPool.lootPool()
+                            .setRolls(UniformGenerator.between(2.0f, 5.0f))
+                            .add(LootItem.lootTableItem(MetallurgicaItems.bauxite.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
+            .register();
+    public static final BlockEntry<Block> bauxiteStone = registrate.block("bauxite_rich_stone", Block::new)
+            .transform(MBuilderTransformers.mineralStone("bauxite"))
+            .loot((lt, bl) -> lt.add(bl,
+                    RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
+                            RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(MetallurgicaItems.bauxite.get()).apply(LimitCount.limitCount(IntRange.range(0, 1)))
+                                    .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
+            .tag(MetallurgicaTags.AllBlockTags.DEPOSIT_REPLACEABLE_BAUXITE.tag)
+            .register();
+    public static final BlockEntry<MineralDepositBlock> nativeGoldDeposit = registrate.block("native_gold_deposit", MineralDepositBlock::new)
+            .transform(MBuilderTransformers.mineralDeposit())
+            .loot((p, bl) -> p.add(bl, RegistrateBlockLootTables.createSingleItemTable(Items.COBBLESTONE)
+                    .withPool(RegistrateBlockLootTables.applyExplosionCondition(MetallurgicaItems.nativeGold.get(), LootPool.lootPool()
+                            .setRolls(UniformGenerator.between(2.0f, 5.0f))
+                            .add(LootItem.lootTableItem(MetallurgicaItems.nativeGold.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
+            .register();
+    public static final BlockEntry<Block> nativeGoldStone = registrate.block("native_gold_rich_stone", Block::new)
+            .transform(MBuilderTransformers.mineralStone("native_gold"))
+            .loot((lt, bl) -> lt.add(bl,
+                    RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
+                            RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(MetallurgicaItems.nativeGold.get()).apply(LimitCount.limitCount(IntRange.range(0, 1)))
+                                    .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
+            .tag(MetallurgicaTags.AllBlockTags.DEPOSIT_REPLACEABLE_NATIVE_GOLD.tag)
             .register();
     public static final BlockEntry<ChannelDepotBlock> channelDepot = registrate.block("channel_depot", ChannelDepotBlock::new)
             .initialProperties(SharedProperties::stone)
@@ -143,7 +178,7 @@ public class MetallurgicaBlocks {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.COPPER))
             .transform(pickaxeOnly())
-            .blockstate((c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/hearth/block"))))
+            .blockstate((c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/hearth"))))
             .addLayer(() -> RenderType::cutoutMipped)
             .simpleItem()
             .register();
@@ -152,6 +187,15 @@ public class MetallurgicaBlocks {
             .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.DEEPSLATE_BRICKS))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> p.simpleBlock(c.get()))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .simpleItem()
+            .register();
+    
+    public static final BlockEntry<CastingTable> castingTable = registrate.block("casting_table", CastingTable::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.DEEPSLATE_BRICKS))
+            .transform(pickaxeOnly())
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/casting_table"))))
             .addLayer(() -> RenderType::cutoutMipped)
             .simpleItem()
             .register();

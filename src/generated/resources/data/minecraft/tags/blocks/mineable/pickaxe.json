@@ -7,8 +7,16 @@
     "metallurgica:magnetite_rich_stone",
     "metallurgica:native_copper_deposit",
     "metallurgica:native_copper_rich_stone",
+    "metallurgica:bauxite_deposit",
+    "metallurgica:bauxite_rich_stone",
+    "metallurgica:native_gold_deposit",
+    "metallurgica:native_gold_rich_stone",
     "metallurgica:channel_depot",
     "metallurgica:channel",
-    "metallurgica:faucet"
+    "metallurgica:faucet",
+    "metallurgica:tuyere",
+    "metallurgica:hearth",
+    "metallurgica:carbon_brick",
+    "metallurgica:casting_table"
   ]
 }

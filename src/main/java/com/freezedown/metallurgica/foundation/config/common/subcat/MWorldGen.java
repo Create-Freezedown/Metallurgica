@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.config.common.subcat;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.world.MetallurgicaOreFeatureConfigEntries;
+import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
 import com.simibubi.create.foundation.config.ConfigBase;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -14,7 +14,7 @@ public class MWorldGen extends ConfigBase {
      */
     public static final int FORCED_UPDATE_VERSION = 2;
     
-    public final ConfigBool disable = b(false, "disableWorldGen", MWorldGen.Comments.disable);
+    public final ConfigBool disable = b(false, "disableWorldGen", Comments.disable);
     
     @Override
     public void registerAll(ForgeConfigSpec.Builder builder) {
@@ -29,5 +29,9 @@ public class MWorldGen extends ConfigBase {
     
     private static class Comments {
         static String disable = "Prevents all worldgen added by Metallurgica from taking effect";
+        static String magnetite = "Modify magnetite ore generation";
+        static String nativeCopper = "Modify native copper ore generation";
+        static String bauxite = "Modify bauxite ore generation";
+        static String nativeGold = "Modify native gold ore generation";
     }
 }

@@ -1,23 +1,26 @@
 package com.freezedown.metallurgica;
 
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
+import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
+import com.freezedown.metallurgica.foundation.worldgen.MBuiltinRegistration;
+import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
+import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
 import com.freezedown.metallurgica.world.biome_modifier.OreModifier;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.infrastructure.worldgen.AllOreFeatureConfigEntries;
 import net.minecraft.client.Minecraft;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -62,6 +65,8 @@ public class Metallurgica
     {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        
+        
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         modEventBus.addListener(this::commonSetup);
         //BIOME_MODIFIERS.register(modEventBus);
@@ -69,19 +74,24 @@ public class Metallurgica
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
         MetallurgicaPackets.registerPackets();
+        MetallurgicaOreFeatureConfigEntries.init();
+        MetallurgicaConfigs.register(ModLoadingContext.get());
+        MetallurgicaFeatures.register(modEventBus);
+        MetallurgicaPlacementModifiers.register(modEventBus);
+        MBuiltinRegistration.register(modEventBus);
         registrate.registerEventListeners(modEventBus);
+        //MetallurgicaOreFeatures.register(modEventBus);
+        
+        EventHandler commonHandler = new EventHandler();
+        MinecraftForge.EVENT_BUS.register(commonHandler);
         
         //MetallurgicaOreFeatureConfigEntries.init();
         
-        //MetallurgicaConfigs.register(modLoadingContext);
-        modEventBus.addListener(EventPriority.LOWEST, Metallurgica::gatherData);
+        modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(modEventBus, forgeEventBus));
         MinecraftForge.EVENT_BUS.register(this);
     }
-    public static void gatherData(GatherDataEvent event) {
-        DataGenerator gen = event.getGenerator();
-        gen.addProvider(true, new LangMerger(gen, ID, DISPLAY_NAME, MetallurgicaLangPartials.values()));
-    }
+    
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         LOGGER.info("HELLO FROM COMMON SETUP");

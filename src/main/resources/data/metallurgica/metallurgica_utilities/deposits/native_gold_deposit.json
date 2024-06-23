@@ -1,0 +1,7 @@
+{
+  "mineralItem": {
+    "id": "metallurgica:native_gold"
+  },
+  "chance": 0.46,
+  "minimumEfficiency": 1.2
+}

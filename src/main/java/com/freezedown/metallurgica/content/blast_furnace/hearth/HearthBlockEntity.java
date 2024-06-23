@@ -114,7 +114,7 @@ public class HearthBlockEntity extends TFMGMachineBlockEntity implements IHaveGo
             
             RecipeWrapper inventoryIn = new RecipeWrapper(this.inputInventory);
             if (this.recipe == null || !this.recipe.matches(inventoryIn, this.level)) {
-                Optional<HeavyBlastingRecipe> recipe = MetallurgicaRecipeTypes.heavyBlasting.find(inventoryIn, this.level);
+                Optional<HeavyBlastingRecipe> recipe = MetallurgicaRecipeTypes.heavy_blasting.find(inventoryIn, this.level);
                 if (!recipe.isPresent()) {
                     this.timer = -1;
                     this.sendData();

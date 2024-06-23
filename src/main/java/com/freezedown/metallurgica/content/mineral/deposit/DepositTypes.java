@@ -2,13 +2,14 @@ package com.freezedown.metallurgica.content.mineral.deposit;
 
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
+import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fluids.capability.FluidHandlerBlockEntity;
 
 public enum DepositTypes {
     magnetite(MetallurgicaBlocks.magnetiteDeposit.get(), MetallurgicaItems.magnetite.get(), 0.21f, 1.0f),
-    nativeCopper(MetallurgicaBlocks.nativeCopperDeposit.get(), MetallurgicaItems.nativeCopper.get(), 0.12f, 0.88f)
+    nativeCopper(MetallurgicaBlocks.nativeCopperDeposit.get(), MetallurgicaItems.nativeCopper.get(), 0.31f, 0.88f)
     ;
     private final Block depositBlock;
     private final Item mineralItem;

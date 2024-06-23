@@ -1,0 +1,7 @@
+{
+  "mineralItem": {
+    "id": "metallurgica:magnetite"
+  },
+  "chance": 0.78,
+  "minimumEfficiency": 1.0
+}

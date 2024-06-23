@@ -23,7 +23,7 @@ public class DrillActivatorItemHandler implements IItemHandler {
     
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (!blockEntity.canAcceptItem(stack))
+        if (!blockEntity.canAcceptItem())
             return stack;
         if (!simulate)
             blockEntity.setItem(stack);

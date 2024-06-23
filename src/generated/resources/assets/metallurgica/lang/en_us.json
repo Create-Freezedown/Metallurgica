@@ -1,32 +1,36 @@
 {
-
-	"_": "->------------------------]  Game Elements  [------------------------<-",
-
-	"block.metallurgica.channel": "Channel",
-	"block.metallurgica.channel_depot": "Channel Depot",
-	"block.metallurgica.drill_activator": "Drill Activator",
-	"block.metallurgica.drill_expansion": "Drill Expansion",
-	"block.metallurgica.drill_tower": "Drill Tower",
-	"block.metallurgica.faucet": "Faucet",
-	"block.metallurgica.magnetite_deposit": "Magnetite Deposit",
-	"block.metallurgica.magnetite_rich_stone": "Magnetite Rich Stone",
-	"block.metallurgica.native_copper_deposit": "Native Copper Deposit",
-	"block.metallurgica.native_copper_rich_stone": "Native Copper Rich Stone",
-
-	"item.metallurgica.magnetite": "Magnetite",
-	"item.metallurgica.native_copper": "Native Copper",
-
-
-	"_": "->------------------------]  UI & Messages  [------------------------<-",
-
-	"create.goggles.drill_activator.insufficient_efficiency": "Efficiency is too low. Try increasing the size of the drill.",
-	"create.goggles.drill_activator.height": "Height: %s",
-	"create.goggles.drill_activator.efficiency": "Efficiency: %s",
-	"create.goggles.drill_activator.deposit_location": "Deposit Location: %s",
-
-	"create.gui.goggles.drill_display": "Drill Display",
-	"create.gui.goggles.drill_activator": "Drill Status:",
-
-	"_": "Thank you for translating Metallurgica!"
-
+  "block.metallurgica.bauxite_deposit": "Bauxite Deposit",
+  "block.metallurgica.bauxite_rich_stone": "Bauxite Rich Stone",
+  "block.metallurgica.carbon_brick": "Carbon Brick",
+  "block.metallurgica.casting_table": "Casting Table",
+  "block.metallurgica.channel": "Channel",
+  "block.metallurgica.channel_depot": "Channel Depot",
+  "block.metallurgica.drill_activator": "Drill Activator",
+  "block.metallurgica.drill_expansion": "Drill Expansion",
+  "block.metallurgica.drill_tower": "Drill Tower",
+  "block.metallurgica.faucet": "Faucet",
+  "block.metallurgica.hearth": "Hearth",
+  "block.metallurgica.magnetite_deposit": "Magnetite Deposit",
+  "block.metallurgica.magnetite_rich_stone": "Magnetite Rich Stone",
+  "block.metallurgica.native_copper_deposit": "Native Copper Deposit",
+  "block.metallurgica.native_copper_rich_stone": "Native Copper Rich Stone",
+  "block.metallurgica.native_gold_deposit": "Native Gold Deposit",
+  "block.metallurgica.native_gold_rich_stone": "Native Gold Rich Stone",
+  "block.metallurgica.tuyere": "Tuyere",
+  "create.goggles.drill_activator": "Drill Status:",
+  "create.goggles.drill_activator.deposit": "Extracting: %s",
+  "create.goggles.drill_activator.deposit_location": "Deposit Location: %s",
+  "create.goggles.drill_activator.efficiency": "Efficiency: %s",
+  "create.goggles.drill_activator.height": "Height: %s",
+  "create.goggles.drill_activator.insufficient_efficiency": "Efficiency is too low. Try increasing the size of the drill.",
+  "create.gui.goggles.drill_display": "Drill Display",
+  "item.metallurgica.armor_plating_mold": "Armor Plating Mold",
+  "item.metallurgica.bauxite": "Bauxite",
+  "item.metallurgica.bauxite_rubble": "Bauxite Rubble",
+  "item.metallurgica.magnetite": "Magnetite",
+  "item.metallurgica.magnetite_rubble": "Magnetite Rubble",
+  "item.metallurgica.native_copper": "Native Copper",
+  "item.metallurgica.native_copper_rubble": "Native Copper Rubble",
+  "item.metallurgica.native_gold": "Native Gold",
+  "item.metallurgica.native_gold_rubble": "Native Gold Rubble"
 }

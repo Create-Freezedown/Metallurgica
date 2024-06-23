@@ -1,8 +1,8 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.createindustry.CreateTFMG;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.blast_furnace.HeavyBlastingRecipe;
+import com.freezedown.metallurgica.content.forging.advanced_casting.AdvancedCastingRecipe;
 import com.google.common.collect.ImmutableSet;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
@@ -27,7 +27,8 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
-    heavyBlasting(HeavyBlastingRecipe::new),
+    heavy_blasting(HeavyBlastingRecipe::new),
+    advanced_casting(AdvancedCastingRecipe::new),
     ;
     
     private final ResourceLocation id;
@@ -38,7 +39,7 @@ public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
     
     private MetallurgicaRecipeTypes(Supplier serializerSupplier, Supplier typeSupplier, boolean registerType) {
         String name = Lang.asId(this.name());
-        this.id = CreateTFMG.asResource(name);
+        this.id = Metallurgica.asResource(name);
         this.serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
         if (registerType) {
             this.typeObject = Registers.TYPE_REGISTER.register(name, typeSupplier);
@@ -52,7 +53,7 @@ public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
     
     private MetallurgicaRecipeTypes(Supplier serializerSupplier) {
         String name = Lang.asId(this.name());
-        this.id = CreateTFMG.asResource(name);
+        this.id = Metallurgica.asResource(name);
         this.serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
         this.typeObject = Registers.TYPE_REGISTER.register(name, () -> {
             return simpleType(this.id);

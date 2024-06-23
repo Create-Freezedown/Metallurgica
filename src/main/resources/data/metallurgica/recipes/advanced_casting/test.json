@@ -1,0 +1,17 @@
+{
+  "type": "metallurgica:advanced_casting",
+  "ingredients": [
+    {
+      "fluid": "minecraft:lava",
+      "amount": 100
+    }
+  ],
+  "coolingTime": 300,
+  "results": [
+    {
+      "item": "minecraft:diamond",
+      "count": 1
+    }
+  ],
+  "castingMoldType": "armor_plating"
+}

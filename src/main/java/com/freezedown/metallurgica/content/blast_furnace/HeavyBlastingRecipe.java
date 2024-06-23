@@ -8,7 +8,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class HeavyBlastingRecipe extends ProcessingRecipe<RecipeWrapper> {
     public HeavyBlastingRecipe(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
-        super(MetallurgicaRecipeTypes.heavyBlasting, params);
+        super(MetallurgicaRecipeTypes.heavy_blasting, params);
     }
     
     protected int getMaxInputCount() {

@@ -1,41 +1,45 @@
 package com.freezedown.metallurgica.content.mineral.drill.drill_activator;
 
-import com.freezedown.metallurgica.content.mineral.deposit.DepositTypes;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
+import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.mineral.deposit.*;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
+import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
+import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
+import joptsimple.internal.Strings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-@SuppressWarnings("removal")
 public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
     public ItemStack item;
     public DrillActivatorItemHandler itemHandler;
     public LazyOptional<IItemHandler> lazyHandler;
     public VersionedInventoryTrackerBehaviour invVersionTracker;
-    public BlockPos publicPosition = this.getBlockPos();
     
     public DrillActivatorBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
@@ -46,6 +50,9 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
     public void setItem(ItemStack stack) {
         item = stack;
         invVersionTracker.reset();
+        if (level == null) {
+            return;
+        }
         if (!level.isClientSide) {
             notifyUpdate();
             award(AllAdvancements.CHUTE);
@@ -55,13 +62,24 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(invVersionTracker = new VersionedInventoryTrackerBehaviour(this));
     }
-    protected boolean canAcceptItem(ItemStack stack) {
+    protected boolean canAcceptItem() {
         return item.isEmpty();
     }
     public int height;
     public float efficiency;
     public boolean canActivate;
     public BlockPos depositPos;
+    public int progress;
+    @Override
+    public void lazyTick() {
+        super.lazyTick();
+        if (this.level == null) {
+            return;
+        }
+        if (canActivate && getSpeed() > 0) {
+            createExcavationParticles();
+        }
+    }
     @Override
     public void tick() {
         super.tick();
@@ -75,24 +93,33 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
             canActivate = false;
         
         height = obtainTowerHeight();
-        
+        if (level.getGameTime() % 20 == 0) {
+            if (canActivate && getSpeed() > 0) {
+                increaseProgress();
+            }
+        }
+        if (progress >= 10) {
+            drillDeposit();
+            progress = 0;
+        }
         
         efficiency = (float) (1.1 * (height + 1) / 5);
-        if (canActivate) {
-            drillDeposit();
-        }
+        
         checkDrillsAndActivate();
     }
     
     private int obtainTowerHeight() {
-        int height = 1;
+        int height = 0;
+        if (level == null) {
+            return height;
+        }
         for (int i = 0; i < this.getBlockPos().getY() + 64; i++) {
             
             BlockPos checkedPos = new BlockPos(this.getBlockPos().getX(), (this.getBlockPos().getY() + 1) + i, this.getBlockPos().getZ());
             
             if (level.getBlockState(new BlockPos(checkedPos)).is(MetallurgicaBlocks.drillExpansion.get())) {
                 height++;
-            }else break;
+            } else break;
             
             
         }
@@ -103,6 +130,9 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
     
     //DrMangoTea was there :3
     public void findDeposit() {
+        if (level == null) {
+            return;
+        }
         for (int i = 0; i < this.getBlockPos().getY() + 64; i++) {
             
             BlockPos checkedPos = new BlockPos(this.getBlockPos().getX(), (this.getBlockPos().getY() - 1) - i, this.getBlockPos().getZ());
@@ -129,9 +159,59 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         
         if(depositPos==null)
             return;
+        if(level == null)
+            return;
+        Deposit deposit = depositType(this.level.getBlockState(depositPos));
+        if (deposit == null) {
+            Metallurgica.LOGGER.info("Deposit is null");
+            return;
+        }
         
-        
-        canActivate = efficiency >= depositType(level.getBlockState(depositPos).getBlock()).getMinimumEfficiency();
+        canActivate = efficiency >= deposit.minimumEfficiency();
+    }
+    public void increaseProgress() {
+        if (this.level == null) {
+            return;
+        }
+        if (this.depositPos == null) {
+            return;
+        }
+        Deposit deposit = depositType(this.level.getBlockState(depositPos));
+        if (deposit == null) {
+            return;
+        }
+        if (efficiency >= deposit.minimumEfficiency()) {
+            float successChance = deposit.chance() * efficiency;
+            if (this.level.random.nextFloat() <= (successChance *  0.23)) {
+                Metallurgica.LOGGER.info("Progress increased by 1");
+                progress++;
+            }
+        }
+    }
+    public void createExcavationParticles() {
+        boolean shouldRender = MetallurgicaConfigs.client().renderExcavationParticles.get();
+        if (!shouldRender) {
+            return;
+        }
+        if (this.level == null) {
+            return;
+        }
+        if (this.depositPos == null) {
+            return;
+        }
+        Deposit deposit = depositType(this.level.getBlockState(depositPos));
+        if (deposit == null) {
+            return;
+        }
+        if (efficiency >= deposit.minimumEfficiency()) {
+            BlockParticleOption blockParticleOption = new BlockParticleOption(ParticleTypes.BLOCK, level.getBlockState(depositPos));
+            for (int i = 0; i < 10; i++) {
+                double x = (double) getBlockPos().getX() + 0.5D + (level.random.nextDouble() * 0.6D - 0.3D);
+                double y = (double) getBlockPos().getY() + 0.5D + (level.random.nextDouble() * 0.4D - 0.2D);
+                double z = (double) getBlockPos().getZ() + 0.5D + (level.random.nextDouble() * 0.6D - 0.3D);
+                level.addParticle(blockParticleOption, x, y, z, 0.3D, 0.0D, 0.3D);
+            }
+        }
     }
     public void drillDeposit() {
         if (this.level == null) {
@@ -140,21 +220,25 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         if (this.depositPos == null) {
             return;
         }
-        DepositTypes deposit = depositType(this.level.getBlockState(depositPos).getBlock());
-        if (this.level.getBlockState(depositPos).is(deposit.getDepositBlock()) && efficiency >= deposit.getMinimumEfficiency() && this.level.getBlockEntity(depositPos) instanceof MineralDepositBlockEntity mineralDeposit) {
-            if (this.level.random.nextFloat() <= (deposit.getChance()  / 100)) {
-                mineralDeposit.mineralAmount--;
-                if (itemHandler.getStackInSlot(0).getCount() < 64 && item.getItem() == deposit.getMineralItem()) {
-                    item.grow(1);
-                } else if (item.isEmpty() || item.getItem() == Items.AIR) {
-                    item = new ItemStack(deposit.getMineralItem());
-                }
-            }
+        Deposit deposit = depositType(this.level.getBlockState(depositPos));
+        if (deposit == null) {
+            return;
+        }
+        int efficiency = Mth.floor(this.efficiency);
+        int amount = Mth.clamp(efficiency + 1, 1, 5);
+        if (itemHandler.getStackInSlot(0).getCount() < 64 && item == deposit.mineralItem()) {
+            Metallurgica.LOGGER.info("Grew stack by {} items", amount);
+            item.grow(amount);
+        } else if (item.isEmpty() || item.getItem() == Items.AIR) {
+            ItemStack output = deposit.mineralItem();
+            output.setCount(amount);
+            Metallurgica.LOGGER.info("Set stack to {} items", amount);
+            item = output;
         }
     }
     
-    public DepositTypes depositType(Block block) {
-        return DepositTypes.getDepositTypeFromBlock(block);
+    public Deposit depositType(BlockState block) {
+        return DepositManager.getDepositPropertiesOrNull(block);
     }
     
     
@@ -167,6 +251,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         height = compound.getInt("height");
         efficiency = compound.getFloat("efficiency");
         canActivate = compound.getBoolean("canActivate");
+        progress = compound.getInt("progress");
     }
     
     public void write(CompoundTag compound, boolean clientPacket) {
@@ -180,6 +265,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         compound.putInt("height", height);
         compound.putFloat("efficiency", efficiency);
         compound.putBoolean("canActivate", canActivate);
+        compound.putInt("progress", progress);
     }
     
     @Override
@@ -189,8 +275,8 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         super.invalidate();
     }
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER)
             return lazyHandler.cast();
         return super.getCapability(cap, side);
     }
@@ -201,16 +287,27 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         if (this.depositPos == null) {
             return false;
         }
-        if(!canActivate)
+        Deposit deposit = depositType(this.level.getBlockState(depositPos));
+        if (deposit == null) {
             return false;
-        DepositTypes deposit = depositType(this.level.getBlockState(depositPos).getBlock());
-        Lang.translate("gui.goggles.drill_activator").forGoggles(tooltip);
-        if (efficiency < deposit.getMinimumEfficiency()) {
+        }
+        String extracting = deposit.mineralItem().getDisplayName().getString().replace("[", "").replace("]", "");
+        Component extractingComponent = Component.literal(extracting);
+        Lang.translate("goggles.drill_activator").forGoggles(tooltip);
+        Lang.translate("goggles.drill_activator.deposit", extractingComponent).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+        if (efficiency < deposit.minimumEfficiency()) {
             Lang.translate("goggles.drill_activator.insufficient_efficiency").style(ChatFormatting.DARK_RED).forGoggles(tooltip);
         } else {
             Lang.translate("goggles.drill_activator.height", height).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
             Lang.translate("goggles.drill_activator.efficiency", efficiency).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+            Lang.translate("goggles.drill_activator.progress", progress).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+            tooltip.add(Lang.builder().text(Strings.repeat(' ', 4)).add(bars(progress, ChatFormatting.DARK_GREEN)).component());
         }
         return true;
+    }
+    
+    private MutableComponent bars(int level, ChatFormatting format) {
+        return Components.literal(Strings.repeat('|', level))
+                .withStyle(format);
     }
 }

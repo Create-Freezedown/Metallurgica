@@ -4,5 +4,6 @@
   "create.goggles.drill_activator.efficiency": "Efficiency: %s",
   "create.goggles.drill_activator.deposit_location": "Deposit Location: %s",
   "create.gui.goggles.drill_display": "Drill Display",
-  "create.gui.goggles.drill_activator": "Drill Status:"
+  "create.goggles.drill_activator": "Drill Status:",
+  "create.goggles.drill_activator.deposit": "Extracting: %s"
 }

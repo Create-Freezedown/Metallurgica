@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,valid_structure=false": {
+      "model": "metallurgica:block/hearth",
+      "y": 90
+    },
+    "facing=east,valid_structure=true": {
+      "model": "metallurgica:block/hearth",
+      "y": 90
+    },
+    "facing=north,valid_structure=false": {
+      "model": "metallurgica:block/hearth"
+    },
+    "facing=north,valid_structure=true": {
+      "model": "metallurgica:block/hearth"
+    },
+    "facing=south,valid_structure=false": {
+      "model": "metallurgica:block/hearth",
+      "y": 180
+    },
+    "facing=south,valid_structure=true": {
+      "model": "metallurgica:block/hearth",
+      "y": 180
+    },
+    "facing=west,valid_structure=false": {
+      "model": "metallurgica:block/hearth",
+      "y": 270
+    },
+    "facing=west,valid_structure=true": {
+      "model": "metallurgica:block/hearth",
+      "y": 270
+    }
+  }
+}

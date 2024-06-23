@@ -1,0 +1,7 @@
+{
+  "mineralItem": {
+    "id": "metallurgica:bauxite"
+  },
+  "chance": 0.97,
+  "minimumEfficiency": 0.9
+}
