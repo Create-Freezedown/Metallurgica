@@ -72,6 +72,7 @@ public class MetallurgicaTags {
         DEPOSIT_REPLACEABLE_MAGNETITE(MOD, "deposit_replaceable/magnetite"),
         DEPOSIT_REPLACEABLE_NATIVE_COPPER(MOD, "deposit_replaceable/native_copper"),
         DEPOSIT_REPLACEABLE_NATIVE_GOLD(MOD, "deposit_replaceable/native_gold"),
+        BUDDING_AMETHYST_REPLACEABLE,
         ;
         
         public final TagKey<Block> tag;

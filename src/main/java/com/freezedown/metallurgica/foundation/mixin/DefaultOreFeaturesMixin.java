@@ -39,4 +39,12 @@ public class DefaultOreFeaturesMixin {
         pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, OrePlacements.ORE_BLACKSTONE);
         addAncientDebris(pBuilder);
     }
+    
+    /**
+     * @author PouffyDev
+     * @reason Remove Amethyst Geodes
+     */
+    @Overwrite
+    public static void addDefaultCrystalFormations(BiomeGenerationSettings.Builder pBuilder) {
+    }
 }

@@ -13,6 +13,6 @@ public class DrillActivatorInstance extends SingleRotatingInstance<DrillActivato
     
     @Override
     protected Instancer<RotatingData> getModel() {
-        return getRotatingMaterial().getModel(AllPartialModels.SHAFTLESS_COGWHEEL, blockEntity.getBlockState());
+        return getRotatingMaterial().getModel(AllPartialModels.MILLSTONE_COG, blockEntity.getBlockState());
     }
 }

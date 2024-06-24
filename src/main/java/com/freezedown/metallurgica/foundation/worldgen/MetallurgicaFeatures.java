@@ -1,6 +1,8 @@
 package com.freezedown.metallurgica.foundation.worldgen;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.worldgen.feature.MLayeredOreFeature;
+import com.freezedown.metallurgica.foundation.worldgen.feature.MStandardOreFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

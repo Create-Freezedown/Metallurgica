@@ -65,6 +65,10 @@ public class DepositManager extends SimpleJsonResourceReloadListener {
         return depositType.getOrDefault(deposit, null);
     }
     
+    public static boolean hasDepositProperties(BlockState deposit) {
+        return depositType.containsKey(deposit);
+    }
+    
     public static List<Deposit> getAllDepositProperties() {
         List<Deposit> properties = new ArrayList<>();
         for (Map.Entry<BlockState, Deposit> entry : DepositManager.depositType.entrySet()) {

@@ -5,7 +5,6 @@
   "compatibilityLevel": "JAVA_16",
   "refmap": "metallurgica.refmap.json",
   "mixins": [
-    "AllOreFeatureConfigEntriesMixin",
     "DefaultOreFeaturesMixin",
     "OreVeinifierHijacker",
     "TFMGBlastFurnaceBGone"

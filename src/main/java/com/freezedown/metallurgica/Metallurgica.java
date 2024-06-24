@@ -73,6 +73,7 @@ public class Metallurgica
         MetallurgicaBlockEntities.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
+        MetallurgicaFluids.register();
         MetallurgicaPackets.registerPackets();
         MetallurgicaOreFeatureConfigEntries.init();
         MetallurgicaConfigs.register(ModLoadingContext.get());

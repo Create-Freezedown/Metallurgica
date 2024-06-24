@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.world.biome_modifier;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.OrePlacements;
+import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
@@ -43,6 +44,7 @@ public enum OreModifier implements BiomeModifier
         generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_DIAMOND);
         generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_COPPER_LARGE);
         generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_COPPER);
+        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION).remove(CavePlacements.AMETHYST_GEODE);
     }
     
     @Override

@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(OreVeinifier.class)
 public class OreVeinifierHijacker {
@@ -20,7 +21,7 @@ public class OreVeinifierHijacker {
         return (pos) -> {
             double d0 = densityFunction.compute(pos);
             int i = pos.blockY();
-            VeinifierHijackerTypes oreveinifier$veintype = d0 > 0.0D ? VeinifierHijackerTypes.COPPER : VeinifierHijackerTypes.IRON;
+            VeinifierHijackerTypes oreveinifier$veintype = getVeinType(d0);
             double d1 = Math.abs(d0);
             int j = oreveinifier$veintype.maxY - i;
             int k = i - oreveinifier$veintype.minY;
@@ -48,6 +49,19 @@ public class OreVeinifierHijacker {
                 return blockstate;
             }
         };
+    }
+    
+    @Unique
+    private static VeinifierHijackerTypes getVeinType(double density) {
+        if (density <= 0.3D) {
+            return VeinifierHijackerTypes.COPPER;
+        } else if (density <= 0.6D) {
+            return VeinifierHijackerTypes.IRON;
+        } else if (density <= 0.8D) {
+            return VeinifierHijackerTypes.BAUXITE;
+        } else {
+            return VeinifierHijackerTypes.GOLD;
+        }
     }
     
 }

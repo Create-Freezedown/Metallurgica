@@ -1,4 +1,4 @@
-// 1.19.2	2024-06-23T18:57:14.8705478	Registrate Provider for metallurgica [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2024-06-24T16:56:17.8235861	Registrate Provider for metallurgica [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 0d8cba54b05b67bef018f8c21b730acee2e0dcae assets/metallurgica/blockstates/bauxite_deposit.json
 fc3db81bd5dbdc9fcab667b81922a647073f110f assets/metallurgica/blockstates/bauxite_rich_stone.json
 252461da0a8cc1701d8cdf3bf65abf4ff9a17b37 assets/metallurgica/blockstates/carbon_brick.json
@@ -17,8 +17,8 @@ b1778f9c9ed17e16c1741a5dfbb864ba62ad6f09 assets/metallurgica/blockstates/faucet.
 fa84bc4e3a612555562979b0c9aec41a9fe17da0 assets/metallurgica/blockstates/native_gold_deposit.json
 6b0cdd5ecc85713cef309b0dea979e6ba2ac6248 assets/metallurgica/blockstates/native_gold_rich_stone.json
 54e6f581b3d35be5c3c33166f782882b2503afab assets/metallurgica/blockstates/tuyere.json
-9549731b1c1413b5b4c571d12de99f3623d9b487 assets/metallurgica/lang/en_ud.json
-7a1bfd5b380be4d90fb236bc8a94e1abdcccb00c assets/metallurgica/lang/en_us.json
+c4c5a0f6c20669fe8e5d94f197c2790aa22509f0 assets/metallurgica/lang/en_ud.json
+54134f06fe18567f56442a6fd1ab9232222e1ec4 assets/metallurgica/lang/en_us.json
 8e3e7241a72bd447b0199e5fd0ef0556ffa48dfd assets/metallurgica/models/block/bauxite_deposit.json
 a5f715a7e0ddf9eae1c65732d24be9744e064daa assets/metallurgica/models/block/bauxite_natural_0.json
 c19a867205f6b33ce4ef922ca2cfa9e07ef1e6d7 assets/metallurgica/models/block/bauxite_natural_1.json
@@ -100,6 +100,7 @@ f08c5d7954ad0997e573fbca31d940ab0c922dc3 data/metallurgica/loot_tables/blocks/na
 8257ead4b7e208ee1c98b700179fb40d8e1aa8c9 data/metallurgica/loot_tables/blocks/native_gold_rich_stone.json
 c051fdef247503c5a63aaee18195345ce9de2d40 data/metallurgica/loot_tables/blocks/tuyere.json
 c93e03d746cae5143427d5605bebd2b2a4006219 data/metallurgica/tags/blocks/bauxite_ore_replaceable.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/metallurgica/tags/blocks/budding_amethyst_replaceable.json
 530c7d2e7bd7b8690861d7b5b963708935fa7140 data/metallurgica/tags/blocks/deposit_replaceable/bauxite.json
 87e5eb0a276f9f11d163844e308e361ced3ffca9 data/metallurgica/tags/blocks/deposit_replaceable/magnetite.json
 a81b47401620d4998a6fb7132103b5377ad2093e data/metallurgica/tags/blocks/deposit_replaceable/native_copper.json

@@ -14,9 +14,11 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
+import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
+import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
@@ -48,6 +50,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<DrillActivatorBlock> drillActivator = registrate.block("drill_activator", DrillActivatorBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
+            .transform(BlockStressDefaults.setImpact(6.0))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/drill_activator/block"))))

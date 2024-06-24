@@ -1,8 +1,5 @@
 package com.freezedown.metallurgica.registry;
 
-import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.blast_furnace.hearth.HearthBlockEntity;
-import com.freezedown.metallurgica.content.blast_furnace.tuyere.TuyereBlockEntity;
 import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlockEntity;
 import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlockEntity;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlockEntity;
@@ -12,30 +9,11 @@ import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelD
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlockEntity;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTableBlockEntity;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTableRenderer;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorInstance;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
-import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
-import com.google.common.collect.ImmutableSet;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-
-import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Stream;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 

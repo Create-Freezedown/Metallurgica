@@ -23,7 +23,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -37,9 +36,11 @@ import java.util.List;
 
 public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
     public ItemStack item;
+    public boolean isFull;
     public DrillActivatorItemHandler itemHandler;
     public LazyOptional<IItemHandler> lazyHandler;
     public VersionedInventoryTrackerBehaviour invVersionTracker;
+    public static final int maxProgress = 30;
     
     public DrillActivatorBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
@@ -63,7 +64,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         behaviours.add(invVersionTracker = new VersionedInventoryTrackerBehaviour(this));
     }
     protected boolean canAcceptItem() {
-        return item.isEmpty();
+        return itemHandler.getStackInSlot(1).isEmpty();
     }
     public int height;
     public float efficiency;
@@ -87,18 +88,19 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
             return;
         }
         
+        isFull = itemHandler.getStackInSlot(1).getCount() >= 64;
         
         findDeposit();
         if (!(this.level.getBlockState(this.worldPosition.below()).getBlock() instanceof DrillTowerBlock) )
             canActivate = false;
         
         height = obtainTowerHeight();
-        if (level.getGameTime() % 20 == 0) {
+        if (level.getGameTime() % 30 == 0) {
             if (canActivate && getSpeed() > 0) {
                 increaseProgress();
             }
         }
-        if (progress >= 10) {
+        if (progress >= maxProgress) {
             drillDeposit();
             progress = 0;
         }
@@ -183,7 +185,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         if (efficiency >= deposit.minimumEfficiency()) {
             float successChance = deposit.chance() * efficiency;
             if (this.level.random.nextFloat() <= (successChance *  0.23)) {
-                Metallurgica.LOGGER.info("Progress increased by 1");
+                Metallurgica.LOGGER.info("Progress increased by 1, now at {}", progress);
                 progress++;
             }
         }
@@ -204,6 +206,14 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
             return;
         }
         if (efficiency >= deposit.minimumEfficiency()) {
+            if (isFull) {
+                for (int i = 0; i < 10; i++) {
+                    double x = (double) getBlockPos().getX() + 0.5D + (level.random.nextDouble() * 0.6D - 0.3D);
+                    double y = (double) getBlockPos().getY() + 0.5D + (level.random.nextDouble() * 0.4D - 0.2D);
+                    double z = (double) getBlockPos().getZ() + 0.5D + (level.random.nextDouble() * 0.6D - 0.3D);
+                    level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.3D, 0.0D, 0.3);
+                }
+            }
             BlockParticleOption blockParticleOption = new BlockParticleOption(ParticleTypes.BLOCK, level.getBlockState(depositPos));
             for (int i = 0; i < 10; i++) {
                 double x = (double) getBlockPos().getX() + 0.5D + (level.random.nextDouble() * 0.6D - 0.3D);
@@ -225,15 +235,17 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
             return;
         }
         int efficiency = Mth.floor(this.efficiency);
-        int amount = Mth.clamp(efficiency + 1, 1, 5);
-        if (itemHandler.getStackInSlot(0).getCount() < 64 && item == deposit.mineralItem()) {
+        int amount = Mth.randomBetweenInclusive(level.random,1, 3 + efficiency);
+        if (itemHandler.getStackInSlot(1).getCount() < 64 && itemHandler.getStackInSlot(1) == deposit.mineralItem()) {
+            ItemStack stack = itemHandler.getStackInSlot(0);
+            stack.grow(amount);
             Metallurgica.LOGGER.info("Grew stack by {} items", amount);
-            item.grow(amount);
-        } else if (item.isEmpty() || item.getItem() == Items.AIR) {
+            itemHandler.insertItem(1, stack, true);
+        } else if (itemHandler.getStackInSlot(1).isEmpty()) {
             ItemStack output = deposit.mineralItem();
             output.setCount(amount);
             Metallurgica.LOGGER.info("Set stack to {} items", amount);
-            item = output;
+            itemHandler.insertItem(1, output, true);
         }
     }
     
@@ -295,17 +307,51 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         Component extractingComponent = Component.literal(extracting);
         Lang.translate("goggles.drill_activator").forGoggles(tooltip);
         Lang.translate("goggles.drill_activator.deposit", extractingComponent).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+        if (isPlayerSneaking) {
+            Lang.translate("goggles.drill_activator.item").forGoggles(tooltip);
+            if (itemHandler.getStackInSlot(1).isEmpty()) {
+                Lang.translate("goggles.drill_activator.item.empty").style(ChatFormatting.DARK_RED).forGoggles(tooltip);
+            } else {
+                tooltip.add(storedItem());
+            }
+        }
         if (efficiency < deposit.minimumEfficiency()) {
             Lang.translate("goggles.drill_activator.insufficient_efficiency").style(ChatFormatting.DARK_RED).forGoggles(tooltip);
         } else {
-            Lang.translate("goggles.drill_activator.height", height).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
-            Lang.translate("goggles.drill_activator.efficiency", efficiency).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
-            Lang.translate("goggles.drill_activator.progress", progress).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
-            tooltip.add(Lang.builder().text(Strings.repeat(' ', 4)).add(bars(progress, ChatFormatting.DARK_GREEN)).component());
+            if (!isPlayerSneaking) {
+                Lang.translate("goggles.drill_activator.height", height).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+                Lang.translate("goggles.drill_activator.efficiency", efficiency).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+            }
+            Lang.translate("goggles.drill_activator.progress", progress).forGoggles(tooltip);
+            tooltip.add(progressBar(progress));
         }
+        
         return true;
     }
+    private MutableComponent storedItem() {
+        MutableComponent itemName = Component.literal(itemHandler.getStackInSlot(1).getDisplayName().getString().replace("[", "").replace("]", ""));
+        return Lang.builder()
+                .text(Strings.repeat(' ', 4))
+                .add(itemName)
+                .text(" x" + itemHandler.getStackInSlot(1).getCount())
+                .style(ChatFormatting.DARK_GREEN)
+                .component();
+    }
+    private MutableComponent progressBar(int progress) {
+        int redBars = maxProgress - progress;
+        return Lang.builder().text(Strings.repeat(' ', 4))
+                .add(bars(progress, ChatFormatting.DARK_GREEN))
+                .add(bars(redBars, ChatFormatting.DARK_RED))
+                .add(percent(progress))
+                .component();
+    }
     
+    private MutableComponent percent(int progress) {
+        float percent = Math.round((float) progress / maxProgress * 100);
+        return Lang.builder().text(" ")
+                .text(percent + "%")
+                .component();
+    }
     private MutableComponent bars(int level, ChatFormatting format) {
         return Components.literal(Strings.repeat('|', level))
                 .withStyle(format);
