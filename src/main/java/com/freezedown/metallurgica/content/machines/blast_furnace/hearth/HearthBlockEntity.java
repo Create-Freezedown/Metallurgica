@@ -113,16 +113,16 @@ public class HearthBlockEntity extends TFMGMachineBlockEntity implements IHaveGo
             }
             
             RecipeWrapper inventoryIn = new RecipeWrapper(this.inputInventory);
-            if (this.recipe == null || !this.recipe.matches(inventoryIn, this.level)) {
-                Optional<HeavyBlastingRecipe> recipe = MetallurgicaRecipeTypes.heavy_blasting.find(inventoryIn, this.level);
-                if (!recipe.isPresent()) {
-                    this.timer = -1;
-                    this.sendData();
-                } else {
-                    this.recipe = recipe.get();
-                    this.sendData();
-                }
-            }
+            //if (this.recipe == null || !this.recipe.matches(inventoryIn, this.level)) {
+            //    Optional<HeavyBlastingRecipe> recipe = MetallurgicaRecipeTypes.heavy_blasting.find(inventoryIn, this.level);
+            //    if (!recipe.isPresent()) {
+            //        this.timer = -1;
+            //        this.sendData();
+            //    } else {
+            //        this.recipe = recipe.get();
+            //        this.sendData();
+            //    }
+            //}
             
             this.acceptInsertedItems();
             if (this.timer > 0 && this.tank1.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount() <= this.tank1.getPrimaryHandler().getCapacity() && this.tank2.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(1)).getAmount() <= this.tank2.getPrimaryHandler().getCapacity()) {

@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.machines.blast_furnace.hearth;
 
+import com.drmangotea.createindustry.blocks.machines.metal_processing.blast_furnace.BlastFurnaceOutputBlock;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaBlockPatterns;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,6 +21,7 @@ public class HearthBlock extends HorizontalDirectionalBlock {
     public static final BooleanProperty validStructure = BooleanProperty.create("valid_structure");
     public HearthBlock(Properties pProperties) {
         super(pProperties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(validStructure, false));
     }
     @Nullable
     public BlockState getStateForPlacement(@Nonnull BlockPlaceContext context) {
@@ -39,6 +41,7 @@ public class HearthBlock extends HorizontalDirectionalBlock {
             default -> pos;
         };
     }
+    
     public void updateState(BlockState state, Level level, BlockPos pos) {
         BlockPattern.BlockPatternMatch patternHelper = MetallurgicaBlockPatterns.industrialBlastFurnace.find(level, hearthStructurePos(state.getValue(FACING), pos));
         if (patternHelper == null) {

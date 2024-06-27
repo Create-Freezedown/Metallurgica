@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "metallurgica:block/palettes/stone_types/natural/bauxite_3"
+    "all": "metallurgica:block/palettes/stone_types/mineral/bauxite_3"
   }
 }

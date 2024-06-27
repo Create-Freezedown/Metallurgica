@@ -59,7 +59,7 @@ public class CastingTableRenderer extends SmartBlockEntityRenderer<CastingTableB
             float minX = 2f / 16f;
             float maxX = 14f / 16f;
             float minY = 12f / 16f;
-            float maxY = minY + (15 / 16f) * level;
+            float maxY = (15 / 16f) * level;
             float minZ = 2f / 16f;
             float maxZ = 14f / 16f;
             

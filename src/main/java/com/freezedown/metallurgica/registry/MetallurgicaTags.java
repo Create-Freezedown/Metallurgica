@@ -25,7 +25,9 @@ public class MetallurgicaTags {
         return registry.tags()
                 .createOptionalTagKey(id, Collections.emptySet());
     }
-    
+    public static <T> TagKey<T> modTag(IForgeRegistry<T> registry, String namespace, String path) {
+        return optionalTag(registry, new ResourceLocation(namespace, path));
+    }
     public static <T> TagKey<T> forgeTag(IForgeRegistry<T> registry, String path) {
         return optionalTag(registry, new ResourceLocation("forge", path));
     }
@@ -33,13 +35,30 @@ public class MetallurgicaTags {
     public static TagKey<Block> forgeBlockTag(String path) {
         return forgeTag(ForgeRegistries.BLOCKS, path);
     }
-    
     public static TagKey<Item> forgeItemTag(String path) {
         return forgeTag(ForgeRegistries.ITEMS, path);
     }
-    
     public static TagKey<Fluid> forgeFluidTag(String path) {
         return forgeTag(ForgeRegistries.FLUIDS, path);
+    }
+    
+    public static TagKey<Block> modBlockTag(String namespace, String path) {
+        return modTag(ForgeRegistries.BLOCKS, namespace, path);
+    }
+    public static TagKey<Item> modItemTag(String namespace, String path) {
+        return modTag(ForgeRegistries.ITEMS, namespace, path);
+    }
+    public static TagKey<Fluid> modFluidTag(String namespace, String path) {
+        return modTag(ForgeRegistries.FLUIDS, namespace, path);
+    }
+    public static TagKey<Block> modBlockTag(String path) {
+        return modTag(ForgeRegistries.BLOCKS, Metallurgica.ID, path);
+    }
+    public static TagKey<Item> modItemTag(String path) {
+        return modTag(ForgeRegistries.ITEMS, Metallurgica.ID, path);
+    }
+    public static TagKey<Fluid> modFluidTag(String path) {
+        return modTag(ForgeRegistries.FLUIDS, Metallurgica.ID, path);
     }
     
     public enum NameSpace {

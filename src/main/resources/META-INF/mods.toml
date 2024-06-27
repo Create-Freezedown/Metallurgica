@@ -25,3 +25,15 @@ mandatory=true
 versionRange="[1.19.2,1.20)"
 ordering="NONE"
 side="BOTH"
+[[dependencies.metallurgica]]
+modId="createindustry"
+mandatory=true
+versionRange="[0.8.0b,1.0.0a)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.metallurgica]]
+modId="create"
+mandatory=true
+versionRange="[0.5.1.f,)"
+ordering="NONE"
+side="BOTH"

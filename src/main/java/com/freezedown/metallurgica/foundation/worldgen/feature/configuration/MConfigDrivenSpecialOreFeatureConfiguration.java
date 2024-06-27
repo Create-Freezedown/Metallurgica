@@ -1,5 +1,7 @@
-package com.freezedown.metallurgica.foundation.worldgen;
+package com.freezedown.metallurgica.foundation.worldgen.feature.configuration;
 
+import com.freezedown.metallurgica.foundation.worldgen.MBaseConfigDrivenOreFeatureConfiguration;
+import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.createindustry.registry.TFMGPaletteBlocks;
 import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
@@ -12,14 +11,17 @@ import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelD
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
+import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
-import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
+import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
+import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
@@ -47,6 +49,17 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
     
+    public static final BlockEntry<ElectrolyzerBlock> electrolyzer = registrate.block("electrolyzer", ElectrolyzerBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .blockstate(BlockStateGen.horizontalBlockProvider(true))
+            .transform(TagGen.pickaxeOnly())
+            .transform(BlockStressDefaults.setImpact(8.0))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .item(AssemblyOperatorBlockItem::new)
+            .transform(customItemModel())
+            .register();
+    
     public static final BlockEntry<DrillActivatorBlock> drillActivator = registrate.block("drill_activator", DrillActivatorBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
@@ -57,7 +70,15 @@ public class MetallurgicaBlocks {
             .item()
             .transform(customItemModel())
             .register();
-    
+    public static final BlockEntry<DrillTowerDeployerBlock> drillTowerDeployer = registrate.block("drill_tower_deployer", DrillTowerDeployerBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .transform(TagGen.pickaxeOnly())
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/drill_tower_deployer/block"))))
+            .item()
+            .build()
+            .register();
     public static final BlockEntry<DrillTowerBlock> drillTower = registrate.block("drill_tower", DrillTowerBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)

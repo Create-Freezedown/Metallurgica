@@ -1,7 +1,5 @@
 package com.freezedown.metallurgica.content.mineral.drill.drill_tower;
 
-import com.freezedown.metallurgica.content.mineral.deposit.DepositManager;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.foundation.util.SupportsDrillTower;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
@@ -16,6 +14,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+
+import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
 
 @SupportsDrillTower
 public class DrillTowerDeployerBlock extends Block implements IWrenchable, IBE<DrillTowerDeployerBlockEntity> {
@@ -33,13 +33,10 @@ public class DrillTowerDeployerBlock extends Block implements IWrenchable, IBE<D
     
     @Override
     public BlockEntityType<? extends DrillTowerDeployerBlockEntity> getBlockEntityType() {
-        return null;
+        return MetallurgicaBlockEntities.drillTowerDeployer.get();
     }
     
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pLevel.isClientSide) {
-            return InteractionResult.FAIL;
-        }
         DrillTowerDeployerBlockEntity blockEntity = (DrillTowerDeployerBlockEntity) pLevel.getBlockEntity(pPos);
         if (blockEntity != null) {
             blockEntity.findDeposit();

@@ -1,0 +1,19 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/bauxite"
+    },
+    {
+      "amount": 500,
+      "fluid": "metallurgica:sodium_hydroxide",
+      "nbt": {}
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "item": "metallurgica:loosened_bauxite"
+    }
+  ]
+}

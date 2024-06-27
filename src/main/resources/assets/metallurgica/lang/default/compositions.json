@@ -1,0 +1,11 @@
+{
+  "item.metallurgica.magnetite.tooltip.chemical_formula": "Fe3 O4",
+  "item.metallurgica.native_copper.tooltip.chemical_formula": "Cu",
+  "item.metallurgica.malachite.tooltip.chemical_formula": "Cu2 CO3 OH2",
+  "item.metallurgica.native_gold.tooltip.chemical_formula": "Au",
+
+  "item.metallurgica.bauxite.tooltip.chemical_formula": "Al2 O3. 2H 2O",
+  "item.metallurgica.washed_alumina.tooltip.chemical_formula": "Al2 O3",
+  "item.metallurgica.alumina.tooltip.chemical_formula": "Al2 O3",
+  "item.metallurgica.aluminum_dust.tooltip.chemical_formula": "Al"
+}
