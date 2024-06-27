@@ -1,0 +1,23 @@
+{
+  "type": "create:emptying",
+  "ingredients": [
+    {
+      "item": "metallurgica:rich_magnetite"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "count": 2,
+      "item": "metallurgica:magnetite_lumps"
+    },
+    {
+      "chance": 0.25,
+      "item": "metallurgica:magnetite_lumps"
+    },
+    {
+      "amount": 5,
+      "fluid": "metallurgica:magnetite_fines"
+    }
+  ]
+}

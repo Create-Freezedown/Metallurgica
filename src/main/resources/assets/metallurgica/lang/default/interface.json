@@ -8,5 +8,6 @@
   "create.goggles.drill_activator.deposit": "Extracting: %s",
   "create.goggles.drill_activator.progress": "Progress:",
   "create.goggles.drill_activator.item.empty": "Empty",
-  "create.goggles.drill_activator.item": "Stored Items:"
+  "create.goggles.drill_activator.item": "Stored Items:",
+  "recipe.metallurgica.electrolysis": "Electrolysis"
 }

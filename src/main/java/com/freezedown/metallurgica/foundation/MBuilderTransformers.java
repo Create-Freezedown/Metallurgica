@@ -18,7 +18,7 @@ public class MBuilderTransformers {
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
                 .simpleItem();
     }
-    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> mineralStone(String name) {
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> stone(String name) {
         return b -> b.initialProperties(SharedProperties::stone)
                 .properties(p -> p.sound(SoundType.STONE).requiresCorrectToolForDrops())
                 .transform(TagGen.pickaxeOnly())
@@ -26,6 +26,16 @@ public class MBuilderTransformers {
                 .blockstate(BlockStateGen.naturalStoneTypeBlock(name))
                 .item()
                 .model((c, p) -> p.cubeAll(c.getName(), p.modLoc("block/palettes/stone_types/natural/" + name + "_2")))
+                .build();
+    }
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> mineralStone(String name) {
+        return b -> b.initialProperties(SharedProperties::stone)
+                .properties(p -> p.sound(SoundType.STONE).requiresCorrectToolForDrops())
+                .transform(TagGen.pickaxeOnly())
+                .blockstate((c, p) -> p.simpleBlock(c.get()))
+                .blockstate(MBlockStateGen.naturalMineralTypeBlock(name))
+                .item()
+                .model((c, p) -> p.cubeAll(c.getName(), p.modLoc("block/palettes/stone_types/mineral/" + name + "_2")))
                 .build();
     }
 }

@@ -1,6 +1,8 @@
 package com.freezedown.metallurgica.foundation.data;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
+import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.simibubi.create.foundation.utility.FilesHelper;
@@ -22,6 +24,10 @@ public class MetallurgicaDatagen {
         boolean client = event.includeClient();
         boolean server = event.includeServer();
         
+        if (server) {
+            generator.addProvider(true, new MStandardRecipeGen(generator));
+            MProcessingRecipeGen.registerAll(generator);
+        }
     }
     
     private static void addExtraRegistrateData() {
@@ -31,6 +37,7 @@ public class MetallurgicaDatagen {
             BiConsumer<String, String> langConsumer = provider::add;
             
             provideDefaultLang("interface", langConsumer);
+            provideDefaultLang("compositions", langConsumer);
             //provideDefaultLang("tooltips", langConsumer);
         });
     }

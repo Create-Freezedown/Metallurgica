@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.worldgen.feature;
 
 import com.freezedown.metallurgica.foundation.worldgen.MBaseConfigDrivenOreFeature;
-import com.freezedown.metallurgica.foundation.worldgen.MConfigDrivenOreFeatureConfiguration;
+import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.MConfigDrivenOreFeatureConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;

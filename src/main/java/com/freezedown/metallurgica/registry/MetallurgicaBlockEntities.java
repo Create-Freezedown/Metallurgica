@@ -9,15 +9,24 @@ import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelD
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlockEntity;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTableBlockEntity;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTableRenderer;
+import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlockEntity;
+import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorInstance;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
+import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public class MetallurgicaBlockEntities {
+    
+    public static final BlockEntityEntry<ElectrolyzerBlockEntity> electrolyzer = registrate
+            .blockEntity("electrolizer", ElectrolyzerBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.electrolyzer)
+            .renderer(() -> ElectrolyzerRenderer::new)
+            .register();
     
     public static final BlockEntityEntry<DrillActivatorBlockEntity> drillActivator = registrate
             .blockEntity("drill_activator", DrillActivatorBlockEntity::new)
@@ -25,7 +34,10 @@ public class MetallurgicaBlockEntities {
             .validBlocks(MetallurgicaBlocks.drillActivator)
             .renderer(() -> DrillActivatorRenderer::new)
             .register();
-    
+    public static final BlockEntityEntry<DrillTowerDeployerBlockEntity> drillTowerDeployer = registrate
+            .blockEntity("drill_tower_deployer", DrillTowerDeployerBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.drillTowerDeployer)
+            .register();
     public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit = registrate
             .blockEntity("mineral_deposit", MineralDepositBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.magnetiteDeposit, MetallurgicaBlocks.nativeCopperDeposit)

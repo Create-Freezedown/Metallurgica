@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "modid": "create",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "tag": "createindustry:stone_types/bauxite"
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:bauxite"
+    },
+    {
+      "item": "metallurgica:bauxite",
+      "chance": 0.25
+    },
+    {
+      "item": "create:experience_nugget",
+      "chance": 0.15
+    }
+  ],
+  "processingTime": 250
+}

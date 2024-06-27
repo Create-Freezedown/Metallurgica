@@ -39,7 +39,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@SuppressWarnings("removal")
 @Mod(Metallurgica.ID)
 public class Metallurgica
 {
@@ -64,7 +63,8 @@ public class Metallurgica
     public Metallurgica()
     {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus modEventBus = FMLJavaModLoadingContext.get()
+                .getModEventBus();
         
         
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
@@ -74,6 +74,7 @@ public class Metallurgica
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
         MetallurgicaFluids.register();
+        MetallurgicaRecipeTypes.register(modEventBus);
         MetallurgicaPackets.registerPackets();
         MetallurgicaOreFeatureConfigEntries.init();
         MetallurgicaConfigs.register(ModLoadingContext.get());

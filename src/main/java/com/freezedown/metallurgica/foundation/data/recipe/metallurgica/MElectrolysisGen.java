@@ -1,0 +1,32 @@
+package com.freezedown.metallurgica.foundation.data.recipe.metallurgica;
+
+import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
+import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
+import com.simibubi.create.content.processing.recipe.HeatCondition;
+import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
+import net.minecraft.data.DataGenerator;
+
+public class MElectrolysisGen extends MProcessingRecipeGen {
+    
+    GeneratedRecipe
+    
+    sodiumHydroxide = create(Metallurgica.asResource("sodium_hydroxide"), b -> b
+            .require(I.salt())
+            .require(F.water(), 500)
+            .output(F.sodiumHydroxide(), 500)
+            .requiresHeat(HeatCondition.HEATED)
+            .duration(200))
+    
+    ;
+    
+    
+    public MElectrolysisGen(DataGenerator generator) {
+        super(generator);
+    }
+    
+    @Override
+    protected IRecipeTypeInfo getRecipeType() {
+        return MetallurgicaRecipeTypes.electrolysis;
+    }
+}

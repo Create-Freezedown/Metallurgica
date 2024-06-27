@@ -1,6 +1,8 @@
 {
   "values": [
+    "metallurgica:electrolyzer",
     "metallurgica:drill_activator",
+    "metallurgica:drill_tower_deployer",
     "metallurgica:drill_tower",
     "metallurgica:drill_expansion",
     "metallurgica:magnetite_deposit",
