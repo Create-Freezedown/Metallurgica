@@ -27,9 +27,12 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SandBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MaterialColor;
@@ -101,6 +104,20 @@ public class MetallurgicaBlocks {
             .build()
             .lang("Drill Expansion")
             .register();
+    
+    public static final BlockEntry<SandBlock> magnetiteSand = registrate.block("magnetite_sand", p -> new SandBlock(0x8D8388, p))
+            .loot(BlockLoot::dropSelf)
+            .item()
+            .build()
+            .register();
+    
+    public static final BlockEntry<SandBlock> magnetiteTracedSand = registrate.block("magnetite_traced_sand", p -> new SandBlock(0x8D8388, p))
+            .transform(MBuilderTransformers.mineralStone("magnetite_traced_sand"))
+            .loot((p, bl) -> p.add(bl,
+                    RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
+                            RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(Items.SAND)))))
+            .register();
+    
     public static final BlockEntry<MineralDepositBlock> magnetiteDeposit = registrate.block("magnetite_deposit", MineralDepositBlock::new)
             .transform(MBuilderTransformers.mineralDeposit())
             .loot((p, bl) -> p.add(bl, RegistrateBlockLootTables.createSingleItemTable(Items.COBBLESTONE)

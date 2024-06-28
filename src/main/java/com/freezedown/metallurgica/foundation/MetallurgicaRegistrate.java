@@ -1,7 +1,11 @@
 package com.freezedown.metallurgica.foundation;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.fluids.molten_metal.base.MoltenMetal;
+import com.freezedown.metallurgica.content.fluids.types.Acid;
+import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
+import com.freezedown.metallurgica.content.fluids.types.ReactiveGas;
+import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
+import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -13,8 +17,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.fluids.FluidStack;
-
-import javax.sound.midi.MidiFileFormat;
 
 public class MetallurgicaRegistrate extends CreateRegistrate {
     /**
@@ -34,37 +36,76 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return fluid(name, new ResourceLocation(getModid(), "fluid/" + name + "_still"), new ResourceLocation(getModid(), "fluid/" + name + "_flow"), MoltenMetal.MoltenMetalFluidType::new, MoltenMetal.Flowing::new);
     }
     
+    public FluidBuilder<FlowingGas.Flowing, CreateRegistrate> gas(String name, int color) {
+        ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
+        ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
+        return fluid(name, still, flow, TintedFluid.create(color), FlowingGas.Flowing::new).source(FlowingGas.Source::new).block(GasBlock::new).build();
+    }
+    
+    public FluidBuilder<ReactiveGas.Flowing, CreateRegistrate> reactiveGas(String name, int color) {
+        ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
+        ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
+        return fluid(name, still, flow, TintedFluid.create(color), ReactiveGas.Flowing::new).source(ReactiveGas.Source::new).block(GasBlock::new).build();
+    }
+    
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualDust(String name, int color) {
-        return tintedVirtualFluid(name, color, Metallurgica.asResource("fluid/dust_still"), Metallurgica.asResource("fluid/dust_flow"));
+        ResourceLocation still = Metallurgica.asResource("fluid/dust_still");
+        ResourceLocation flow = Metallurgica.asResource("fluid/dust_flow");
+        return tintedVirtualFluid(name, color, still, flow);
     }
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color) {
         return tintedVirtualFluid(name, color, Metallurgica.asResource("fluid/thin_fluid_still"), Metallurgica.asResource("fluid/thin_fluid_flow"));
     }
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
-        return virtualFluid(name, still, flow, TintedVirtualFluid.create(color), VirtualFluid::new);
+        return virtualFluid(name, still, flow, TintedFluid.create(color, still, flow), VirtualFluid::new);
+    }
+    public FluidBuilder<Acid, CreateRegistrate> acid(String name, int color, float acidity) {
+        ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
+        ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
+        return acid(name, color, still, flow, acidity);
+    }
+    
+    public FluidBuilder<Acid, CreateRegistrate> acid(String name, int color, ResourceLocation still, ResourceLocation flow, float acidity) {
+        if (acidity > 14 || acidity < 0) {
+            throw new IllegalArgumentException("Acidity must be between 0 and 14 for " + name);
+        }
+        return virtualFluid(name, still, flow, TintedFluid.create(color), p -> new Acid(p).acidity(acidity));
     }
     
     public ItemBuilder<Item, Object> item(String name, Object o) {
         return null;
     }
     
-    
-    public static class TintedVirtualFluid extends AllFluids.TintedFluidType {
-        public static final ResourceLocation stillRl = Metallurgica.asResource("fluid/thin_fluid_still");
-        public static final ResourceLocation flowRl = Metallurgica.asResource("fluid/thin_fluid_flow");
+    public static class TintedFluid extends AllFluids.TintedFluidType {
+        public ResourceLocation still;
+        public ResourceLocation flow;
         public int color;
         
-        public TintedVirtualFluid(Properties properties) {
-            super(properties, stillRl, flowRl);
+        public TintedFluid(Properties properties, ResourceLocation still, ResourceLocation flow) {
+            super(properties, still, flow);
         }
         
-        public TintedVirtualFluid color(int color) {
+        public TintedFluid color(int color) {
             this.color = color;
             return this;
         }
         
+        public TintedFluid still(ResourceLocation still) {
+            this.still = still;
+            return this;
+        }
+        
+        public TintedFluid flow(ResourceLocation flow) {
+            this.flow = flow;
+            return this;
+        }
+        
         public static FluidBuilder.FluidTypeFactory create(int color) {
-            return (properties, still, flow) -> new TintedVirtualFluid(properties).color(color);
+            return (properties, still, flow) -> new TintedFluid(properties, still, flow).color(color);
+        }
+        
+        public static FluidBuilder.FluidTypeFactory create(int color, ResourceLocation still, ResourceLocation flow) {
+            return (properties, still1, flow1) -> new TintedFluid(properties, still, flow).color(color).still(still).flow(flow);
         }
         
         @Override

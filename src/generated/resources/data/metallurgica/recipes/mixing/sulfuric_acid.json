@@ -1,6 +1,6 @@
 {
   "type": "create:mixing",
-  "heatRequirement": "heated",
+  "heatRequirement": "superheated",
   "ingredients": [
     {
       "item": "createindustry:sulfur_dust"
@@ -9,14 +9,17 @@
       "item": "createindustry:sulfur_dust"
     },
     {
-      "amount": 800,
+      "item": "createindustry:nitrate_dust"
+    },
+    {
+      "amount": 20,
       "fluid": "minecraft:water",
       "nbt": {}
     }
   ],
   "results": [
     {
-      "amount": 800,
+      "amount": 20,
       "fluid": "metallurgica:sulfuric_acid"
     }
   ]

@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.data;
 
+import com.drmangotea.createindustry.registry.TFMGFluids;
 import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
@@ -39,7 +40,7 @@ public class MetallurgicaRegistrateTags {
     }
     
     private static void genFluidTags(RegistrateTagsProvider<Fluid> prov) {
-    
+        prov.tag(MetallurgicaTags.modFluidTag("fluid_reactive/chlorine")).add(TFMGFluids.GASOLINE.get().getFlowing(), TFMGFluids.GASOLINE.get().getSource());
     }
     
     private static void genEntityTags(RegistrateTagsProvider<EntityType<?>> prov) {

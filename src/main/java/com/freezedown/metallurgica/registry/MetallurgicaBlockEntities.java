@@ -10,6 +10,7 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlockEntity;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTableBlockEntity;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTableRenderer;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlockEntity;
+import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerInstance;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
@@ -23,7 +24,8 @@ import static com.freezedown.metallurgica.Metallurgica.registrate;
 public class MetallurgicaBlockEntities {
     
     public static final BlockEntityEntry<ElectrolyzerBlockEntity> electrolyzer = registrate
-            .blockEntity("electrolizer", ElectrolyzerBlockEntity::new)
+            .blockEntity("electrolyzer", ElectrolyzerBlockEntity::new)
+            .instance(() -> ElectrolyzerInstance::new)
             .validBlocks(MetallurgicaBlocks.electrolyzer)
             .renderer(() -> ElectrolyzerRenderer::new)
             .register();

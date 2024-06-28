@@ -139,7 +139,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
             
             BlockPos checkedPos = new BlockPos(this.getBlockPos().getX(), (this.getBlockPos().getY() - 1) - i, this.getBlockPos().getZ());
             
-            if (level.getBlockState(new BlockPos(checkedPos)).getBlock() instanceof MineralDepositBlock) {
+            if (depositType(this.level.getBlockState(checkedPos)) != null) {
                 depositPos = checkedPos;
                 return;
             }
@@ -152,7 +152,6 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
             
         }
         depositPos = null;
-        
         
     }
     

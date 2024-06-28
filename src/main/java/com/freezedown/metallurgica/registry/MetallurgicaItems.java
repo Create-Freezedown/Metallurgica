@@ -51,6 +51,12 @@ public class MetallurgicaItems {
             .tag(AllTags.forgeItemTag("advanced_casting_molds"))
             .register();
     
+    //MISC ITEMS
+    public static final ItemEntry<MetallurgicaItem> salt = registrate.item("salt", p -> new MetallurgicaItem(p).showElementComposition())
+            .properties(p->p)
+            .tag(AllTags.forgeItemTag("salt"))
+            .register();
+    
     //MAGNETITE PROCESSING
     public static final ItemEntry<MetallurgicaItem> magnetite = registrate.item("magnetite", p -> new MetallurgicaItem(p).showElementComposition())
             .properties(p->p)

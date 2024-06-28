@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.fluids;
+package com.freezedown.metallurgica.content.fluids.types;
 
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
 import com.simibubi.create.content.fluids.VirtualFluid;

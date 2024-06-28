@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "amount": 10,
+      "fluid": "minecraft:water",
+      "nbt": {}
+    },
+    {
+      "amount": 10,
+      "fluid": "metallurgica:sodium_hypochlorite",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "amount": 10,
+      "fluid": "metallurgica:decontaminated_water"
+    }
+  ]
+}

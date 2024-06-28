@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.fluids.molten_metal.base;
+package com.freezedown.metallurgica.content.fluids.types;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

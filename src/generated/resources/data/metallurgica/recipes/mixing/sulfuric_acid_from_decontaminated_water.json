@@ -1,0 +1,26 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "superheated",
+  "ingredients": [
+    {
+      "item": "createindustry:sulfur_dust"
+    },
+    {
+      "item": "createindustry:sulfur_dust"
+    },
+    {
+      "item": "createindustry:nitrate_dust"
+    },
+    {
+      "amount": 20,
+      "fluid": "metallurgica:decontaminated_water",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "amount": 40,
+      "fluid": "metallurgica:sulfuric_acid"
+    }
+  ]
+}

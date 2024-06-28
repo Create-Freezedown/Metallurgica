@@ -1,10 +1,14 @@
 package com.freezedown.metallurgica.registry;
 
 import com.drmangotea.createindustry.CreateTFMG;
+import com.drmangotea.createindustry.registry.TFMGFluids;
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.fluids.RiverSandFluid.*;
-import com.freezedown.metallurgica.content.fluids.RiverSandFluid;
-import com.freezedown.metallurgica.content.fluids.molten_metal.base.MoltenMetal;
+import com.freezedown.metallurgica.content.fluids.types.Acid;
+import com.freezedown.metallurgica.content.fluids.types.ReactiveGas;
+import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid.*;
+import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
+import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
+import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -30,10 +34,25 @@ public class MetallurgicaFluids {
     public static final FluidEntry<RiverSandFluid> riverSand = Metallurgica.registrate.virtualFluid("river_sand", RiverSandFluidType::new, RiverSandFluid::new).lang("River Sand").register();
     
     public static final FluidEntry<VirtualFluid> cryolite = Metallurgica.registrate.tintedVirtualFluid("cryolite", 0x90EE90).lang("Cryolite").register();
-    public static final FluidEntry<VirtualFluid> hydrochloricAcid = Metallurgica.registrate.tintedVirtualFluid("hydrochloric_acid", 0xAAFFAA).lang("Hydrochloric Acid").register();
-    public static final FluidEntry<VirtualFluid> sulfuricAcid = Metallurgica.registrate.tintedVirtualFluid("sulfuric_acid", 0xAAAAFF).lang("Sulfuric Acid").register();
-    public static final FluidEntry<VirtualFluid> aluminaSolution = Metallurgica.registrate.tintedVirtualFluid("alumina_solution", 0xC9A699).lang("Alumina Solution").register();
-    public static final FluidEntry<VirtualFluid> sodiumHydroxide = Metallurgica.registrate.tintedVirtualFluid("sodium_hydroxide", 0xC3D2D5).lang("Sodium Hydroxide").register();
+    public static final FluidEntry<VirtualFluid> decontaminatedWater = Metallurgica.registrate.tintedVirtualFluid("decontaminated_water", 0x90C6E3).lang("Decontaminated Water").register();
+    public static final FluidEntry<Acid> hydrochloricAcid = Metallurgica.registrate.acid("hydrochloric_acid", 0xAAFFAA, 1.1f).lang("Hydrochloric Acid").register();
+    public static final FluidEntry<Acid> sulfuricAcid = Metallurgica.registrate.acid("sulfuric_acid", 0xAAAAFF, 0.1f).lang("Sulfuric Acid").register();
+    public static final FluidEntry<Acid> sodiumHydroxide = Metallurgica.registrate.acid("sodium_hydroxide", 0xC3D2D5, 14).lang("Sodium Hydroxide").register();
+    public static final FluidEntry<Acid> sodiumHypochlorite = Metallurgica.registrate.acid("sodium_hypochlorite", 0xE8f1C7, 1.1f).lang("Sodium Hypochlorite").register();
+    
+    public static final FluidEntry<ReactiveGas.Flowing> chlorine = Metallurgica.registrate.reactiveGas("chlorine", 0xDBD971).lang("Chlorine").properties((properties ->
+            properties
+                    .motionScale(1D)
+                    .canPushEntity(false)
+                    .canSwim(false)
+                    .canDrown(true)
+                    .density(3)
+                    .temperature(0)
+                    .viscosity(0)
+                    .fallDistanceModifier(1F)
+                    .pathType(null)
+                    .adjacentPathType(null)
+    )).register();
     
     public static final FluidEntry<VirtualFluid> magnetiteFines = Metallurgica.registrate.tintedVirtualDust("magnetite_fines", 0x696A76).lang("Magnetite Fines").register();
     
@@ -56,6 +75,18 @@ public class MetallurgicaFluids {
             }
         }
         return stacks;
+    }
+    
+    public static List<Acid> getAcids() {
+        List<Acid> acids = new ArrayList<>();
+        for (RegistryEntry<Fluid> entry : ALL) {
+            if (entry instanceof FluidEntry<?> fluidEntry) {
+                if (fluidEntry.get() instanceof Acid acid) {
+                    acids.add(acid);
+                }
+            }
+        }
+        return acids;
     }
     
     public static void register() {

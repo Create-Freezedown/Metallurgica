@@ -3,7 +3,7 @@
   "heatRequirement": "heated",
   "ingredients": [
     {
-      "tag": "forge:salt"
+      "item": "metallurgica:salt"
     },
     {
       "amount": 500,
@@ -14,8 +14,12 @@
   "processingTime": 200,
   "results": [
     {
-      "amount": 500,
+      "amount": 300,
       "fluid": "metallurgica:sodium_hydroxide"
+    },
+    {
+      "amount": 200,
+      "fluid": "metallurgica:chlorine"
     }
   ]
 }

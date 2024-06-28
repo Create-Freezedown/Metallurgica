@@ -1,0 +1,31 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "createindustry:coal_coke_dust"
+    },
+    {
+      "item": "createindustry:coal_coke_dust"
+    },
+    {
+      "amount": 5,
+      "fluid": "metallurgica:magnetite_fines",
+      "nbt": {}
+    },
+    {
+      "amount": 10,
+      "fluid": "metallurgica:decontaminated_water",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:magnetite_lumps"
+    },
+    {
+      "chance": 0.25,
+      "item": "metallurgica:magnetite_lumps"
+    }
+  ]
+}

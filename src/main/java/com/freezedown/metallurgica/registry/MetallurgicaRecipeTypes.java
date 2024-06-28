@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
 import com.freezedown.metallurgica.content.forging.advanced_casting.AdvancedCastingRecipe;
 import com.freezedown.metallurgica.content.machines.blast_furnace.HeavyBlastingRecipe;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolysisRecipe;
@@ -30,6 +31,7 @@ public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
     heavy_blasting(HeavyBlastingRecipe::new),
     advanced_casting(AdvancedCastingRecipe::new),
     electrolysis(ElectrolysisRecipe::new),
+    drilling(DrillingRecipe::new),
     ;
     
     private final ResourceLocation id;

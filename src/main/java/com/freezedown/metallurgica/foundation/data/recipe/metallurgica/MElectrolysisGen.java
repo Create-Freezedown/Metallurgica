@@ -14,7 +14,16 @@ public class MElectrolysisGen extends MProcessingRecipeGen {
     sodiumHydroxide = create(Metallurgica.asResource("sodium_hydroxide"), b -> b
             .require(I.salt())
             .require(F.water(), 500)
-            .output(F.sodiumHydroxide(), 500)
+            .output(F.sodiumHydroxide(), 300)
+            .output(F.chlorine(), 200)
+            .requiresHeat(HeatCondition.HEATED)
+            .duration(200)),
+    
+    sodiumHydroxideDecontaminated = create(Metallurgica.asResource("sodium_hydroxide_from_decontaminated_water"), b -> b
+            .require(I.salt())
+            .require(F.decontaminatedWater(), 500)
+            .output(F.sodiumHydroxide(), 400)
+            .output(F.chlorine(), 100)
             .requiresHeat(HeatCondition.HEATED)
             .duration(200))
     

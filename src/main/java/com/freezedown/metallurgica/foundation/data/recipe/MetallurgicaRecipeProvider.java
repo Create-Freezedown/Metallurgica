@@ -49,8 +49,8 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
     }
     
     public static class I {
-        public static TagKey<Item> salt() {
-            return MetallurgicaTags.forgeItemTag("salt");
+        public static ItemLike salt() {
+            return MetallurgicaItems.salt.get();
         }
         public static TagKey<Item> redstone() {
             return Tags.Items.DUSTS_REDSTONE;
@@ -96,6 +96,9 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike nitrateDust() {
             return TFMGItems.NITRATE_DUST.get();
         }
+        public static ItemLike cokeDust() {
+            return TFMGItems.COAL_COKE_DUST.get();
+        }
         public static TagKey<Item> bauxite() {
             return MetallurgicaTags.forgeItemTag("raw_materials/bauxite");
         }
@@ -123,6 +126,9 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
     }
     
     public static class F {
+        public static Fluid decontaminatedWater() {
+            return MetallurgicaFluids.decontaminatedWater.get();
+        }
         public static Fluid preheatedAir() {
             return MetallurgicaFluids.preheatedAir.get();
         }
@@ -146,6 +152,12 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         }
         public static Fluid sodiumHydroxide() {
             return MetallurgicaFluids.sodiumHydroxide.get();
+        }
+        public static Fluid sodiumHypochlorite() {
+            return MetallurgicaFluids.sodiumHypochlorite.get();
+        }
+        public static Fluid chlorine() {
+            return MetallurgicaFluids.chlorine.get();
         }
         public static Fluid moltenIron() {
             return MetallurgicaFluids.moltenIron.get();

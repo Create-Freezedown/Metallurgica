@@ -1,13 +1,19 @@
 package com.freezedown.metallurgica.compat.jei;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.compat.jei.category.drill.DrillingCategory;
+import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
 import com.freezedown.metallurgica.compat.jei.category.electrolyzer.ElectrolysisCategory;
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
+import com.freezedown.metallurgica.content.fluids.types.Acid;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.compat.jei.ConversionRecipe;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -77,6 +83,15 @@ public class MetallurgicaJei implements IModPlugin {
                         .doubleItemIcon(MetallurgicaBlocks.electrolyzer.get(), MetallurgicaItems.washedAlumina.get())
                         .emptyBackground(177, 103)
                         .build("electrolysis", ElectrolysisCategory::new)
+        );
+        allCategories.add(
+                builder(DrillingRecipe.class)
+                        .addRecipes(() -> DrillingCategory.RECIPES)
+                        .catalyst(MetallurgicaBlocks.drillActivator::get)
+                        .catalyst(MetallurgicaBlocks.drillExpansion::get)
+                        .doubleItemIcon(MetallurgicaBlocks.bauxiteDeposit.get(), MetallurgicaItems.loosenedBauxite.get())
+                        .emptyBackground(177, 123)
+                        .build("deposit_drilling", DrillingCategory::new)
         );
     }
 }
