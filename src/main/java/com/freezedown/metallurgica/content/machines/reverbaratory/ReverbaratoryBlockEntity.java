@@ -117,13 +117,9 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         
         this.fuelEfficiency = 400.0F;
         this.speedModifier = 1.0F;
-        IFluidHandler handler = checker.getOutputBlockEntity().tank.getCapability().orElse(null);
-        int tank1Capacity = handler.getTankCapacity(0);
-        int tank1Amount = handler.getFluidInTank(0).getAmount();
-        int tank2Capacity = handler.getTankCapacity(1);
-        int tank2Amount  = handler.getFluidInTank(1).getAmount();
         
-        if (this.recipe != null && this.timer == -1 && tank1Amount + this.recipe.getFluidResults().get(0).getAmount() <= tank1Capacity && tank2Amount + this.recipe.getFluidResults().get(1).getAmount() <= tank2Capacity && isValid && !this.tankInventory.isEmpty()) {
+        
+        if (this.recipe != null && this.timer == -1 && checker.getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount() <= checker.getOutputBlockEntity().tank1.getPrimaryHandler().getCapacity() && checker.getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount() <= checker.getOutputBlockEntity().tank2.getPrimaryHandler().getCapacity() && isValid && !this.tankInventory.isEmpty()) {
             this.timer = (int)((float)this.recipe.getProcessingDuration() / this.speedModifier);
             this.inputInventory.getStackInSlot(0).setCount(this.inputInventory.getStackInSlot(0).getCount() - 1);
         }
@@ -140,7 +136,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
             }
         }
         
-        if (isValid && this.timer > 0 && tank1Amount + this.recipe.getFluidResults().get(0).getAmount() <= tank1Capacity && tank2Amount + this.recipe.getFluidResults().get(1).getAmount() <= tank2Capacity) {
+        if (isValid && this.timer > 0 && checker.getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(0)).getAmount() <= checker.getOutputBlockEntity().tank1.getPrimaryHandler().getCapacity() && checker.getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(1)).getAmount() <= checker.getOutputBlockEntity().tank2.getPrimaryHandler().getCapacity()) {
             --this.timer;
             createSmokeVolume();
             for (LivingEntity entity : this.getEntitiesToCremate()) {

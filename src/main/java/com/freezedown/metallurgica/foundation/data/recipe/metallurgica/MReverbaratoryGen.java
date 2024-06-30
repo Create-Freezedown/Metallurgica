@@ -14,7 +14,7 @@ public class MReverbaratoryGen extends MProcessingRecipeGen {
             .require(I.magnetiteLumps())
             .output(F.moltenIron(), 45)
             .output(F.slag(), 25)
-            .duration(200))
+            .duration(1200))
     
     ;
     

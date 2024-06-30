@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.machines.reverbaratory;
 
+import com.drmangotea.createindustry.blocks.machines.metal_processing.blast_furnace.BlastFurnaceOutputBlockEntity;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -26,22 +27,30 @@ import java.util.List;
 import java.util.Optional;
 
 public class ReverbaratoryOutputBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
-    public SmartFluidTankBehaviour tank;
+    public SmartFluidTankBehaviour tank1;
+    public SmartFluidTankBehaviour tank2;
     private boolean contentsChanged = true;
     protected LazyOptional<IFluidHandler> fluidCapability;
     
     public ReverbaratoryOutputBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        this.tank1.getPrimaryHandler().setCapacity(8000);
+        this.tank2.getPrimaryHandler().setCapacity(8000);
     }
     
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        tank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.OUTPUT, this, 2, 8000, true)
-                .whenFluidUpdates(() -> contentsChanged = true)
-                .forbidInsertion();
-        behaviours.add(this.tank);
+        this.tank1 = (new SmartFluidTankBehaviour(SmartFluidTankBehaviour.OUTPUT, this, 1, 1000, true)).whenFluidUpdates(() -> {
+            this.contentsChanged = true;
+        }).forbidInsertion();
+        this.tank2 = (new SmartFluidTankBehaviour(SmartFluidTankBehaviour.OUTPUT, this, 1, 1000, true)).whenFluidUpdates(() -> {
+            this.contentsChanged = true;
+        }).forbidInsertion();
+        behaviours.add(this.tank1);
+        behaviours.add(this.tank2);
         this.fluidCapability = LazyOptional.of(() -> {
-            LazyOptional<? extends IFluidHandler> inputCap = this.tank.getCapability();
-            return new CombinedTankWrapper(inputCap.orElse(null));
+            LazyOptional<? extends IFluidHandler> inputCap = this.tank1.getCapability();
+            LazyOptional<? extends IFluidHandler> outputCap = this.tank2.getCapability();
+            return new CombinedTankWrapper(new IFluidHandler[]{(IFluidHandler)outputCap.orElse(null), (IFluidHandler)inputCap.orElse(null)});
         });
     }
     
@@ -69,7 +78,7 @@ public class ReverbaratoryOutputBlockEntity extends SmartBlockEntity implements 
             if (tank.getTanks() == 0) {
                 return false;
             } else {
-                LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+                LangBuilder mb = Lang.translate("generic.unit.millibuckets", new Object[0]);
                 boolean isEmpty = true;
                 
                 for(int i = 0; i < tank.getTanks(); ++i) {
@@ -81,10 +90,18 @@ public class ReverbaratoryOutputBlockEntity extends SmartBlockEntity implements 
                     }
                 }
                 
-                if (isEmpty) {
-                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number((double) tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                if (tank.getTanks() > 1) {
+                    if (isEmpty) {
+                        tooltip.remove(tooltip.size() - 1);
+                    }
+                    
+                    return true;
+                } else if (!isEmpty) {
+                    return true;
+                } else {
+                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number((double)tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                    return true;
                 }
-                return true;
             }
         }
     }
