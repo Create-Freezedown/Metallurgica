@@ -1,0 +1,17 @@
+{
+  "values": [
+    "minecraft:iron_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:copper_ingot",
+    "createindustry:aluminum_ingot",
+    "create:zinc_ingot",
+    "minecraft:iron_nugget",
+    "minecraft:gold_nugget",
+    "create:copper_nugget",
+    "create:zinc_nugget",
+    "createindustry:sulfur_dust",
+    "createindustry:sulfur",
+    "createindustry:nitrate_dust",
+    "createindustry:limesand"
+  ]
+}

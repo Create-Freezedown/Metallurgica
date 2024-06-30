@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.fluids.types;
 
+import com.freezedown.metallurgica.Metallurgica;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -23,12 +24,14 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class MoltenMetal extends ForgeFlowingFluid {
     public MoltenMetal(Properties properties) {
@@ -69,13 +72,11 @@ public class MoltenMetal extends ForgeFlowingFluid {
     
     
     public static class MoltenMetalFluidType extends FluidType {
-        public final ResourceLocation still;
-        public final ResourceLocation flow;
+        public final ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
+        public final ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
         
         public MoltenMetalFluidType(Properties properties, ResourceLocation still, ResourceLocation flow) {
             super(properties.canSwim(false).canDrown(false).pathType(BlockPathTypes.LAVA).adjacentPathType(null).lightLevel(15).density(3000).viscosity(6000).temperature(1300));
-            this.still = still;
-            this.flow = flow;
         }
         
         public void setItemMovement(ItemEntity entity) {
@@ -89,6 +90,22 @@ public class MoltenMetal extends ForgeFlowingFluid {
         
         public boolean canPushEntity(Entity entity) {
             return true;
+        }
+        
+        @Override
+        public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+            consumer.accept(new IClientFluidTypeExtensions() {
+                
+                @Override
+                public ResourceLocation getStillTexture() {
+                    return still;
+                }
+                
+                @Override
+                public ResourceLocation getFlowingTexture() {
+                    return flow;
+                }
+            });
         }
     }
     public static class Source extends ForgeFlowingFluid {

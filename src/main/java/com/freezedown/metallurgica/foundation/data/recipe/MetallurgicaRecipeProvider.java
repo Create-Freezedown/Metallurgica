@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.data.recipe;
 
 import com.drmangotea.createindustry.CreateTFMG;
+import com.drmangotea.createindustry.registry.TFMGFluids;
 import com.drmangotea.createindustry.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
@@ -86,7 +87,15 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static TagKey<Item> malachiteStone() {
             return MetallurgicaTags.modItemTag("stone_types/malachite");
         }
-        
+        public static ItemLike copperRubble() {
+            return MetallurgicaItems.copperRubble.get();
+        }
+        public static ItemLike malachite() {
+            return MetallurgicaItems.malachite.get();
+        }
+        public static ItemLike copperOxide() {
+            return MetallurgicaItems.copperOxide.get();
+        }
         public static ItemLike fireClayBall() {
             return TFMGItems.FIRECLAY_BALL.get();
         }
@@ -159,8 +168,11 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static Fluid chlorine() {
             return MetallurgicaFluids.chlorine.get();
         }
-        public static Fluid moltenIron() {
-            return MetallurgicaFluids.moltenIron.get();
+        public static Fluid slag() {
+            return TFMGFluids.MOLTEN_SLAG.get();
+        }
+        public static Fluid carbonDioxide() {
+            return TFMGFluids.CARBON_DIOXIDE.get();
         }
         public static Fluid magnetiteFines() {
             return MetallurgicaFluids.magnetiteFines.get();
@@ -168,6 +180,13 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         
         public static Fluid water() {
             return Fluids.WATER;
+        }
+        
+        public static Fluid moltenIron() {
+            return MetallurgicaFluids.moltenIron.get();
+        }
+        public static Fluid moltenCopper() {
+            return MetallurgicaFluids.moltenCopper.get();
         }
     }
 }

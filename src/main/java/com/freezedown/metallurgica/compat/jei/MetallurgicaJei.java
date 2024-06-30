@@ -1,5 +1,7 @@
 package com.freezedown.metallurgica.compat.jei;
 
+import com.drmangotea.createindustry.CreateTFMG;
+import com.drmangotea.createindustry.recipes.jei.TFMGJei;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.category.drill.DrillingCategory;
 import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
@@ -14,7 +16,10 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.compat.jei.ConversionRecipe;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
+import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
+import com.tterrag.registrate.util.entry.FluidEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.forge.ForgeTypes;
@@ -26,10 +31,14 @@ import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
@@ -63,11 +72,25 @@ public class MetallurgicaJei implements IModPlugin {
         allCategories.forEach(c -> c.registerCatalysts(registration));
     }
     
-    
+    public static Collection<RegistryEntry<Fluid>> ALL_TFMG = CreateTFMG.REGISTRATE.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
+    public static List<FluidStack> getTFMGVirtualFluidStacks() {
+        List<FluidStack> stacks = new ArrayList<>();
+        for (RegistryEntry<Fluid> entry : ALL_TFMG) {
+            if (entry instanceof FluidEntry<?> fluidEntry) {
+                if (fluidEntry.get() instanceof VirtualFluid virtualFluid) {
+                    FluidStack stack = new FluidStack(virtualFluid.getSource(), FluidType.BUCKET_VOLUME);
+                    stacks.add(stack);
+                }
+            }
+        }
+        return stacks;
+    }
     @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
         List<FluidStack> fluidIngredients = new ArrayList<>(MetallurgicaFluids.getVirtualFluidStacks());
+        List<FluidStack> tfmgFluidIngredients = new ArrayList<>(getTFMGVirtualFluidStacks());
         jeiRuntime.getIngredientManager().addIngredientsAtRuntime(ForgeTypes.FLUID_STACK,fluidIngredients);
+        jeiRuntime.getIngredientManager().addIngredientsAtRuntime(ForgeTypes.FLUID_STACK,tfmgFluidIngredients);
     }
     
     private static <T extends Recipe<?>> RecipeCategoryBuilder<T> builder(Class<T> cls) {
@@ -76,7 +99,7 @@ public class MetallurgicaJei implements IModPlugin {
     
     private void loadCategories(IRecipeCategoryRegistration registration) {
         allCategories.clear();
-        allCategories.add(
+        allCategories.add(0,
                 builder(BasinRecipe.class)
                         .addTypedRecipes(MetallurgicaRecipeTypes.electrolysis)
                         .catalyst(MetallurgicaBlocks.electrolyzer::get)
@@ -84,7 +107,7 @@ public class MetallurgicaJei implements IModPlugin {
                         .emptyBackground(177, 103)
                         .build("electrolysis", ElectrolysisCategory::new)
         );
-        allCategories.add(
+        allCategories.add(1,
                 builder(DrillingRecipe.class)
                         .addRecipes(() -> DrillingCategory.RECIPES)
                         .catalyst(MetallurgicaBlocks.drillActivator::get)

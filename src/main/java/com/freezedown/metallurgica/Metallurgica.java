@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEnde
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
+import com.freezedown.metallurgica.foundation.mixin.ChemicalInfoTooltipMixin;
 import com.freezedown.metallurgica.foundation.worldgen.MBuiltinRegistration;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
@@ -61,6 +62,7 @@ public class Metallurgica
     };
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);
     public static final RegistryObject<Codec<? extends OreModifier>> oreGen_CODEC = BIOME_MODIFIERS.register("generation_ores", () -> Codec.unit(OreModifier.INSTANCE));
+    
     public Metallurgica()
     {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();

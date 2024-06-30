@@ -3,6 +3,8 @@
     "metallurgica:native_copper",
     "metallurgica:native_gold",
     "metallurgica:magnetite",
-    "metallurgica:bauxite"
+    "metallurgica:bauxite",
+    "metallurgica:cassiterite",
+    "metallurgica:malachite"
   ]
 }

@@ -99,6 +99,42 @@ public class MetallurgicaItems {
             .tag(AllTags.forgeItemTag("dusts/aluminum"))
             .tag(AllTags.forgeItemTag("dusts"))
             .register();
+    
+    //TIN PROCESSING
+    public static final ItemEntry<MetallurgicaItem> cassiterite = registrate.item("cassiterite", p -> new MetallurgicaItem(p).showElementComposition())
+            .properties(p->p)
+            .tag(AllTags.forgeItemTag("raw_materials/cassiterite"))
+            .tag(AllTags.forgeItemTag("raw_materials"))
+            .register();
+    public static final ItemEntry<MetallurgicaItem> alluvialCassiterite = registrate.item("alluvial_cassiterite", p -> new MetallurgicaItem(p).showElementComposition())
+            .properties(p->p)
+            .tag(AllTags.forgeItemTag("alluvial_materials/cassiterite"))
+            .tag(AllTags.forgeItemTag("alluvial_materials"))
+            .register();
+    
+    //COPPER PROCESSING
+    public static final ItemEntry<MetallurgicaItem> malachite = registrate.item("malachite", p -> new MetallurgicaItem(p).showElementComposition())
+            .properties(p->p)
+            .tag(AllTags.forgeItemTag("raw_materials/malachite"))
+            .tag(AllTags.forgeItemTag("raw_materials"))
+            .register();
+    public static final ItemEntry<MetallurgicaItem> richMalachite = registrate.item("rich_malachite", p -> new MetallurgicaItem(p).showElementComposition())
+            .properties(p->p)
+            .tag(AllTags.forgeItemTag("enriched_materials/malachite"))
+            .tag(AllTags.forgeItemTag("enriched_materials"))
+            .register();
+    
+    public static final ItemEntry<MetallurgicaItem> copperOxide = registrate.item("copper_oxide", p -> new MetallurgicaItem(p).showElementComposition())
+            .properties(p->p)
+            .tag(AllTags.forgeItemTag("dusts/copper_oxide"))
+            .tag(AllTags.forgeItemTag("dusts"))
+            .register();
+    public static final ItemEntry<MetallurgicaItem> copperRubble = registrate.item("copper_rubble", p -> new MetallurgicaItem(p).showElementComposition())
+            .properties(p->p)
+            .tag(AllTags.forgeItemTag("material_rubble/copper"))
+            .tag(AllTags.forgeItemTag("material_rubble"))
+            .register();
+    
     public static void register() {
     }
 }

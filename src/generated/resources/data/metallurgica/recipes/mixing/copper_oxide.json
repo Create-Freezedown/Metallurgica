@@ -1,0 +1,28 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "metallurgica:malachite"
+    },
+    {
+      "item": "createindustry:coal_coke_dust"
+    },
+    {
+      "item": "createindustry:coal_coke_dust"
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:copper_oxide"
+    },
+    {
+      "chance": 0.35,
+      "item": "metallurgica:copper_oxide"
+    },
+    {
+      "amount": 90,
+      "fluid": "createindustry:carbon_dioxide"
+    }
+  ]
+}

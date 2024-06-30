@@ -1,14 +1,12 @@
 package com.freezedown.metallurgica.registry;
 
 import com.drmangotea.createindustry.CreateTFMG;
-import com.drmangotea.createindustry.registry.TFMGFluids;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.Acid;
 import com.freezedown.metallurgica.content.fluids.types.ReactiveGas;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid.*;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
-import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -31,8 +29,8 @@ public class MetallurgicaFluids {
     public static final FluidEntry<VirtualFluid> preheatedAir = Metallurgica.registrate.virtualFluid("preheated_air", AIR_RL, AIR_RL).lang("Preheated Air").register();
     public static final FluidEntry<VirtualFluid> nitrogen = Metallurgica.registrate.virtualFluid("nitrogen", NITROGEN_RL, NITROGEN_RL).lang("Nitrogen").register();
     public static final FluidEntry<VirtualFluid> bfg = Metallurgica.registrate.virtualFluid("bfg", AIR_RL, AIR_RL).lang("Blast Furnace Gas").register();
-    public static final FluidEntry<RiverSandFluid> riverSand = Metallurgica.registrate.virtualFluid("river_sand", RiverSandFluidType::new, RiverSandFluid::new).lang("River Sand").register();
     
+    public static final FluidEntry<RiverSandFluid> riverSand = Metallurgica.registrate.virtualFluid("river_sand", RiverSandFluidType::new, RiverSandFluid::new).lang("River Sand").register();
     public static final FluidEntry<VirtualFluid> cryolite = Metallurgica.registrate.tintedVirtualFluid("cryolite", 0x90EE90).lang("Cryolite").register();
     public static final FluidEntry<VirtualFluid> decontaminatedWater = Metallurgica.registrate.tintedVirtualFluid("decontaminated_water", 0x90C6E3).lang("Decontaminated Water").register();
     public static final FluidEntry<Acid> hydrochloricAcid = Metallurgica.registrate.acid("hydrochloric_acid", 0xAAFFAA, 1.1f).lang("Hydrochloric Acid").register();
@@ -56,11 +54,8 @@ public class MetallurgicaFluids {
     
     public static final FluidEntry<VirtualFluid> magnetiteFines = Metallurgica.registrate.tintedVirtualDust("magnetite_fines", 0x696A76).lang("Magnetite Fines").register();
     
-    public static final FluidEntry<MoltenMetal.Flowing> moltenIron = createMoltenMetal("iron", "Iron");
-    
-    public static FluidEntry<MoltenMetal.Flowing> createMoltenMetal(String name, String langName) {
-        return Metallurgica.registrate.moltenMetal("molten_" + name).lang("Molten " + langName).source(MoltenMetal.Source::new).bucket().build().register();
-    }
+    public static final FluidEntry<MoltenMetal.Flowing> moltenIron = Metallurgica.registrate.moltenMetal("iron").register();
+    public static final FluidEntry<MoltenMetal.Flowing> moltenCopper = Metallurgica.registrate.moltenMetal("copper").register();
     
     public static Collection<RegistryEntry<Fluid>> ALL = Metallurgica.registrate.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
     
@@ -76,6 +71,8 @@ public class MetallurgicaFluids {
         }
         return stacks;
     }
+    
+    
     
     public static List<Acid> getAcids() {
         List<Acid> acids = new ArrayList<>();

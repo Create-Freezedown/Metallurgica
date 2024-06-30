@@ -12,6 +12,9 @@ import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlockEntity;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerInstance;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
+import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlockEntity;
+import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryCarbonOutputBlockEntity;
+import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryOutputBlockEntity;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorInstance;
@@ -77,6 +80,23 @@ public class MetallurgicaBlockEntities {
             .validBlocks(MetallurgicaBlocks.castingTable)
             .renderer(() -> CastingTableRenderer::new)
             .register();
+    
+    public static final BlockEntityEntry<ReverbaratoryBlockEntity> reverbaratory = registrate
+            .blockEntity("reverbaratory", ReverbaratoryBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.reverbaratory)
+            .register();
+    
+    public static final BlockEntityEntry<ReverbaratoryOutputBlockEntity> reverbaratoryOutput = registrate
+            .blockEntity("reverbaratory_output", ReverbaratoryOutputBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.reverbaratoryOutput)
+            .register();
+    
+    public static final BlockEntityEntry<ReverbaratoryCarbonOutputBlockEntity> reverbaratoryCarbonOutput = registrate
+            .blockEntity("reverbaratory_carbon_output", ReverbaratoryCarbonOutputBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.reverbaratoryCarbonOutput)
+            .register();
+    
+    
     
     public static void register() {}
 }

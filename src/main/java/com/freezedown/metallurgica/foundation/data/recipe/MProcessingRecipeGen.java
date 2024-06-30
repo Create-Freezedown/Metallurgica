@@ -5,6 +5,7 @@ import com.freezedown.metallurgica.foundation.data.recipe.create.MEmptyingGen;
 import com.freezedown.metallurgica.foundation.data.recipe.create.MMixingRecipeGen;
 import com.freezedown.metallurgica.foundation.data.recipe.create.MSplashingRecipeGen;
 import com.freezedown.metallurgica.foundation.data.recipe.metallurgica.MElectrolysisGen;
+import com.freezedown.metallurgica.foundation.data.recipe.metallurgica.MReverbaratoryGen;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
@@ -39,6 +40,7 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
         GENERATORS.add(new MEmptyingGen(gen));
         
         GENERATORS.add(new MElectrolysisGen(gen));
+        GENERATORS.add(new MReverbaratoryGen(gen));
         
         gen.addProvider(true, new DataProvider() {
             

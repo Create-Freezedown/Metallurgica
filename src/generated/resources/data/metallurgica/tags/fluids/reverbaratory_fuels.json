@@ -1,0 +1,16 @@
+{
+  "values": [
+    "createindustry:butane",
+    "createindustry:propane",
+    "createindustry:lpg",
+    "createindustry:kerosene",
+    "createindustry:naphtha",
+    "createindustry:ethylene",
+    "createindustry:propylene",
+    "createindustry:diesel",
+    "createindustry:lubrication_oil",
+    "createindustry:heavy_oil",
+    "createindustry:creosote",
+    "createindustry:gasoline"
+  ]
+}

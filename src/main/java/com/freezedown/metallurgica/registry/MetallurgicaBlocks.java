@@ -12,6 +12,9 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
+import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
+import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryCarbonOutputBlock;
+import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryOutputBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
@@ -31,7 +34,6 @@ import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SandBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -51,6 +53,33 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+    
+    public static final BlockEntry<ReverbaratoryBlock> reverbaratory = registrate.block("reverbaratory", ReverbaratoryBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(BlockStateGen.horizontalBlockProvider(false))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .item()
+            .build()
+            .register();
+    public static final BlockEntry<ReverbaratoryOutputBlock> reverbaratoryOutput = registrate.block("reverbaratory_output", ReverbaratoryOutputBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .transform(TagGen.pickaxeOnly())
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/reverbaratory/input_output"))))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .simpleItem()
+            .register();
+    public static final BlockEntry<ReverbaratoryCarbonOutputBlock> reverbaratoryCarbonOutput = registrate.block("reverbaratory_carbon_output", ReverbaratoryCarbonOutputBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .transform(TagGen.pickaxeOnly())
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/reverbaratory/input_output"))))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .item()
+            .build()
+            .register();
     
     public static final BlockEntry<ElectrolyzerBlock> electrolyzer = registrate.block("electrolyzer", ElectrolyzerBlock::new)
             .initialProperties(SharedProperties::copperMetal)
@@ -243,6 +272,8 @@ public class MetallurgicaBlocks {
             .addLayer(() -> RenderType::cutoutMipped)
             .simpleItem()
             .register();
+    
+    
     public static void register() {
     
     }

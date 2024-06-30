@@ -1,5 +1,8 @@
 {
   "values": [
+    "metallurgica:reverbaratory",
+    "metallurgica:reverbaratory_output",
+    "metallurgica:reverbaratory_carbon_output",
     "metallurgica:electrolyzer",
     "metallurgica:drill_activator",
     "metallurgica:drill_tower_deployer",

@@ -1,0 +1,19 @@
+{
+  "type": "metallurgica:reverbaratory_cooking",
+  "ingredients": [
+    {
+      "item": "metallurgica:magnetite_lumps"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "amount": 45,
+      "fluid": "metallurgica:molten_iron"
+    },
+    {
+      "amount": 25,
+      "fluid": "createindustry:molten_slag"
+    }
+  ]
+}

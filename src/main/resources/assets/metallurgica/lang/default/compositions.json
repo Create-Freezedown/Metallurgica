@@ -1,12 +1,34 @@
 {
   "item.metallurgica.magnetite.tooltip.chemical_formula": "Fe3 O4",
-  "item.metallurgica.native_copper.tooltip.chemical_formula": "Cu",
-  "item.metallurgica.malachite.tooltip.chemical_formula": "Cu2 CO3 OH2",
   "item.metallurgica.native_gold.tooltip.chemical_formula": "Au",
   "item.metallurgica.salt.tooltip.chemical_formula": "Na Cl",
 
   "item.metallurgica.bauxite.tooltip.chemical_formula": "Al2 O3 2H 2O",
   "item.metallurgica.washed_alumina.tooltip.chemical_formula": "Al2 O3",
   "item.metallurgica.alumina.tooltip.chemical_formula": "Al2 O3",
-  "item.metallurgica.aluminum_dust.tooltip.chemical_formula": "Al"
+  "item.metallurgica.aluminum_dust.tooltip.chemical_formula": "Al",
+
+  "item.metallurgica.native_copper.tooltip.chemical_formula": "Cu",
+  "item.metallurgica.malachite.tooltip.chemical_formula": "Cu2 CO3 OH2",
+  "item.metallurgica.copper_oxide.tooltip.chemical_formula": "CuO",
+  "item.metallurgica.copper_rubble.tooltip.chemical_formula": "Cu",
+
+  "item.metallurgica.cassiterite.tooltip.chemical_formula": "SnO2",
+  "item.metallurgica.alluvial_cassiterite.tooltip.chemical_formula": "SnO2",
+  "item.metallurgica.tin.tooltip.chemical_formula": "Sn",
+
+
+  "item.create.zinc_ingot.tooltip.chemical_formula": "Zn",
+  "item.create.zinc_nugget.tooltip.chemical_formula": "Zn",
+  "item.minecraft.copper_ingot.tooltip.chemical_formula": "Cu",
+  "item.create.copper_nugget.tooltip.chemical_formula": "Cu",
+  "item.minecraft.iron_ingot.tooltip.chemical_formula": "Fe",
+  "item.minecraft.iron_nugget.tooltip.chemical_formula": "Fe",
+  "item.minecraft.gold_ingot.tooltip.chemical_formula": "Au",
+  "item.minecraft.gold_nugget.tooltip.chemical_formula": "Au",
+  "item.createindustry.aluminum_ingot.tooltip.chemical_formula": "Al",
+  "item.createindustry.sulfur_dust.tooltip.chemical_formula": "S",
+  "item.createindustry.sulfur.tooltip.chemical_formula": "S",
+  "item.createindustry.nitrate_dust.tooltip.chemical_formula": "KNO3",
+  "item.createindustry.limesand.tooltip.chemical_formula": "CaCO3"
 }

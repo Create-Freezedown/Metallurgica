@@ -9,5 +9,8 @@
   "create.goggles.drill_activator.progress": "Progress:",
   "create.goggles.drill_activator.item.empty": "Empty",
   "create.goggles.drill_activator.item": "Stored Items:",
-  "recipe.metallurgica.electrolysis": "Electrolysis"
+  "recipe.metallurgica.electrolysis": "Electrolysis",
+  "create.goggles.reverbaratory.invalid": "Invalid Reverbaratory Multiblock",
+  "create.goggles.reverbaratory.fuel_info": "Fuel Info",
+  "create.goggles.reverbaratory.stats": "Stats"
 }

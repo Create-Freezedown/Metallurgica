@@ -56,6 +56,23 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .require(I.cokeDust())
             .output(I.magnetiteLumps(), 1)
             .output(0.25f, I.magnetiteLumps(), 1)
+            .requiresHeat(HeatCondition.HEATED)),
+    
+    copperOxide = create(Metallurgica.asResource("copper_oxide"), b -> b
+            .require(I.malachite())
+            .require(I.cokeDust())
+            .require(I.cokeDust())
+            .output(F.carbonDioxide(), 90)
+            .output(I.copperOxide(), 1)
+            .output(0.35f, I.copperOxide(), 1)
+            .requiresHeat(HeatCondition.HEATED)),
+    
+    copperFromOxide = create(Metallurgica.asResource("copper_from_oxide"), b -> b
+            .require(I.copperOxide())
+            .require(I.cokeDust())
+            .output(F.carbonDioxide(), 90)
+            .output(I.copperRubble(), 1)
+            .output(0.05f, I.copperRubble(), 1)
             .requiresHeat(HeatCondition.HEATED))
             
     ;

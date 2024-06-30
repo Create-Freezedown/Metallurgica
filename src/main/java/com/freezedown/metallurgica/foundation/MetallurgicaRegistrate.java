@@ -33,7 +33,11 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
     
     public FluidBuilder<MoltenMetal.Flowing, CreateRegistrate> moltenMetal(String name) {
-        return fluid(name, new ResourceLocation(getModid(), "fluid/" + name + "_still"), new ResourceLocation(getModid(), "fluid/" + name + "_flow"), MoltenMetal.MoltenMetalFluidType::new, MoltenMetal.Flowing::new);
+        ResourceLocation modelParent = new ResourceLocation("item/generated");
+        ResourceLocation itemTexture = Metallurgica.asResource("item/molten_metal_bucket");
+        ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
+        ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
+        return fluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, MoltenMetal.Flowing::new).source(MoltenMetal.Source::new).bucket().model((ctx, prov) -> prov.singleTexture(ctx.getName(), modelParent, itemTexture)).build();
     }
     
     public FluidBuilder<FlowingGas.Flowing, CreateRegistrate> gas(String name, int color) {

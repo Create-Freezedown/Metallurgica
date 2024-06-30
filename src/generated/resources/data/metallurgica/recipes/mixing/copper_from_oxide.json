@@ -1,0 +1,25 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "metallurgica:copper_oxide"
+    },
+    {
+      "item": "createindustry:coal_coke_dust"
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:copper_rubble"
+    },
+    {
+      "chance": 0.05,
+      "item": "metallurgica:copper_rubble"
+    },
+    {
+      "amount": 90,
+      "fluid": "createindustry:carbon_dioxide"
+    }
+  ]
+}
