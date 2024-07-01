@@ -35,10 +35,11 @@ public class MetallurgicaFluids {
     
     public static final FluidEntry<VirtualFluid> cryolite = Metallurgica.registrate.tintedVirtualFluid("cryolite", 0x90EE90).lang("Cryolite").register();
     public static final FluidEntry<VirtualFluid> decontaminatedWater = Metallurgica.registrate.tintedVirtualFluid("decontaminated_water", 0x90C6E3).lang("Decontaminated Water").register();
-    public static final FluidEntry<Acid> hydrochloricAcid = Metallurgica.registrate.acid("hydrochloric_acid", 0xAAFFAA, 1.1f).lang("Hydrochloric Acid").register();
-    public static final FluidEntry<Acid> sulfuricAcid = Metallurgica.registrate.acid("sulfuric_acid", 0xAAAAFF, 0.1f).lang("Sulfuric Acid").register();
-    public static final FluidEntry<Acid> sodiumHydroxide = Metallurgica.registrate.acid("sodium_hydroxide", 0xC3D2D5, 14).lang("Sodium Hydroxide").register();
-    public static final FluidEntry<Acid> sodiumHypochlorite = Metallurgica.registrate.acid("sodium_hypochlorite", 0xE8f1C7, 1.1f).lang("Sodium Hypochlorite").register();
+    public static final FluidEntry<Acid>
+            hydrochloricAcid = acid("hydrochloric_acid", 0xAAFFAA, 1.1f, "Hydrochloric Acid"),
+            sulfuricAcid = acid("sulfuric_acid", 0xAAAAFF, 0.1f, "Sulfuric Acid"),
+            sodiumHydroxide = acid("sodium_hydroxide", 0xC3D2D5, 14, "Sodium Hydroxide"),
+            sodiumHypochlorite = acid("sodium_hypochlorite", 0xE8f1C7, 1.1f, "Sodium Hypochlorite");
     
     public static final FluidEntry<ReactiveGas.Flowing> chlorine = Metallurgica.registrate.reactiveGas("chlorine", 0xDBD971).lang("Chlorine").properties((properties ->
             properties
@@ -75,6 +76,10 @@ public class MetallurgicaFluids {
             }
         }
         return stacks;
+    }
+
+    private static FluidEntry<Acid> acid(String name, int color, float acidity, String lang) {
+        return Metallurgica.registrate.acid(name, color, acidity).lang(lang).register();
     }
     
     public static List<Acid> getAcids() {

@@ -17,66 +17,78 @@ import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillAc
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorInstance;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
+import com.jozufozu.flywheel.api.MaterialManager;
+import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
+import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.BiFunction;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public class MetallurgicaBlockEntities {
     
-    public static final BlockEntityEntry<ElectrolyzerBlockEntity> electrolyzer = registrate
-            .blockEntity("electrolyzer", ElectrolyzerBlockEntity::new)
-            .instance(() -> ElectrolyzerInstance::new)
-            .validBlocks(MetallurgicaBlocks.electrolyzer)
-            .renderer(() -> ElectrolyzerRenderer::new)
-            .register();
+    public static final BlockEntityEntry<ElectrolyzerBlockEntity> electrolyzer =
+            blockEntity("electrolyzer", ElectrolyzerBlockEntity::new, ElectrolyzerInstance::new, ElectrolyzerRenderer::new, MetallurgicaBlocks.electrolyzer);
     
-    public static final BlockEntityEntry<DrillActivatorBlockEntity> drillActivator = registrate
-            .blockEntity("drill_activator", DrillActivatorBlockEntity::new)
-            .instance(() -> DrillActivatorInstance::new)
-            .validBlocks(MetallurgicaBlocks.drillActivator)
-            .renderer(() -> DrillActivatorRenderer::new)
-            .register();
-    public static final BlockEntityEntry<DrillTowerDeployerBlockEntity> drillTowerDeployer = registrate
-            .blockEntity("drill_tower_deployer", DrillTowerDeployerBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.drillTowerDeployer)
-            .register();
-    public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit = registrate
-            .blockEntity("mineral_deposit", MineralDepositBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.magnetiteDeposit, MetallurgicaBlocks.nativeCopperDeposit)
-            .register();
+    public static final BlockEntityEntry<DrillActivatorBlockEntity> drillActivator =
+            blockEntity("drill_activator", DrillActivatorBlockEntity::new, DrillActivatorInstance::new, DrillActivatorRenderer::new, MetallurgicaBlocks.drillActivator);
+
+    public static final BlockEntityEntry<DrillTowerDeployerBlockEntity> drillTowerDeployer =
+            simpleBlockEntity("drill_tower_deployer", DrillTowerDeployerBlockEntity::new, MetallurgicaBlocks.drillTowerDeployer);
+
+    public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit =
+            simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new, MetallurgicaBlocks.magnetiteDeposit, MetallurgicaBlocks.nativeCopperDeposit);
     
-    public static final BlockEntityEntry<ChannelDepotBlockEntity> channelDepot = registrate
-            .blockEntity("channel_depot", ChannelDepotBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.channelDepot)
-            .renderer(() -> ChannelDepotRenderer::new)
-            .register();
+    public static final BlockEntityEntry<ChannelDepotBlockEntity> channelDepot =
+            blockEntity("channel_depot", ChannelDepotBlockEntity::new, null, ChannelDepotRenderer::new, MetallurgicaBlocks.channelDepot);
     
-    public static final BlockEntityEntry<ChannelBlockEntity> channel = registrate
-            .blockEntity("channel", ChannelBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.channelDepot)
-            .renderer(() -> ChannelRenderer::new)
-            .register();
+    public static final BlockEntityEntry<ChannelBlockEntity> channel =
+            blockEntity("channel", ChannelBlockEntity::new, null, ChannelRenderer::new, MetallurgicaBlocks.channelDepot);
     
-    public static final BlockEntityEntry<FaucetBlockEntity> faucet = registrate
-            .blockEntity("faucet", FaucetBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.faucet)
-            .register();
+    public static final BlockEntityEntry<FaucetBlockEntity> faucet =
+            simpleBlockEntity("faucet", FaucetBlockEntity::new, MetallurgicaBlocks.faucet);
     
-    public static final BlockEntityEntry<TuyereBlockEntity> tuyere = registrate
-            .blockEntity("tuyere", TuyereBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.tuyere)
-            .register();
+    public static final BlockEntityEntry<TuyereBlockEntity> tuyere =
+            simpleBlockEntity("tuyere", TuyereBlockEntity::new, MetallurgicaBlocks.tuyere);
     
-    public static final BlockEntityEntry<HearthBlockEntity> hearth = registrate
-            .blockEntity("hearth", HearthBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.hearth)
-            .register();
+    public static final BlockEntityEntry<HearthBlockEntity> hearth =
+            simpleBlockEntity("hearth", HearthBlockEntity::new, MetallurgicaBlocks.hearth);
     
-    public static final BlockEntityEntry<CastingTableBlockEntity> castingTable = registrate
-            .blockEntity("casting_table", CastingTableBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.castingTable)
-            .renderer(() -> CastingTableRenderer::new)
-            .register();
-    
+    public static final BlockEntityEntry<CastingTableBlockEntity> castingTable =
+            blockEntity("casting_table", CastingTableBlockEntity::new, null, CastingTableRenderer::new, MetallurgicaBlocks.castingTable);
+
+    private static <T extends BlockEntity> BlockEntityEntry<T> blockEntity(
+            String name,
+            BlockEntityBuilder.BlockEntityFactory<T> factory,
+            @Nullable BiFunction<MaterialManager, T, BlockEntityInstance<? super T>> instance,
+            @Nullable NonNullFunction<BlockEntityRendererProvider.Context, BlockEntityRenderer<? super T>> renderer,
+            BlockEntry<?>... blocks) {
+        CreateBlockEntityBuilder<T, CreateRegistrate> builder = registrate.blockEntity(name, factory);
+        if(instance != null) {
+            builder = builder.instance(() -> instance);
+        }
+        BlockEntityBuilder<T, CreateRegistrate> builder2 = builder.validBlocks(blocks);
+        if (renderer != null) {
+            builder2 = builder2.renderer(() -> renderer);
+        }
+        return builder2.register();
+    }
+
+    private static <T extends BlockEntity> BlockEntityEntry<T> simpleBlockEntity(
+            String name,
+            BlockEntityBuilder.BlockEntityFactory<T> factory,
+            BlockEntry<?>... blocks) {
+        return blockEntity(name, factory, null, null, blocks);
+    }
+
     public static void register() {}
 }

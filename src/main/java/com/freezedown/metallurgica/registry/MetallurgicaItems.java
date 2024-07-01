@@ -5,100 +5,68 @@ import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
+import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import org.apache.logging.log4j.util.LambdaUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MetallurgicaItems {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
     
+    public static final ItemEntry<MetallurgicaItem>
+            nativeCopper = metallurgicaItem("native_copper",  "raw_materials/native_copper", "raw_materials"),
+            nativeGold = metallurgicaItem("native_gold", "raw_materials/native_gold", "raw_materials");
     
-    public static final ItemEntry<MetallurgicaItem> nativeCopper = registrate.item("native_copper", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("raw_materials/native_copper"))
-            .tag(AllTags.forgeItemTag("raw_materials"))
-            .register();
-    
-    public static final ItemEntry<MetallurgicaItem> nativeGold = registrate.item("native_gold", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("raw_materials/native_gold"))
-            .tag(AllTags.forgeItemTag("raw_materials"))
-            .register();
-    
-    public static final ItemEntry<Item> magnetiteRubble = registrate.item("magnetite_rubble", Item::new)
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("material_rubble/magnetite"))
-            .tag(AllTags.forgeItemTag("material_rubble"))
-            .register();
-    public static final ItemEntry<Item> nativeCopperRubble = registrate.item("native_copper_rubble", Item::new)
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("material_rubble/native_copper"))
-            .tag(AllTags.forgeItemTag("material_rubble"))
-            .register();
-    public static final ItemEntry<Item> bauxiteRubble = registrate.item("bauxite_rubble", Item::new)
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("material_rubble/bauxite"))
-            .tag(AllTags.forgeItemTag("material_rubble"))
-            .register();
-    public static final ItemEntry<Item> nativeGoldRubble = registrate.item("native_gold_rubble", Item::new)
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("material_rubble/native_gold"))
-            .tag(AllTags.forgeItemTag("material_rubble"))
-            .register();
-    
-    public static final ItemEntry<Item> armorPlatingMold = registrate.item("armor_plating_mold", Item::new)
-            .properties(p->p.stacksTo(1).fireResistant())
-            .tag(AllTags.forgeItemTag("advanced_casting_molds/armor_plating"))
-            .tag(AllTags.forgeItemTag("advanced_casting_molds"))
-            .register();
+    public static final ItemEntry<Item>
+            magnetiteRubble = simpleItem("magnetite_rubble", "material_rubble/magnetite", "material_rubble"),
+            nativeCopperRubble = simpleItem("native_copper_rubble", "material_rubble/native_copper", "material_rubble"),
+            bauxiteRubble = simpleItem("bauxite_rubble", "material_rubble/bauxite", "material_rubble"),
+            nativeGoldRubble = simpleItem("native_gold_rubble", "material_rubble/native_gold", "material_rubble"),
+            armorPlatingMold = item("armor_plating_mold", Item::new, p->p.stacksTo(1).fireResistant(), "advanced_casting_molds/armor_plating", "advanced_casting_molds");
     
     //MISC ITEMS
-    public static final ItemEntry<MetallurgicaItem> salt = registrate.item("salt", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("salt"))
-            .register();
-    
+    public static final ItemEntry<MetallurgicaItem>
+            salt = metallurgicaItem("salt", "salt"),
+
     //MAGNETITE PROCESSING
-    public static final ItemEntry<MetallurgicaItem> magnetite = registrate.item("magnetite", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("raw_materials/magnetite"))
-            .tag(AllTags.forgeItemTag("raw_materials"))
-            .register();
-    public static final ItemEntry<MetallurgicaItem> richMagnetite = registrate.item("rich_magnetite", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("enriched_materials/magnetite"))
-            .tag(AllTags.forgeItemTag("enriched_materials"))
-            .register();
-    public static final ItemEntry<MetallurgicaItem> magnetiteLumps = registrate.item("magnetite_lumps", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("lumps/magnetite"))
-            .tag(AllTags.forgeItemTag("lumps"))
-            .register();
+            magnetite = metallurgicaItem("magnetite", "raw_materials/magnetite", "raw_materials"),
+            richMagnetite = metallurgicaItem("rich_magnetite", "enriched_materials/magnetite", "enriched_materials"),
+            magnetiteLumps = metallurgicaItem("magnetite_lumps", "lumps/magnetite", "lumps"),
     
     //BAUXITE PROCESSING
-    public static final ItemEntry<MetallurgicaItem> bauxite = registrate.item("bauxite", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("raw_materials/bauxite"))
-            .tag(AllTags.forgeItemTag("raw_materials"))
-            .register();
-    public static final ItemEntry<Item> loosenedBauxite = registrate.item("loosened_bauxite", Item::new)
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("loosened_materials/bauxite"))
-            .tag(AllTags.forgeItemTag("loosened_materials"))
-            .register();
-    public static final ItemEntry<MetallurgicaItem> washedAlumina = registrate.item("washed_alumina", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("washed_materials/alumina"))
-            .tag(AllTags.forgeItemTag("washed_materials"))
-            .register();
-    public static final ItemEntry<MetallurgicaItem> alumina = registrate.item("alumina", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("alumina"))
-            .register();
-    public static final ItemEntry<MetallurgicaItem> aluminumDust = registrate.item("aluminum_dust", p -> new MetallurgicaItem(p).showElementComposition())
-            .properties(p->p)
-            .tag(AllTags.forgeItemTag("dusts/aluminum"))
-            .tag(AllTags.forgeItemTag("dusts"))
-            .register();
+            bauxite = metallurgicaItem("bauxite", "raw_materials/bauxite",  "raw_materials");
+
+    public static final ItemEntry<Item>
+            loosenedBauxite = simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item???
+
+    public static final ItemEntry<MetallurgicaItem>
+            washedAlumina = metallurgicaItem("washed_alumina", "washed_materials/alumina", "washed_materials"),
+            alumina = metallurgicaItem("alumina", "alumina"),
+            aluminumDust = metallurgicaItem("aluminum_dust", "dusts/aluminum", "dusts");
+
+    private static <T extends Item> ItemEntry<T> item(String name, NonNullFunction<Item.Properties, T> factory, NonNullUnaryOperator<Item.Properties> properties, String... tags) {
+        ItemBuilder<T, ?> builder = registrate.item(name, factory).properties(properties);
+        for(String tag : tags) {
+            builder.tag(AllTags.forgeItemTag(tag));
+        }
+        return builder.register();
+    }
+
+    private static ItemEntry<Item> simpleItem(String name, String... tags) {
+        return item(name, Item::new, p->p, tags);
+    }
+
+    private static ItemEntry<MetallurgicaItem> metallurgicaItem(String name, String... tags) {
+        return item(name, p -> new MetallurgicaItem(p).showElementComposition(), p->p, tags);
+    }
+
     public static void register() {
     }
 }
