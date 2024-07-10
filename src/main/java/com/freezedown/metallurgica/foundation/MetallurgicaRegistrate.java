@@ -7,8 +7,10 @@ import com.freezedown.metallurgica.content.fluids.types.ReactiveGas;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
+import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
+import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
 import com.simibubi.create.AllFluids;
@@ -54,7 +56,9 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.BiFunction;
+import java.util.stream.Stream;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -215,6 +219,14 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .simpleItem();
         b = lang != null ? b.lang(lang) : b;
         return b.register();
+    }
+
+    public <T extends BlockEntity, P extends Block> BlockEntityEntry<T> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaMaterials[] blocks) {
+        BlockEntry[] blocks2 = new BlockEntry[blocks.length];
+        for (int i = 0; i < blocks.length; i++) {
+            blocks2[i] = blocks[i].materialEntry.depositBlock();
+        }
+        return simpleBlockEntity(name, factory, blocks2);
     }
 
     public static class TintedFluid extends AllFluids.TintedFluidType {

@@ -27,26 +27,6 @@ public class MetallurgicaOreFeatureConfigEntries {
     public static final RuleTest BUDDING_AMETHYST_REPLACEABLE = new BlockMatchTest(Blocks.AMETHYST_BLOCK);
     
     public static final RuleTest GRAVEL_REPLACEABLE = new BlockMatchTest(Blocks.GRAVEL);
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    public static final MOreFeatureConfigEntry BAUXITE_CLUSTER = bauxite.cluster(19, 9, -30, 70);
-
-    public static final MOreFeatureConfigEntry MAGNETITE_CLUSTER = magnetite.cluster(23, 4, -3, 128);
-
-    public static final MOreFeatureConfigEntry NATIVE_COPPER_CLUSTER = nativeCopper.cluster(26, 7, -3, 97);
-
-    public static final MOreFeatureConfigEntry NATIVE_GOLD_CLUSTER = nativeGold.cluster(12, 4, -12, 56);
-    
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    public static final MOreFeatureConfigEntry BAUXITE_DEPOSIT = bauxite.deposit(1, 10, -30, 70);
-
-    public static final MOreFeatureConfigEntry MAGNETITE_DEPOSIT = magnetite.deposit(1, 5, -3, 128);
-
-    public static final MOreFeatureConfigEntry NATIVE_COPPER_DEPOSIT = nativeCopper.deposit(1, 8, -3, 97);
-
-    public static final MOreFeatureConfigEntry NATIVE_GOLD_DEPOSIT = nativeGold.deposit(1, 5, -12, 56);
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

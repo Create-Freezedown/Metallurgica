@@ -18,6 +18,10 @@ import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillAc
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static com.freezedown.metallurgica.registry.MetallurgicaBlocks.*;
 import static com.freezedown.metallurgica.Metallurgica.registrate;
@@ -36,10 +40,7 @@ public class MetallurgicaBlockEntities {
 
     public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit =
             registrate.simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new,
-                    magnetite.depositBlock(),
-                    nativeCopper.depositBlock(),
-                    magnetite.depositBlock(),
-                    bauxite.depositBlock());
+                    values());
     
     public static final BlockEntityEntry<ChannelDepotBlockEntity> channelDepot =
             registrate.blockEntity("channel_depot", ChannelDepotBlockEntity::new, null, ChannelDepotRenderer::new, MetallurgicaBlocks.channelDepot);
