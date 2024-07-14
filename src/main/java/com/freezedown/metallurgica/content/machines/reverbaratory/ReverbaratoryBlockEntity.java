@@ -1,11 +1,13 @@
 package com.freezedown.metallurgica.content.machines.reverbaratory;
 
-import com.drmangotea.createindustry.blocks.machines.metal_processing.blast_furnace.BlastFurnaceOutputBlockEntity;
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.multiblock.MultiblockStructure;
+import com.freezedown.metallurgica.foundation.multiblock.PositionUtil;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
+import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.simibubi.create.Create;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -32,7 +34,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlastFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -41,7 +42,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -50,10 +50,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.freezedown.metallurgica.foundation.util.ClientUtil.createCustomCubeParticles;
 
@@ -65,17 +62,46 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     public FluidTank tankInventory = this.createInventory();
     public boolean isValid = false;
     public int timer;
-    public ReverbaratoryChecker checker;
     public float fuelEfficiency;
     public float speedModifier;
+    public MultiblockStructure multiblockStructure;
+    
+    public BlockPos getMasterPosition() {
+        return this.getBlockPos();
+    }
+    public Direction getMasterDirection() {
+        return this.getBlockState().getValue(ReverbaratoryBlock.FACING);
+    }
+    
+    BlockPos getOutputPos() {
+        return getMasterPosition().relative(getMasterDirection(), 3).below();
+    }
+    BlockPos getCarbonDioxideOutputPos() {
+        return getMasterPosition().relative(getMasterDirection(), 3).above();
+    }
+    BlockPos getInputPos() {
+        return getMasterPosition().relative(getMasterDirection(), 1).above();
+    }
     
     public ReverbaratoryBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.timer = -1;
         this.inputInventory = (new SmartInventory(1, this)).forbidInsertion().forbidExtraction().withMaxStackSize(64);
-        this.checker = new ReverbaratoryChecker(this);
         this.fuelEfficiency = 1000.0F;
         this.speedModifier = 1.0F;
+        this.multiblockStructure = MultiblockStructure.builder()
+                .addBlock(getMasterPosition().above(), MetallurgicaBlocks.carbonBrick.getDefaultState())
+                .addBlock(getMasterPosition().below(), MetallurgicaBlocks.carbonBrick.getDefaultState())
+                .addBlock(PositionUtil.getRightSidePos(getMasterPosition(), getMasterDirection()), MetallurgicaBlocks.carbonBrick.getDefaultState())
+                .addBlock(PositionUtil.getLeftSidePos(getMasterPosition(), getMasterDirection()), MetallurgicaBlocks.carbonBrick.getDefaultState())
+                .addBlock(PositionUtil.getRightSidePos(getMasterPosition(), getMasterDirection()).above(), MetallurgicaBlocks.carbonBrick.getDefaultState())
+                .addBlock(PositionUtil.getLeftSidePos(getMasterPosition(), getMasterDirection()).above(), MetallurgicaBlocks.carbonBrick.getDefaultState())
+                .addBlock(PositionUtil.getRightSidePos(getMasterPosition(), getMasterDirection()).below(), MetallurgicaBlocks.carbonBrick.getDefaultState())
+                .addBlock(PositionUtil.getLeftSidePos(getMasterPosition(), getMasterDirection()).below(), MetallurgicaBlocks.carbonBrick.getDefaultState())
+                .addBlock(getOutputPos(), MetallurgicaBlocks.reverbaratoryOutput.getDefaultState())
+                .addBlock(getCarbonDioxideOutputPos(), MetallurgicaBlocks.reverbaratoryCarbonOutput.getDefaultState())
+                .addBlock(getInputPos(), AllBlocks.CHUTE.getDefaultState())
+                .build(this);
     }
     
     protected SmartFluidTank createInventory() {
@@ -100,8 +126,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         if (this.level == null) {
             return;
         }
-        checker.createMissingSegmentParticles();
-        
+        multiblockStructure.createMissingParticles();
     }
     
     public void tick() {
@@ -110,7 +135,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
             return;
         }
         
-        isValid = checker.checkReverbaratory();
+        isValid = multiblockStructure.isStructureCorrect();
         if (isValid) {
             this.acceptInsertedItems();
         }
@@ -119,7 +144,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         this.speedModifier = 1.0F;
         
         
-        if (this.recipe != null && this.timer == -1 && checker.getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount() <= checker.getOutputBlockEntity().tank1.getPrimaryHandler().getCapacity() && checker.getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount() <= checker.getOutputBlockEntity().tank2.getPrimaryHandler().getCapacity() && isValid && !this.tankInventory.isEmpty()) {
+        if (this.recipe != null && this.timer == -1 && getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount() <= getOutputBlockEntity().tank1.getPrimaryHandler().getCapacity() && getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount() <= getOutputBlockEntity().tank2.getPrimaryHandler().getCapacity() && isValid && !this.tankInventory.isEmpty()) {
             this.timer = (int)((float)this.recipe.getProcessingDuration() / this.speedModifier);
             this.inputInventory.getStackInSlot(0).setCount(this.inputInventory.getStackInSlot(0).getCount() - 1);
         }
@@ -136,7 +161,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
             }
         }
         
-        if (isValid && this.timer > 0 && checker.getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(0)).getAmount() <= checker.getOutputBlockEntity().tank1.getPrimaryHandler().getCapacity() && checker.getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(1)).getAmount() <= checker.getOutputBlockEntity().tank2.getPrimaryHandler().getCapacity()) {
+        if (isValid && this.timer > 0 && getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(0)).getAmount() <= getOutputBlockEntity().tank1.getPrimaryHandler().getCapacity() && getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(1)).getAmount() <= getOutputBlockEntity().tank2.getPrimaryHandler().getCapacity()) {
             --this.timer;
             createSmokeVolume();
             for (LivingEntity entity : this.getEntitiesToCremate()) {
@@ -209,8 +234,8 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
             return;
         }
         if (!this.level.isClientSide) {
-            checker.getOutputBlockEntity().tank1.getPrimaryHandler().setFluid(new FluidStack(this.recipe.getFluidResults().get(0).getFluid(), checker.getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount()));
-            checker.getOutputBlockEntity().tank2.getPrimaryHandler().setFluid(new FluidStack(this.recipe.getFluidResults().get(1).getFluid(), checker.getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount()));
+            getOutputBlockEntity().tank1.getPrimaryHandler().setFluid(new FluidStack(this.recipe.getFluidResults().get(0).getFluid(), getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount()));
+            getOutputBlockEntity().tank2.getPrimaryHandler().setFluid(new FluidStack(this.recipe.getFluidResults().get(1).getFluid(), getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount()));
         }
     }
     
@@ -294,7 +319,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
             Lang.translate("goggles.blast_furnace.nothing_lol").style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
         }
         
-        LazyOptional<IFluidHandler> handler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+        LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
         Optional<IFluidHandler> resolve = handler.resolve();
         if (!resolve.isPresent()) {
             return false;
@@ -361,7 +386,19 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         ClientUtil.createCustomCubeParticles(endPos, this.level, smallSmoke, smallFlame);
     }
     
+    ReverbaratoryOutputBlockEntity getOutputBlockEntity() {
+        if (level == null) {
+            return null;
+        }
+        return (ReverbaratoryOutputBlockEntity) level.getBlockEntity(getOutputPos());
+    }
     
+    ReverbaratoryCarbonOutputBlockEntity getCarbonDioxideOutputBlockEntity() {
+        if (level == null) {
+            return null;
+        }
+        return (ReverbaratoryCarbonOutputBlockEntity) level.getBlockEntity(getCarbonDioxideOutputPos());
+    }
     public class ReverbaratoryChecker {
         @Getter
         private final ReverbaratoryBlockEntity blockEntity;
