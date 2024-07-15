@@ -66,6 +66,8 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     public float speedModifier;
     public MultiblockStructure multiblockStructure;
     
+    public BlockState mainWall = MetallurgicaBlocks.carbonBrick.get().defaultBlockState();
+    
     public BlockPos getMasterPosition() {
         return this.getBlockPos();
     }
@@ -89,19 +91,17 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         this.inputInventory = (new SmartInventory(1, this)).forbidInsertion().forbidExtraction().withMaxStackSize(64);
         this.fuelEfficiency = 1000.0F;
         this.speedModifier = 1.0F;
-        this.multiblockStructure = MultiblockStructure.builder()
-                .addBlock(getMasterPosition().above(), MetallurgicaBlocks.carbonBrick.getDefaultState())
-                .addBlock(getMasterPosition().below(), MetallurgicaBlocks.carbonBrick.getDefaultState())
-                .addBlock(PositionUtil.getRightSidePos(getMasterPosition(), getMasterDirection()), MetallurgicaBlocks.carbonBrick.getDefaultState())
-                .addBlock(PositionUtil.getLeftSidePos(getMasterPosition(), getMasterDirection()), MetallurgicaBlocks.carbonBrick.getDefaultState())
-                .addBlock(PositionUtil.getRightSidePos(getMasterPosition(), getMasterDirection()).above(), MetallurgicaBlocks.carbonBrick.getDefaultState())
-                .addBlock(PositionUtil.getLeftSidePos(getMasterPosition(), getMasterDirection()).above(), MetallurgicaBlocks.carbonBrick.getDefaultState())
-                .addBlock(PositionUtil.getRightSidePos(getMasterPosition(), getMasterDirection()).below(), MetallurgicaBlocks.carbonBrick.getDefaultState())
-                .addBlock(PositionUtil.getLeftSidePos(getMasterPosition(), getMasterDirection()).below(), MetallurgicaBlocks.carbonBrick.getDefaultState())
-                .addBlock(getOutputPos(), MetallurgicaBlocks.reverbaratoryOutput.getDefaultState())
-                .addBlock(getCarbonDioxideOutputPos(), MetallurgicaBlocks.reverbaratoryCarbonOutput.getDefaultState())
-                .addBlock(getInputPos(), AllBlocks.CHUTE.getDefaultState())
-                .build(this);
+        this.multiblockStructure = MultiblockStructure.cuboidBuilder(this)
+                .withSize(5, 3, 3)
+                .withBlockAt(0, -1, 0, mainWall)
+                .withBlockAt(0, -1, 1, mainWall)
+                .withBlockAt(0, -1, -1, mainWall)
+                .withBlockAt(0, 1, 0, mainWall)
+                .withBlockAt(0, 1, 1, mainWall)
+                .withBlockAt(0, 1, -1, mainWall)
+                .withBlockAt(0, 0, 1, mainWall)
+                .withBlockAt(0, 0, -1, mainWall)
+                .build();
     }
     
     protected SmartFluidTank createInventory() {
