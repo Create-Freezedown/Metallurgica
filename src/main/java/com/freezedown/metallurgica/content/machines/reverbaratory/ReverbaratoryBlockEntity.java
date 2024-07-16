@@ -67,6 +67,8 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     public MultiblockStructure multiblockStructure;
     
     public BlockState mainWall = MetallurgicaBlocks.carbonBrick.get().defaultBlockState();
+    private final TagKey<Block> reverbaratoryWallTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_WALL.tag;
+    private final TagKey<Block> reverbaratoryGlassTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_GLASS.tag;
     
     public BlockPos getMasterPosition() {
         return this.getBlockPos();
@@ -92,8 +94,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         this.speedModifier = 1.0F;
         this.multiblockStructure = MultiblockStructure.cuboidBuilder(this)
                 .directional(getMasterDirection())
-                .withSize(5, 3, 3)
-                .withBlockAt(new PositionRange(zero(), generateSequence(-1, 1, 1), generateSequence(-1, 1, 1)), mainWall)
+                .withTagAt(new PositionRange(zero(), generateSequence(-1, 1, 1), generateSequence(-1, 1, 1)), reverbaratoryWallTag)
                 .build();
     }
     

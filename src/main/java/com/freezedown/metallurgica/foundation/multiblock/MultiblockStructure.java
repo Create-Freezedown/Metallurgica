@@ -6,6 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,43 +22,16 @@ import static com.freezedown.metallurgica.foundation.util.ClientUtil.createCusto
 public class MultiblockStructure {
     private final BlockEntity master;
     private final ArrayList<Map<BlockPos, BlockState>> structure;
+    private final ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure;
     
-    public MultiblockStructure(BlockEntity master, ArrayList<Map<BlockPos, BlockState>> structure) {
+    public MultiblockStructure(BlockEntity master, ArrayList<Map<BlockPos, BlockState>> structure, ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure) {
         this.master = master;
         this.structure = structure;
-    }
-    
-    public static Builder builder() {
-        return new Builder();
+        this.tagStructure = tagStructure;
     }
     
     public static CuboidBuilder cuboidBuilder(BlockEntity master) {
         return new CuboidBuilder(master);
-    }
-    
-    public static class Builder {
-        private final ArrayList<Map<BlockPos, BlockState>> structure = new ArrayList<>();
-        
-        public Builder addBlock(BlockPos pos, BlockState block) {
-            structure.add(Map.of(pos, block));
-            return this;
-        }
-        
-        public Builder addBlock(Map<BlockPos, BlockState> block) {
-            structure.add(block);
-            return this;
-        }
-        
-        public Builder addBlocks(List<Pair<BlockPos, BlockState>> positionsAndStates) {
-            for (Pair<BlockPos, BlockState> pair : positionsAndStates) {
-                structure.add(Map.of(pair.getFirst(), pair.getSecond()));
-            }
-            return this;
-        }
-        
-        public MultiblockStructure build(BlockEntity master) {
-            return new MultiblockStructure(master, structure);
-        }
     }
     
     public static class CuboidBuilder {
@@ -64,6 +39,7 @@ public class MultiblockStructure {
         private Direction direction = null;
         private boolean isDirectional = false;
         private final ArrayList<Map<BlockPos, BlockState>> structure = new ArrayList<>();
+        private final ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure = new ArrayList<>();
         private int width = 0;
         private int height = 0;
         private int depth = 0;
@@ -130,6 +106,21 @@ public class MultiblockStructure {
             return this;
         }
         
+        public CuboidBuilder withTagAt(int x, int y, int z, TagKey<Block> blockTag) {
+            BlockPos pos = translateToMaster(x, y, z);
+            tagStructure.add(Map.of(pos, blockTag));
+            return this;
+        }
+        
+        public CuboidBuilder withTagAt(PositionUtil.PositionRange range, TagKey<Block> blockTag) {
+            for (Triple<Integer, Integer, Integer> pos : range.getPositions()) {
+                tagStructure.add(Map.of(translateToMaster(pos.getFirst(), pos.getSecond(), pos.getThird()), blockTag));
+            }
+            return this;
+        }
+        
+        
+        
         private BlockPos translateToMaster(int x, int y, int z) {
             BlockPos masterPos = getMasterPosition();
             if (isDirectional) {
@@ -139,12 +130,16 @@ public class MultiblockStructure {
         }
         
         public MultiblockStructure build() {
-            return new MultiblockStructure(getMaster(), structure);
+            return new MultiblockStructure(getMaster(), structure, tagStructure);
         }
     }
     
     public ArrayList<Map<BlockPos, BlockState>> getStructure() {
         return structure;
+    }
+    
+    public ArrayList<Map<BlockPos, TagKey<Block>>> getTagStructure() {
+        return tagStructure;
     }
     
     public BlockEntity getMaster() {
@@ -166,10 +161,22 @@ public class MultiblockStructure {
     public boolean isBlockCorrect(BlockPos pos) {
         if (master.getLevel() == null) return false;
         for (Map<BlockPos, BlockState> map : getStructure()) {
-            if (map.containsKey(pos)) {
-                return master.getLevel().getBlockState(pos).equals(map.get(pos));
+            for (BlockPos pos1 : map.keySet()) {
+                return master.getLevel().getBlockState(pos).equals(map.get(pos1));
             }
         }
+        
+        return false;
+    }
+    
+    public boolean isTagCorrect(BlockPos pos) {
+        if (master.getLevel() == null) return false;
+        for (Map<BlockPos, TagKey<Block>> tagMap : getTagStructure()) {
+            for (BlockPos pos1 : tagMap.keySet()) {
+                return master.getLevel().getBlockState(pos).is(tagMap.get(pos1));
+            }
+        }
+        
         return false;
     }
     
@@ -186,54 +193,31 @@ public class MultiblockStructure {
                 }
             }
         }
-    }
-    
-    public boolean isStructureCorrect() {
-        for (Map<BlockPos, BlockState> map : getStructure()) {
-            for (BlockPos pos : map.keySet()) {
-                if (!isBlockCorrect(pos)) {
-                    return false;
+        for (Map<BlockPos, TagKey<Block>> tagMap : getTagStructure()) {
+            for (BlockPos pos : tagMap.keySet()) {
+                if (!isTagCorrect(pos)) {
+                    createCustomCubeParticles(pos, master.getLevel(), smokeParticle);
                 }
             }
         }
-        return true;
     }
     
-    
-    public BlockPos getRightSidePos(BlockPos pos) {
-        return pos.relative(getMasterDirection().getClockWise());
-    }
-    public BlockPos getRightSidePos() {
-        return getMasterPosition().relative(getMasterDirection().getClockWise());
-    }
-    public BlockPos getRightSidePos(int distance) {
-        return getMasterPosition().relative(getMasterDirection().getClockWise(), distance);
-    }
-    public BlockPos getRightSidePos(BlockPos pos, int distance) {
-        return pos.relative(getMasterDirection().getClockWise(), distance);
-    }
-    public BlockPos getRightSidePos(BlockPos pos, Direction direction) {
-        return pos.relative(direction.getClockWise());
-    }
-    public BlockPos getRightSidePos(BlockPos pos, int distance, Direction direction) {
-        return pos.relative(direction.getClockWise(), distance);
-    }
-    public BlockPos getLeftSidePos(BlockPos pos) {
-        return pos.relative(getMasterDirection().getCounterClockWise());
-    }
-    public BlockPos getLeftSidePos() {
-        return getMasterPosition().relative(getMasterDirection().getCounterClockWise());
-    }
-    public BlockPos getLeftSidePos(int distance) {
-        return getMasterPosition().relative(getMasterDirection().getCounterClockWise(), distance);
-    }
-    public BlockPos getLeftSidePos(BlockPos pos, int distance) {
-        return pos.relative(getMasterDirection().getCounterClockWise(), distance);
-    }
-    public BlockPos getLeftSidePos(BlockPos pos, Direction direction) {
-        return pos.relative(direction.getCounterClockWise());
-    }
-    public BlockPos getLeftSidePos(BlockPos pos, int distance, Direction direction) {
-        return pos.relative(direction.getCounterClockWise(), distance);
+    public boolean isStructureCorrect() {
+        int validBlocks = getStructure().size() + getTagStructure().size() - 1;
+        for (Map<BlockPos, BlockState> map : getStructure()) {
+                for (BlockPos pos : map.keySet()) {
+                    if (!isBlockCorrect(pos)) {
+                        validBlocks--;
+                    }
+                }
+            }
+        for (Map<BlockPos, TagKey<Block>> tagMap : getTagStructure()) {
+            for (BlockPos pos : tagMap.keySet()) {
+                if (!isTagCorrect(pos)) {
+                    validBlocks--;
+                }
+            }
+        }
+        return validBlocks >= getStructure().size() + getTagStructure().size() - 1;
     }
 }
