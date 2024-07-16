@@ -2,12 +2,11 @@ package com.freezedown.metallurgica.content.machines.reverbaratory;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.multiblock.MultiblockStructure;
-import com.freezedown.metallurgica.foundation.multiblock.PositionUtil;
+import com.freezedown.metallurgica.foundation.multiblock.PositionUtil.PositionRange;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -52,6 +51,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
+import static com.freezedown.metallurgica.foundation.multiblock.PositionUtil.*;
 import static com.freezedown.metallurgica.foundation.util.ClientUtil.createCustomCubeParticles;
 
 public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
@@ -84,7 +84,6 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     BlockPos getInputPos() {
         return getMasterPosition().relative(getMasterDirection(), 1).above();
     }
-    
     public ReverbaratoryBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.timer = -1;
@@ -92,15 +91,9 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         this.fuelEfficiency = 1000.0F;
         this.speedModifier = 1.0F;
         this.multiblockStructure = MultiblockStructure.cuboidBuilder(this)
+                .directional(getMasterDirection())
                 .withSize(5, 3, 3)
-                .withBlockAt(0, -1, 0, mainWall)
-                .withBlockAt(0, -1, 1, mainWall)
-                .withBlockAt(0, -1, -1, mainWall)
-                .withBlockAt(0, 1, 0, mainWall)
-                .withBlockAt(0, 1, 1, mainWall)
-                .withBlockAt(0, 1, -1, mainWall)
-                .withBlockAt(0, 0, 1, mainWall)
-                .withBlockAt(0, 0, -1, mainWall)
+                .withBlockAt(new PositionRange(zero(), generateSequence(-1, 1, 1), generateSequence(-1, 1, 1)), mainWall)
                 .build();
     }
     

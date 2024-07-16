@@ -2,8 +2,6 @@ package com.freezedown.metallurgica.foundation.multiblock;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.mojang.datafixers.util.Pair;
-import com.simibubi.create.content.decoration.copycat.CopycatModel;
-import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -63,6 +61,8 @@ public class MultiblockStructure {
     
     public static class CuboidBuilder {
         private final BlockEntity master;
+        private Direction direction = null;
+        private boolean isDirectional = false;
         private final ArrayList<Map<BlockPos, BlockState>> structure = new ArrayList<>();
         private int width = 0;
         private int height = 0;
@@ -80,22 +80,6 @@ public class MultiblockStructure {
             return getMaster().getBlockPos();
         }
         
-        public BlockState getMasterBlockState() {
-            if (getMaster().getLevel() == null) {
-                Metallurgica.LOGGER.error("Level is null, cannot get block state");
-                return null;
-            }
-            return getMaster().getLevel().getBlockState(getMasterPosition());
-        }
-        
-        public Direction getMasterDirection() {
-            if (getMasterBlockState() == null) {
-                Metallurgica.LOGGER.error("Block state is null, cannot get direction");
-                return null;
-            }
-            return getMasterBlockState().getValue(BlockStateProperties.FACING);
-        }
-        
         public CuboidBuilder cube(int size) {
             return withSize(size, size, size);
         }
@@ -108,6 +92,12 @@ public class MultiblockStructure {
             this.width = width;
             this.height = height;
             this.depth = depth;
+            return this;
+        }
+        
+        public CuboidBuilder directional(Direction direction) {
+            this.direction = direction;
+            this.isDirectional = true;
             return this;
         }
         
@@ -133,15 +123,19 @@ public class MultiblockStructure {
             return this;
         }
         
+        public CuboidBuilder withBlockAt(PositionUtil.PositionRange range, BlockState block) {
+            for (Triple<Integer, Integer, Integer> pos : range.getPositions()) {
+                structure.add(Map.of(translateToMaster(pos.getFirst(), pos.getSecond(), pos.getThird()), block));
+            }
+            return this;
+        }
+        
         private BlockPos translateToMaster(int x, int y, int z) {
             BlockPos masterPos = getMasterPosition();
-            Direction direction = getMasterDirection();
-            if (direction == null) {
-                Metallurgica.LOGGER.error("Direction is null, cannot translate position");
-                return masterPos;
+            if (isDirectional) {
+                return masterPos.relative(direction, x).above(y).relative(direction.getClockWise(), z);
             }
-            
-            return masterPos.relative(direction, x).above(y).relative(direction.getClockWise(), z);
+            return masterPos.offset(x, y, z);
         }
         
         public MultiblockStructure build() {
