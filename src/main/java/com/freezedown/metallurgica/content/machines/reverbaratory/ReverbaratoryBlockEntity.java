@@ -1,6 +1,9 @@
 package com.freezedown.metallurgica.content.machines.reverbaratory;
 
+import com.drmangotea.createindustry.registry.TFMGFluids;
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
+import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.MultiblockStructure;
 import com.freezedown.metallurgica.foundation.multiblock.PositionUtil.PositionRange;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
@@ -15,7 +18,6 @@ import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.item.SmartInventory;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
-import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,6 +43,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -52,11 +55,12 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 import static com.freezedown.metallurgica.foundation.multiblock.PositionUtil.*;
-import static com.freezedown.metallurgica.foundation.util.ClientUtil.createCustomCubeParticles;
 
 public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     public ReverbaratoryCookingRecipe recipe;
-    protected LazyOptional<IFluidHandler> fluidCapability = LazyOptional.of(() -> this.tankInventory);
+    protected LazyOptional<IFluidHandler> fluidCapability = LazyOptional.of(() -> {
+        return this.tankInventory;
+    });
     public LazyOptional<IItemHandlerModifiable> itemCapability = LazyOptional.of(() -> new InvWrapper(this.inputInventory));
     public SmartInventory inputInventory;
     public FluidTank tankInventory = this.createInventory();
@@ -67,39 +71,33 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     public MultiblockStructure multiblockStructure;
     
     public BlockState mainWall = MetallurgicaBlocks.carbonBrick.get().defaultBlockState();
-    private final TagKey<Block> reverbaratoryWallTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_WALL.tag;
-    private final TagKey<Block> reverbaratoryGlassTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_GLASS.tag;
     
-    public BlockPos getMasterPosition() {
-        return this.getBlockPos();
-    }
     public Direction getMasterDirection() {
         return this.getBlockState().getValue(ReverbaratoryBlock.FACING);
     }
     
-    BlockPos getOutputPos() {
-        return getMasterPosition().relative(getMasterDirection(), 3).below();
-    }
-    BlockPos getCarbonDioxideOutputPos() {
-        return getMasterPosition().relative(getMasterDirection(), 3).above();
-    }
-    BlockPos getInputPos() {
-        return getMasterPosition().relative(getMasterDirection(), 1).above();
-    }
     public ReverbaratoryBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.timer = -1;
         this.inputInventory = (new SmartInventory(1, this)).forbidInsertion().forbidExtraction().withMaxStackSize(64);
         this.fuelEfficiency = 1000.0F;
         this.speedModifier = 1.0F;
+        TagKey<Block> reverbaratoryWallTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_WALL.tag;
+        TagKey<Block> reverbaratoryGlassTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_GLASS.tag;
         this.multiblockStructure = MultiblockStructure.cuboidBuilder(this)
                 .directional(getMasterDirection())
-                .withTagAt(new PositionRange(zero(), generateSequence(-1, 1, 1), generateSequence(-1, 1, 1)), reverbaratoryWallTag)
+                .withBlockAt(new PositionRange(zero(), generateSequence(-1, 1, 1), generateSequence(-1, 1, 1)), mainWall)
+                .withTagAt(new PositionRange(generateSequence(1, 3, 1), List.of(0), List.of(1)), reverbaratoryGlassTag)
+                .withTagAt(new PositionRange(generateSequence(1, 3, 1), List.of(0), List.of(-1)), reverbaratoryGlassTag)
+                .withBlockAt(new PositionRange(generateSequence(1, 2, 1), List.of(-1), generateSequence(-1, 1, 1)), mainWall)
+                .withFluidOutputAt(3, -1, 0, "reverbaratory.primary_fluid_output")
+                .withFluidOutputAt(4, 1, 0, "reverbaratory.carbon_dioxide_output")
+                .withFluidOutputAt(4, 0, 0, "reverbaratory.slag_output")
                 .build();
     }
     
     protected SmartFluidTank createInventory() {
-        return new SmartFluidTank(4000, this::onFluidStackChanged) {
+        return new SmartFluidTank(1000, this::onFluidStackChanged) {
             public boolean isFluidValid(FluidStack stack) {
                 return stack.getFluid().is(MetallurgicaTags.AllFluidTags.REVERBARATORY_FUELS.tag);
             }
@@ -110,6 +108,9 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     public void destroy() {
         super.destroy();
         ItemHelper.dropContents(level, worldPosition, inputInventory);
+        multiblockStructure.setFluidOutputCapacity(getOutputBlockEntity(), 0);
+        multiblockStructure.setFluidOutputCapacity(getCarbonDioxideOutputBlockEntity(), 0);
+        multiblockStructure.setFluidOutputCapacity(getSlagOutputBlockEntity(), 0);
     }
     
     protected void onFluidStackChanged(FluidStack newFluidStack) {
@@ -128,6 +129,9 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         if (this.level == null) {
             return;
         }
+        multiblockStructure.setFluidOutputCapacity(getOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.reverbaratoryPrimaryOutputCapacity.get());
+        multiblockStructure.setFluidOutputCapacity(getCarbonDioxideOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.genericCarbonDioxideOutputCapacity.get());
+        multiblockStructure.setFluidOutputCapacity(getSlagOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.reverbaratorySlagOutputCapacity.get());
         
         isValid = multiblockStructure.isStructureCorrect();
         if (isValid) {
@@ -138,7 +142,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         this.speedModifier = 1.0F;
         
         
-        if (this.recipe != null && this.timer == -1 && getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount() <= getOutputBlockEntity().tank1.getPrimaryHandler().getCapacity() && getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount() <= getOutputBlockEntity().tank2.getPrimaryHandler().getCapacity() && isValid && !this.tankInventory.isEmpty()) {
+        if (this.recipe != null && this.timer == -1 && getOutputBlockEntity().tankInventory.getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount() <= getOutputBlockEntity().tankInventory.getCapacity() && getSlagOutputBlockEntity().tankInventory.getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount() <= getSlagOutputBlockEntity().tankInventory.getCapacity() && isValid && !this.tankInventory.isEmpty()) {
             this.timer = (int)((float)this.recipe.getProcessingDuration() / this.speedModifier);
             this.inputInventory.getStackInSlot(0).setCount(this.inputInventory.getStackInSlot(0).getCount() - 1);
         }
@@ -154,10 +158,13 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
                 this.sendData();
             }
         }
-        
-        if (isValid && this.timer > 0 && getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(0)).getAmount() <= getOutputBlockEntity().tank1.getPrimaryHandler().getCapacity() && getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + ((FluidStack)this.recipe.getFluidResults().get(1)).getAmount() <= getOutputBlockEntity().tank2.getPrimaryHandler().getCapacity()) {
-            --this.timer;
+        if (isValid && this.timer > 0) {
             createSmokeVolume();
+        }
+        
+        if (isValid && this.timer > 0 && getOutputBlockEntity().tankInventory.getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount() <= getOutputBlockEntity().tankInventory.getCapacity() && getSlagOutputBlockEntity().tankInventory.getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount() <= getSlagOutputBlockEntity().tankInventory.getCapacity()) {
+            --this.timer;
+           
             for (LivingEntity entity : this.getEntitiesToCremate()) {
                 if (level.random.nextDouble() > 0.85) {
                     entity.hurt(getDamageSource(), 0.5F);
@@ -170,6 +177,9 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
                     }
                     level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FIRE_EXTINGUISH, soundSource, 1.0F, 1.0F, false);
                 }
+            }
+            if (level.random.nextFloat() < 0.05) {
+                getCarbonDioxideOutputBlockEntity().tankInventory.setFluid(new FluidStack(TFMGFluids.CARBON_DIOXIDE.get(), getCarbonDioxideOutputBlockEntity().tankInventory.getFluidAmount() + 10));
             }
             int random = level.random.nextInt((int)Math.abs(this.fuelEfficiency) + 1);
             if (random == 69) {
@@ -184,14 +194,10 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         }
     }
     
-    private void refreshCapability() {
-        LazyOptional<IFluidHandler> oldCap = this.fluidCapability;
-        this.fluidCapability = LazyOptional.of(this::handlerForCapability);
-        oldCap.invalidate();
-    }
-    
-    private IFluidHandler handlerForCapability() {
-        return this.tankInventory;
+    public void invalidate() {
+        super.invalidate();
+        this.fluidCapability.invalidate();
+        this.itemCapability.invalidate();
     }
     
     @Nonnull
@@ -203,19 +209,33 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         return cap == ForgeCapabilities.FLUID_HANDLER ? this.fluidCapability.cast() : super.getCapability(cap, side);
     }
     
+    private IFluidHandler handlerForCapability() {
+        return this.tankInventory;
+    }
+    
+    public IFluidTank getTankInventory() {
+        return this.tankInventory;
+    }
+    
+    private void refreshCapability() {
+        LazyOptional<IFluidHandler> oldCap = this.fluidCapability;
+        this.fluidCapability = LazyOptional.of(this::handlerForCapability);
+        oldCap.invalidate();
+    }
+    
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         this.inputInventory.deserializeNBT(compound.getCompound("InputItems"));
+        this.tankInventory.setCapacity(4000);
+        this.tankInventory.readFromNBT(compound.getCompound("TankContent"));
+        timer = compound.getInt("Timer");
     }
     
     public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         compound.put("InputItems", this.inputInventory.serializeNBT());
-    }
-    
-    public void invalidate() {
-        super.invalidate();
-        this.itemCapability.invalidate();
+        compound.put("TankContent", this.tankInventory.writeToNBT(new CompoundTag()));
+        compound.putInt("Timer", timer);
     }
     
     @Override
@@ -228,8 +248,8 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
             return;
         }
         if (!this.level.isClientSide) {
-            getOutputBlockEntity().tank1.getPrimaryHandler().setFluid(new FluidStack(this.recipe.getFluidResults().get(0).getFluid(), getOutputBlockEntity().tank1.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount()));
-            getOutputBlockEntity().tank2.getPrimaryHandler().setFluid(new FluidStack(this.recipe.getFluidResults().get(1).getFluid(), getOutputBlockEntity().tank2.getPrimaryHandler().getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount()));
+            getOutputBlockEntity().tankInventory.setFluid(new FluidStack(this.recipe.getFluidResults().get(0).getFluid(), getOutputBlockEntity().tankInventory.getFluidAmount() + this.recipe.getFluidResults().get(0).getAmount()));
+            getSlagOutputBlockEntity().tankInventory.setFluid(new FluidStack(this.recipe.getFluidResults().get(1).getFluid(), getSlagOutputBlockEntity().tankInventory.getFluidAmount() + this.recipe.getFluidResults().get(1).getAmount()));
         }
     }
     
@@ -237,8 +257,8 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         List<ItemEntity> itemsToPick = this.getItemsToPick();
         Iterator<ItemEntity> var2 = itemsToPick.iterator();
         
-        while(true) {
-            while(var2.hasNext()) {
+        while (true) {
+            while (var2.hasNext()) {
                 ItemEntity itemEntity = var2.next();
                 ItemStack itemStack = itemEntity.getItem();
                 int freeSpace;
@@ -261,7 +281,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     }
     
     public CremationDamageSource getDamageSource() {
-        int messageType = Mth.randomBetweenInclusive(level.random, 1, 4);
+        int messageType = Mth.randomBetweenInclusive(getLevel().random, 1, 4);
         return new CremationDamageSource("reverbaratory_" + messageType, new Vec3(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()));
     }
     
@@ -302,11 +322,11 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         if (!isValid) {
             Lang.translate("goggles.reverbaratory.invalid").style(ChatFormatting.RED).forGoggles(tooltip, 1);
         }   else {
-            Lang.translate("goggles.reverbaratory.stats", new Object[0]).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+            Lang.translate("goggles.reverbaratory.stats").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
             if (this.timer > 0) {
-                Lang.translate("goggles.blast_furnace.status.running", new Object[0]).style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+                Lang.translate("goggles.blast_furnace.status.running").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
             } else {
-                Lang.translate("goggles.blast_furnace.status.off", new Object[0]).style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+                Lang.translate("goggles.blast_furnace.status.off").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
             }
             Lang.translate("goggles.misc.storage_info").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
             Lang.translate("goggles.blast_furnace.item_count", this.inputInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
@@ -318,7 +338,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         if (!resolve.isPresent()) {
             return false;
         } else {
-            IFluidHandler tank = (IFluidHandler)resolve.get();
+            IFluidHandler tank = resolve.get();
             if (tank.getTanks() == 0) {
                 return false;
             } else {
@@ -328,9 +348,8 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
                 for(int i = 0; i < tank.getTanks(); ++i) {
                     FluidStack fluidStack = tank.getFluidInTank(i);
                     if (!fluidStack.isEmpty()) {
-                        Lang.translate("goggles.reverbaratory.fuel_info").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
                         Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                        Lang.builder().add(Lang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.DARK_GREEN)).text(ChatFormatting.GRAY, " / ").add(Lang.number((double)tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+                        Lang.builder().add(Lang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number((double)tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
                         isEmpty = false;
                     }
                 }
@@ -344,27 +363,18 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
                 } else if (!isEmpty) {
                     return true;
                 } else {
-                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number((double)tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
                     return true;
                 }
             }
         }
     }
     
-    int logCounter = 0;
     public void createSmokeVolume() {
         Direction facing = this.getBlockState().getValue(ReverbaratoryBlock.FACING);
         BlockPos firstPos = this.getBlockPos().relative(facing, 1);
         BlockPos middlePos = this.getBlockPos().relative(facing, 2);
         BlockPos endPos = this.getBlockPos().relative(facing, 3);
-        
-        logCounter++;
-        if (logCounter > 200) {
-            Metallurgica.LOGGER.info("FirstPos: {}", firstPos);
-            Metallurgica.LOGGER.info("MiddlePos: {}", middlePos);
-            Metallurgica.LOGGER.info("EndPos: {}", endPos);
-            logCounter = 0;
-        }
         
         ParticleOptions smallSmoke = ParticleTypes.SMOKE;
         ParticleOptions smallFlame = ParticleTypes.FLAME;
@@ -380,239 +390,25 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         ClientUtil.createCustomCubeParticles(endPos, this.level, smallSmoke, smallFlame);
     }
     
-    ReverbaratoryOutputBlockEntity getOutputBlockEntity() {
+    FluidOutputBlockEntity getOutputBlockEntity() {
         if (level == null) {
             return null;
         }
-        return (ReverbaratoryOutputBlockEntity) level.getBlockEntity(getOutputPos());
+        return (FluidOutputBlockEntity) level.getBlockEntity(multiblockStructure.getFluidOutputPosition("reverbaratory.primary_fluid_output"));
     }
     
-    ReverbaratoryCarbonOutputBlockEntity getCarbonDioxideOutputBlockEntity() {
+    FluidOutputBlockEntity getCarbonDioxideOutputBlockEntity() {
         if (level == null) {
             return null;
         }
-        return (ReverbaratoryCarbonOutputBlockEntity) level.getBlockEntity(getCarbonDioxideOutputPos());
+        return (FluidOutputBlockEntity) level.getBlockEntity(multiblockStructure.getFluidOutputPosition("reverbaratory.carbon_dioxide_output"));
     }
-    public class ReverbaratoryChecker {
-        @Getter
-        private final ReverbaratoryBlockEntity blockEntity;
-        
-        public ReverbaratoryChecker(ReverbaratoryBlockEntity blockEntity) {
-            this.blockEntity = blockEntity;
+    
+    FluidOutputBlockEntity getSlagOutputBlockEntity() {
+        if (level == null) {
+            return null;
         }
-        
-        
-        public boolean checkReverbaratory() {
-            return checkSegments();
-        }
-        
-        ReverbaratoryOutputBlockEntity getOutputBlockEntity() {
-            if (level == null) {
-                return null;
-            }
-            return (ReverbaratoryOutputBlockEntity) level.getBlockEntity(getOutputPos());
-        }
-        
-        ReverbaratoryCarbonOutputBlockEntity getCarbonDioxideOutputBlockEntity() {
-            if (level == null) {
-                return null;
-            }
-            return (ReverbaratoryCarbonOutputBlockEntity) level.getBlockEntity(getCarbonDioxideOutputPos());
-        }
-        
-        private final TagKey<Block> reverbaratoryWallTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_WALL.tag;
-        private final TagKey<Block> reverbaratoryGlassTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_GLASS.tag;
-        private final TagKey<Block> reverbaratoryInputTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_INPUT.tag;
-        Direction getFacing() {
-            return blockEntity.getBlockState().getValue(ReverbaratoryBlock.FACING);
-        }
-        BlockPos getMainPos() {
-            return blockEntity.getBlockPos();
-        }
-        BlockPos getRightSidePos(Direction facing, BlockPos pos) {
-            return pos.relative(facing.getClockWise());
-        }
-        BlockPos getRightSidePos(Direction facing) {
-            return getMainPos().relative(facing.getClockWise());
-        }
-        BlockPos getRightSidePos(Direction facing, int distance) {
-            return getMainPos().relative(facing.getClockWise(), distance);
-        }
-        BlockPos getLeftSidePos(Direction facing, BlockPos pos) {
-            return pos.relative(facing.getCounterClockWise());
-        }
-        BlockPos getLeftSidePos(Direction facing) {
-            return getMainPos().relative(facing.getCounterClockWise());
-        }
-        BlockPos getLeftSidePos(Direction facing, int distance) {
-            return getMainPos().relative(facing.getCounterClockWise(), distance);
-        }
-        BlockPos getOutputPos() {
-            return getMainPos().relative(getFacing(), 3).below();
-        }
-        BlockPos getCarbonDioxideOutputPos() {
-            return getMainPos().relative(getFacing(), 3).above();
-        }
-        BlockPos getInputPos() {
-            return getMainPos().relative(getFacing(), 1).above();
-        }
-        
-        public boolean checkForWall(BlockPos pos) {
-            if (level == null) {
-                return false;
-            }
-            return level.getBlockState(pos).is(reverbaratoryWallTag);
-        }
-        public boolean checkForWallOrGlass(BlockPos pos) {
-            if (level == null) {
-                return false;
-            }
-            return level.getBlockState(pos).is(reverbaratoryWallTag) || level.getBlockState(pos).is(reverbaratoryGlassTag);
-        }
-        
-        public boolean checkSegment1() {
-            boolean above = checkForWall(getMainPos().above());
-            boolean below = checkForWall(getMainPos().below());
-            boolean right = checkForWall(getRightSidePos(getFacing()));
-            boolean left = checkForWall(getLeftSidePos(getFacing()));
-            boolean rightAbove = checkForWall(getRightSidePos(getFacing()).above());
-            boolean leftAbove = checkForWall(getLeftSidePos(getFacing()).above());
-            boolean rightBelow = checkForWall(getRightSidePos(getFacing()).below());
-            boolean leftBelow = checkForWall(getLeftSidePos(getFacing()).below());
-            return above && below && right && left && rightAbove && leftAbove && rightBelow && leftBelow;
-        }
-        public boolean checkSegment2() {
-            if (level == null) {
-                return false;
-            }
-            BlockPos segment2Pos = getMainPos().relative(getFacing(), 1);
-            boolean above = level.getBlockState(getInputPos()).is(reverbaratoryInputTag);
-            boolean below = checkForWall(segment2Pos.below());
-            boolean right = checkForWallOrGlass(getRightSidePos(getFacing(), segment2Pos));
-            boolean left = checkForWallOrGlass(getLeftSidePos(getFacing(), segment2Pos));
-            boolean rightAbove = checkForWall(getRightSidePos(getFacing(), segment2Pos).above());
-            boolean leftAbove = checkForWall(getLeftSidePos(getFacing(), segment2Pos).above());
-            boolean rightBelow = checkForWall(getRightSidePos(getFacing(), segment2Pos).below());
-            boolean leftBelow = checkForWall(getLeftSidePos(getFacing(), segment2Pos).below());
-            
-            return above && below && right && left && rightAbove && leftAbove && rightBelow && leftBelow;
-        }
-        
-        public boolean checkSegment3() {
-            BlockPos segment3Pos = getMainPos().relative(getFacing(), 2);
-            boolean above = checkForWall(segment3Pos.above());
-            boolean below = checkForWall(segment3Pos.below());
-            boolean right = checkForWallOrGlass(getRightSidePos(getFacing(), segment3Pos));
-            boolean left = checkForWallOrGlass(getLeftSidePos(getFacing(), segment3Pos));
-            boolean rightAbove = checkForWall(getRightSidePos(getFacing(), segment3Pos).above());
-            boolean leftAbove = checkForWall(getLeftSidePos(getFacing(), segment3Pos).above());
-            boolean rightBelow = checkForWall(getRightSidePos(getFacing(), segment3Pos).below());
-            boolean leftBelow = checkForWall(getLeftSidePos(getFacing(), segment3Pos).below());
-            
-            return above && below && right && left && rightAbove && leftAbove && rightBelow && leftBelow;
-        }
-        
-        public boolean checkSegment4() {
-            if (level == null) {
-                return false;
-            }
-            BlockPos segment4Pos = getMainPos().relative(getFacing(), 3);
-            boolean above = level.getBlockState(segment4Pos.above()).getBlock() instanceof ReverbaratoryCarbonOutputBlock;
-            boolean below = level.getBlockState(segment4Pos.below()).getBlock() instanceof ReverbaratoryOutputBlock;
-            boolean right = checkForWallOrGlass(getRightSidePos(getFacing(), segment4Pos));
-            boolean left = checkForWallOrGlass(getLeftSidePos(getFacing(), segment4Pos));
-            boolean rightAbove = checkForWall(getRightSidePos(getFacing(), segment4Pos).above());
-            boolean leftAbove = checkForWall(getLeftSidePos(getFacing(), segment4Pos).above());
-            boolean rightBelow = checkForWall(getRightSidePos(getFacing(), segment4Pos).below());
-            boolean leftBelow = checkForWall(getLeftSidePos(getFacing(), segment4Pos).below());
-            
-            return above && below && right && left && rightAbove && leftAbove && rightBelow && leftBelow;
-        }
-        
-        public boolean checkSegment5() {
-            BlockPos segment5Pos = getMainPos().relative(getFacing(), 4);
-            boolean middle = checkForWall(segment5Pos);
-            boolean above = checkForWall(segment5Pos.above());
-            boolean below = checkForWall(segment5Pos.below());
-            boolean right = checkForWall(getRightSidePos(getFacing(), segment5Pos));
-            boolean left = checkForWall(getLeftSidePos(getFacing(), segment5Pos));
-            boolean rightAbove = checkForWall(getRightSidePos(getFacing(), segment5Pos).above());
-            boolean leftAbove = checkForWall(getLeftSidePos(getFacing(), segment5Pos).above());
-            boolean rightBelow = checkForWall(getRightSidePos(getFacing(), segment5Pos).below());
-            boolean leftBelow = checkForWall(getLeftSidePos(getFacing(), segment5Pos).below());
-            
-            return middle && above && below && right && left && rightAbove && leftAbove && rightBelow && leftBelow;
-        }
-        
-        public boolean checkSegments() {
-            if (level == null) {
-                Metallurgica.LOGGER.error("Level is null, cannot check segments");
-                return false;
-            }
-            return checkSegment1() && checkSegment2() && checkSegment3() && checkSegment4() && checkSegment5();
-        }
-        
-        public void createMissingSegmentParticles() {
-            ParticleOptions smokeParticle = ParticleTypes.SMOKE;
-            if (level == null) {
-                Metallurgica.LOGGER.error("Level is null, cannot create particles");
-                return;
-            }
-            if (!checkSegment1()) {
-                createCustomCubeParticles(getMainPos().above(), level, smokeParticle);
-                createCustomCubeParticles(getMainPos().below(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing()), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing()), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing()).above(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing()).above(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing()).below(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing()).below(), level, smokeParticle);
-            }
-            if (!checkSegment2()) {
-                BlockPos segment2Pos = getMainPos().relative(getFacing(), 1);
-                createCustomCubeParticles(segment2Pos.above(), level, smokeParticle);
-                createCustomCubeParticles(segment2Pos.below(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment2Pos), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment2Pos), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment2Pos).above(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment2Pos).above(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment2Pos).below(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment2Pos).below(), level, smokeParticle);
-            }
-            if (!checkSegment3()) {
-                BlockPos segment3Pos = getMainPos().relative(getFacing(), 2);
-                createCustomCubeParticles(segment3Pos.above(), level, smokeParticle);
-                createCustomCubeParticles(segment3Pos.below(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment3Pos), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment3Pos), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment3Pos).above(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment3Pos).above(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment3Pos).below(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment3Pos).below(), level, smokeParticle);
-            }
-            if (!checkSegment4()) {
-                BlockPos segment4Pos = getMainPos().relative(getFacing(), 3);
-                createCustomCubeParticles(segment4Pos.above(), level, smokeParticle);
-                createCustomCubeParticles(segment4Pos.below(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment4Pos), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment4Pos), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment4Pos).above(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment4Pos).above(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment4Pos).below(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment4Pos).below(), level, smokeParticle);
-            }
-            if (!checkSegment5()) {
-                BlockPos segment5Pos = getMainPos().relative(getFacing(), 4);
-                createCustomCubeParticles(segment5Pos.above(), level, smokeParticle);
-                createCustomCubeParticles(segment5Pos.below(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment5Pos), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment5Pos), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment5Pos).above(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment5Pos).above(), level, smokeParticle);
-                createCustomCubeParticles(getRightSidePos(getFacing(), segment5Pos).below(), level, smokeParticle);
-                createCustomCubeParticles(getLeftSidePos(getFacing(), segment5Pos).below(), level, smokeParticle);
-            }
-        }
+        return (FluidOutputBlockEntity) level.getBlockEntity(multiblockStructure.getFluidOutputPosition("reverbaratory.slag_output"));
     }
     
 }

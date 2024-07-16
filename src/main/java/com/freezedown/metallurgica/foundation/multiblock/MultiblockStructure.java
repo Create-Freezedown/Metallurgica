@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.multiblock;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.mojang.datafixers.util.Pair;
+import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -23,11 +23,21 @@ public class MultiblockStructure {
     private final BlockEntity master;
     private final ArrayList<Map<BlockPos, BlockState>> structure;
     private final ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure;
+    private final ArrayList<Map<BlockPos, String>> fluidOutputs = new ArrayList<>();
     
     public MultiblockStructure(BlockEntity master, ArrayList<Map<BlockPos, BlockState>> structure, ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure) {
         this.master = master;
         this.structure = structure;
         this.tagStructure = tagStructure;
+    }
+    
+    public MultiblockStructure addFluidOutput(BlockPos pos, String identifier) {
+        fluidOutputs.add(Map.of(pos, identifier));
+        return this;
+    }
+    public MultiblockStructure addFluidOutputs(List<Map<BlockPos, String>> fluidOutputs) {
+        this.fluidOutputs.addAll(fluidOutputs);
+        return this;
     }
     
     public static CuboidBuilder cuboidBuilder(BlockEntity master) {
@@ -40,6 +50,7 @@ public class MultiblockStructure {
         private boolean isDirectional = false;
         private final ArrayList<Map<BlockPos, BlockState>> structure = new ArrayList<>();
         private final ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure = new ArrayList<>();
+        private final ArrayList<Map<BlockPos, String>> fluidOutputs = new ArrayList<>();
         private int width = 0;
         private int height = 0;
         private int depth = 0;
@@ -93,6 +104,12 @@ public class MultiblockStructure {
             return getSize().getThird();
         }
         
+        public CuboidBuilder withFluidOutputAt(int x, int y, int z, String identifier) {
+            BlockPos pos = translateToMaster(x, y, z);
+            fluidOutputs.add(Map.of(pos, identifier));
+            return withBlockAt(x, y, z, MetallurgicaBlocks.fluidOutput.get().defaultBlockState());
+        }
+        
         public CuboidBuilder withBlockAt(int x, int y, int z, BlockState block) {
             BlockPos pos = translateToMaster(x, y, z);
             structure.add(Map.of(pos, block));
@@ -130,7 +147,7 @@ public class MultiblockStructure {
         }
         
         public MultiblockStructure build() {
-            return new MultiblockStructure(getMaster(), structure, tagStructure);
+            return new MultiblockStructure(getMaster(), structure, tagStructure).addFluidOutputs(fluidOutputs);
         }
     }
     
@@ -144,6 +161,21 @@ public class MultiblockStructure {
     
     public BlockEntity getMaster() {
         return master;
+    }
+    
+    public ArrayList<Map<BlockPos, String>> getFluidOutputs() {
+        return fluidOutputs;
+    }
+    
+    public BlockPos getFluidOutputPosition(String identifier) {
+        for (Map<BlockPos, String> map : fluidOutputs) {
+            for (BlockPos pos : map.keySet()) {
+                if (map.get(pos).equals(identifier)) {
+                    return pos;
+                }
+            }
+        }
+        return null;
     }
     
     public BlockPos getMasterPosition() {
@@ -190,6 +222,7 @@ public class MultiblockStructure {
             for (BlockPos pos : map.keySet()) {
                 if (!isBlockCorrect(pos)) {
                     createCustomCubeParticles(pos, master.getLevel(), smokeParticle);
+                    Metallurgica.LOGGER.debug("Invalid block at {} in multiblock structure. must be {}", pos, map.get(pos));
                 }
             }
         }
@@ -197,6 +230,7 @@ public class MultiblockStructure {
             for (BlockPos pos : tagMap.keySet()) {
                 if (!isTagCorrect(pos)) {
                     createCustomCubeParticles(pos, master.getLevel(), smokeParticle);
+                    Metallurgica.LOGGER.debug("Invalid tag at {} in multiblock structure. must be {}", pos, tagMap.get(pos));
                 }
             }
         }
@@ -219,5 +253,11 @@ public class MultiblockStructure {
             }
         }
         return validBlocks >= getStructure().size() + getTagStructure().size() - 1;
+    }
+    
+    public void setFluidOutputCapacity(FluidOutputBlockEntity fluidOutput, int value) {
+        if (fluidOutput == null) return;
+        if (fluidOutput.tankInventory.getCapacity() == value) return;
+        fluidOutput.tankInventory.setCapacity(value);
     }
 }

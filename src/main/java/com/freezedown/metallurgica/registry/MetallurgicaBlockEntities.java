@@ -13,13 +13,12 @@ import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBloc
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerInstance;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlockEntity;
-import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryCarbonOutputBlockEntity;
-import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryOutputBlockEntity;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorInstance;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
+import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
@@ -86,14 +85,9 @@ public class MetallurgicaBlockEntities {
             .validBlocks(MetallurgicaBlocks.reverbaratory)
             .register();
     
-    public static final BlockEntityEntry<ReverbaratoryOutputBlockEntity> reverbaratoryOutput = registrate
-            .blockEntity("reverbaratory_output", ReverbaratoryOutputBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.reverbaratoryOutput)
-            .register();
-    
-    public static final BlockEntityEntry<ReverbaratoryCarbonOutputBlockEntity> reverbaratoryCarbonOutput = registrate
-            .blockEntity("reverbaratory_carbon_output", ReverbaratoryCarbonOutputBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.reverbaratoryCarbonOutput)
+    public static final BlockEntityEntry<FluidOutputBlockEntity> fluidOutput = registrate
+            .blockEntity("fluid_output", FluidOutputBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.fluidOutput)
             .register();
     
     

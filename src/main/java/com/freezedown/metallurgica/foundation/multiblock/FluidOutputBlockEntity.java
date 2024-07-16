@@ -1,46 +1,44 @@
-package com.freezedown.metallurgica.content.machines.reverbaratory;
+package com.freezedown.metallurgica.foundation.multiblock;
 
-import com.drmangotea.createindustry.registry.TFMGFluids;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
-import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class ReverbaratoryCarbonOutputBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
-    public SmartFluidTankBehaviour tank;
-    private boolean contentsChanged = true;
-    protected LazyOptional<IFluidHandler> fluidCapability;
+public class FluidOutputBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+    protected LazyOptional<IFluidHandler> fluidCapability = LazyOptional.of(() -> {
+        return this.tankInventory;
+    });
+    public FluidTank tankInventory = this.createInventory();
     
-    public ReverbaratoryCarbonOutputBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public FluidOutputBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.tank.getPrimaryHandler().setCapacity(8000);
+        this.refreshCapability();
     }
     
     protected SmartFluidTank createInventory() {
-        return new SmartFluidTank(1000, this::onFluidStackChanged) {
-            public boolean isFluidValid(FluidStack stack) {
-                return stack.getFluid() == TFMGFluids.CARBON_DIOXIDE.get();
-            }
-        };
+        return new SmartFluidTank(1000, this::onFluidStackChanged);
     }
     
     protected void onFluidStackChanged(FluidStack newFluidStack) {
@@ -50,14 +48,6 @@ public class ReverbaratoryCarbonOutputBlockEntity extends SmartBlockEntity imple
     
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        this.tank = (new SmartFluidTankBehaviour(SmartFluidTankBehaviour.OUTPUT, this, 1, 1000, true)).whenFluidUpdates(() -> {
-            this.contentsChanged = true;
-        });
-        behaviours.add(this.tank);
-        this.fluidCapability = LazyOptional.of(() -> {
-            LazyOptional<? extends IFluidHandler> inputCap = this.tank.getCapability();
-            return new CombinedTankWrapper(inputCap.orElse(null));
-        });
     }
     
     public void invalidate() {
@@ -66,16 +56,47 @@ public class ReverbaratoryCarbonOutputBlockEntity extends SmartBlockEntity imple
     }
     
     @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-        return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? this.fluidCapability.cast() : super.getCapability(cap, side);
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if (!this.fluidCapability.isPresent()) {
+            this.refreshCapability();
+        }
+        
+        return cap == ForgeCapabilities.FLUID_HANDLER ? this.fluidCapability.cast() : super.getCapability(cap, side);
+    }
+    
+    private void refreshCapability() {
+        LazyOptional<IFluidHandler> oldCap = this.fluidCapability;
+        this.fluidCapability = LazyOptional.of(() -> {
+            return this.handlerForCapability();
+        });
+        oldCap.invalidate();
+    }
+    
+    private IFluidHandler handlerForCapability() {
+        return this.tankInventory;
+    }
+    
+    public IFluidTank getTankInventory() {
+        return this.tankInventory;
     }
     
     public void notifyUpdate() {
         super.notifyUpdate();
     }
     
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        super.read(compound, clientPacket);
+        this.tankInventory.setCapacity(0);
+        this.tankInventory.readFromNBT(compound.getCompound("TankContent"));
+    }
+    
+    public void write(CompoundTag compound, boolean clientPacket) {
+        compound.put("TankContent", this.tankInventory.writeToNBT(new CompoundTag()));
+        super.write(compound, clientPacket);
+    }
+    
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        LazyOptional<IFluidHandler> handler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+        LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
         Optional<IFluidHandler> resolve = handler.resolve();
         if (!resolve.isPresent()) {
             return false;

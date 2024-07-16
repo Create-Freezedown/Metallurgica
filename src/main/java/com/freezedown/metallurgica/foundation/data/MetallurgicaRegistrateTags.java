@@ -36,7 +36,8 @@ public class MetallurgicaRegistrateTags {
                         AllPaletteBlocks.TILED_GLASS.get(),
                         AllPaletteBlocks.HORIZONTAL_FRAMED_GLASS.get(),
                         AllPaletteBlocks.VERTICAL_FRAMED_GLASS.get()
-                );
+                )
+                .addTag(MetallurgicaTags.AllBlockTags.REVERBARATORY_WALL.tag);
         prov.tag(MetallurgicaTags.AllBlockTags.REVERBARATORY_WALL.tag)
                 .add(
                         MetallurgicaBlocks.carbonBrick.get(),
