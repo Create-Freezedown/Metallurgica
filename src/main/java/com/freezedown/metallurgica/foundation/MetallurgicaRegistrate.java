@@ -56,6 +56,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
@@ -71,6 +72,21 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
      */
     protected MetallurgicaRegistrate(String modid) {
         super(modid);
+    }
+
+    public static String autoLang(String id) {
+        StringBuilder builder = new StringBuilder();
+        boolean b = true;
+        for (char c: id.toCharArray()) {
+            if(c == '_') {
+                builder.append(' ');
+                b = true;
+            } else {
+                builder.append(b ? String.valueOf(c).toUpperCase() : c);
+                b = false;
+            }
+        }
+        return builder.toString();
     }
     
     public static MetallurgicaRegistrate create(String modid) {
@@ -145,6 +161,22 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return item(name, p -> new MetallurgicaItem(p).showElementComposition(), p->p, tags);
     }
 
+    public ItemEntry<MetallurgicaItem> raw(String name) {
+        return this.item(name, MetallurgicaItem::new)
+                .tag(AllTags.forgeItemTag("raw_materials/" + name))
+                .tag(AllTags.forgeItemTag("raw_materials"))
+                .lang(autoLang(name))
+                .register();
+    }
+
+    public ItemEntry<Item> rubble(String name) {
+        return this.item(name, Item::new)
+                .tag(AllTags.forgeItemTag("material_rubble/" + name))
+                .tag(AllTags.forgeItemTag("material_rubble"))
+                .lang(autoLang(name))
+                .register();
+    }
+
     public <T extends BlockEntity> BlockEntityEntry<T> blockEntity(
             String name,
             BlockEntityBuilder.BlockEntityFactory<T> factory,
@@ -185,6 +217,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                         .withPool(RegistrateBlockLootTables.applyExplosionCondition(mineral.get(), LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(2.0f, 5.0f))
                                 .add(LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
+                .lang(autoLang(name + "_deposit"))
                 .register();
     }
 
@@ -201,6 +234,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                                         RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1)))
                                                 .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
                 .tag(tag)
+                .lang(autoLang(name + "_rich_stone"))
                 .register();
     }
 

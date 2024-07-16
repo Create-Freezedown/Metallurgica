@@ -30,7 +30,7 @@ public class MaterialEntry {
     private final ItemEntry<Item> rubble;
 
     public MaterialEntry(MetallurgicaRegistrate reg, String pName) {
-        raw = reg.metallurgicaItem(pName,  "raw_materials/" + pName, "raw_materials");
+        raw = reg.raw(pName);
         rubble = reg.simpleItem(pName + "_rubble", "material_rubble/" + pName, "material_rubble");
         deposit = reg.depositBlock(pName + "_deposit", raw);
         ResourceLocation id = new ResourceLocation(MOD.id, "deposit_replaceable/" + pName);

@@ -59,6 +59,13 @@ public class Metallurgica
             return new ItemStack(MetallurgicaBlocks.drillExpansion.get());
         }
     };
+
+    public static final CreativeModeTab materialItemGroup = new CreativeModeTab(ID + "_materials") {
+    @Override
+    public @NotNull ItemStack makeIcon() {
+        return new ItemStack(MetallurgicaMaterials.BAUXITE.materialEntry.depositBlock().get());
+    }
+};
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);
     public static final RegistryObject<Codec<? extends OreModifier>> oreGen_CODEC = BIOME_MODIFIERS.register("generation_ores", () -> Codec.unit(OreModifier.INSTANCE));
     public Metallurgica()

@@ -21,9 +21,6 @@ import static com.freezedown.metallurgica.registry.MetallurgicaMaterials.*;
 public class MetallurgicaOreFeatureConfigEntries {
     public static final RuleTest BAUXITE_CLUSTER_REPLACEABLE = new TagMatchTest(MetallurgicaTags.AllBlockTags.BAUXITE_ORE_REPLACEABLE.tag);
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    
     public static final RuleTest BUDDING_AMETHYST_REPLACEABLE = new BlockMatchTest(Blocks.AMETHYST_BLOCK);
     
     public static final RuleTest GRAVEL_REPLACEABLE = new BlockMatchTest(Blocks.GRAVEL);
