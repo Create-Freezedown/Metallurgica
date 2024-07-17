@@ -12,7 +12,6 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlock;
@@ -47,25 +46,22 @@ public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
 
     //MACHINES
-    public static final BlockEntry<ElectrolyzerBlock> electrolyzer = registrate.block("electrolyzer",ElectrolyzerBlock::new)
-
     public static final BlockEntry<ReverbaratoryBlock> reverbaratory = registrate.block("reverbaratory", ReverbaratoryBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
             .blockstate(BlockStateGen.horizontalBlockProvider(false))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
-            .item()
-            .build()
+            .simpleItem()
             .register();
+
     public static final BlockEntry<FluidOutputBlock> fluidOutput = registrate.block("fluid_output", FluidOutputBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/reverbaratory/input_output"))))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
-            .item()
-            .build()
+            .simpleItem()
             .register();
 
     public static final BlockEntry<ElectrolyzerBlock> electrolyzer = registrate.block("electrolyzer", ElectrolyzerBlock::new)
@@ -89,15 +85,16 @@ public class MetallurgicaBlocks {
             .item()
             .transform(customItemModel())
             .register();
+
     public static final BlockEntry<DrillTowerDeployerBlock> drillTowerDeployer = registrate.block("drill_tower_deployer", DrillTowerDeployerBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/drill_tower_deployer/block"))))
-            .item()
-            .build()
+            .simpleItem()
             .register();
+
     public static final BlockEntry<DrillTowerBlock> drillTower = registrate.block("drill_tower", DrillTowerBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
@@ -107,6 +104,7 @@ public class MetallurgicaBlocks {
             .item()
             .transform(customItemModel())
             .register();
+
     public static final BlockEntry<Block> drillExpansion = registrate.block("drill_expansion", Block::new)
             .initialProperties(SharedProperties::copperMetal)
             .properties(p -> p.color(MaterialColor.COLOR_YELLOW))
@@ -116,16 +114,14 @@ public class MetallurgicaBlocks {
             .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, MetallurgicaSpriteShifts.drillExpansion)))
             .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
                     .cubeColumn(c.getName(), p.modLoc("block/" + c.getName()), p.modLoc("block/" + c.getName() + "_end"))))
-            .item()
-            .build()
+            .simpleItem()
             .lang("Drill Expansion")
             .register();
 
     //SAND
     public static final BlockEntry<SandBlock> magnetiteSand = registrate.block("magnetite_sand", p -> new SandBlock(0x8D8388, p))
             .loot(BlockLoot::dropSelf)
-            .item()
-            .build()
+            .simpleItem()
             .register();
     
     public static final BlockEntry<SandBlock> magnetiteTracedSand = registrate.block("magnetite_traced_sand", p -> new SandBlock(0x8D8388, p))
@@ -156,45 +152,6 @@ public class MetallurgicaBlocks {
 
     public static final BlockEntry<Block>
             carbonBrick =              registrate.simpleMachineBlock("carbon_brick", "Carbon Brick", Block::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.get()));
-    public static final BlockEntry<TuyereBlock> tuyere = registrate.block("tuyere", TuyereBlock::new)
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.COPPER))
-            .transform(pickaxeOnly())
-            .blockstate((c, p) -> p.simpleBlock(c.get()))
-            .addLayer(() -> RenderType::cutoutMipped)
-            .simpleItem()
-            .lang("Tuyere")
-            .register();
-    public static final BlockEntry<HearthBlock> hearth = registrate.block("hearth", HearthBlock::new)
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.COPPER))
-            .transform(pickaxeOnly())
-            .blockstate((c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/hearth"))))
-            .addLayer(() -> RenderType::cutoutMipped)
-            .simpleItem()
-            .lang("Hearth")
-            .register();
-    public static final BlockEntry<Block> carbonBrick = registrate.block("carbon_brick", Block::new)
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.DEEPSLATE_BRICKS))
-            .transform(pickaxeOnly())
-            .blockstate((c, p) -> p.simpleBlock(c.get()))
-            .addLayer(() -> RenderType::cutoutMipped)
-            .simpleItem()
-            .lang("Carbon Brick")
-            .register();
-
-    public static final BlockEntry<CastingTable> castingTable = registrate.block("casting_table", CastingTable::new)
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.DEEPSLATE_BRICKS))
-            .transform(pickaxeOnly())
-            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/casting_table"))))
-            .addLayer(() -> RenderType::cutoutMipped)
-            .simpleItem()
-            .register();
-
-
-    public static void register() {
 
     public static final BlockEntry<CastingTable>
             castingTable =             registrate.simpleMachineBlock("casting_table", null, CastingTable::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.getEntry(), p.models().getExistingFile(p.modLoc("block/casting_table"))));

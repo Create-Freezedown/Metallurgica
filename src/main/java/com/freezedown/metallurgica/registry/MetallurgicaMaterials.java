@@ -10,6 +10,7 @@ public enum MetallurgicaMaterials {
     NATIVE_GOLD(12, 4, -12, 56, 5, -12, 56),
     MAGNETITE(23, 4, -3, 128, 5, -3, 128),
     BAUXITE(19, 9, -30, 70, 10, -30, 70),
+    MALACHITE(),
     HEMATITE(),
     CHALKOPYRITE(),
     GALENA(),

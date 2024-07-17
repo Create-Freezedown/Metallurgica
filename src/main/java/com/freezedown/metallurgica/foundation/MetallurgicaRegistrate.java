@@ -130,8 +130,9 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return acid(name, color, still, flow, acidity);
     }
 
-    public static FluidEntry<MoltenMetal.Flowing> createMoltenMetal(String name, String langName) {
-        return Metallurgica.registrate.moltenMetal("molten_" + name).lang("Molten " + langName).source(MoltenMetal.Source::new).bucket().build().register();
+    public static FluidEntry<MoltenMetal.Flowing> createMoltenMetal(String name) {
+        String id = "molten_" + name;
+        return Metallurgica.registrate.moltenMetal(id).lang(autoLang(id)).source(MoltenMetal.Source::new).bucket().build().register();
     }
 
     public FluidEntry<Acid> acid(String name, int color, float acidity, String lang) {

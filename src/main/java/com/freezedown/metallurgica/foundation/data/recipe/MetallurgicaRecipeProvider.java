@@ -6,6 +6,7 @@ import com.drmangotea.createindustry.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
+import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -91,7 +92,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
             return MetallurgicaItems.copperRubble.get();
         }
         public static ItemLike malachite() {
-            return MetallurgicaItems.malachite.get();
+            return MetallurgicaMaterials.MALACHITE.materialEntry.raw().get();
         }
         public static ItemLike copperOxide() {
             return MetallurgicaItems.copperOxide.get();
