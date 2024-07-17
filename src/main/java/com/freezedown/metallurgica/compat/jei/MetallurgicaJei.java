@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.compat.jei;
 
 import com.drmangotea.createindustry.CreateTFMG;
-import com.drmangotea.createindustry.recipes.jei.TFMGJei;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.category.drill.DrillingCategory;
 import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
@@ -9,7 +8,6 @@ import com.freezedown.metallurgica.compat.jei.category.electrolyzer.Electrolysis
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
 import com.freezedown.metallurgica.registry.*;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.tterrag.registrate.util.entry.FluidEntry;
@@ -106,7 +104,7 @@ public class MetallurgicaJei implements IModPlugin {
                         .addRecipes(() -> DrillingCategory.RECIPES)
                         .catalyst(MetallurgicaBlocks.drillActivator::get)
                         .catalyst(MetallurgicaBlocks.drillExpansion::get)
-                        .doubleItemIcon(MetallurgicaMaterials.BAUXITE.materialEntry.depositBlock().get(), MetallurgicaItems.loosenedBauxite.get())
+                        .doubleItemIcon(MetallurgicaMaterials.BAUXITE.MATERIAL.depositBlock().get(), MetallurgicaItems.loosenedBauxite.get())
                         .emptyBackground(177, 123)
                         .build("deposit_drilling", DrillingCategory::new)
         );

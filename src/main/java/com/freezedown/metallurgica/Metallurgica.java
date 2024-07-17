@@ -4,7 +4,6 @@ import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEnde
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
-import com.freezedown.metallurgica.foundation.mixin.ChemicalInfoTooltipMixin;
 import com.freezedown.metallurgica.foundation.worldgen.MBuiltinRegistration;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
@@ -64,7 +63,7 @@ public class Metallurgica
     public static final CreativeModeTab materialItemGroup = new CreativeModeTab(ID + "_materials") {
     @Override
     public @NotNull ItemStack makeIcon() {
-        return new ItemStack(MetallurgicaMaterials.BAUXITE.materialEntry.depositBlock().get());
+        return new ItemStack(MetallurgicaMaterials.BAUXITE.MATERIAL.depositBlock().get());
     }
 };
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);

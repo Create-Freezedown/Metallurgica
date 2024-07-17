@@ -6,45 +6,84 @@ import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
 
 public enum MetallurgicaMaterials {
+    //COPPER
     NATIVE_COPPER(26, 7, -3, 97, 8, -3, 97),
-    NATIVE_GOLD(12, 4, -12, 56, 5, -12, 56),
-    MAGNETITE(23, 4, -3, 128, 5, -3, 128),
-    BAUXITE(19, 9, -30, 70, 10, -30, 70),
-    MALACHITE(),
-    HEMATITE(),
+    MALACHITE(true),
     CHALKOPYRITE(),
-    GALENA(),
-    PYROMORPHITE(),
-    NATIVE_LEAD(),
+
+    //GOLD
+    NATIVE_GOLD(12, 4, -12, 56, 5, -12, 56),
+
+    //IRON
+    MAGNETITE(23, 4, -3, 128, 5, -3, 128, true),
+    HEMATITE(),
     PENTLANDITE(),
-    ARGENTITE(),
-    CHLORARGYRITE(),
-    SPHALRITE(),
-    CALAMINE(),
+
+    //LITHIUM/ALUMINUM
+    BAUXITE(19, 9, -30, 70, 10, -30, 70),
     PETALITE(),
     SPODUMENE(),
-    DOLOMITE(),
-    MEGNESITE(),
+
+    //LEAD
+    GALENA(),
+    NATIVE_LEAD(),
+    PYROMORPHITE(),
+
+    //ZINC
+    SPHALRITE(),
+
+    //TUNGSTEN
     WOLFRAMITE(),
+
+    //TITANIUM
     RUTILE(),
+
+    //URANIUM/THORIUM
     URANINITE(),
+    MONAZITE(),
+
+    //PLATINUM
     SPERRYLITE(),
-    MONAZITE()
+
+    //Silver
+    ARGENTITE(),
+    CHLORARGYRITE(),
+
+    //LOTION (????)
+    CALAMINE(),
+
+    //LIMESTONE
+    DOLOMITE(),
+
+    //MAGNESIUM
+    MEGNESITE()
     ;
 
     public MOreFeatureConfigEntry DEPOSIT;
     public MOreFeatureConfigEntry CLUSTER;
-    public final MaterialEntry materialEntry;
+    public final MaterialEntry MATERIAL;
 
     MetallurgicaMaterials() {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
-        materialEntry = registrate.material(this.name().toLowerCase());
+        MATERIAL = registrate.material(this.name().toLowerCase(), false);
+    }
+
+    MetallurgicaMaterials(boolean richb) {
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MATERIAL = registrate.material(this.name().toLowerCase(), richb);
     }
 
     MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight) {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
-        materialEntry = registrate.material(this.name().toLowerCase());
-        DEPOSIT = materialEntry.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
-        CLUSTER = materialEntry.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
+        MATERIAL = registrate.material(this.name().toLowerCase(), false);
+        DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
+        CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
+    }
+
+    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb) {
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MATERIAL = registrate.material(this.name().toLowerCase(), richb);
+        DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
+        CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
     }
 }

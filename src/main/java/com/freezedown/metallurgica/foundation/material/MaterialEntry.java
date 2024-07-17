@@ -17,6 +17,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
+
 import static com.freezedown.metallurgica.registry.MetallurgicaTags.NameSpace.MOD;
 import static com.freezedown.metallurgica.registry.MetallurgicaTags.optionalTag;
 import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.create;
@@ -28,8 +30,10 @@ public class MaterialEntry {
     private final String name;
     private final ItemEntry<MetallurgicaItem> raw;
     private final ItemEntry<Item> rubble;
+    @Nullable
+    private final ItemEntry<MetallurgicaItem> rich;
 
-    public MaterialEntry(MetallurgicaRegistrate reg, String pName) {
+    public MaterialEntry(MetallurgicaRegistrate reg, String pName, boolean richb) {
         raw = reg.raw(pName);
         rubble = reg.simpleItem(pName + "_rubble", "material_rubble/" + pName, "material_rubble");
         deposit = reg.depositBlock(pName + "_deposit", raw);
@@ -37,6 +41,7 @@ public class MaterialEntry {
         tag = MOD.optionalDefault ? optionalTag(ForgeRegistries.BLOCKS, id) : BlockTags.create(id);
         stone = reg.mineralBlock(pName, tag, raw);
         name = pName;
+        rich = richb ? reg.metallurgicaItem("rich_magnetite", "enriched_materials/" + pName, "enriched_materials") : null;
     }
 
     public BlockEntry<MineralDepositBlock> depositBlock() { return deposit; }
@@ -47,6 +52,10 @@ public class MaterialEntry {
 
     public ItemEntry<MetallurgicaItem> raw() {
         return raw;
+    }
+
+    public ItemEntry<MetallurgicaItem> rich() {
+        return rich;
     }
 
     public ItemEntry<Item> rubble() {
