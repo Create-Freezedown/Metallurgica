@@ -7,7 +7,6 @@ import com.freezedown.metallurgica.content.fluids.types.ReactiveGas;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid.*;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
-import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.tterrag.registrate.util.entry.FluidEntry;
@@ -62,9 +61,9 @@ public class MetallurgicaFluids {
                     .adjacentPathType(null)
     )).register();
     
-    public static final FluidEntry<MoltenMetal.Flowing> moltenIron = MetallurgicaRegistrate.createMoltenMetal("iron");
+    public static final FluidEntry<MoltenMetal.Flowing> moltenIron = registrate.moltenMetal("iron");
 
-    public static final FluidEntry<MoltenMetal.Flowing> moltenCopper = MetallurgicaRegistrate.createMoltenMetal("copper");
+    public static final FluidEntry<MoltenMetal.Flowing> moltenCopper = registrate.moltenMetal("copper");
 
     public static Collection<RegistryEntry<Fluid>> ALL = registrate.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
 

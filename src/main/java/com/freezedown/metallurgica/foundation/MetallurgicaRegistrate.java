@@ -7,7 +7,6 @@ import com.freezedown.metallurgica.content.fluids.types.ReactiveGas;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
@@ -56,10 +55,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.function.BiFunction;
-import java.util.stream.Stream;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -93,13 +89,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return new MetallurgicaRegistrate(modid);
     }
     
-    public FluidBuilder<MoltenMetal.Flowing, CreateRegistrate> moltenMetal(String name) {
-        ResourceLocation modelParent = new ResourceLocation("item/generated");
-        ResourceLocation itemTexture = Metallurgica.asResource("item/molten_metal_bucket");
-        ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
-        ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
-        return fluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, MoltenMetal.Flowing::new).source(MoltenMetal.Source::new).bucket().model((ctx, prov) -> prov.singleTexture(ctx.getName(), modelParent, itemTexture)).build();
-    }
+
     
     public FluidBuilder<FlowingGas.Flowing, CreateRegistrate> gas(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
@@ -130,9 +120,20 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return acid(name, color, still, flow, acidity);
     }
 
-    public static FluidEntry<MoltenMetal.Flowing> createMoltenMetal(String name) {
+    public FluidEntry<MoltenMetal.Flowing> moltenMetal(String name) {
         String id = "molten_" + name;
-        return Metallurgica.registrate.moltenMetal(id).lang(autoLang(id)).source(MoltenMetal.Source::new).bucket().build().register();
+        ResourceLocation modelParent = new ResourceLocation("item/generated");
+        ResourceLocation itemTexture = Metallurgica.asResource("item/molten_metal_bucket");
+        ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
+        ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
+        return fluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, MoltenMetal.Flowing::new)
+                .source(MoltenMetal.Source::new)
+                .bucket()
+                .model((ctx, prov) -> prov.singleTexture(ctx.getName(), modelParent, itemTexture))
+                .build()
+                .lang(autoLang(id))
+                .source(MoltenMetal.Source::new)
+                .register();
     }
 
     public FluidEntry<Acid> acid(String name, int color, float acidity, String lang) {
