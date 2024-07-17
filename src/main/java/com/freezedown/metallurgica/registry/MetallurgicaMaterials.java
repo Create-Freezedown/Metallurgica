@@ -29,7 +29,8 @@ public enum MetallurgicaMaterials {
     RUTILE(),
     URANINITE(),
     SPERRYLITE(),
-    MONAZITE()
+    MONAZITE(),
+    CASSITERITE(),
     ;
 
     public MOreFeatureConfigEntry DEPOSIT;

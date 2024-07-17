@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "metallurgica:item/rich_malachite"
+    "layer0": "metallurgica:item/molten_metal_bucket"
   }
 }

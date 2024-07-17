@@ -18,6 +18,8 @@ import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerD
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
+import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
+import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
@@ -30,6 +32,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.SandBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -44,7 +47,21 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+    
+    public static final BlockEntry<ConnectedGlassBlock> blastProofGlass = registrate.block("blast_proof_glass", ConnectedGlassBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties((p) -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.GLASS).strength(1.5f, 8.0f))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::translucent)
+            .transform(pickaxeOnly())
+            .blockstate((c, p) -> p.simpleBlock(c.get()))
+            .onRegister(connectedTextures(() -> new EncasedCTBehaviour(MetallurgicaSpriteShifts.blastProofGlass)))
+            .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, MetallurgicaSpriteShifts.blastProofGlass)))
+            .item()
+            .build()
+            .register();
 
+    
     //MACHINES
     public static final BlockEntry<ReverbaratoryBlock> reverbaratory = registrate.block("reverbaratory", ReverbaratoryBlock::new)
             .initialProperties(SharedProperties::copperMetal)

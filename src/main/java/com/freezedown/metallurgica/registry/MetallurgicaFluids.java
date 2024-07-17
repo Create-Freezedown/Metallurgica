@@ -61,9 +61,25 @@ public class MetallurgicaFluids {
                     .adjacentPathType(null)
     )).register();
     
-    public static final FluidEntry<MoltenMetal.Flowing> moltenIron = registrate.moltenMetal("iron");
-
-    public static final FluidEntry<MoltenMetal.Flowing> moltenCopper = registrate.moltenMetal("copper");
+    public static final FluidEntry<MoltenMetal.Flowing>
+            moltenIron = registrate.moltenMetal("iron"),
+            moltenGold = registrate.moltenMetal("gold"),
+            moltenCopper = registrate.moltenMetal("copper"),
+            moltenAluminum = registrate.moltenMetal("aluminum"),
+            moltenLead = registrate.moltenMetal("lead"),
+            moltenSilver = registrate.moltenMetal("silver"),
+            moltenNickel = registrate.moltenMetal("nickel"),
+            moltenTin = registrate.moltenMetal("tin"),
+            moltenZinc = registrate.moltenMetal("zinc"),
+            moltenPlatinum = registrate.moltenMetal("platinum"),
+            moltenTitanium = registrate.moltenMetal("titanium"),
+            moltenUranium = registrate.moltenMetal("uranium"),
+            moltenLithium = registrate.moltenMetal("lithium"),
+            moltenMagnesium = registrate.moltenMetal("magnesium"),
+            moltenTungsten = registrate.moltenMetal("tungsten"),
+            moltenOsmium = registrate.moltenMetal("osmium"),
+            moltenThorium = registrate.moltenMetal("thorium")
+    ;
 
     public static Collection<RegistryEntry<Fluid>> ALL = registrate.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
 

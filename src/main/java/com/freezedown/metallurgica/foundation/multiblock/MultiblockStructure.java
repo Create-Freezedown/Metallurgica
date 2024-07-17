@@ -2,33 +2,41 @@ package com.freezedown.metallurgica.foundation.multiblock;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.LangBuilder;
+import com.simibubi.create.foundation.utility.ghost.GhostBlockParams;
+import com.simibubi.create.foundation.utility.ghost.GhostBlockRenderer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jgrapht.alg.util.Triple;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.freezedown.metallurgica.foundation.util.ClientUtil.createCustomCubeParticles;
 
 public class MultiblockStructure {
     private final BlockEntity master;
     private final ArrayList<Map<BlockPos, BlockState>> structure;
-    private final ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure;
     private final ArrayList<Map<BlockPos, String>> fluidOutputs = new ArrayList<>();
     
-    public MultiblockStructure(BlockEntity master, ArrayList<Map<BlockPos, BlockState>> structure, ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure) {
+    public MultiblockStructure(BlockEntity master, ArrayList<Map<BlockPos, BlockState>> structure) {
         this.master = master;
         this.structure = structure;
-        this.tagStructure = tagStructure;
     }
     
     public MultiblockStructure addFluidOutput(BlockPos pos, String identifier) {
@@ -49,7 +57,6 @@ public class MultiblockStructure {
         private Direction direction = null;
         private boolean isDirectional = false;
         private final ArrayList<Map<BlockPos, BlockState>> structure = new ArrayList<>();
-        private final ArrayList<Map<BlockPos, TagKey<Block>>> tagStructure = new ArrayList<>();
         private final ArrayList<Map<BlockPos, String>> fluidOutputs = new ArrayList<>();
         private int width = 0;
         private int height = 0;
@@ -123,21 +130,6 @@ public class MultiblockStructure {
             return this;
         }
         
-        public CuboidBuilder withTagAt(int x, int y, int z, TagKey<Block> blockTag) {
-            BlockPos pos = translateToMaster(x, y, z);
-            tagStructure.add(Map.of(pos, blockTag));
-            return this;
-        }
-        
-        public CuboidBuilder withTagAt(PositionUtil.PositionRange range, TagKey<Block> blockTag) {
-            for (Triple<Integer, Integer, Integer> pos : range.getPositions()) {
-                tagStructure.add(Map.of(translateToMaster(pos.getFirst(), pos.getSecond(), pos.getThird()), blockTag));
-            }
-            return this;
-        }
-        
-        
-        
         private BlockPos translateToMaster(int x, int y, int z) {
             BlockPos masterPos = getMasterPosition();
             if (isDirectional) {
@@ -147,16 +139,12 @@ public class MultiblockStructure {
         }
         
         public MultiblockStructure build() {
-            return new MultiblockStructure(getMaster(), structure, tagStructure).addFluidOutputs(fluidOutputs);
+            return new MultiblockStructure(getMaster(), structure).addFluidOutputs(fluidOutputs);
         }
     }
     
     public ArrayList<Map<BlockPos, BlockState>> getStructure() {
         return structure;
-    }
-    
-    public ArrayList<Map<BlockPos, TagKey<Block>>> getTagStructure() {
-        return tagStructure;
     }
     
     public BlockEntity getMaster() {
@@ -165,6 +153,19 @@ public class MultiblockStructure {
     
     public ArrayList<Map<BlockPos, String>> getFluidOutputs() {
         return fluidOutputs;
+    }
+    
+    public ArrayList<FluidOutputBlockEntity> getFluidOutputBlockEntities() {
+        ArrayList<FluidOutputBlockEntity> fluidOutputBlockEntities = new ArrayList<>();
+        for (Map<BlockPos, String> map : fluidOutputs) {
+            for (BlockPos pos : map.keySet()) {
+                BlockEntity blockEntity = master.getLevel().getBlockEntity(pos);
+                if (blockEntity instanceof FluidOutputBlockEntity) {
+                    fluidOutputBlockEntities.add((FluidOutputBlockEntity) blockEntity);
+                }
+            }
+        }
+        return fluidOutputBlockEntities;
     }
     
     public BlockPos getFluidOutputPosition(String identifier) {
@@ -193,22 +194,10 @@ public class MultiblockStructure {
     public boolean isBlockCorrect(BlockPos pos) {
         if (master.getLevel() == null) return false;
         for (Map<BlockPos, BlockState> map : getStructure()) {
-            for (BlockPos pos1 : map.keySet()) {
-                return master.getLevel().getBlockState(pos).equals(map.get(pos1));
+            if (map.containsKey(pos)) {
+                return master.getLevel().getBlockState(pos).equals(map.get(pos));
             }
         }
-        
-        return false;
-    }
-    
-    public boolean isTagCorrect(BlockPos pos) {
-        if (master.getLevel() == null) return false;
-        for (Map<BlockPos, TagKey<Block>> tagMap : getTagStructure()) {
-            for (BlockPos pos1 : tagMap.keySet()) {
-                return master.getLevel().getBlockState(pos).is(tagMap.get(pos1));
-            }
-        }
-        
         return false;
     }
     
@@ -218,46 +207,84 @@ public class MultiblockStructure {
             Metallurgica.LOGGER.error("Level is null, cannot create particles");
             return;
         }
+        
         for (Map<BlockPos, BlockState> map : getStructure()) {
             for (BlockPos pos : map.keySet()) {
+                //CreateClient.GHOST_BLOCKS.showGhostState(this, map.get(pos)).at(pos).breathingAlpha();
                 if (!isBlockCorrect(pos)) {
-                    createCustomCubeParticles(pos, master.getLevel(), smokeParticle);
-                    Metallurgica.LOGGER.debug("Invalid block at {} in multiblock structure. must be {}", pos, map.get(pos));
-                }
-            }
-        }
-        for (Map<BlockPos, TagKey<Block>> tagMap : getTagStructure()) {
-            for (BlockPos pos : tagMap.keySet()) {
-                if (!isTagCorrect(pos)) {
-                    createCustomCubeParticles(pos, master.getLevel(), smokeParticle);
-                    Metallurgica.LOGGER.debug("Invalid tag at {} in multiblock structure. must be {}", pos, tagMap.get(pos));
+                    //CreateClient.OUTLINER.showAABB(pos, new AABB(pos)).colored(0xFF0000).lineWidth(0.01f).withFaceTexture(AllSpecialTextures.HIGHLIGHT_CHECKERED);
+                    CreateClient.GHOST_BLOCKS.showGhost(pos, GhostBlockRenderer.standard(), GhostBlockParams.of(map.get(pos)).at(pos).breathingAlpha(), 1);
+                    //createCustomCubeParticles(pos, master.getLevel(), smokeParticle);
                 }
             }
         }
     }
     
     public boolean isStructureCorrect() {
-        int validBlocks = getStructure().size() + getTagStructure().size() - 1;
         for (Map<BlockPos, BlockState> map : getStructure()) {
-                for (BlockPos pos : map.keySet()) {
-                    if (!isBlockCorrect(pos)) {
-                        validBlocks--;
-                    }
-                }
-            }
-        for (Map<BlockPos, TagKey<Block>> tagMap : getTagStructure()) {
-            for (BlockPos pos : tagMap.keySet()) {
-                if (!isTagCorrect(pos)) {
-                    validBlocks--;
+            for (BlockPos pos : map.keySet()) {
+                if (!isBlockCorrect(pos)) {
+                    return false;
                 }
             }
         }
-        return validBlocks >= getStructure().size() + getTagStructure().size() - 1;
+        return true;
     }
     
     public void setFluidOutputCapacity(FluidOutputBlockEntity fluidOutput, int value) {
         if (fluidOutput == null) return;
         if (fluidOutput.tankInventory.getCapacity() == value) return;
         fluidOutput.tankInventory.setCapacity(value);
+    }
+    
+    public void addToGoggleTooltip(List<Component> tooltip) {
+        for (FluidOutputBlockEntity fluidOutput : getFluidOutputBlockEntities()) {
+            LazyOptional<IFluidHandler> handler = fluidOutput.getCapability(ForgeCapabilities.FLUID_HANDLER);
+            Optional<IFluidHandler> resolve = handler.resolve();
+            if (!resolve.isPresent()) {
+                return;
+            } else {
+                IFluidHandler tank = resolve.get();
+                if (tank.getTanks() == 0) {
+                    return;
+                } else {
+                    LangBuilder tankName = null;
+                    for (Map<BlockPos, String> map : getFluidOutputs()) {
+                        for (BlockPos pos : map.keySet()) {
+                            if (pos.equals(fluidOutput.getBlockPos())) {
+                                tankName = Lang.translate(map.get(pos));
+                            }
+                        }
+                    }
+                    LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+                    boolean isEmpty = true;
+                    if (tankName != null) {
+                        tankName.style(ChatFormatting.WHITE).forGoggles(tooltip, 1);
+                    }
+                    
+                    for(int i = 0; i < tank.getTanks(); ++i) {
+                        FluidStack fluidStack = tank.getFluidInTank(i);
+                        if (!fluidStack.isEmpty()) {
+                            Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+                            Lang.builder().add(Lang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number((double)tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+                            isEmpty = false;
+                        }
+                    }
+                    
+                    if (tank.getTanks() > 1) {
+                        if (isEmpty) {
+                            tooltip.remove(tooltip.size() - 1);
+                        }
+                        
+                        return;
+                    } else if (!isEmpty) {
+                        return;
+                    } else {
+                        Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                        return;
+                    }
+                }
+            }
+        }
     }
 }

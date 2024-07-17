@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.block.render.SpriteShifter;
 public class MetallurgicaSpriteShifts {
     
     public static final CTSpriteShiftEntry drillExpansion = vertical("drill_expansion");
+    public static final CTSpriteShiftEntry blastProofGlass = omni("blast_proof_glass");
     
     private static CTSpriteShiftEntry omni(String name) {
         return getCT(AllCTTypes.OMNIDIRECTIONAL, name);
