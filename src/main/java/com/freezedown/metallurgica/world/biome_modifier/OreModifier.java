@@ -6,11 +6,16 @@ import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.freezedown.metallurgica.Metallurgica.oreGen_CODEC;
+import static net.minecraft.data.worldgen.placement.OrePlacements.*;
 
 public enum OreModifier implements BiomeModifier
 {
@@ -24,27 +29,41 @@ public enum OreModifier implements BiomeModifier
         }
         
         BiomeGenerationSettingsBuilder generationSettings = builder.getGenerationSettings();
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_COAL_LOWER);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_COAL_UPPER);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_IRON_MIDDLE);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_IRON_UPPER);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_IRON_SMALL);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_GOLD);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_GOLD_EXTRA);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_GOLD_DELTAS);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_GOLD_LOWER);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_GOLD_NETHER);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_LAPIS);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_LAPIS_BURIED);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_REDSTONE);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_REDSTONE_LOWER);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_EMERALD);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_DIAMOND_BURIED);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_DIAMOND_LARGE);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_DIAMOND);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_COPPER_LARGE);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).remove(OrePlacements.ORE_COPPER);
-        generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION).remove(CavePlacements.AMETHYST_GEODE);
+        removeFeatures(
+                generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES),
+                ORE_COAL_LOWER,
+                ORE_COAL_UPPER,
+                ORE_IRON_MIDDLE,
+                ORE_IRON_UPPER,
+                ORE_IRON_SMALL,
+                ORE_GOLD,
+                ORE_GOLD_EXTRA,
+                ORE_GOLD_DELTAS,
+                ORE_GOLD_LOWER,
+                ORE_GOLD_NETHER,
+                ORE_LAPIS,
+                ORE_LAPIS_BURIED,
+                ORE_REDSTONE,
+                ORE_REDSTONE_LOWER,
+                ORE_EMERALD,
+                ORE_DIAMOND_BURIED,
+                ORE_DIAMOND_LARGE,
+                ORE_DIAMOND,
+                ORE_COPPER_LARGE,
+                ORE_COPPER
+        );
+
+        removeFeatures(
+                generationSettings.getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION),
+                CavePlacements.AMETHYST_GEODE
+        );
+    }
+
+    @SafeVarargs
+    private void removeFeatures(List<Holder<PlacedFeature>> allFeatures, Holder<PlacedFeature>... features) {
+        for (Holder<PlacedFeature> feature : features) {
+            allFeatures.remove(feature);
+        }
     }
     
     @Override

@@ -90,10 +90,6 @@ public class MetallurgicaTags {
     
     public enum AllBlockTags {
         BAUXITE_ORE_REPLACEABLE,
-        DEPOSIT_REPLACEABLE_BAUXITE(MOD, "deposit_replaceable/bauxite"),
-        DEPOSIT_REPLACEABLE_MAGNETITE(MOD, "deposit_replaceable/magnetite"),
-        DEPOSIT_REPLACEABLE_NATIVE_COPPER(MOD, "deposit_replaceable/native_copper"),
-        DEPOSIT_REPLACEABLE_NATIVE_GOLD(MOD, "deposit_replaceable/native_gold"),
         BUDDING_AMETHYST_REPLACEABLE,
         REVERBARATORY_GLASS,
         REVERBARATORY_WALL,

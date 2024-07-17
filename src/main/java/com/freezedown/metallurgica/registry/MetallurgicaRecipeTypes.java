@@ -6,6 +6,8 @@ import com.freezedown.metallurgica.content.forging.advanced_casting.AdvancedCast
 import com.freezedown.metallurgica.content.machines.blast_furnace.HeavyBlastingRecipe;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolysisRecipe;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryCookingRecipe;
+import com.freezedown.metallurgica.content.machines.kiln.BakingRecipe;
+import com.freezedown.metallurgica.content.machines.sluice_belt.SluicingRecipe;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
@@ -34,6 +36,8 @@ public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
     electrolysis(ElectrolysisRecipe::new),
     drilling(DrillingRecipe::new),
     reverbaratory_cooking(ReverbaratoryCookingRecipe::new),
+    baking(BakingRecipe::new),
+    sluicing(SluicingRecipe::new),
     ;
     
     private final ResourceLocation id;
