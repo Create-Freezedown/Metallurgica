@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "createindustry:bauxite"
+          "name": "minecraft:cobblestone"
         }
       ],
       "rolls": 1.0

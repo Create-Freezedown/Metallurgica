@@ -56,7 +56,8 @@ public enum MetallurgicaMaterials {
     DOLOMITE(),
 
     //MAGNESIUM
-    MEGNESITE()
+    MEGNESITE(),
+    CASSITERITE()
     ;
 
     public MOreFeatureConfigEntry DEPOSIT;

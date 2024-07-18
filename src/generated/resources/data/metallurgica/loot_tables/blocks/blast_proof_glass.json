@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "metallurgica:reverbaratory_output"
+          "name": "metallurgica:blast_proof_glass"
         }
       ],
       "rolls": 1.0

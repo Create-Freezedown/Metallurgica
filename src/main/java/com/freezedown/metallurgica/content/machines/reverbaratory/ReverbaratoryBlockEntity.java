@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.content.machines.reverbaratory;
 
 import com.drmangotea.createindustry.registry.TFMGFluids;
-import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.MultiblockStructure;
@@ -27,14 +26,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -71,6 +69,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     public MultiblockStructure multiblockStructure;
     
     public BlockState mainWall = MetallurgicaBlocks.carbonBrick.get().defaultBlockState();
+    public BlockState mainGlass = MetallurgicaBlocks.blastProofGlass.get().defaultBlockState();
     
     public Direction getMasterDirection() {
         return this.getBlockState().getValue(ReverbaratoryBlock.FACING);
@@ -82,13 +81,11 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         this.inputInventory = (new SmartInventory(1, this)).forbidInsertion().forbidExtraction().withMaxStackSize(64);
         this.fuelEfficiency = 1000.0F;
         this.speedModifier = 1.0F;
-        TagKey<Block> reverbaratoryWallTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_WALL.tag;
-        TagKey<Block> reverbaratoryGlassTag = MetallurgicaTags.AllBlockTags.REVERBARATORY_GLASS.tag;
         this.multiblockStructure = MultiblockStructure.cuboidBuilder(this)
                 .directional(getMasterDirection())
                 .withBlockAt(new PositionRange(zero(), generateSequence(-1, 1, 1), generateSequence(-1, 1, 1)), mainWall)
-                .withTagAt(new PositionRange(generateSequence(1, 3, 1), List.of(0), List.of(1)), reverbaratoryGlassTag)
-                .withTagAt(new PositionRange(generateSequence(1, 3, 1), List.of(0), List.of(-1)), reverbaratoryGlassTag)
+                .withBlockAt(new PositionRange(generateSequence(1, 3, 1), List.of(0), List.of(1)), mainGlass)
+                .withBlockAt(new PositionRange(generateSequence(1, 3, 1), List.of(0), List.of(-1)), mainGlass)
                 .withBlockAt(new PositionRange(generateSequence(1, 2, 1), List.of(-1), generateSequence(-1, 1, 1)), mainWall)
                 .withFluidOutputAt(3, -1, 0, "reverbaratory.primary_fluid_output")
                 .withFluidOutputAt(4, 1, 0, "reverbaratory.carbon_dioxide_output")
@@ -121,7 +118,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         if (this.level == null) {
             return;
         }
-        multiblockStructure.createMissingParticles();
+        
     }
     
     public void tick() {
@@ -129,6 +126,8 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         if (this.level == null) {
             return;
         }
+        multiblockStructure.createMissingParticles();
+        
         multiblockStructure.setFluidOutputCapacity(getOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.reverbaratoryPrimaryOutputCapacity.get());
         multiblockStructure.setFluidOutputCapacity(getCarbonDioxideOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.genericCarbonDioxideOutputCapacity.get());
         multiblockStructure.setFluidOutputCapacity(getSlagOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.reverbaratorySlagOutputCapacity.get());
@@ -167,7 +166,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
            
             for (LivingEntity entity : this.getEntitiesToCremate()) {
                 if (level.random.nextDouble() > 0.85) {
-                    entity.hurt(getDamageSource(), 0.5F);
+                    entity.hurt(getDamageSource(), 2.5F);
                     SoundSource soundSource = SoundSource.NEUTRAL;
                     if (entity.getType().getCategory() == MobCategory.MONSTER) {
                         soundSource = SoundSource.HOSTILE;
@@ -322,22 +321,27 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         if (!isValid) {
             Lang.translate("goggles.reverbaratory.invalid").style(ChatFormatting.RED).forGoggles(tooltip, 1);
         }   else {
-            Lang.translate("goggles.reverbaratory.stats").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-            if (this.timer > 0) {
-                Lang.translate("goggles.blast_furnace.status.running").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
-            } else {
-                Lang.translate("goggles.blast_furnace.status.off").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+            if (!isPlayerSneaking) {
+                Lang.translate("goggles.reverbaratory.stats").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+                if (this.timer > 0) {
+                    Lang.translate("goggles.blast_furnace.status.running").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+                } else {
+                    Lang.translate("goggles.blast_furnace.status.off").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+                }
+                Lang.translate("goggles.misc.storage_info").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                Lang.translate("goggles.blast_furnace.item_count", this.inputInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
+                Lang.translate("goggles.blast_furnace.nothing_lol").style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
             }
-            Lang.translate("goggles.misc.storage_info").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
-            Lang.translate("goggles.blast_furnace.item_count", this.inputInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
-            Lang.translate("goggles.blast_furnace.nothing_lol").style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
         }
-        
         LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
         Optional<IFluidHandler> resolve = handler.resolve();
         if (!resolve.isPresent()) {
             return false;
         } else {
+            if (isPlayerSneaking) {
+                multiblockStructure.addToGoggleTooltip(tooltip);
+                return false;
+            }
             IFluidHandler tank = resolve.get();
             if (tank.getTanks() == 0) {
                 return false;
@@ -368,6 +372,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
                 }
             }
         }
+        
     }
     
     public void createSmokeVolume() {

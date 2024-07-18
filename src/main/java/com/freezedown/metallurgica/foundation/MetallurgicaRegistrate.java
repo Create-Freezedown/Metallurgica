@@ -57,7 +57,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiFunction;
 
-import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class MetallurgicaRegistrate extends CreateRegistrate {
@@ -136,7 +135,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return fluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, MoltenMetal.Flowing::new)
                 .source(MoltenMetal.Source::new)
                 .bucket()
-                .model((ctx, prov) -> prov.singleTexture(ctx.getName(), modelParent, itemTexture))
+                .model((ctx, prov) -> prov.singleTexture(ctx.getName(), modelParent, "layer0", itemTexture))
                 .build()
                 .lang(autoLang(id))
                 .source(MoltenMetal.Source::new)
@@ -176,7 +175,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
 
     public ItemEntry<MetallurgicaItem> raw(String name) {
-        return this.item(name, MetallurgicaItem::new)
+        return this.item(name, p -> new MetallurgicaItem(p).showElementComposition())
                 .tag(AllTags.forgeItemTag("raw_materials/" + name))
                 .tag(AllTags.forgeItemTag("raw_materials"))
                 .lang(autoLang(name))

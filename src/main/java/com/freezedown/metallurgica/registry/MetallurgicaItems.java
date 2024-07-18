@@ -33,7 +33,7 @@ public class MetallurgicaItems {
             aluminumDust =        registrate.metallurgicaItem("aluminum_dust", "dusts/aluminum", "dusts");
 
     public static final ItemEntry<Item>
-            loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item???
+            loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item??? Idk lol
 
     public static void register() {
     }

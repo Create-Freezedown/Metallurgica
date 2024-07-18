@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "texture": "metallurgica:item/molten_metal_bucket"
+    "layer0": "metallurgica:item/molten_metal_bucket"
   }
 }

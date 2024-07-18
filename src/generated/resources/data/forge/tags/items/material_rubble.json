@@ -1,9 +1,10 @@
 {
   "values": [
-    "metallurgica:magnetite_rubble",
     "metallurgica:native_copper_rubble",
-    "metallurgica:bauxite_rubble",
     "metallurgica:native_gold_rubble",
+    "metallurgica:magnetite_rubble",
+    "metallurgica:bauxite_rubble",
+    "metallurgica:malachite_rubble",
     "metallurgica:copper_rubble"
   ]
 }
