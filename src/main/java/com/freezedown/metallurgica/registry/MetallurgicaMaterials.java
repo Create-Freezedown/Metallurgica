@@ -4,6 +4,8 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
+import net.minecraft.client.Camera;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 
 public enum MetallurgicaMaterials {
     //COPPER
@@ -31,6 +33,7 @@ public enum MetallurgicaMaterials {
 
     //ZINC
     SPHALRITE(),
+    CALAMINE(),
 
     //TUNGSTEN
     WOLFRAMITE(),
@@ -45,12 +48,9 @@ public enum MetallurgicaMaterials {
     //PLATINUM
     SPERRYLITE(),
 
-    //Silver
+    //SILVER
     ARGENTITE(),
     CHLORARGYRITE(),
-
-    //LOTION (????)
-    CALAMINE(),
 
     //LIMESTONE
     DOLOMITE(),

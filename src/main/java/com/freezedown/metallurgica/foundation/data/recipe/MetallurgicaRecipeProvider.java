@@ -88,9 +88,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static TagKey<Item> malachiteStone() {
             return MetallurgicaTags.modItemTag("stone_types/malachite");
         }
-        public static ItemLike copperRubble() {
-            return MetallurgicaItems.copperRubble.get();
-        }
+        public static ItemLike copperRubble() { return MetallurgicaMaterials.NATIVE_COPPER.MATERIAL.rubble().get(); }
         public static ItemLike malachite() { return MetallurgicaMaterials.MALACHITE.MATERIAL.raw().get(); }
         public static ItemLike copperOxide() {
             return MetallurgicaItems.copperOxide.get();
