@@ -91,9 +91,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike copperRubble() {
             return MetallurgicaItems.copperRubble.get();
         }
-        public static ItemLike malachite() {
-            return MetallurgicaMaterials.MALACHITE.materialEntry.raw().get();
-        }
+        public static ItemLike malachite() { return MetallurgicaMaterials.MALACHITE.MATERIAL.raw().get(); }
         public static ItemLike copperOxide() {
             return MetallurgicaItems.copperOxide.get();
         }
@@ -130,9 +128,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike magnetiteLumps() {
             return MetallurgicaItems.magnetiteLumps.get();
         }
-        public static ItemLike richMagnetite() {
-            return MetallurgicaItems.richMagnetite.get();
-        }
+        public static ItemLike richMagnetite() { return MetallurgicaMaterials.MALACHITE.MATERIAL.rich().get(); }
     }
     
     public static class F {

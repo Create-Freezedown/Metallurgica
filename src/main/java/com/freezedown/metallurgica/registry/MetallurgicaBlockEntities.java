@@ -41,8 +41,7 @@ public class MetallurgicaBlockEntities {
             registrate.simpleBlockEntity("drill_tower_deployer", DrillTowerDeployerBlockEntity::new, MetallurgicaBlocks.drillTowerDeployer);
 
     public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit =
-            registrate.simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new,
-                    values());
+            registrate.simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new, values());
     
     public static final BlockEntityEntry<ChannelDepotBlockEntity> channelDepot =
             registrate.blockEntity("channel_depot", ChannelDepotBlockEntity::new, null, ChannelDepotRenderer::new, MetallurgicaBlocks.channelDepot);

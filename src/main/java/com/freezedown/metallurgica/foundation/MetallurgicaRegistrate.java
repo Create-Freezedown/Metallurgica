@@ -71,6 +71,8 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         super(modid);
     }
 
+    // UTIL
+    
     public static String autoLang(String id) {
         StringBuilder builder = new StringBuilder();
         boolean b = true;
@@ -91,7 +93,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
     
 
-    
+    //GAS
     public FluidBuilder<FlowingGas.Flowing, CreateRegistrate> gas(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
@@ -104,17 +106,22 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return fluid(name, still, flow, TintedFluid.create(color), ReactiveGas.Flowing::new).source(ReactiveGas.Source::new).block(GasBlock::new).build();
     }
     
+    
+    //FLUIDS
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualDust(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/dust_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/dust_flow");
         return tintedVirtualFluid(name, color, still, flow);
     }
+    
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color) {
         return tintedVirtualFluid(name, color, Metallurgica.asResource("fluid/thin_fluid_still"), Metallurgica.asResource("fluid/thin_fluid_flow"));
     }
+    
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
         return virtualFluid(name, still, flow, TintedFluid.create(color, still, flow), VirtualFluid::new);
     }
+    
     public FluidBuilder<Acid, CreateRegistrate> acid(String name, int color, float acidity) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
@@ -148,6 +155,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return virtualFluid(name, still, flow, TintedFluid.create(color), p -> new Acid(p).acidity(acidity));
     }
 
+    //ITEM
     public <T extends Item> ItemEntry<T> item(String name, NonNullFunction<Item.Properties, T> factory, NonNullUnaryOperator<Item.Properties> properties, String... tags) {
         ItemBuilder<T, ?> builder = this.item(name, factory).properties(properties);
         for(String tag : tags) {
@@ -156,8 +164,8 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return builder.register();
     }
 
-    public MaterialEntry material(String name) {
-        return new MaterialEntry(this, name);
+    public MaterialEntry material(String name, boolean richb) {
+        return new MaterialEntry(this, name, richb);
     }
     
     public GemEntry gem(String name) {
@@ -233,6 +241,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .register();
     }
 
+    //BLOCK ENTITY
     public <T extends BlockEntity> BlockEntityEntry<T> blockEntity(
             String name,
             BlockEntityBuilder.BlockEntityFactory<T> factory,
@@ -263,6 +272,15 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return blockEntity(name, factory, null, null, blocks);
     }
 
+    public <T extends BlockEntity> BlockEntityEntry<T> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaMaterials[] blocks) {
+        BlockEntry[] blocks2 = new BlockEntry[blocks.length];
+        for (int i = 0; i < blocks.length; i++) {
+            blocks2[i] = blocks[i].MATERIAL.depositBlock();
+        }
+        return simpleBlockEntity(name, factory, blocks2);
+    }
+
+    //BLOCKS
     public BlockEntry<MineralDepositBlock> depositBlock(
             String name,
             ItemEntry<MetallurgicaItem> mineral
@@ -311,14 +329,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return b.register();
     }
 
-    public <T extends BlockEntity, P extends Block> BlockEntityEntry<T> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaMaterials[] blocks) {
-        BlockEntry[] blocks2 = new BlockEntry[blocks.length];
-        for (int i = 0; i < blocks.length; i++) {
-            blocks2[i] = blocks[i].materialEntry.depositBlock();
-        }
-        return simpleBlockEntity(name, factory, blocks2);
-    }
-
+    //MISC
     public static class TintedFluid extends AllFluids.TintedFluidType {
         public ResourceLocation still;
         public ResourceLocation flow;

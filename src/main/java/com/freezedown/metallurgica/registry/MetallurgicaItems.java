@@ -28,7 +28,6 @@ public class MetallurgicaItems {
             salt =                registrate.metallurgicaItem("salt", "salt"),
 
     //MAGNETITE PROCESSING
-            richMagnetite =       registrate.metallurgicaItem("rich_magnetite", "enriched_materials/magnetite", "enriched_materials"),
             magnetiteLumps =      registrate.metallurgicaItem("magnetite_lumps", "lumps/magnetite", "lumps"),
 
     //TIN PROCESSING
@@ -36,7 +35,7 @@ public class MetallurgicaItems {
 
     //COPPER PROCESSING
             copperOxide = registrate.metallurgicaItem("copper_oxide", "dusts/copper_oxide", "dusts"),
-            copperRubble = registrate.metallurgicaItem("copper_rubble", "material_rubble/copper", "material_rubble"),
+
     //BAUXITE PROCESSING
             washedAlumina =       registrate.metallurgicaItem("washed_alumina", "washed_materials/alumina", "washed_materials"),
             alumina =             registrate.metallurgicaItem("alumina", "alumina")
