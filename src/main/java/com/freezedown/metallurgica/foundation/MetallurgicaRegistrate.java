@@ -7,6 +7,8 @@ import com.freezedown.metallurgica.content.fluids.types.ReactiveGas;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
+import com.freezedown.metallurgica.foundation.item.AlloyItem;
+import com.freezedown.metallurgica.foundation.material.GemEntry;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
@@ -157,6 +159,10 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     public MaterialEntry material(String name) {
         return new MaterialEntry(this, name);
     }
+    
+    public GemEntry gem(String name) {
+        return new GemEntry(this, name);
+    }
 
     public ItemEntry<Item> simpleItem(String name, String... tags) {
         return item(name, Item::new, p->p, tags);
@@ -164,6 +170,14 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
 
     public ItemEntry<MetallurgicaItem> metallurgicaItem(String name, String... tags) {
         return item(name, p -> new MetallurgicaItem(p).showElementComposition(), p->p, tags);
+    }
+    
+    public ItemEntry<MetallurgicaItem> cluster(String name) {
+        return this.item(name, p -> new MetallurgicaItem(p).showElementComposition())
+                .tag(AllTags.forgeItemTag("gem_clusters/" + name))
+                .tag(AllTags.forgeItemTag("gem_clusters"))
+                .lang(autoLang(name))
+                .register();
     }
 
     public ItemEntry<MetallurgicaItem> raw(String name) {
@@ -178,6 +192,43 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return this.item(name, Item::new)
                 .tag(AllTags.forgeItemTag("material_rubble/" + name))
                 .tag(AllTags.forgeItemTag("material_rubble"))
+                .lang(autoLang(name))
+                .register();
+    }
+    public ItemEntry<MetallurgicaItem> powder(String name) {
+        return this.item(name, p -> new MetallurgicaItem(p).showElementComposition())
+                .tag(AllTags.forgeItemTag("powders/" + name))
+                .tag(AllTags.forgeItemTag("powders"))
+                .lang(autoLang(name))
+                .register();
+    }
+    public ItemEntry<AlloyItem> alloyItem(String name, String... tags) {
+        return item(name, AlloyItem::new, p->p, tags);
+    }
+    public ItemEntry<AlloyItem> alloyNugget(String name) {
+        return this.item(name, AlloyItem::new)
+                .tag(AllTags.forgeItemTag("nuggets/" + name))
+                .tag(AllTags.forgeItemTag("nuggets"))
+                .tag(AllTags.forgeItemTag("alloy_nuggets/" + name))
+                .tag(AllTags.forgeItemTag("alloy_nuggets"))
+                .lang(autoLang(name))
+                .register();
+    }
+    public ItemEntry<AlloyItem> alloyDust(String name) {
+        return this.item(name, AlloyItem::new)
+                .tag(AllTags.forgeItemTag("dusts/" + name))
+                .tag(AllTags.forgeItemTag("dusts"))
+                .tag(AllTags.forgeItemTag("alloy_dusts/" + name))
+                .tag(AllTags.forgeItemTag("alloy_dusts"))
+                .lang(autoLang(name))
+                .register();
+    }
+    public ItemEntry<AlloyItem> alloySheet(String name) {
+        return this.item(name, AlloyItem::new)
+                .tag(AllTags.forgeItemTag("plates/" + name))
+                .tag(AllTags.forgeItemTag("plates"))
+                .tag(AllTags.forgeItemTag("alloy_sheets/" + name))
+                .tag(AllTags.forgeItemTag("alloy_sheets"))
                 .lang(autoLang(name))
                 .register();
     }
@@ -222,7 +273,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                         .withPool(RegistrateBlockLootTables.applyExplosionCondition(mineral.get(), LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(2.0f, 5.0f))
                                 .add(LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
-                .lang(autoLang(name + "_deposit"))
+                .lang(autoLang(name))
                 .register();
     }
 

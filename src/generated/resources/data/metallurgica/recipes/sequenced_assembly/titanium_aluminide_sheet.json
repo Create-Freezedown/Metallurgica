@@ -1,0 +1,57 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "metallurgica:titanium_aluminide_ingot"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "chance": 120.0,
+      "item": "metallurgica:titanium_aluminide_sheet"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "metallurgica:unprocessed_titanium_aluminide_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "metallurgica:unprocessed_titanium_aluminide_sheet"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "metallurgica:unprocessed_titanium_aluminide_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "metallurgica:unprocessed_titanium_aluminide_sheet"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "metallurgica:unprocessed_titanium_aluminide_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "metallurgica:unprocessed_titanium_aluminide_sheet"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "metallurgica:unprocessed_titanium_aluminide_sheet"
+  }
+}

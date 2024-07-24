@@ -128,9 +128,9 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         }
         multiblockStructure.createMissingParticles();
         
-        multiblockStructure.setFluidOutputCapacity(getOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.reverbaratoryPrimaryOutputCapacity.get());
-        multiblockStructure.setFluidOutputCapacity(getCarbonDioxideOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.genericCarbonDioxideOutputCapacity.get());
-        multiblockStructure.setFluidOutputCapacity(getSlagOutputBlockEntity(), MetallurgicaConfigs.server().machineConfig.reverbaratorySlagOutputCapacity.get());
+        multiblockStructure.setFluidOutputCapacity(getOutputBlockEntity(), isValid ? MetallurgicaConfigs.server().machineConfig.reverbaratoryPrimaryOutputCapacity.get() : 0);
+        multiblockStructure.setFluidOutputCapacity(getCarbonDioxideOutputBlockEntity(), isValid ? MetallurgicaConfigs.server().machineConfig.genericCarbonDioxideOutputCapacity.get() : 0);
+        multiblockStructure.setFluidOutputCapacity(getSlagOutputBlockEntity(), isValid ? MetallurgicaConfigs.server().machineConfig.reverbaratorySlagOutputCapacity.get() : 0);
         
         isValid = multiblockStructure.isStructureCorrect();
         if (isValid) {

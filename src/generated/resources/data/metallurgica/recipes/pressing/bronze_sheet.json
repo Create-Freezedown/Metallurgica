@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/bronze"
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:bronze_sheet"
+    }
+  ]
+}

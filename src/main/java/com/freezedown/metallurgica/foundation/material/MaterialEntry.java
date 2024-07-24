@@ -4,7 +4,6 @@ import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
-import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.data.worldgen.features.OreFeatures;
@@ -38,9 +37,7 @@ public class MaterialEntry {
         stone = reg.mineralBlock(pName, tag, raw);
         name = pName;
     }
-
     public BlockEntry<MineralDepositBlock> depositBlock() { return deposit; }
-
     public BlockEntry<Block> stone() { return stone; }
 
     public TagKey<Block> tag() { return tag; }
@@ -60,7 +57,7 @@ public class MaterialEntry {
                 .biomeTag(BiomeTags.IS_OVERWORLD)
                 .parent();
     }
-
+    
     public MOreFeatureConfigEntry cluster(int size, int frequency, int minHeight, int maxHeight) {
         return create(name + "_cluster", size, frequency, minHeight, maxHeight)
                 .customStandardDatagenExt()

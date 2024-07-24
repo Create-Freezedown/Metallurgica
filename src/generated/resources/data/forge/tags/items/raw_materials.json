@@ -4,6 +4,8 @@
     "metallurgica:native_gold",
     "metallurgica:magnetite",
     "metallurgica:bauxite",
-    "metallurgica:malachite"
+    "metallurgica:malachite",
+    "metallurgica:cassiterite",
+    "metallurgica:fluorite"
   ]
 }

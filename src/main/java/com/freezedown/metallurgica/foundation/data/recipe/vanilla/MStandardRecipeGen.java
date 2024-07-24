@@ -1,7 +1,9 @@
 package com.freezedown.metallurgica.foundation.data.recipe.vanilla;
 
+import com.drmangotea.createindustry.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MetallurgicaRecipeProvider;
+import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import com.google.common.base.Supplier;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -37,9 +39,15 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
             .viaCooking(() -> I.washedAlumina().asItem())
             .forDuration(200)
             .rewardXP(0.35f)
-            .inSmokerOnly()
+            .inSmokerOnly(),
+    
+    aluminum_ingot = create(TFMGItems.ALUMINUM_INGOT::get)
+            .unlockedBy(MetallurgicaItems.aluminumNugget::get)
+            .viaShaped(b -> b.pattern("###").pattern("###").pattern("###").define('#', MetallurgicaItems.aluminumNugget.get()))
     
     ;
+    
+    
     
     /*
      * End of recipe list

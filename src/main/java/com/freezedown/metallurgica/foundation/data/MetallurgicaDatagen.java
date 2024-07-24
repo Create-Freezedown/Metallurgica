@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.foundation.data;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
+import com.freezedown.metallurgica.foundation.data.recipe.create.MSequencedAssemblyGen;
 import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,6 +28,7 @@ public class MetallurgicaDatagen {
         if (server) {
             generator.addProvider(true, new MStandardRecipeGen(generator));
             MProcessingRecipeGen.registerAll(generator);
+            generator.addProvider(true, new  MSequencedAssemblyGen(generator));
         }
     }
     
@@ -38,7 +40,7 @@ public class MetallurgicaDatagen {
             
             provideDefaultLang("interface", langConsumer);
             provideDefaultLang("compositions", langConsumer);
-            //provideDefaultLang("tooltips", langConsumer);
+            provideDefaultLang("tooltips", langConsumer);
         });
     }
     

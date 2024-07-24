@@ -1,6 +1,9 @@
 {
   "values": [
     "metallurgica:copper_oxide",
-    "metallurgica:aluminum_dust"
+    "metallurgica:aluminum_dust",
+    "metallurgica:titanium_dust",
+    "metallurgica:bronze_dust",
+    "metallurgica:titanium_aluminide_dust"
   ]
 }

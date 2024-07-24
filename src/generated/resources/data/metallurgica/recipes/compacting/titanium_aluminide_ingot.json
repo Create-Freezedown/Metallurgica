@@ -1,0 +1,37 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    },
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    },
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    },
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    },
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    },
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    },
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    },
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    },
+    {
+      "tag": "forge:nuggets/titanium_aluminide"
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:titanium_aluminide_ingot"
+    }
+  ]
+}

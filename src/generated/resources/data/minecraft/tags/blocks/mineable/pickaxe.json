@@ -25,6 +25,10 @@
     "metallurgica:bauxite_deposit",
     "metallurgica:bauxite_rich_stone",
     "metallurgica:malachite_deposit",
-    "metallurgica:malachite_rich_stone"
+    "metallurgica:malachite_rich_stone",
+    "metallurgica:cassiterite_deposit",
+    "metallurgica:cassiterite_rich_stone",
+    "metallurgica:fluorite_deposit",
+    "metallurgica:fluorite_rich_stone"
   ]
 }

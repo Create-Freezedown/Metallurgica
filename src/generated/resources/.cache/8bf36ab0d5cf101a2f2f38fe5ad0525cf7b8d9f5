@@ -1,4 +1,6 @@
-// 1.19.2	2024-06-30T20:54:45.4030151	Metallurgica's Processing Recipes
+// 1.19.2	2024-07-24T20:57:24.9856491	Metallurgica's Processing Recipes
+77cbee027e5612bb371413a6a8b0e65cb3703d76 data/metallurgica/recipes/compacting/titanium_aluminide_ingot.json
+ce21f452f42a841a590f3f66a910236320dfd9c7 data/metallurgica/recipes/compacting/titanium_ingot.json
 e0a6c2290e1ec6e166c709f9538504e7ad46f56b data/metallurgica/recipes/electrolysis/sodium_hydroxide.json
 d086cc31a8873e2b2061f568883e56e009880ff4 data/metallurgica/recipes/electrolysis/sodium_hydroxide_from_decontaminated_water.json
 c4bfca1dc912b9cff422c90a25e7f9a9d1c14a29 data/metallurgica/recipes/emptying/magnetite_lumps.json
@@ -12,5 +14,7 @@ fa18e5c5df49889c9360f2f3b69337f19f37f2be data/metallurgica/recipes/mixing/magnet
 67c18b509459be891d352908cba95f2b52f2cf36 data/metallurgica/recipes/mixing/sodium_hypochlorite.json
 77719fa845ed293841054be4ddc9af6656338fcc data/metallurgica/recipes/mixing/sulfuric_acid.json
 213a44a2a09967a2b890946ef7a332853dc2b191 data/metallurgica/recipes/mixing/sulfuric_acid_from_decontaminated_water.json
+7151dbb410fdb3f15d2f20d86f942d81722267f4 data/metallurgica/recipes/pressing/aluminum_sheet.json
+1ccfb461a00cdbc5cdebbabe6efdca8283a0ce63 data/metallurgica/recipes/pressing/bronze_sheet.json
 757d9f66824c5f80ada79efa36417f751e122055 data/metallurgica/recipes/reverbaratory_cooking/molten_iron.json
 0cba913130aaf1e8e640a84cac8208870ba0ef99 data/metallurgica/recipes/splashing/washed_alumina.json

@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "metallurgica:block/fluorite_natural_0"
+      },
+      {
+        "model": "metallurgica:block/fluorite_natural_1"
+      },
+      {
+        "model": "metallurgica:block/fluorite_natural_2"
+      },
+      {
+        "model": "metallurgica:block/fluorite_natural_3"
+      }
+    ]
+  }
+}

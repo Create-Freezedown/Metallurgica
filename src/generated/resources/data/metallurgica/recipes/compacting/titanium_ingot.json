@@ -1,0 +1,37 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/titanium"
+    },
+    {
+      "tag": "forge:nuggets/titanium"
+    },
+    {
+      "tag": "forge:nuggets/titanium"
+    },
+    {
+      "tag": "forge:nuggets/titanium"
+    },
+    {
+      "tag": "forge:nuggets/titanium"
+    },
+    {
+      "tag": "forge:nuggets/titanium"
+    },
+    {
+      "tag": "forge:nuggets/titanium"
+    },
+    {
+      "tag": "forge:nuggets/titanium"
+    },
+    {
+      "tag": "forge:nuggets/titanium"
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:titanium_ingot"
+    }
+  ]
+}
