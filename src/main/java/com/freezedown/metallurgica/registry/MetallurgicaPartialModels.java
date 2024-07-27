@@ -6,7 +6,8 @@ import com.jozufozu.flywheel.core.PartialModel;
 public class MetallurgicaPartialModels {
     public static final PartialModel
             drillBitCastIron = block("drill_tower/bit_cast_iron"),
-            channelSide = block("channel/block_side")
+            channelSide = block("channel/block_side"),
+            shakerPlatform = block("shaking_table/platform")
             ;
     
     private static PartialModel block(String path) {

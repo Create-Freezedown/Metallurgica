@@ -118,7 +118,6 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         if (this.level == null) {
             return;
         }
-        
     }
     
     public void tick() {

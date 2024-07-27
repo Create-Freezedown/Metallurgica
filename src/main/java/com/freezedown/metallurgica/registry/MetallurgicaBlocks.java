@@ -12,6 +12,8 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
+import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlock;
+import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableGenerator;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlock;
@@ -63,6 +65,17 @@ public class MetallurgicaBlocks {
 
     
     //MACHINES
+    public static final BlockEntry<ShakingTableBlock> shakingTable = registrate.block("shaking_table", ShakingTableBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .transform(TagGen.pickaxeOnly())
+            .transform(BlockStressDefaults.setImpact(12.0))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate(new ShakingTableGenerator()::generate)
+            .item()
+            .transform(customItemModel())
+            .register();
+    
     public static final BlockEntry<ReverbaratoryBlock> reverbaratory = registrate.block("reverbaratory", ReverbaratoryBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())

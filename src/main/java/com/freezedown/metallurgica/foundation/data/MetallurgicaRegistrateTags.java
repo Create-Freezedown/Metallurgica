@@ -7,6 +7,7 @@ import com.drmangotea.createindustry.registry.TFMGItems;
 import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
+import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -46,6 +47,10 @@ public class MetallurgicaRegistrateTags {
         prov.tag(MetallurgicaTags.AllBlockTags.REVERBARATORY_INPUT.tag)
                 .add(
                         AllBlocks.CHUTE.get()
+                );
+        prov.tag(MetallurgicaTags.AllBlockTags.DEPOSITS.tag)
+                .add(
+                        MetallurgicaMaterials.FLUORITE.MATERIAL.depositBlock().get()
                 );
         for (MetallurgicaTags.AllBlockTags tag : MetallurgicaTags.AllBlockTags.values()) {
             if (tag.alwaysDatagen) {

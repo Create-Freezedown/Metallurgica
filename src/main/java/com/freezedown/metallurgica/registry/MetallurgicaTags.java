@@ -94,6 +94,7 @@ public class MetallurgicaTags {
         REVERBARATORY_GLASS,
         REVERBARATORY_WALL,
         REVERBARATORY_INPUT,
+        DEPOSITS,
         ;
         
         public final TagKey<Block> tag;

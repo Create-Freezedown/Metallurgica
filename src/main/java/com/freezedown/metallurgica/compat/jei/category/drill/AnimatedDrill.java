@@ -25,29 +25,34 @@ public class AnimatedDrill extends AnimatedKinetics {
         
         for (int i = 0; i < expansionAmount; i++) {
             blockElement(MetallurgicaBlocks.drillExpansion.getDefaultState())
+                    .atLocal(0, -2 + i, 0)
                     .scale(scale)
                     .render(matrixStack);
         }
         
         blockElement(deposit)
-                .atLocal(0, 3, 0)
+                .atLocal(0, 0, 0)
                 .scale(scale)
                 .render(matrixStack);
         
         blockElement(MetallurgicaBlocks.drillTower.getDefaultState())
-                .atLocal(0, 2, 0)
+                .atLocal(0, -1, 0)
                 .scale(scale)
                 .render(matrixStack);
         
         blockElement(cogwheel())
-                .atLocal(0, 1, 0)
+                .atLocal(0, -2, 0)
                 .rotateBlock(0, getCurrentAngle() * 2, 0)
                 .scale(scale)
                 .render(matrixStack);
         
         blockElement(MetallurgicaBlocks.drillActivator.getDefaultState())
-                .atLocal(0, 1, 0)
+                .atLocal(0, -2, 0)
                 .scale(scale)
                 .render(matrixStack);
+        
+        matrixStack.scale((float)scale, (float)(-scale), (float)scale);
+        matrixStack.translate(0.0, -1.8, 0.0);
+        matrixStack.popPose();
     }
 }

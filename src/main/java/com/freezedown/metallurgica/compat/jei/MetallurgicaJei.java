@@ -6,6 +6,8 @@ import com.freezedown.metallurgica.compat.jei.category.drill.DrillingCategory;
 import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
 import com.freezedown.metallurgica.compat.jei.category.electrolyzer.ElectrolysisCategory;
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
+import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
+import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.registry.*;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.fluids.VirtualFluid;
@@ -105,8 +107,16 @@ public class MetallurgicaJei implements IModPlugin {
                         .catalyst(MetallurgicaBlocks.drillActivator::get)
                         .catalyst(MetallurgicaBlocks.drillExpansion::get)
                         .doubleItemIcon(MetallurgicaMaterials.BAUXITE.MATERIAL.depositBlock().get(), MetallurgicaItems.loosenedBauxite.get())
-                        .emptyBackground(177, 123)
+                        .emptyBackground(177, 150)
                         .build("deposit_drilling", DrillingCategory::new)
+        );
+        allCategories.add(2,
+                builder(ShakingRecipe.class)
+                        .addTypedRecipes(MetallurgicaRecipeTypes.shaking)
+                        .catalyst(MetallurgicaBlocks.shakingTable::get)
+                        .itemIcon(MetallurgicaBlocks.shakingTable.get())
+                        .emptyBackground(177, 70)
+                        .build("shaking", ShakingCategory::new)
         );
     }
 }

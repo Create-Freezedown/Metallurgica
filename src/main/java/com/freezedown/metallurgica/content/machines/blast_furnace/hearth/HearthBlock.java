@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.content.machines.blast_furnace.hearth;
 
-import com.drmangotea.createindustry.blocks.machines.metal_processing.blast_furnace.BlastFurnaceOutputBlock;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaBlockPatterns;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

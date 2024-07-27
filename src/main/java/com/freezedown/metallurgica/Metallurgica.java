@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica;
 
+import com.drmangotea.createindustry.CreateTFMG;
 import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
@@ -14,6 +15,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.item.TooltipModifier;
 import com.simibubi.create.infrastructure.worldgen.AllOreFeatureConfigEntries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -38,6 +43,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import static com.simibubi.create.foundation.item.TooltipHelper.styleFromColor;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Metallurgica.ID)
@@ -68,6 +75,13 @@ public class Metallurgica
 };
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);
     public static final RegistryObject<Codec<? extends OreModifier>> oreGen_CODEC = BIOME_MODIFIERS.register("generation_ores", () -> Codec.unit(OreModifier.INSTANCE));
+    public static final TooltipHelper.Palette METALLURGICA_PALETTE = new TooltipHelper.Palette(styleFromColor(0x383d59), styleFromColor(0x717388));
+    static {
+        registrate.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, METALLURGICA_PALETTE)
+                .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
+        CreateTFMG.REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, METALLURGICA_PALETTE)
+                .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
+    }
     
     public Metallurgica()
     {
@@ -86,7 +100,7 @@ public class Metallurgica
         MetallurgicaRecipeTypes.register(modEventBus);
         MetallurgicaPackets.registerPackets();
         MetallurgicaOreFeatureConfigEntries.init();
-        MetallurgicaConfigs.register(ModLoadingContext.get());
+        MetallurgicaConfigs.register(modLoadingContext);
         MetallurgicaFeatures.register(modEventBus);
         MetallurgicaPlacementModifiers.register(modEventBus);
         MBuiltinRegistration.register(modEventBus);
@@ -118,13 +132,15 @@ public class Metallurgica
     public void onServerStart(ServerAboutToStartEvent event)
     {
         LOGGER.info("Thanks for using Metallurgica! Expect a severe lack of ores in your world :3");
-        AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
+        if (AllOreFeatureConfigEntries.ZINC_ORE != null)
+            AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
         LOGGER.info("Double checking our cool little ore frequency thingy :3");
-        AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
+        if (AllOreFeatureConfigEntries.ZINC_ORE != null)
+            AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }
 
     @Mod.EventBusSubscriber(modid = ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

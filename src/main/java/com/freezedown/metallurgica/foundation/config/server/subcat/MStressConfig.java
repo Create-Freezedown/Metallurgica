@@ -8,7 +8,6 @@ import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,9 +39,6 @@ public class MStressConfig extends ConfigBase implements BlockStressValues.IStre
         builder.pop();
     }
     
-    public String getName() {
-        return "stressValues";
-    }
     
     public double getImpact(Block block) {
         block = this.redirectValues(block);
@@ -58,6 +54,13 @@ public class MStressConfig extends ConfigBase implements BlockStressValues.IStre
         return value != null ? (Double)value.get() : 0.0;
     }
     
+    public Couple<Integer> getGeneratedRPM(Block block) {
+        block = this.redirectValues(block);
+        ResourceLocation key = RegisteredObjects.getKeyOrThrow(block);
+        Supplier<Couple<Integer>> supplier = BlockStressDefaults.GENERATOR_SPEEDS.get(key);
+        return supplier == null ? null : supplier.get();
+    }
+    
     public boolean hasImpact(Block block) {
         block = this.redirectValues(block);
         ResourceLocation key = RegisteredObjects.getKeyOrThrow(block);
@@ -70,13 +73,6 @@ public class MStressConfig extends ConfigBase implements BlockStressValues.IStre
         return this.getCapacities().containsKey(key);
     }
     
-    public @Nullable Couple<Integer> getGeneratedRPM(Block block) {
-        block = this.redirectValues(block);
-        ResourceLocation key = RegisteredObjects.getKeyOrThrow(block);
-        Supplier<Couple<Integer>> supplier = BlockStressDefaults.GENERATOR_SPEEDS.get(key);
-        return supplier == null ? null : supplier.get();
-    }
-    
     protected Block redirectValues(Block block) {
         return block;
     }
@@ -87,6 +83,10 @@ public class MStressConfig extends ConfigBase implements BlockStressValues.IStre
     
     public Map<ResourceLocation, ForgeConfigSpec.ConfigValue<Double>> getCapacities() {
         return this.capacities;
+    }
+    
+    public String getName() {
+        return "stressValues.v" + BlockStressDefaults.FORCED_UPDATE_VERSION;
     }
     
     private static class Comments {

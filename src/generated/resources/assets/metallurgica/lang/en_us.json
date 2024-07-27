@@ -47,6 +47,7 @@
   "block.metallurgica.native_gold_deposit": "Native Gold Deposit",
   "block.metallurgica.native_gold_rich_stone": "Native Gold Rich Stone",
   "block.metallurgica.reverbaratory": "Reverbaratory",
+  "block.metallurgica.shaking_table": "Shaking Table",
   "block.metallurgica.tuyere": "Tuyere",
   "create.goggles.drill_activator": "Drill Status:",
   "create.goggles.drill_activator.deposit": "Extracting: %s",
@@ -182,6 +183,7 @@
   "metallurgica.impurity.tin": "Tin",
   "metallurgica.impurity.unknown": "Missing Translation for %s",
   "metallurgica.item_appendages.impure": "Impure",
+  "metallurgica.jei.required_efficiency": "Required Efficiency: %s",
   "metallurgica.tooltips.impurities": "Impurities:",
   "recipe.metallurgica.electrolysis": "Electrolysis"
 }

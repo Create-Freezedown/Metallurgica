@@ -34,6 +34,7 @@ public class MetallurgicaItems {
             alluvialCassiterite = registrate.metallurgicaItem("alluvial_cassiterite", "alluvial_materials/cassiterite", "alluvial_materials"),
 
     //COPPER PROCESSING
+            copperRubble = registrate.metallurgicaItem("copper_rubble", "material_rubble/copper", "material_rubble"),
             copperOxide = registrate.metallurgicaItem("copper_oxide", "dusts/copper_oxide", "dusts"),
 
     //BAUXITE PROCESSING

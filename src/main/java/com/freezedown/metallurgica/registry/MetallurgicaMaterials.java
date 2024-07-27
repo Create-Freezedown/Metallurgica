@@ -9,55 +9,58 @@ public enum MetallurgicaMaterials {
     //COPPER
     NATIVE_COPPER(26, 7, -3, 97, 8, -3, 97),
     MALACHITE(true),
-    CHALKOPYRITE(),
+    //CHALKOPYRITE(),
 
     //GOLD
     NATIVE_GOLD(12, 4, -12, 56, 5, -12, 56),
 
     //IRON
     MAGNETITE(23, 4, -3, 128, 5, -3, 128, true),
-    HEMATITE(),
-    PENTLANDITE(),
+    //HEMATITE(),
+    //PENTLANDITE(),
 
     //LITHIUM/ALUMINUM
     BAUXITE(19, 9, -30, 70, 10, -30, 70),
-    PETALITE(),
-    SPODUMENE(),
+    //PETALITE(),
+    //SPODUMENE(),
 
     //LEAD
-    GALENA(),
-    NATIVE_LEAD(),
-    PYROMORPHITE(),
+    //GALENA(),
+    //NATIVE_LEAD(),
+    //PYROMORPHITE(),
 
     //ZINC
-    SPHALRITE(),
+    //SPHALRITE(),
 
     //TUNGSTEN
-    WOLFRAMITE(),
+    //WOLFRAMITE(),
 
     //TITANIUM
-    RUTILE(),
+    //RUTILE(),
 
     //URANIUM/THORIUM
-    URANINITE(),
-    MONAZITE(),
+    //URANINITE(),
+    //MONAZITE(),
 
     //PLATINUM
-    SPERRYLITE(),
+    //SPERRYLITE(),
 
     //Silver
-    ARGENTITE(),
-    CHLORARGYRITE(),
+    //ARGENTITE(),
+    //CHLORARGYRITE(),
 
     //LOTION (????)
-    CALAMINE(),
+    //CALAMINE(),
 
     //LIMESTONE
-    DOLOMITE(),
+    //DOLOMITE(),
 
     //MAGNESIUM
-    MEGNESITE(),
-    CASSITERITE()
+    //MEGNESITE(),
+    CASSITERITE(),
+    
+    //FLUORITE
+    FLUORITE(),
     ;
 
     public MOreFeatureConfigEntry DEPOSIT;

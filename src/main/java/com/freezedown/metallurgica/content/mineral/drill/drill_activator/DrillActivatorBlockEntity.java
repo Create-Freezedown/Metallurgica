@@ -1,15 +1,14 @@
 package com.freezedown.metallurgica.content.mineral.drill.drill_activator;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.mineral.deposit.*;
+import com.freezedown.metallurgica.content.mineral.deposit.Deposit;
+import com.freezedown.metallurgica.content.mineral.deposit.DepositManager;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.foundation.advancement.AllAdvancements;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
+import com.simibubi.create.foundation.item.SmartInventory;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
 import joptsimple.internal.Strings;
@@ -22,50 +21,32 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
-    public ItemStack item;
     public boolean isFull;
-    public DrillActivatorItemHandler itemHandler;
-    public LazyOptional<IItemHandler> lazyHandler;
-    public VersionedInventoryTrackerBehaviour invVersionTracker;
+    public LazyOptional<IItemHandlerModifiable> itemCapability;
+    public SmartInventory inventory;
     public static final int maxProgress = 30;
     
     public DrillActivatorBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
-        item = ItemStack.EMPTY;
-        itemHandler = new DrillActivatorItemHandler(this);
-        lazyHandler = LazyOptional.of(() -> itemHandler);
+        this.inventory = new SmartInventory(1, this).forbidInsertion().withMaxStackSize(256);
+        
+        this.itemCapability = LazyOptional.of(() -> new CombinedInvWrapper(this.inventory));
     }
-    public void setItem(ItemStack stack) {
-        item = stack;
-        invVersionTracker.reset();
-        if (level == null) {
-            return;
-        }
-        if (!level.isClientSide) {
-            notifyUpdate();
-            award(AllAdvancements.CHUTE);
-        }
-    }
-    @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        behaviours.add(invVersionTracker = new VersionedInventoryTrackerBehaviour(this));
-    }
-    protected boolean canAcceptItem() {
-        return itemHandler.getStackInSlot(1).isEmpty();
-    }
+    
     public int height;
     public float efficiency;
     public boolean canActivate;
@@ -88,7 +69,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
             return;
         }
         
-        isFull = itemHandler.getStackInSlot(1).getCount() >= 64;
+        isFull = inventory.getStackInSlot(0).getCount() >= inventory.getMaxStackSize();
         
         findDeposit();
         if (!(this.level.getBlockState(this.worldPosition.below()).getBlock() instanceof DrillTowerBlock) )
@@ -155,6 +136,10 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         
     }
     
+    public Deposit depositType(BlockState block) {
+        return DepositManager.getDepositPropertiesOrNull(block);
+    }
+    
     
     private void checkDrillsAndActivate() {
         
@@ -184,8 +169,8 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         if (efficiency >= deposit.minimumEfficiency()) {
             float successChance = deposit.chance() * efficiency;
             if (this.level.random.nextFloat() <= (successChance *  0.23)) {
-                Metallurgica.LOGGER.info("Progress increased by 1, now at {}", progress);
                 progress++;
+                Metallurgica.LOGGER.info("Progress increased by 1, now at {}", progress);
             }
         }
     }
@@ -235,27 +220,23 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         }
         int efficiency = Mth.floor(this.efficiency);
         int amount = Mth.randomBetweenInclusive(level.random,1, 3 + efficiency);
-        if (itemHandler.getStackInSlot(1).getCount() < 64 && itemHandler.getStackInSlot(1) == deposit.mineralItem()) {
-            ItemStack stack = itemHandler.getStackInSlot(0);
+        if (inventory.getStackInSlot(0).getCount() < inventory.getMaxStackSize() && inventory.getStackInSlot(0).getItem() == deposit.mineralItem().getItem()) {
+            ItemStack stack = inventory.getStackInSlot(0);
             stack.grow(amount);
+            inventory.insertItem(0, stack, true);
             Metallurgica.LOGGER.info("Grew stack by {} items", amount);
-            itemHandler.insertItem(1, stack, true);
-        } else if (itemHandler.getStackInSlot(1).isEmpty()) {
+        } else if (inventory.getStackInSlot(0).isEmpty()) {
             ItemStack output = deposit.mineralItem();
             output.setCount(amount);
+            inventory.insertItem(0, output, true);
             Metallurgica.LOGGER.info("Set stack to {} items", amount);
-            itemHandler.insertItem(1, output, true);
         }
-    }
-    
-    public Deposit depositType(BlockState block) {
-        return DepositManager.getDepositPropertiesOrNull(block);
     }
     
     
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
-        item = ItemStack.of(compound.getCompound("Item"));
+        this.inventory.deserializeNBT(compound.getCompound("Inventory"));
         if (compound.contains("depositX")) {
             depositPos = new BlockPos(compound.getInt("depositX"), compound.getInt("depositY"), compound.getInt("depositZ"));
         }
@@ -267,7 +248,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
     
     public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
-        compound.put("Item", item.serializeNBT());
+        compound.put("Inventory", this.inventory.serializeNBT());
         if (depositPos != null) {
             compound.putInt("depositX", depositPos.getX());
             compound.putInt("depositY", depositPos.getY());
@@ -281,16 +262,20 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
     
     @Override
     public void invalidate() {
-        if (lazyHandler != null)
-            lazyHandler.invalidate();
         super.invalidate();
     }
+    
     @Override
-    public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER)
-            return lazyHandler.cast();
-        return super.getCapability(cap, side);
+    public void destroy() {
+        super.destroy();
+        Containers.dropItemStack(level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), inventory.getStackInSlot(0));
     }
+    
+    @Nonnull
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+        return cap == ForgeCapabilities.ITEM_HANDLER ? this.itemCapability.cast() : super.getCapability(cap, side);
+    }
+    
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (this.level == null) {
             return false;
@@ -308,7 +293,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         Lang.translate("goggles.drill_activator.deposit", extractingComponent).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
         if (isPlayerSneaking) {
             Lang.translate("goggles.drill_activator.item").forGoggles(tooltip);
-            if (itemHandler.getStackInSlot(1).isEmpty()) {
+            if (inventory.getStackInSlot(0).isEmpty()) {
                 Lang.translate("goggles.drill_activator.item.empty").style(ChatFormatting.DARK_RED).forGoggles(tooltip);
             } else {
                 tooltip.add(storedItem());
@@ -328,11 +313,11 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         return true;
     }
     private MutableComponent storedItem() {
-        MutableComponent itemName = Component.literal(itemHandler.getStackInSlot(1).getDisplayName().getString().replace("[", "").replace("]", ""));
+        MutableComponent itemName = Component.literal(inventory.getStackInSlot(0).getDisplayName().getString().replace("[", "").replace("]", ""));
         return Lang.builder()
                 .text(Strings.repeat(' ', 4))
                 .add(itemName)
-                .text(" x" + itemHandler.getStackInSlot(1).getCount())
+                .text(" x" + inventory.getStackInSlot(0).getCount())
                 .style(ChatFormatting.DARK_GREEN)
                 .component();
     }

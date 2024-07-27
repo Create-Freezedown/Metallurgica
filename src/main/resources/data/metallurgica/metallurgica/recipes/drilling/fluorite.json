@@ -1,0 +1,15 @@
+{
+  "type": "metallurgica:deposit_drilling",
+  "ingredients": [
+    {
+      "item": "metallurgica:fluorite_deposit"
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:fluorite"
+    }
+  ],
+  "chance": 0.43,
+  "minEfficiency": 4.7
+}

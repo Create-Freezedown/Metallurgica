@@ -4,10 +4,12 @@ import com.drmangotea.createindustry.CreateTFMG;
 import com.drmangotea.createindustry.registry.TFMGFluids;
 import com.drmangotea.createindustry.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
+import com.simibubi.create.foundation.fluid.FluidIngredient;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -18,6 +20,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +132,12 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
             return MetallurgicaItems.magnetiteLumps.get();
         }
         public static ItemLike richMagnetite() { return MetallurgicaMaterials.MALACHITE.MATERIAL.rich().get(); }
+        public static ItemLike goldNugget() {
+            return Items.GOLD_NUGGET;
+        }
+        public static ItemLike sand() {
+            return Items.SAND;
+        }
     }
     
     public static class F {
@@ -184,6 +193,14 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         }
         public static Fluid moltenCopper() {
             return MetallurgicaFluids.moltenCopper.get();
+        }
+        
+        public static FluidStack riverSandStack(String mineral, int amount) {
+            return RiverSandFluid.of(amount, mineral);
+        }
+        
+        public static FluidIngredient riverSand(String mineral, int amount) {
+            return FluidIngredient.fromFluidStack(riverSandStack(mineral, amount));
         }
     }
 }

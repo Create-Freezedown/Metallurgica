@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.content.forging.advanced_casting;
 
-import com.drmangotea.createindustry.registry.TFMGRecipeTypes;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.google.gson.JsonObject;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;

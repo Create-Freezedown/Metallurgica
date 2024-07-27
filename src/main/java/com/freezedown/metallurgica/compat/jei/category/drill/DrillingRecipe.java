@@ -16,7 +16,7 @@ public class DrillingRecipe extends ProcessingRecipe<RecipeWrapper> {
     
     public static DrillingRecipe create(ItemStack from, ItemStack to, float efficiency) {
         minEfficiency = efficiency;
-        ResourceLocation recipeId = Metallurgica.asResource("drilling_" + ForgeRegistries.ITEMS.getKey(to.getItem()).toString().replace(":", "/"));
+        ResourceLocation recipeId = Metallurgica.asResource("deposit_drilling_" + ForgeRegistries.ITEMS.getKey(to.getItem()).toString().replace(":", "/"));
         return new ProcessingRecipeBuilder<>(DrillingRecipe::new, recipeId)
                 .withItemIngredients(Ingredient.of(from))
                 .withSingleItemOutput(to)
@@ -24,7 +24,7 @@ public class DrillingRecipe extends ProcessingRecipe<RecipeWrapper> {
     }
     
     public DrillingRecipe(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
-        super(MetallurgicaRecipeTypes.drilling, params);
+        super(MetallurgicaRecipeTypes.deposit_drilling, params);
     }
     
     public float getMinEfficiency() {

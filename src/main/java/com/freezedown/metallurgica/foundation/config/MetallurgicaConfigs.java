@@ -60,11 +60,11 @@ public class MetallurgicaConfigs {
         common = register(MCommon::new, ModConfig.Type.COMMON);
         client = register(MClient::new, ModConfig.Type.CLIENT);
         
-        for (Map.Entry<ModConfig.Type, ConfigBase> typeConfigBaseEntry : CONFIGS.entrySet()) {
-            context.registerConfig(typeConfigBaseEntry.getKey(), typeConfigBaseEntry.getValue().specification);
+        for (Map.Entry<ModConfig.Type, ConfigBase> pair : CONFIGS.entrySet()) {
+            context.registerConfig(pair.getKey(), pair.getValue().specification);
         }
         
-        BlockStressValues.registerProvider(context.getActiveNamespace(), server().stressValues);
+        BlockStressValues.registerProvider(context.getActiveNamespace(), server().kinetics.stressValues);
     }
     
     @SubscribeEvent

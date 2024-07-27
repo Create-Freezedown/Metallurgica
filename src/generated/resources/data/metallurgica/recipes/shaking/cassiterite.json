@@ -1,0 +1,26 @@
+{
+  "type": "metallurgica:shaking",
+  "ingredients": [
+    {
+      "item": "metallurgica:cassiterite"
+    }
+  ],
+  "processingTime": 100,
+  "results": [
+    {
+      "item": "metallurgica:cassiterite_rubble"
+    },
+    {
+      "chance": 0.25,
+      "item": "metallurgica:cassiterite_rubble"
+    },
+    {
+      "chance": 0.25,
+      "item": "minecraft:sand"
+    },
+    {
+      "chance": 0.5,
+      "item": "minecraft:granite"
+    }
+  ]
+}

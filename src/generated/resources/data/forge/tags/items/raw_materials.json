@@ -1,10 +1,10 @@
 {
   "values": [
     "metallurgica:native_copper",
+    "metallurgica:malachite",
     "metallurgica:native_gold",
     "metallurgica:magnetite",
     "metallurgica:bauxite",
-    "metallurgica:malachite",
     "metallurgica:cassiterite",
     "metallurgica:fluorite"
   ]

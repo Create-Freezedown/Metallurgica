@@ -13,6 +13,9 @@ import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBloc
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerInstance;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlockEntity;
+import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlockEntity;
+import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableInstance;
+import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableRenderer;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorInstance;
@@ -20,10 +23,6 @@ import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillAc
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import com.tterrag.registrate.util.entry.BlockEntry;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static com.freezedown.metallurgica.registry.MetallurgicaBlocks.*;
 import static com.freezedown.metallurgica.Metallurgica.registrate;
@@ -64,6 +63,9 @@ public class MetallurgicaBlockEntities {
             .blockEntity("fluid_output", FluidOutputBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.fluidOutput)
             .register();
+    
+    public static final BlockEntityEntry<ShakingTableBlockEntity> shakingTable =
+            registrate.blockEntity("shaking_table", ShakingTableBlockEntity::new, ShakingTableInstance::new, ShakingTableRenderer::new, MetallurgicaBlocks.shakingTable);
 
 
 

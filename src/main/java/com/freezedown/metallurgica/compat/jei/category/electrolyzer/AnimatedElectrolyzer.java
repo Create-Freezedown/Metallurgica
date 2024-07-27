@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.compat.jei.category.electrolyzer;
 
-import com.drmangotea.createindustry.recipes.jei.DistillationCategory;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;

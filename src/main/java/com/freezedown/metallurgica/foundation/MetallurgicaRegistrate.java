@@ -8,7 +8,6 @@ import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingG
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
-import com.freezedown.metallurgica.foundation.material.GemEntry;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
@@ -168,9 +167,6 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return new MaterialEntry(this, name, richb);
     }
     
-    public GemEntry gem(String name) {
-        return new GemEntry(this, name);
-    }
 
     public ItemEntry<Item> simpleItem(String name, String... tags) {
         return item(name, Item::new, p->p, tags);

@@ -29,9 +29,5 @@ public class MWorldGen extends ConfigBase {
     
     private static class Comments {
         static String disable = "Prevents all worldgen added by Metallurgica from taking effect";
-        static String magnetite = "Modify magnetite ore generation";
-        static String nativeCopper = "Modify native copper ore generation";
-        static String bauxite = "Modify bauxite ore generation";
-        static String nativeGold = "Modify native gold ore generation";
     }
 }
