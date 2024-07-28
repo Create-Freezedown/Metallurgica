@@ -2,14 +2,11 @@ package com.freezedown.metallurgica.compat.jei.category.shaking;
 
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.negodya1.vintageimprovements.compat.jei.category.animations.AnimatedVibratingTable;
-import com.negodya1.vintageimprovements.content.kinetics.vibration.VibratingRecipe;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;

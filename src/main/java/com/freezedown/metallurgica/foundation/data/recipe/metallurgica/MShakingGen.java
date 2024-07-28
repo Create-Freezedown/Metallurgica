@@ -19,7 +19,15 @@ public class MShakingGen extends MProcessingRecipeGen {
             .output(0.25f, MetallurgicaMaterials.CASSITERITE.MATERIAL.rubble().get(), 1)
             .output(0.25f, I.sand(), 1)
             .output(0.5f, Items.GRANITE, 1)
-            .duration(100))
+            .duration(600)),
+    
+    goldNuggetFromRedSand = create(Metallurgica.asResource("gold_nugget_from_red_sand"), b -> b
+            .require(Items.RED_SAND)
+            .require(F.water(), 250)
+            .output(0.23f, Items.GOLD_NUGGET, 3)
+            .output(0.42f, Items.GOLD_NUGGET, 1)
+            .output(0.1f, Items.DEAD_BUSH, 1)
+            .duration(200))
             
             ;
     

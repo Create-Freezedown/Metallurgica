@@ -76,10 +76,11 @@ public class Metallurgica
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);
     public static final RegistryObject<Codec<? extends OreModifier>> oreGen_CODEC = BIOME_MODIFIERS.register("generation_ores", () -> Codec.unit(OreModifier.INSTANCE));
     public static final TooltipHelper.Palette METALLURGICA_PALETTE = new TooltipHelper.Palette(styleFromColor(0x383d59), styleFromColor(0x717388));
+    public static final TooltipHelper.Palette TFMG_PALETTE = new TooltipHelper.Palette(styleFromColor(0x292c2d), styleFromColor(0x494a4b));
     static {
         registrate.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, METALLURGICA_PALETTE)
                 .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
-        CreateTFMG.REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, METALLURGICA_PALETTE)
+        CreateTFMG.REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, TFMG_PALETTE)
                 .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
     }
     

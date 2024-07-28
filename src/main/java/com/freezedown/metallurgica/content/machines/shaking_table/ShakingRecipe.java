@@ -23,6 +23,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -40,65 +41,13 @@ public class ShakingRecipe extends ProcessingRecipe<RecipeWrapper> implements IA
     }
     
     public boolean matches(RecipeWrapper inv, Level worldIn) {
-        return inv.isEmpty() ? false : ((Ingredient)this.ingredients.get(0)).test(inv.getItem(0));
+        return inv.isEmpty() ? false : this.ingredients.get(0).test(inv.getItem(0));
     }
-    
-    public static boolean apply(VibratingTableBlockEntity centrifuge, Recipe<?> recipe) {
-        return apply(centrifuge, recipe, false);
-    }
-    
-    private static boolean apply(VibratingTableBlockEntity centrifuge, Recipe<?> recipe, boolean test) {
-        IItemHandlerModifiable availableItems = (IItemHandlerModifiable)centrifuge.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse((IItemHandler) null);
-        if (availableItems == null) {
-            return false;
-        } else {
-            List<ItemStack> recipeOutputItems = new ArrayList();
-            List<Ingredient> ingredients = new LinkedList(recipe.getIngredients());
-            boolean[] var6 = Iterate.trueAndFalse;
-            int var7 = var6.length;
-            
-            for(int var8 = 0; var8 < var7; ++var8) {
-                boolean simulate = var6[var8];
-                if (!simulate && test) {
-                    return true;
-                }
-                
-                int[] extractedItemsFromSlot = new int[availableItems.getSlots()];
-                
-                label62:
-                for(int i = 0; i < ingredients.size(); ++i) {
-                    Ingredient ingredient = (Ingredient)ingredients.get(i);
-                    
-                    for(int slot = 0; slot < availableItems.getSlots(); ++slot) {
-                        if (!simulate || availableItems.getStackInSlot(slot).getCount() > extractedItemsFromSlot[slot]) {
-                            ItemStack extracted = availableItems.getStackInSlot(slot);
-                            if (ingredient.test(extracted)) {
-                                if (!simulate) {
-                                    extracted.shrink(1);
-                                }
-                                
-                                int var10002 = extractedItemsFromSlot[slot]++;
-                                continue label62;
-                            }
-                        }
-                    }
-                    
-                    return false;
-                }
-                
-                if (simulate && recipe instanceof com.negodya1.vintageimprovements.content.kinetics.vibration.VibratingRecipe) {
-                    com.negodya1.vintageimprovements.content.kinetics.vibration.VibratingRecipe centrifugeRecipe = (com.negodya1.vintageimprovements.content.kinetics.vibration.VibratingRecipe)recipe;
-                    recipeOutputItems.addAll(centrifugeRecipe.rollResults());
-                    recipeOutputItems.addAll(centrifugeRecipe.getRemainingItems(centrifuge.inputInv));
-                }
-                
-                if (!centrifuge.acceptOutputs(recipeOutputItems, simulate)) {
-                    return false;
-                }
-            }
-            
-            return true;
+    public boolean matches(RecipeWrapper inv, FluidTank tank, Level worldIn) {
+        if (!this.getFluidIngredients().isEmpty()) {
+            return this.matches(inv, worldIn) && this.getFluidIngredients().get(0).test(tank.getFluid());
         }
+        return this.matches(inv, worldIn);
     }
     
     protected int getMaxFluidInputCount() {

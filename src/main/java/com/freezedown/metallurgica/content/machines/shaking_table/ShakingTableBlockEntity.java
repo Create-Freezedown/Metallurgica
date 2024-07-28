@@ -1,8 +1,12 @@
 package com.freezedown.metallurgica.content.machines.shaking_table;
 
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
+import com.simibubi.create.AllParticleTypes;
+import com.simibubi.create.content.fluids.FluidFX;
+import com.simibubi.create.content.fluids.particle.FluidParticleData;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.utility.Lang;
@@ -12,9 +16,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -57,25 +63,23 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
             //    return;
             //}
             if (this.timer > 0) {
-                this.timer -= this.getProcessingSpeed();
+                this.timer -= getProcessingSpeed();
                 if (this.level.isClientSide) {
                     this.spawnParticles();
                 } else {
                     if (this.timer <= 0 && this.haveRecipe()) {
-                        this.shakingTableBehaviour.heldItem.stack.shrink(1);
                         this.process();
                         this.timer = 0;
                     }
             
                 }
-            } else if (this.lastRecipe != null && lastRecipe.getIngredients().get(0).test(this.shakingTableBehaviour.heldItem.stack)) {
+            } else if (this.shakingTableBehaviour.heldItem != null && !this.shakingTableBehaviour.heldItem.stack.isEmpty()) {
                 RecipeWrapper inventoryIn = new RecipeWrapper(this.shakingTableBehaviour.itemHandler);
-                if (this.lastRecipe != null && this.lastRecipe.matches(inventoryIn, this.level)) {
+                if (this.lastRecipe != null && this.haveRecipe()) {
                     this.timer = this.lastRecipe.getProcessingDuration();
                     if (this.timer == 0) {
                         this.timer = 100;
                     }
-                    
                     this.sendData();
                 } else {
                     Optional<ShakingRecipe> recipe = MetallurgicaRecipeTypes.shaking.find(inventoryIn, this.level);
@@ -93,17 +97,29 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
     }
     
     public void spawnParticles() {
+        if (level == null) {
+            return;
+        }
         if (this.haveRecipe()) {
             ItemStack stackInSlot = this.shakingTableBehaviour.getHeldItemStack();
+            FluidStack fluid = this.tankInventory.getFluid();
+            RandomSource r = level.random;
+            float rim = 1 / 16f;
+            float space = 13.5f / 16f;
+            float surface = worldPosition.getY() + rim + space;
+            float x = worldPosition.getX() + rim + space * r.nextFloat();
+            float z = worldPosition.getZ() + rim + space * r.nextFloat();
             if (!stackInSlot.isEmpty()) {
                 ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, stackInSlot);
                 float angle = this.level.random.nextFloat() * 360.0F;
                 Vec3 offset = new Vec3(0.0, 0.0, 0.5);
-                offset = VecHelper.rotate(offset, (double)angle, Direction.Axis.Y);
+                offset = VecHelper.rotate(offset, angle, Direction.Axis.Y);
                 Vec3 target = VecHelper.rotate(offset, this.getSpeed() > 0.0F ? 25.0 : -25.0, Direction.Axis.Y);
-                Vec3 center = offset.add(VecHelper.getCenterOf(this.worldPosition));
                 target = VecHelper.offsetRandomly(target.subtract(offset), this.level.random, 0.0078125F);
-                this.level.addParticle(data, center.x, center.y + 0.5, center.z, target.x, target.y, target.z);
+                this.level.addParticle(data, x, surface, z, target.x, target.y, target.z);
+            }
+            if (!fluid.isEmpty()) {
+                level.addAlwaysVisibleParticle(new FluidParticleData(AllParticleTypes.BASIN_FLUID.get(), fluid), x, surface, z, 0, 0, 0);
             }
         }
     }
@@ -122,7 +138,7 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
             ItemStackHandler tester = new ItemStackHandler(1);
             tester.setStackInSlot(0, stack);
             RecipeWrapper inventoryIn = new RecipeWrapper(tester);
-            if (this.lastRecipe != null && this.lastRecipe.matches(inventoryIn, this.level)) {
+            if (this.lastRecipe != null && this.lastRecipe.matches(inventoryIn, tankInventory, this.level)) {
                 return true;
             } else
                 return MetallurgicaRecipeTypes.shaking.find(inventoryIn, this.level).isPresent();
@@ -134,10 +150,15 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
     }
     
     private void process() {
-       
+        if (!this.lastRecipe.getFluidIngredients().isEmpty()) {
+            this.tankInventory.drain(this.lastRecipe.getFluidIngredients().get(0).getRequiredAmount(), IFluidHandler.FluidAction.EXECUTE);
+        }
+        this.shakingTableBehaviour.heldItem.stack.shrink(1);
         this.lastRecipe.rollResults().forEach((stackx) -> {
             ItemHandlerHelper.insertItemStacked(this.shakingTableBehaviour.processingOutputBuffer, stackx, false);
         });
+        this.sendData();
+        this.setChanged();
     }
     
     
@@ -178,38 +199,20 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
         Optional<IFluidHandler> resolve = handler.resolve();
-        if (!resolve.isPresent()) {
+        if (resolve.isEmpty()) {
             return false;
         } else {
-            IFluidHandler tank = resolve.get();
-            if (tank.getTanks() == 0) {
-                return false;
+            LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+            
+            FluidStack fluidStack = tankInventory.getFluid();
+            if (!fluidStack.isEmpty()) {
+                Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+                Lang.builder().add(Lang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
             } else {
-                LangBuilder mb = Lang.translate("generic.unit.millibuckets");
-                boolean isEmpty = true;
-                
-                for(int i = 0; i < tank.getTanks(); ++i) {
-                    FluidStack fluidStack = tank.getFluidInTank(i);
-                    if (!fluidStack.isEmpty()) {
-                        Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                        Lang.builder().add(Lang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number((double)tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
-                        isEmpty = false;
-                    }
-                }
-                
-                if (tank.getTanks() > 1) {
-                    if (isEmpty) {
-                        tooltip.remove(tooltip.size() - 1);
-                    }
-                    
-                    return true;
-                } else if (!isEmpty) {
-                    return true;
-                } else {
-                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
-                    return true;
-                }
+                Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                return true;
             }
         }
+        return true;
     }
 }
