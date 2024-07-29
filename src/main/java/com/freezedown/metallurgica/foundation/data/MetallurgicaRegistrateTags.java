@@ -74,12 +74,14 @@ public class MetallurgicaRegistrateTags {
                 Items.COPPER_INGOT,
                 TFMGItems.ALUMINUM_INGOT.get(),
                 AllItems.ZINC_INGOT.get(),
+                AllItems.BRASS_INGOT.get(),
                 
                 //Nuggets
                 Items.IRON_NUGGET,
                 Items.GOLD_NUGGET,
                 AllItems.COPPER_NUGGET.get(),
                 AllItems.ZINC_NUGGET.get(),
+                AllItems.BRASS_NUGGET.get(),
                 
                 //Misc Items
                 TFMGItems.SULFUR_DUST.get(),

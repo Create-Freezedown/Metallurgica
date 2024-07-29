@@ -2,11 +2,9 @@ package com.freezedown.metallurgica.content.machines.shaking_table;
 
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.simibubi.create.AllParticleTypes;
-import com.simibubi.create.content.fluids.FluidFX;
 import com.simibubi.create.content.fluids.particle.FluidParticleData;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.utility.Lang;
@@ -16,7 +14,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -26,7 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -39,6 +35,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import java.util.List;
 import java.util.Optional;
 
+//TODO: Recipe continues even if the fluid requirement isn't met
 public class ShakingTableBlockEntity extends KineticBlockEntity {
     protected LazyOptional<IFluidHandler> fluidCapability;
     protected FluidTank tankInventory;
@@ -102,7 +99,6 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
         }
         if (this.haveRecipe()) {
             ItemStack stackInSlot = this.shakingTableBehaviour.getHeldItemStack();
-            FluidStack fluid = this.tankInventory.getFluid();
             RandomSource r = level.random;
             float rim = 1 / 16f;
             float space = 13.5f / 16f;
@@ -118,6 +114,20 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
                 target = VecHelper.offsetRandomly(target.subtract(offset), this.level.random, 0.0078125F);
                 this.level.addParticle(data, x, surface, z, target.x, target.y, target.z);
             }
+        }
+    }
+    public void spawnFluidParticles() {
+        if (level == null) {
+            return;
+        }
+        if (this.haveRecipe()) {
+            FluidStack fluid = this.tankInventory.getFluid();
+            RandomSource r = level.random;
+            float rim = 1 / 16f;
+            float space = 13.5f / 16f;
+            float surface = worldPosition.getY() + rim + space;
+            float x = worldPosition.getX() + rim + space * r.nextFloat();
+            float z = worldPosition.getZ() + rim + space * r.nextFloat();
             if (!fluid.isEmpty()) {
                 level.addAlwaysVisibleParticle(new FluidParticleData(AllParticleTypes.BASIN_FLUID.get(), fluid), x, surface, z, 0, 0, 0);
             }
@@ -197,22 +207,16 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
     
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
-        Optional<IFluidHandler> resolve = handler.resolve();
-        if (resolve.isEmpty()) {
-            return false;
+        LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+        
+        FluidStack fluidStack = tankInventory.getFluid();
+        if (!fluidStack.isEmpty()) {
+            Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+            Lang.builder().add(Lang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+            return true;
         } else {
-            LangBuilder mb = Lang.translate("generic.unit.millibuckets");
-            
-            FluidStack fluidStack = tankInventory.getFluid();
-            if (!fluidStack.isEmpty()) {
-                Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                Lang.builder().add(Lang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
-            } else {
-                Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
-                return true;
-            }
+            Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+            return true;
         }
-        return true;
     }
 }

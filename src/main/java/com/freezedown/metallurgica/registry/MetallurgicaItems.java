@@ -4,13 +4,9 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
-
-import static com.drmangotea.createindustry.CreateTFMG.REGISTRATE;
 
 public class MetallurgicaItems {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
@@ -46,6 +42,16 @@ public class MetallurgicaItems {
     public static final ItemEntry<MetallurgicaItem>
             fluoriteCluster =     registrate.cluster("fluorite_cluster"),
             fluoritePowder =      registrate.powder("fluorite_powder")
+                    ;
+    //RUTILE
+    public static final ItemEntry<MetallurgicaItem>
+            rutilePowder =        registrate.powder("rutile_powder")
+                    ;
+    
+    //MAGNESIUM
+    public static final ItemEntry<MetallurgicaItem>
+            magnesiumOxide =      registrate.metallurgicaItem("magnesium_oxide", "dusts/magnesium_oxide", "dusts"),
+            magnesiumChloride =   registrate.metallurgicaItem("magnesium_chloride" )
                     ;
     //METALS
     public static final ItemEntry<MetallurgicaItem>

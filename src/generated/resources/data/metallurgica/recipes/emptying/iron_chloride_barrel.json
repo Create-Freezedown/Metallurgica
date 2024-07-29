@@ -1,0 +1,17 @@
+{
+  "type": "create:emptying",
+  "ingredients": [
+    {
+      "item": "metallurgica:iron_chloride_bucket"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:bucket"
+    },
+    {
+      "amount": 1000,
+      "fluid": "metallurgica:iron_chloride"
+    }
+  ]
+}

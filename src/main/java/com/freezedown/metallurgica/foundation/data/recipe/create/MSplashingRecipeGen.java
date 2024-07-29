@@ -5,6 +5,8 @@ import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class MSplashingRecipeGen extends MProcessingRecipeGen {
     
@@ -19,6 +21,9 @@ public class MSplashingRecipeGen extends MProcessingRecipeGen {
     ;
     
     
+    public static Item getBucket(String name) {
+        return Metallurgica.registrate.get(name+"_bucket", ForgeRegistries.ITEMS.getRegistryKey()).get();
+    }
     
     public MSplashingRecipeGen(DataGenerator generator) {
         super(generator);

@@ -207,7 +207,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .register();
     }
     public ItemEntry<AlloyItem> alloyItem(String name, String... tags) {
-        return item(name, AlloyItem::new, p->p, tags);
+        return item(name, p -> new AlloyItem(p).showElementComposition(), p->p, tags);
     }
     public ItemEntry<AlloyItem> alloyNugget(String name) {
         return this.item(name, AlloyItem::new)

@@ -24,8 +24,6 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.List;
 
 public class AcidEffect implements OpenEndedPipe.IEffectHandler {
-    
-    
     protected final Acid acidType;
     
     public AcidEffect(Acid acidType) {
@@ -41,8 +39,6 @@ public class AcidEffect implements OpenEndedPipe.IEffectHandler {
     public void applyEffects(OpenEndedPipe pipe, FluidStack fluid) {
         Level world = pipe.getWorld();
         if (world.getGameTime() % 5 != 0) return;
-        Metallurgica.LOGGER.info("Applying acid effects from fluid: {}", Component.translatable(acidType.getFluidType().getDescriptionId()).getString());
-        Metallurgica.LOGGER.info("{} has an acidity of {}", Component.translatable(acidType.getFluidType().getDescriptionId()).getString(), acidType.getAcidity());
         float acidity = acidType.getAcidity();
         if (acidType.isNeutral()) {
             neutralEffect(pipe, acidType, world, acidity);

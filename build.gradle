@@ -117,8 +117,8 @@ repositories {
         }
     }
     maven {
-        name = 'Progwm16 maven'
-        url = 'https://dvs1.progwml6.com/files/maven'
+        name "JEI"
+        url "https://dvs1.progwml6.com/files/maven"
     }
     maven {
         name = 'tterrag maven'
@@ -134,6 +134,10 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
 }
 
 dependencies {
@@ -144,9 +148,9 @@ dependencies {
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
     implementation fg.deobf("curse.maven:krystal-core-937451:${krystal_core_version}")
 
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-$minecraft_version-common-api:$jei_version")
+    compileOnly fg.deobf("mezz.jei:jei-$minecraft_version-forge-api:$jei_version")
+    runtimeOnly fg.deobf("mezz.jei:jei-$minecraft_version-forge:$jei_version")
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
     testAnnotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

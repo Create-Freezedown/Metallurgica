@@ -27,6 +27,11 @@ public class AlloyItem extends MetallurgicaItem{
         super(pProperties);
     }
     
+    public AlloyItem showElementComposition() {
+        showElementComposition = true;
+        return this;
+    }
+    
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         

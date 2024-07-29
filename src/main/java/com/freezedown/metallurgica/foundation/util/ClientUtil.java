@@ -3,14 +3,24 @@ package com.freezedown.metallurgica.foundation.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 import static java.util.stream.Collectors.toList;
 
 public class ClientUtil {
+    public static String fromId(String key) {
+        String s = key.replaceAll("_", " ");
+        s = Arrays.stream(StringUtils.splitByCharacterTypeCamelCase(s)).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+        s = StringUtils.normalizeSpace(s);
+        return s;
+    }
+    
     public static List<Double> generateSequenceDoubleStream(double start, double end, double step) {
         return DoubleStream.iterate(start, d -> d <= end, d -> d + step)
                 .boxed()

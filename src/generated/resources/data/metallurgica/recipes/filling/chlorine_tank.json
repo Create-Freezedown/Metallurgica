@@ -1,0 +1,18 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:bucket"
+    },
+    {
+      "amount": 1000,
+      "fluid": "metallurgica:chlorine",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "metallurgica:chlorine_bucket"
+    }
+  ]
+}

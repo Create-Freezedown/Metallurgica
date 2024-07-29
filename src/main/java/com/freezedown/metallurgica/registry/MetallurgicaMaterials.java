@@ -36,7 +36,7 @@ public enum MetallurgicaMaterials {
     //WOLFRAMITE(),
 
     //TITANIUM
-    //RUTILE(),
+    RUTILE(),
 
     //URANIUM/THORIUM
     //URANINITE(),
@@ -56,7 +56,7 @@ public enum MetallurgicaMaterials {
     //DOLOMITE(),
 
     //MAGNESIUM
-    //MEGNESITE(),
+    MAGNESITE(),
     CASSITERITE(),
     
     //FLUORITE

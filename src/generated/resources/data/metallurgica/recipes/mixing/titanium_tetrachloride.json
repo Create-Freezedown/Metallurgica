@@ -1,0 +1,32 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "superheated",
+  "ingredients": [
+    {
+      "item": "metallurgica:rutile_powder"
+    },
+    {
+      "item": "metallurgica:rutile_powder"
+    },
+    {
+      "item": "createindustry:coal_coke_dust"
+    },
+    {
+      "item": "createindustry:coal_coke_dust"
+    },
+    {
+      "item": "createindustry:coal_coke_dust"
+    },
+    {
+      "amount": 500,
+      "fluid": "metallurgica:chlorine",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "amount": 300,
+      "fluid": "metallurgica:crude_titanium_tetrachloride"
+    }
+  ]
+}

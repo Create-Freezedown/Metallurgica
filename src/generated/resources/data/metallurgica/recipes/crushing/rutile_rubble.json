@@ -1,0 +1,18 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "metallurgica:rutile"
+    }
+  ],
+  "processingTime": 600,
+  "results": [
+    {
+      "item": "metallurgica:rutile_rubble"
+    },
+    {
+      "chance": 0.05,
+      "item": "metallurgica:rutile_rubble"
+    }
+  ]
+}

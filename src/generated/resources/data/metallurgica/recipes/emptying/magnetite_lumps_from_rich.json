@@ -8,11 +8,7 @@
   "processingTime": 200,
   "results": [
     {
-      "count": 2,
-      "item": "metallurgica:magnetite_lumps"
-    },
-    {
-      "chance": 0.25,
+      "chance": 1.25,
       "item": "metallurgica:magnetite_lumps"
     },
     {

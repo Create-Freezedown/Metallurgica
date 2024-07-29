@@ -2,6 +2,8 @@ package com.freezedown.metallurgica.foundation.data.recipe.create;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
+import com.freezedown.metallurgica.registry.MetallurgicaFluids;
+import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
@@ -73,6 +75,22 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .output(F.carbonDioxide(), 90)
             .output(I.copperRubble(), 1)
             .output(0.05f, I.copperRubble(), 1)
+            .requiresHeat(HeatCondition.HEATED)),
+    
+    titaniumTetrachloride = create(Metallurgica.asResource("titanium_tetrachloride"), b -> b
+            .require(MetallurgicaItems.rutilePowder.get())
+            .require(MetallurgicaItems.rutilePowder.get())
+            .require(F.chlorine(), 500)
+            .require(I.cokeDust())
+            .require(I.cokeDust())
+            .require(I.cokeDust())
+            .output(MetallurgicaFluids.crudeTitaniumTetrachloride.get(), 300)
+            .requiresHeat(HeatCondition.SUPERHEATED)),
+    
+    magnesiumChloride = create(Metallurgica.asResource("magnesium_chloride"), b -> b
+            .require(MetallurgicaItems.magnesiumOxide.get())
+            .require(MetallurgicaFluids.hydrochloricAcid.get(), 100)
+            .output(MetallurgicaFluids.magnesiumChloride.get(), 50)
             .requiresHeat(HeatCondition.HEATED))
             
     ;

@@ -21,6 +21,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import java.util.Collections;
 
 import static com.freezedown.metallurgica.registry.MetallurgicaTags.NameSpace.MOD;
+import static com.freezedown.metallurgica.registry.MetallurgicaTags.NameSpace.TFMG;
 
 public class MetallurgicaTags {
     public static <T> TagKey<T> optionalTag(IForgeRegistry<T> registry,
@@ -69,7 +70,8 @@ public class MetallurgicaTags {
         MOD(Metallurgica.ID, false, true),
         FORGE("forge"),
         TIC("tconstruct"),
-        QUARK("quark")
+        QUARK("quark"),
+        TFMG("createindustry"),
         
         ;
         
@@ -190,6 +192,9 @@ public class MetallurgicaTags {
     }
     public enum AllFluidTags {
         REVERBARATORY_FUELS(MOD, "reverbaratory_fuels"),
+        GAS(TFMG),
+        CHLORIDE(MOD),
+        ACID(MOD),
         ;
         
         public final TagKey<Fluid> tag;
