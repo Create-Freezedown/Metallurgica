@@ -12,6 +12,8 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
+import com.freezedown.metallurgica.content.machines.rotary_kiln.segment.RotaryKilnSegmentBlock;
+import com.freezedown.metallurgica.content.machines.rotary_kiln.segment.RotaryKilnSegmentGenerator;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlock;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableGenerator;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
@@ -33,10 +35,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GlassBlock;
-import net.minecraft.world.level.block.SandBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -62,7 +61,15 @@ public class MetallurgicaBlocks {
             .item()
             .build()
             .register();
-
+    
+    public static final BlockEntry<RotaryKilnSegmentBlock> rotaryKilnSegment  = registrate.block("rotary_kiln_segment", RotaryKilnSegmentBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(new RotaryKilnSegmentGenerator()::generate)
+            .item().transform(customItemModel())
+            .register();
     
     //MACHINES
     public static final BlockEntry<ShakingTableBlock> shakingTable = registrate.block("shaking_table", ShakingTableBlock::new)

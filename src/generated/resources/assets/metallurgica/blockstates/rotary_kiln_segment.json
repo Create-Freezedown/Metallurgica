@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "metallurgica:block/rotary_kiln_segment/block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "metallurgica:block/rotary_kiln_segment/block"
+    },
+    "facing=south": {
+      "model": "metallurgica:block/rotary_kiln_segment/block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "metallurgica:block/rotary_kiln_segment/block",
+      "y": 270
+    }
+  }
+}

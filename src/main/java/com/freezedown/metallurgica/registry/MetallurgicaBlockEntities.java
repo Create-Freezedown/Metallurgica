@@ -13,6 +13,7 @@ import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBloc
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerInstance;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlockEntity;
+import com.freezedown.metallurgica.content.machines.rotary_kiln.segment.RotaryKilnSegmentBlockEntity;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlockEntity;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableInstance;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableRenderer;
@@ -22,13 +23,20 @@ import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillAc
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
+import com.simibubi.create.content.kinetics.base.CutoutRotatingInstance;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
-import static com.freezedown.metallurgica.registry.MetallurgicaBlocks.*;
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.freezedown.metallurgica.registry.MetallurgicaMaterials.*;
 
 public class MetallurgicaBlockEntities {
+    
+    public static final BlockEntityEntry<RotaryKilnSegmentBlockEntity> rotaryKilnSegment = registrate.blockEntity("rotary_kiln_segment", RotaryKilnSegmentBlockEntity::new)
+            .instance(() -> CutoutRotatingInstance::new, false)
+            .validBlocks(MetallurgicaBlocks.rotaryKilnSegment)
+            .renderer(() -> KineticBlockEntityRenderer::new)
+            .register();
     
     public static final BlockEntityEntry<ElectrolyzerBlockEntity> electrolyzer =
             registrate.blockEntity("electrolyzer", ElectrolyzerBlockEntity::new, ElectrolyzerInstance::new, ElectrolyzerRenderer::new, MetallurgicaBlocks.electrolyzer);

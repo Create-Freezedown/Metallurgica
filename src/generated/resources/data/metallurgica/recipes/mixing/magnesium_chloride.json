@@ -1,0 +1,20 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "metallurgica:magnesium_oxide"
+    },
+    {
+      "amount": 100,
+      "fluid": "metallurgica:hydrochloric_acid",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "amount": 50,
+      "fluid": "metallurgica:magnesium_chloride"
+    }
+  ]
+}
