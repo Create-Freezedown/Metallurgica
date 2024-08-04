@@ -82,6 +82,9 @@ public class MetallurgicaItems {
             titaniumAluminideDust = registrate.alloyItem("titanium_aluminide_dust", "dusts/titanium_aluminide", "dusts", "alloy_dusts/titanium_aluminide", "alloy_dusts"),
             titaniumAluminideSheet = registrate.alloyItem("titanium_aluminide_sheet", "plates/titanium_aluminide", "plates", "alloy_plates/titanium_aluminide", "alloy_plates")
                     ;
+    
+    //PRIMITIVE
+    public static final ItemEntry<Item> dirtyClayBall = registrate.simpleItem("dirty_clay_ball", "dirty_clay_balls", "primitive_materials");
 
     public static final ItemEntry<Item>
             loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item??? Idk lol

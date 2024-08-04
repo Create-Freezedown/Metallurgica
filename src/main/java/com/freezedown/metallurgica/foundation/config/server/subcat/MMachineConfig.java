@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.config.server.subcat;
 
+import com.freezedown.metallurgica.content.primitive.log_pile.LogPileConfig;
 import com.simibubi.create.foundation.config.ConfigBase;
 
 public class MMachineConfig extends ConfigBase {
@@ -8,7 +9,7 @@ public class MMachineConfig extends ConfigBase {
     public String getName() {
         return "machineConfig";
     }
-    
+    public final LogPileConfig logPileConfig = this.nested(1, LogPileConfig::new, "Configure Log Piles");
     public final ConfigInt reverbaratoryPrimaryOutputCapacity = i(8000, "reverbaratoryPrimaryOutputCapacity", Comments.reverbaratoryPrimaryOutputCapacity);
     public final ConfigInt reverbaratorySlagOutputCapacity = i(8000, "reverbaratorySlagOutputCapacity", Comments.reverbaratorySlagOutputCapacity);
     

@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -97,6 +96,7 @@ public class MetallurgicaTags {
         REVERBARATORY_WALL,
         REVERBARATORY_INPUT,
         DEPOSITS,
+        AIR_BLOCKING,
         ;
         
         public final TagKey<Block> tag;
@@ -146,7 +146,9 @@ public class MetallurgicaTags {
     }
     
     public enum AllItemTags {
-        NEEDS_CHEMICAL_FORMULA_TOOLTIP
+        NEEDS_CHEMICAL_FORMULA_TOOLTIP,
+        IGNITES_LOG_PILE,
+        WATER_CONTAINERS,
         ;
         
         public final TagKey<Item> tag;

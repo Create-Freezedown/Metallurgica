@@ -54,6 +54,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.LimitCount;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiFunction;
@@ -119,6 +120,14 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
         return virtualFluid(name, still, flow, TintedFluid.create(color, still, flow), VirtualFluid::new);
+    }
+    
+    
+    
+    public FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate> tintedFluid(String name, int color) {
+        ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
+        ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
+        return fluid(name, still, flow, TintedFluid.create(color), ForgeFlowingFluid.Flowing::new);
     }
     
     public FluidBuilder<Acid, CreateRegistrate> acid(String name, int color, float acidity) {

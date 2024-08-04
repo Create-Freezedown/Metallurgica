@@ -12,6 +12,9 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
+import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentBlock;
+import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentGenerator;
+import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentStructuralBlock;
 import com.freezedown.metallurgica.content.machines.rotary_kiln.segment.RotaryKilnSegmentBlock;
 import com.freezedown.metallurgica.content.machines.rotary_kiln.segment.RotaryKilnSegmentGenerator;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlock;
@@ -19,6 +22,11 @@ import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableGe
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlock;
+import com.freezedown.metallurgica.content.primitive.log_pile.AshedLogPileBlock;
+import com.freezedown.metallurgica.content.primitive.log_pile.IgnitableLogPileBlock;
+import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
+import com.freezedown.metallurgica.content.primitive.log_pile.LogPileGenerator;
+import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
@@ -35,19 +43,83 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.LimitCount;
 
 import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import static com.simibubi.create.foundation.data.TagGen.*;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+    
+    public static final BlockEntry<Block> dirtyClay = registrate.block("dirty_clay", Block::new)
+            .initialProperties(() -> Blocks.CLAY)
+            .properties(p -> p.strength(0.6F).sound(SoundType.GRAVEL))
+            .loot(
+                    (lt, bl) -> lt.add(bl,
+                            RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
+                                    RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(MetallurgicaItems.dirtyClayBall.get()).apply(LimitCount.limitCount(IntRange.exact(4))))
+                                            .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))
+            .simpleItem()
+            .register();
+    
+    public static final BlockEntry<IgnitableLogPileBlock> logPile = registrate.block("log_pile", IgnitableLogPileBlock::new)
+            .initialProperties(SharedProperties::wooden)
+            .properties(p -> p.strength(2.0F).sound(SoundType.WOOD))
+            .transform(axeOnly())
+            .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/log_pile/4"))
+                    .texture("log", p.modLoc("block/log_pile"))
+                    .texture("side", p.modLoc("block/log_pile_side")))
+            .build()
+            .register();
+    
+    public static final BlockEntry<CharredLogPileBlock> charredLogPile = registrate.block("charred_log_pile", CharredLogPileBlock::new)
+            .initialProperties(SharedProperties::wooden)
+            .properties(p -> p.strength(0.75F).sound(SoundType.WOOD))
+            .transform(axeOrPickaxe())
+            .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/log_pile/4"))
+                    .texture("log", p.modLoc("block/charred_log_pile"))
+                    .texture("side", p.modLoc("block/charred_log_pile_side")))
+            .build()
+            .register();
+    
+    public static final BlockEntry<AshedLogPileBlock> ashedCharcoalPile = registrate.block("ashed_charcoal_pile", AshedLogPileBlock::new)
+            .initialProperties(SharedProperties::wooden)
+            .properties(p -> p.strength(1.5F).sound(SoundType.WOOD))
+            .transform(axeOrPickaxe())
+            .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/log_pile/4"))
+                    .texture("log", p.modLoc("block/ashed_charcoal_pile"))
+                    .texture("side", p.modLoc("block/ashed_charcoal_pile_side")))
+            .build()
+            .register();
+    
+    public static final BlockEntry<LogPileBlock> charcoalPile = registrate.block("charcoal_pile", LogPileBlock::new)
+            .initialProperties(SharedProperties::wooden)
+            .properties(p -> p.strength(1.5F).sound(SoundType.WOOD))
+            .transform(axeOrPickaxe())
+            .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/log_pile/4"))
+                    .texture("log", p.modLoc("block/charcoal_pile"))
+                    .texture("side", p.modLoc("block/charcoal_pile_side")))
+            .build()
+            .register();
     
     public static final BlockEntry<ConnectedGlassBlock> blastProofGlass = registrate.block("blast_proof_glass", ConnectedGlassBlock::new)
             .initialProperties(SharedProperties::stone)
@@ -69,6 +141,23 @@ public class MetallurgicaBlocks {
             .transform(TagGen.pickaxeOnly())
             .blockstate(new RotaryKilnSegmentGenerator()::generate)
             .item().transform(customItemModel())
+            .register();
+    
+    public static final BlockEntry<HeaterSegmentStructuralBlock> heaterSegmentStructural = registrate.block("heater_segment_structural", HeaterSegmentStructuralBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStatesExcept(BlockStateGen.mapToAir(p), HeaterSegmentStructuralBlock.FACING))
+            .properties(p -> p.noOcclusion().color(MaterialColor.COLOR_LIGHT_GRAY))
+            .transform(pickaxeOnly())
+            .lang("Rotary Kiln Heater Segment")
+            .register();
+    
+    public static final BlockEntry<HeaterSegmentBlock> heaterSegment = registrate.block("heater_segment", HeaterSegmentBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .blockstate(new HeaterSegmentGenerator()::generate)
+            .properties(p -> p.noOcclusion().color(MaterialColor.COLOR_LIGHT_GRAY))
+            .transform(pickaxeOnly())
+            .lang("Rotary Kiln Heater Segment")
+            .simpleItem()
             .register();
     
     //MACHINES

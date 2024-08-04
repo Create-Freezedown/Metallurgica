@@ -1,0 +1,7 @@
+{
+  "parent": "metallurgica:block/log_pile/2",
+  "textures": {
+    "log": "metallurgica:block/ashed_charcoal_pile",
+    "side": "metallurgica:block/ashed_charcoal_pile_side"
+  }
+}

@@ -14,6 +14,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -52,6 +53,13 @@ public class MetallurgicaRegistrateTags {
                 .add(
                         MetallurgicaMaterials.FLUORITE.MATERIAL.depositBlock().get()
                 );
+        prov.tag(MetallurgicaTags.AllBlockTags.AIR_BLOCKING.tag)
+                .add(
+                        MetallurgicaBlocks.logPile.get(),
+                        MetallurgicaBlocks.ashedCharcoalPile.get(),
+                        MetallurgicaBlocks.charredLogPile.get(),
+                        MetallurgicaBlocks.charcoalPile.get()
+                ).addTag(BlockTags.DIRT);
         for (MetallurgicaTags.AllBlockTags tag : MetallurgicaTags.AllBlockTags.values()) {
             if (tag.alwaysDatagen) {
                 prov.getOrCreateRawBuilder(tag.tag);
@@ -66,6 +74,11 @@ public class MetallurgicaRegistrateTags {
                 prov.getOrCreateRawBuilder(tag.tag);
             }
         }
+        
+        prov.tag(MetallurgicaTags.AllItemTags.IGNITES_LOG_PILE.tag).add(
+                Items.FLINT_AND_STEEL,
+                Items.FIRE_CHARGE
+        );
         
         prov.tag(MetallurgicaTags.AllItemTags.NEEDS_CHEMICAL_FORMULA_TOOLTIP.tag).add(
                 //Ingots

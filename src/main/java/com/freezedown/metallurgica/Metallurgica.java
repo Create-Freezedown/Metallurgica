@@ -24,6 +24,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
@@ -44,6 +47,9 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.simibubi.create.foundation.item.TooltipHelper.styleFromColor;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -53,6 +59,7 @@ public class Metallurgica
     public static final String ID = "metallurgica";
     public static final String DISPLAY_NAME = "Metallurgica";
     public static final Logger LOGGER = LogUtils.getLogger();
+    
     
     public static final MetallurgicaRegistrate registrate = MetallurgicaRegistrate.create(ID);
     
@@ -133,15 +140,15 @@ public class Metallurgica
     public void onServerStart(ServerAboutToStartEvent event)
     {
         LOGGER.info("Thanks for using Metallurgica! Expect a severe lack of ores in your world :3");
-        if (AllOreFeatureConfigEntries.ZINC_ORE != null)
-            AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
+        //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
+        //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
         LOGGER.info("Double checking our cool little ore frequency thingy :3");
-        if (AllOreFeatureConfigEntries.ZINC_ORE != null)
-            AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
+        //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
+        //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }
 
     @Mod.EventBusSubscriber(modid = ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

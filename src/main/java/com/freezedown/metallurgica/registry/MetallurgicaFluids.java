@@ -17,6 +17,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -86,6 +87,8 @@ public class MetallurgicaFluids {
             moltenOsmium = registrate.moltenMetal("osmium"),
             moltenThorium = registrate.moltenMetal("thorium")
     ;
+    
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> claySlip = flowing("clay_slip", 0x725537);
 
     public static Collection<RegistryEntry<Fluid>> ALL = registrate.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
 
@@ -129,6 +132,28 @@ public class MetallurgicaFluids {
             }
         }
         return acids;
+    }
+    
+    @SafeVarargs
+    public static FluidEntry<ForgeFlowingFluid.Flowing> flowing(String name, int color, TagKey<Fluid>... tags) {
+        TagKey<Fluid> tag = FluidTags.create(Metallurgica.asResource(name));
+        
+        TagKey<Fluid>[] fluidTags = tags;
+        
+        if(tags.length==0){
+            
+            fluidTags = new TagKey[]{tag};
+            
+        }
+        
+        return  registrate.tintedFluid(name, color)
+                .lang(ClientUtil.fromId(name))
+                .tag(tags)
+                //.bucket()
+                //.lang(ClientUtil.fromId(name)+" Bucket")
+                //.tag(AllTags.forgeItemTag("buckets/"+name))
+                //.build()
+                .register();
     }
     
     @SafeVarargs

@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_16",
   "refmap": "metallurgica.refmap.json",
   "mixins": [
+    "AllOreFeatureConfigEntriesMixin",
     "ChemicalInfoTooltipMixin",
     "DefaultOreFeaturesMixin",
     "MixinOpenEndedPipe",
