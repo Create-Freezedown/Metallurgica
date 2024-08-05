@@ -1,12 +1,11 @@
 package com.freezedown.metallurgica.content.primitive.ceramic;
 
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
+import com.freezedown.metallurgica.foundation.util.PistonPushable;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.*;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.utility.BlockHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +19,7 @@ import java.util.Objects;
 
 import static com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HEAT_LEVEL;
 
+@PistonPushable
 public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
     private float cookTime;
     private ResourceLocation firedBlock;

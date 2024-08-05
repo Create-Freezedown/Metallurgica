@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.compat.emi.category.shaking;
+package com.freezedown.metallurgica.compat.jei.category.shaking;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemblySubCategory;

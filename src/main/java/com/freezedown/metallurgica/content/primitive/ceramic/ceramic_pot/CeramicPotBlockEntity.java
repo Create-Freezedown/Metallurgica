@@ -1,6 +1,8 @@
 package com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot;
 
+import com.freezedown.metallurgica.foundation.util.PistonPushable;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
@@ -23,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@PistonPushable
 public class CeramicPotBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     protected LazyOptional<IFluidHandler> fluidCapability;
     protected boolean forceFluidLevelUpdate;

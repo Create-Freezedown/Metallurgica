@@ -159,6 +159,7 @@ dependencies {
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}") //1.19 (Dependency of Create)
     implementation fg.deobf("maven.modrinth:create-tfmg:${tfmg_version}") //1.19
     implementation fg.deobf("maven.modrinth:create-vintage-improvements:${vintage_improvements_version}") //1.19.2 (Used as Dependency for more machine blocks)
+    implementation fg.deobf("maven.modrinth:capable-cauldrons:${capable_cauldrons_version}") //1.19.2 (Used as Dependency for Cauldron fluid handling)
 
     minecraftLibrary 'org.apfloat:apfloat:1.11.0'
     minecraftLibrary 'org.jgrapht:jgrapht:1.5.2'

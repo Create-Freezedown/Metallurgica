@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.compat.emi.category.shaking;
+package com.freezedown.metallurgica.compat.jei.category.shaking;
 
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;

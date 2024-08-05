@@ -1,13 +1,14 @@
-package com.freezedown.metallurgica.compat.emi.category.electrolyzer;
+package com.freezedown.metallurgica.compat.jei.category.ceramic_mixing;
 
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
+import com.freezedown.metallurgica.registry.MetallurgicaPartialModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
-import net.minecraft.core.Direction;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import net.minecraft.util.Mth;
 
-public class AnimatedElectrolyzer extends AnimatedKinetics {
+public class AnimatedCeramicMixer extends AnimatedKinetics {
     
     @Override
     public void draw(PoseStack matrixStack, int xOffset, int yOffset) {
@@ -17,22 +18,17 @@ public class AnimatedElectrolyzer extends AnimatedKinetics {
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(22.5f));
         int scale = 23;
         
-        blockElement(shaft(Direction.Axis.Z))
-                .rotateBlock(0, 0, getCurrentAngle())
-                .scale(scale)
-                .render(matrixStack);
-        
-        blockElement(MetallurgicaBlocks.electrolyzer.getDefaultState())
-                .atLocal(0, 0, 0)
-                .scale(scale)
-                .render(matrixStack);
-        
-        blockElement(AllBlocks.BASIN.getDefaultState())
+        blockElement(MetallurgicaBlocks.ceramicMixingPot.getDefaultState())
                 .atLocal(0, 1.65, 0)
                 .scale(scale)
                 .render(matrixStack);
         
-        matrixStack.popPose();
+        float animation = ((Mth.sin(AnimationTickHolder.getRenderTime() / 32f) + 0.3f) / 5) + .5f;
         
+        blockElement(MetallurgicaPartialModels.ceramicMixerStirrer)
+                .rotateBlock(0, getCurrentAngle() * 4, 0)
+                .atLocal(0, animation + 1, 0)
+                .scale(scale)
+                .render(matrixStack);
     }
 }

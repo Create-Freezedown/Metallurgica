@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.compat.emi.category.drill;
+package com.freezedown.metallurgica.compat.jei.category.drill;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;

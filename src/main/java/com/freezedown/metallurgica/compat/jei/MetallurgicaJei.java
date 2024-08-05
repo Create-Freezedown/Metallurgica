@@ -1,14 +1,15 @@
-package com.freezedown.metallurgica.compat.emi;
+package com.freezedown.metallurgica.compat.jei;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.compat.emi.category.drill.DrillingCategory;
-import com.freezedown.metallurgica.compat.emi.category.drill.DrillingRecipe;
-import com.freezedown.metallurgica.compat.emi.category.electrolyzer.ElectrolysisCategory;
-import com.freezedown.metallurgica.compat.emi.category.RecipeCategoryBuilder;
-import com.freezedown.metallurgica.compat.emi.category.shaking.ShakingCategory;
+import com.freezedown.metallurgica.compat.jei.category.ceramic_mixing.CeramicMixingCategory;
+import com.freezedown.metallurgica.compat.jei.category.drill.DrillingCategory;
+import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
+import com.freezedown.metallurgica.compat.jei.category.electrolyzer.ElectrolysisCategory;
+import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
+import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
+import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
 import com.freezedown.metallurgica.registry.*;
-import com.simibubi.create.compat.jei.CreateJEI;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;
@@ -98,6 +99,14 @@ public class MetallurgicaJei implements IModPlugin {
                         .itemIcon(MetallurgicaBlocks.shakingTable.get())
                         .emptyBackground(177, 70)
                         .build("shaking", ShakingCategory::new)
+        );
+        allCategories.add(
+                builder(CeramicMixingRecipe.class)
+                        .addTypedRecipes(MetallurgicaRecipeTypes.ceramic_mixing)
+                        .catalyst(MetallurgicaBlocks.ceramicMixingPot::get)
+                        .doubleItemIcon(MetallurgicaBlocks.ceramicMixingPot.get(), MetallurgicaItems.dirtyClayBall.get())
+                        .emptyBackground(177, 103)
+                        .build("ceramic_mixing", CeramicMixingCategory::new)
         );
     }
 }

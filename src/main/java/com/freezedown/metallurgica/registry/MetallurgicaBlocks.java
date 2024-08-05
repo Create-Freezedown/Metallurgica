@@ -23,6 +23,7 @@ import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillAc
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlock;
 import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlock;
+import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotBlock;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.AshedLogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.IgnitableLogPileBlock;
@@ -89,6 +90,17 @@ public class MetallurgicaBlocks {
             .register();
     
     public static final BlockEntry<CeramicPotBlock> ceramicPot = registrate.block("ceramic_pot", CeramicPotBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.sound(SoundType.STONE))
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/ceramic_pot"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/ceramic_pot")))
+            .build()
+            .register();
+    
+    public static final BlockEntry<CeramicMixingPotBlock> ceramicMixingPot = registrate.block("ceramic_mixing_pot", CeramicMixingPotBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.sound(SoundType.STONE))
             .transform(pickaxeOnly())

@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.compat.emi.category;
+package com.freezedown.metallurgica.compat.jei.category;
 
 import com.simibubi.create.compat.jei.CreateJEI;
 import com.simibubi.create.compat.jei.DoubleItemIcon;

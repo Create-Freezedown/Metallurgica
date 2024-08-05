@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.compat.emi.category.electrolyzer;
+package com.freezedown.metallurgica.compat.jei.category.electrolyzer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.BasinCategory;

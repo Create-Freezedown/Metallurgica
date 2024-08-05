@@ -26,6 +26,9 @@ import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillAc
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlockEntity;
+import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotBlockEntity;
+import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotInstance;
+import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotRenderer;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotRenderer;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlockEntity;
@@ -48,6 +51,13 @@ public class MetallurgicaBlockEntities {
             .blockEntity("ceramic_pot", CeramicPotBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.ceramicPot)
             .renderer(() -> CeramicPotRenderer::new)
+            .register();
+    
+    public static final BlockEntityEntry<CeramicMixingPotBlockEntity> ceramicMixingPot = registrate
+            .blockEntity("ceramic_mixing_pot", CeramicMixingPotBlockEntity::new)
+            .instance(() -> CeramicMixingPotInstance::new)
+            .validBlocks(MetallurgicaBlocks.ceramicMixingPot)
+            .renderer(() -> CeramicMixingPotRenderer::new)
             .register();
     
     public static final BlockEntityEntry<RotaryKilnSegmentBlockEntity> rotaryKilnSegment = registrate.blockEntity("rotary_kiln_segment", RotaryKilnSegmentBlockEntity::new)
