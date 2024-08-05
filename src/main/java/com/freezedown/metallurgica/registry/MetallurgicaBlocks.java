@@ -22,6 +22,8 @@ import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableGe
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlock;
+import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlock;
+import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.AshedLogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.IgnitableLogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
@@ -30,6 +32,7 @@ import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.Charr
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
@@ -61,6 +64,40 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+    
+    public static final BlockEntry<UnfiredCeramicBlock> unfiredCeramicPot = registrate.block("unfired_ceramic_pot", (p) -> new UnfiredCeramicBlock(p, MetallurgicaShapes.ceramicPot))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.sound(SoundType.STONE))
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent(ctx.getName(), prov.modLoc("block/ceramic_pot"))
+                    .texture("particle", prov.modLoc("block/unfired_ceramic_pot_side"))
+                    .texture("side", prov.modLoc("block/unfired_ceramic_pot_side"))
+                    .texture("top", prov.modLoc("block/unfired_ceramic_pot_top"))
+                    .texture("bottom", prov.modLoc("block/unfired_ceramic_pot_bottom"))
+                    .texture("inner", prov.modLoc("block/unfired_ceramic_pot_inner"))
+            ))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/ceramic_pot"))
+                    .texture("particle", p.modLoc("block/unfired_ceramic_pot_side"))
+                    .texture("side", p.modLoc("block/unfired_ceramic_pot_side"))
+                    .texture("top", p.modLoc("block/unfired_ceramic_pot_top"))
+                    .texture("bottom", p.modLoc("block/unfired_ceramic_pot_bottom"))
+                    .texture("inner", p.modLoc("block/unfired_ceramic_pot_inner"))
+            )
+            .build()
+            .register();
+    
+    public static final BlockEntry<CeramicPotBlock> ceramicPot = registrate.block("ceramic_pot", CeramicPotBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.sound(SoundType.STONE))
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/ceramic_pot"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/ceramic_pot")))
+            .build()
+            .register();
     
     public static final BlockEntry<Block> dirtyClay = registrate.block("dirty_clay", Block::new)
             .initialProperties(() -> Blocks.CLAY)

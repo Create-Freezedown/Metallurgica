@@ -9,6 +9,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
+import com.freezedown.metallurgica.registry.MetallurgicaTags.AllBlockTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
 
 public class MetallurgicaRegistrateTags {
@@ -60,6 +62,28 @@ public class MetallurgicaRegistrateTags {
                         MetallurgicaBlocks.charredLogPile.get(),
                         MetallurgicaBlocks.charcoalPile.get()
                 ).addTag(BlockTags.DIRT);
+        
+        prov.tag(AllBlockTags.CERAMIC_HEAT_SOURCES.tag)
+                .add(
+                        Blocks.MAGMA_BLOCK,
+                        Blocks.TORCH,
+                        Blocks.WALL_TORCH,
+                        Blocks.SOUL_TORCH,
+                        Blocks.SOUL_WALL_TORCH
+                )
+                .addTag(BlockTags.FIRE)
+                .addTag(BlockTags.CAMPFIRES);
+        prov.tag(AllBlockTags.LOW_HEAT_SOURCES.tag)
+                .add(
+                        Blocks.MAGMA_BLOCK,
+                        Blocks.TORCH,
+                        Blocks.WALL_TORCH,
+                        Blocks.SOUL_TORCH,
+                        Blocks.SOUL_WALL_TORCH
+                );
+        prov.tag(AllBlockTags.MEDIUM_HEAT_SOURCES.tag)
+                .addTag(BlockTags.FIRE)
+                .addTag(BlockTags.CAMPFIRES);
         for (MetallurgicaTags.AllBlockTags tag : MetallurgicaTags.AllBlockTags.values()) {
             if (tag.alwaysDatagen) {
                 prov.getOrCreateRawBuilder(tag.tag);

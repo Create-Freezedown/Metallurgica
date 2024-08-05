@@ -22,7 +22,8 @@ public class MetallurgicaShapes {
             spoutputWallSouth = shape(3,  4,  0, 13, 14,  4).build(),
             spoutputWallNorth = shape(3,  4, 12, 13, 14, 16).build(),
             spoutputWallEast  = shape(0,  4,  3,  4, 14, 13).build(),
-            spoutputWallWest  = shape(12, 4,  3, 16, 14, 13).build()
+            spoutputWallWest  = shape(12, 4,  3, 16, 14, 13).build(),
+            ceramicPot = shape(2, 0, 2, 14, 15, 14).erase(4, 2, 4, 12, 15, 12).build()
     ;
     
     private static MetallurgicaShapes.Builder shape(VoxelShape shape) {

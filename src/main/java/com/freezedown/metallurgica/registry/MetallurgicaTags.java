@@ -97,6 +97,10 @@ public class MetallurgicaTags {
         REVERBARATORY_INPUT,
         DEPOSITS,
         AIR_BLOCKING,
+        CERAMIC_HEAT_SOURCES,
+        LOW_HEAT_SOURCES,
+        MEDIUM_HEAT_SOURCES,
+        HIGH_HEAT_SOURCES,
         ;
         
         public final TagKey<Block> tag;

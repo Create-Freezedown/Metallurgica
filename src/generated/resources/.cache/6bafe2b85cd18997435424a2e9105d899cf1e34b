@@ -1,4 +1,4 @@
-// 1.19.2	2024-08-04T21:28:26.1735332	Registrate Provider for metallurgica [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2024-08-05T17:01:08.040904	Registrate Provider for metallurgica [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 10811cfe0f93f3f9b8edaa6bdeccc627c164f73e assets/metallurgica/blockstates/ashed_charcoal_pile.json
 0d8cba54b05b67bef018f8c21b730acee2e0dcae assets/metallurgica/blockstates/bauxite_deposit.json
 fc3db81bd5dbdc9fcab667b81922a647073f110f assets/metallurgica/blockstates/bauxite_rich_stone.json
@@ -7,6 +7,7 @@ d5b7ece8eda61ba123c2b9483f2f203a12203353 assets/metallurgica/blockstates/blast_p
 0c83f590d7fc8c7cda90c17b7d4f95453a5b8733 assets/metallurgica/blockstates/cassiterite_deposit.json
 d3b2f60cd29576c0722ef7c43a866cbd577effb2 assets/metallurgica/blockstates/cassiterite_rich_stone.json
 5eac8c9739aae485bb6be541279951533e191e67 assets/metallurgica/blockstates/casting_table.json
+22f3ffef82bbe7d78619302b2db94cd854640cce assets/metallurgica/blockstates/ceramic_pot.json
 7f66098bcac2d2c43be7bb04dcb4fcb3b4904fc5 assets/metallurgica/blockstates/channel.json
 6226ea9821961792b4ed57e26276183e32708dfa assets/metallurgica/blockstates/channel_depot.json
 5fbf2817fa4635e9a126e8f9e405dfac5fcc31bc assets/metallurgica/blockstates/charcoal_pile.json
@@ -61,8 +62,9 @@ fa84bc4e3a612555562979b0c9aec41a9fe17da0 assets/metallurgica/blockstates/native_
 277896d753a0fc210f49f0d802ec58a5052e877e assets/metallurgica/blockstates/rutile_rich_stone.json
 1cf09246e4165b8c6503b34d488807e2c84bd91a assets/metallurgica/blockstates/shaking_table.json
 54e6f581b3d35be5c3c33166f782882b2503afab assets/metallurgica/blockstates/tuyere.json
-01dcc72c2b91ff5f8abc4457704f4915a6ce58aa assets/metallurgica/lang/en_ud.json
-f0f42317ce4841d79cd30b6c5042b3821abe14c0 assets/metallurgica/lang/en_us.json
+380932457c72e4938dae0375845c8763457e2646 assets/metallurgica/blockstates/unfired_ceramic_pot.json
+3d4ac5fee837285d9fa79fb35a993bbabf0059d5 assets/metallurgica/lang/en_ud.json
+9df83b75bb5909cc1b353d39a0d01ee59c68d2f7 assets/metallurgica/lang/en_us.json
 0581a8cd954972a66911cbdfd289c634384eca1e assets/metallurgica/models/block/ashed_charcoal_pile_1.json
 23fbbe5d43ff05d8ad7e81dcf007051c4280de41 assets/metallurgica/models/block/ashed_charcoal_pile_2.json
 2fc947223161f7a58e789f6e66efea763155f02d assets/metallurgica/models/block/ashed_charcoal_pile_3.json
@@ -152,6 +154,7 @@ aaeb2f32567519d0fd5449e8e20a7635d07ce917 assets/metallurgica/models/block/rutile
 1157ea5f33e760883b0c7499a9b7f5b662519c40 assets/metallurgica/models/block/rutile_natural_2.json
 8624443e1873b6e54b78ad65e58df092e4217110 assets/metallurgica/models/block/rutile_natural_3.json
 e4b2c6e5d748bc44b66594f57186540a7ce6caa1 assets/metallurgica/models/block/tuyere.json
+bb762cda1bcd5b46e3dd23f8d9e59733cdb64c14 assets/metallurgica/models/block/unfired_ceramic_pot.json
 8fc9625759b725d0882761c3ec9ba1eb49e25bd5 assets/metallurgica/models/item/alluvial_cassiterite.json
 cb6a7d5f233a0a5c3c665bf7103c0f342a10f1a2 assets/metallurgica/models/item/alumina.json
 801e3f5e017bedd69134b5546a8f75f0dd820be7 assets/metallurgica/models/item/aluminum_dust.json
@@ -174,6 +177,7 @@ ddb7fbbd37dbfe950dbc4dd0d3d6c9ee86130b23 assets/metallurgica/models/item/carbon_
 5582c4f2ade641d752550b4cb0a745dc86053a15 assets/metallurgica/models/item/cassiterite_rich_stone.json
 6e420124c28708da688b487fb9688209b287ee01 assets/metallurgica/models/item/cassiterite_rubble.json
 45132c131ed310396a8b035dfca07b996723ad11 assets/metallurgica/models/item/casting_table.json
+234d04cbb33f50f4c78f22f1a49da71c36a53d98 assets/metallurgica/models/item/ceramic_pot.json
 0703ff15c03fb936b045e2d461157b4c9e947096 assets/metallurgica/models/item/channel.json
 454da3e2b4839033c5a878f07475b391187f8a1c assets/metallurgica/models/item/channel_depot.json
 411840e36ed6229d0e97169052ef5ae8e55a51d3 assets/metallurgica/models/item/charcoal_pile.json
@@ -272,6 +276,7 @@ e06e1c484566e11db13adf637c240e5af61e7d99 assets/metallurgica/models/item/titaniu
 9e9c345bda874726b38a5c1ea09dc1c7f4f09d3f assets/metallurgica/models/item/titanium_sheet.json
 3b58527382174f15fb19a1cd6524c4fdd3d9925a assets/metallurgica/models/item/titanium_tetrachloride_bucket.json
 5c24005142dbb932da897a869b0b44c90c53f408 assets/metallurgica/models/item/tuyere.json
+bb762cda1bcd5b46e3dd23f8d9e59733cdb64c14 assets/metallurgica/models/item/unfired_ceramic_pot.json
 60da285ec5ad26ff5a4d1c346b362fe3b16f1da9 assets/metallurgica/models/item/unprocessed_titanium_aluminide_sheet.json
 8856d534f6c4b130c3fc701ce7455284b688620c assets/metallurgica/models/item/unprocessed_titanium_sheet.json
 6349c75e256a0daea556ea3f30f35eea63dc9fdf assets/metallurgica/models/item/washed_alumina.json
@@ -371,6 +376,7 @@ e36e2ac19210902d1e87131ec88cce6049d03813 data/forge/tags/items/salt.json
 899153902ab858ead302b26a759c7bb5b400b8a0 data/metallurgica/loot_tables/blocks/cassiterite_deposit.json
 63a8a4dd0c247567814879993b23022e7a1d1418 data/metallurgica/loot_tables/blocks/cassiterite_rich_stone.json
 c3dc5d9bfc805fd12cb0a75f5ee825a27ab11796 data/metallurgica/loot_tables/blocks/casting_table.json
+42779fd357882edded25573fc02ddf11ba922308 data/metallurgica/loot_tables/blocks/ceramic_pot.json
 0d9ee1e477b45f3c06a29470fc21b93d01390712 data/metallurgica/loot_tables/blocks/channel.json
 10c10d8939a16306ec90a64752fdd9e4d2bfe548 data/metallurgica/loot_tables/blocks/channel_depot.json
 fbb2821f494f1243f9d36c334f7e824cf7bd46d5 data/metallurgica/loot_tables/blocks/charcoal_pile.json
@@ -407,9 +413,11 @@ f08c5d7954ad0997e573fbca31d940ab0c922dc3 data/metallurgica/loot_tables/blocks/na
 0a74e32717a5b7d97cae05e5b1fa57369eb4bd3a data/metallurgica/loot_tables/blocks/rutile_rich_stone.json
 ffd769164be6e2d31a6487ce9f268db6c19fe5e5 data/metallurgica/loot_tables/blocks/shaking_table.json
 c051fdef247503c5a63aaee18195345ce9de2d40 data/metallurgica/loot_tables/blocks/tuyere.json
+394eb80e9da19d15d170ae4b5847eaca7e12f24f data/metallurgica/loot_tables/blocks/unfired_ceramic_pot.json
 a8b843c73f571f30a3d31927b77e3a4b6aaacf09 data/metallurgica/tags/blocks/air_blocking.json
 c93e03d746cae5143427d5605bebd2b2a4006219 data/metallurgica/tags/blocks/bauxite_ore_replaceable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/metallurgica/tags/blocks/budding_amethyst_replaceable.json
+54fffb365eddf8fed998cf3345df82b92207500d data/metallurgica/tags/blocks/ceramic_heat_sources.json
 6003d7fe860365cebc3bd8d2954d03ef49d97f02 data/metallurgica/tags/blocks/deposits.json
 530c7d2e7bd7b8690861d7b5b963708935fa7140 data/metallurgica/tags/blocks/deposit_replaceable/bauxite.json
 d0a43020280b5c5489978cc3692e45132c9eefef data/metallurgica/tags/blocks/deposit_replaceable/cassiterite.json
@@ -420,6 +428,9 @@ d0a43020280b5c5489978cc3692e45132c9eefef data/metallurgica/tags/blocks/deposit_r
 a81b47401620d4998a6fb7132103b5377ad2093e data/metallurgica/tags/blocks/deposit_replaceable/native_copper.json
 3a1985dce83682ab029f2cf64c076f6c63cce2bb data/metallurgica/tags/blocks/deposit_replaceable/native_gold.json
 9d5d4edf6dcb12c2b6615cbae1c7c0f4cc56d6ae data/metallurgica/tags/blocks/deposit_replaceable/rutile.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/metallurgica/tags/blocks/high_heat_sources.json
+453f6a28d987ead3714b5efb84e48785220f6fab data/metallurgica/tags/blocks/low_heat_sources.json
+6b73bb0ce38222c428d54ee64e82ffa1d96c64d7 data/metallurgica/tags/blocks/medium_heat_sources.json
 8c914e6a73cb7aa2a797573a4e4e4e44d8a08c17 data/metallurgica/tags/blocks/reverbaratory_glass.json
 5948a1258ad63e295be4fc7bf965417b98f5d967 data/metallurgica/tags/blocks/reverbaratory_input.json
 d893fd8b779ec8f8dd1ad5d2270f37b6d3a934e6 data/metallurgica/tags/blocks/reverbaratory_wall.json
@@ -431,4 +442,4 @@ e36e12c8692fdb0c8cc3cc326661314ea1ef4caf data/metallurgica/tags/fluids/fluid_rea
 9ba4d6eaaaa1c5ca5c6b9e376606b632b33f2d14 data/metallurgica/tags/items/needs_chemical_formula_tooltip.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/metallurgica/tags/items/water_containers.json
 b74de1c5ff7adeb56273675bb17592dbcb5b637a data/minecraft/tags/blocks/mineable/axe.json
-ea667c0bdcaef45dbbb07dd20a6851012c774bcb data/minecraft/tags/blocks/mineable/pickaxe.json
+9b11254d47757176137908f6b4f8274ff0e401e6 data/minecraft/tags/blocks/mineable/pickaxe.json
