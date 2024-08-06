@@ -7,12 +7,16 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
 import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
+import com.simibubi.create.content.kinetics.base.KineticBlock;
+import com.simibubi.create.content.kinetics.crank.HandCrankBlock;
+import com.simibubi.create.content.kinetics.crank.HandCrankBlockEntity;
 import com.simibubi.create.content.processing.basin.BasinBlock;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -40,11 +44,15 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import static com.freezedown.metallurgica.registry.MetallurgicaBlockEntities.ceramicMixingPot;
 
-public class CeramicMixingPotBlock extends Block implements IBE<CeramicMixingPotBlockEntity> {
+public class CeramicMixingPotBlock extends KineticBlock implements IBE<CeramicMixingPotBlockEntity> {
     public static VoxelShape SHAPE = MetallurgicaShapes.ceramicPot;
     
     public CeramicMixingPotBlock(Properties pProperties) {
         super(pProperties);
+    }
+    
+    public int getRotationSpeed() {
+        return 32;
     }
     
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
@@ -98,8 +106,7 @@ public class CeramicMixingPotBlock extends Block implements IBE<CeramicMixingPot
                     return InteractionResult.SUCCESS;
                 }
                 return InteractionResult.PASS;
-            }
-            if (player.isShiftKeyDown()) {
+            } if (player.isShiftKeyDown()) {
                 IItemHandlerModifiable inv = be.itemCapability.orElse(new ItemStackHandler(1));
                 boolean success = false;
                 for (int slot = 0; slot < inv.getSlots(); slot++) {
@@ -115,7 +122,7 @@ public class CeramicMixingPotBlock extends Block implements IBE<CeramicMixingPot
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, .2f,
                             1f + Create.RANDOM.nextFloat());
             } else {
-                be.stir();
+                be.stir(false);
                 if (!player.getItemInHand(handIn).is(AllItems.EXTENDO_GRIP.get()))
                     player.causeFoodExhaustion(32 * AllConfigs.server().kinetics.crankHungerMultiplier.getF());
             }
@@ -165,5 +172,10 @@ public class CeramicMixingPotBlock extends Block implements IBE<CeramicMixingPot
     @Override
     public boolean isPathfindable(BlockState state, BlockGetter reader, BlockPos pos, PathComputationType type) {
         return false;
+    }
+    
+    @Override
+    public Direction.Axis getRotationAxis(BlockState state) {
+        return null;
     }
 }

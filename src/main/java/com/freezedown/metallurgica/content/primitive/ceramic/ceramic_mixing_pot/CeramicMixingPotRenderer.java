@@ -43,8 +43,9 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
     protected void renderSafe(CeramicMixingPotBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
         
+        Direction.AxisDirection rotDirection = be.backwards ? Direction.AxisDirection.NEGATIVE : Direction.AxisDirection.POSITIVE;
         be.getRenderedStirrer().light(light);
-        be.getRenderedStirrer().rotateCentered(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), be.getIndependentAngle(partialTicks)).renderInto(ms, buffer.getBuffer(RenderType.solid()));
+        be.getRenderedStirrer().rotateCentered(Direction.get(rotDirection, Direction.Axis.Y), be.getIndependentAngle(partialTicks)).renderInto(ms, buffer.getBuffer(RenderType.solid()));
         
         float fluidLevel = renderFluids(be, partialTicks, ms, buffer, light, overlay);
         float level = Mth.clamp(fluidLevel - .3f, .125f, .6f);

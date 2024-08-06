@@ -10,16 +10,22 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.fluids.FluidFX;
 import com.simibubi.create.content.fluids.particle.FluidParticleData;
+import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
+import com.simibubi.create.content.kinetics.crank.HandCrankBlock;
 import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlockEntity;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.processing.basin.BasinBlock;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
+import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.InvManipulationBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.simple.DeferralBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.item.SmartInventory;
@@ -44,6 +50,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -65,7 +72,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+public class CeramicMixingPotBlockEntity extends GeneratingKineticBlockEntity implements IHaveGoggleInformation {
     public int inUse;
     
     private boolean areFluidsMoving;
@@ -76,6 +83,11 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
     public SmartFluidTankBehaviour inputTank;
     protected SmartInventory outputInventory;
     protected SmartFluidTankBehaviour outputTank;
+    public DeferralBehaviour checker;
+    
+    private FilteringBehaviour filtering;
+    
+    public boolean shouldReset;
     
     private boolean contentsChanged;
     
@@ -93,6 +105,7 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
     public int processingTicks;
     public boolean running;
     
+    public boolean backwards;
     public float independentAngle;
     public float chasingVelocity;
     
@@ -135,8 +148,39 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
         return material.getModel(MetallurgicaPartialModels.ceramicMixerStirrer, blockState);
     }
     
-    public void stir() {
+    public void stir(boolean back) {
+        boolean update = false;
+        
+        if (getGeneratedSpeed() == 0 || back != backwards)
+            update = true;
+        
         inUse = 10;
+        this.backwards = back;
+        if (update && !level.isClientSide)
+            updateGeneratedRotation();
+    }
+    
+    @Override
+    public float getGeneratedSpeed() {
+        Block block = getBlockState().getBlock();
+        if (!(block instanceof CeramicMixingPotBlock))
+            return 0;
+        CeramicMixingPotBlock crank = (CeramicMixingPotBlock) block;
+        int speed = (inUse == 0 ? 0 : clockwise() ? -1 : 1) * crank.getRotationSpeed();
+        return convertToDirection(speed, Direction.UP);
+    }
+    
+    protected boolean clockwise() {
+        return backwards;
+    }
+    
+    @Override
+    public void onSpeedChanged(float prevSpeed) {
+        super.onSpeedChanged(prevSpeed);
+        if (getSpeed() == 0)
+            shouldReset = true;
+        shouldReset = false;
+        checker.scheduleUpdate();
     }
     
     @Override
@@ -144,36 +188,53 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
         super.tick();
         if (level == null)
             return;
+        if (inUse > 0) {
+            inUse--;
+            
+            if (inUse == 0 && !level.isClientSide) {
+                sequenceContext = null;
+                updateGeneratedRotation();
+            }
+        }
         if (level.isClientSide) {
             createFluidParticles();
             tickVisualizedOutputs();
             ingredientRotationSpeed.tickChaser();
             ingredientRotation.setValue(ingredientRotation.getValue() + ingredientRotationSpeed.getValue());
         }
-        float actualSpeed = inUse > 0 ? 32 : 0;
+        
+        if (shouldReset) {
+            shouldReset = false;
+            reset();
+            sendData();
+            return;
+        }
+        
+        float actualSpeed = getSpeed();
         chasingVelocity += ((actualSpeed * 10 / 3f) - chasingVelocity) * .25f;
         independentAngle += chasingVelocity;
-        
-        if (inUse > 0) {
-            inUse--;
-        } else reset();
         
         if (runningTicks >= 40) {
             running = false;
             runningTicks = 0;
-            update();
+            checker.scheduleUpdate();
         }
         
         
-        
+        float speed = Math.abs(getSpeed());
         if (running && level != null) {
             if (level.isClientSide && runningTicks == 20)
                 renderParticles();
             if ((!level.isClientSide || isVirtual()) && runningTicks == 20) {
                 if (processingTicks < 0) {
+                    float recipeSpeed = 1;
                     if (currentRecipe instanceof ProcessingRecipe) {
-                        processingTicks = ((ProcessingRecipe<?>) currentRecipe).getProcessingDuration();
+                        int t = ((ProcessingRecipe<?>) currentRecipe).getProcessingDuration();
+                        if (t != 0)
+                            recipeSpeed = t / 100f;
                     }
+                    
+                    processingTicks = Mth.clamp((Mth.log2((int) (512 / speed))) * Mth.ceil(recipeSpeed * 15) + 1, 1, 512);
                     
                     if (!tanks.getFirst().isEmpty() || !tanks.getSecond().isEmpty())
                         level.playSound(null, worldPosition, SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT,
@@ -202,9 +263,9 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
     }
     
     protected boolean update() {
-        if (inUse == 0)
+        if (isRunning())
             return true;
-        if (running)
+        if (getSpeed() == 0)
             return true;
         if (level == null || level.isClientSide)
             return true;
@@ -215,6 +276,10 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
         startProcessing();
         sendData();
         return true;
+    }
+    
+    public boolean isRunning() {
+        return running;
     }
     
     public void startProcessing() {
@@ -331,6 +396,12 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
         return true;
     }
     
+    public FilteringBehaviour getFilter() {
+        return filtering;
+    }
+    
+    
+    
     private boolean acceptFluidOutputsIntoBasin(List<FluidStack> outputFluids, boolean simulate,
                                                 IFluidHandler targetTank) {
         for (FluidStack fluidStack : outputFluids) {
@@ -356,6 +427,9 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(new DirectBeltInputBehaviour(this));
+        filtering = new FilteringBehaviour(this, new MixingValueBox()).withCallback(newFilter -> contentsChanged = true)
+                .forRecipes();
+        behaviours.add(filtering);
         
         inputTank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 2, 1000, true)
                 .whenFluidUpdates(() -> contentsChanged = true);
@@ -370,12 +444,31 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
             LazyOptional<? extends IFluidHandler> outputCap = outputTank.getCapability();
             return new CombinedTankWrapper(outputCap.orElse(null), inputCap.orElse(null));
         });
+        
+        checker = new DeferralBehaviour(this, this::update);
+        behaviours.add(checker);
+    }
+    
+    static class MixingValueBox extends ValueBoxTransform.Sided {
+        
+        @Override
+        protected Vec3 getSouthLocation() {
+            return VecHelper.voxelSpace(8, 10, 14.05);
+        }
+        
+        @Override
+        protected boolean isSideActive(BlockState state, Direction direction) {
+            return direction.getAxis()
+                    .isHorizontal();
+        }
+        
     }
     
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         inUse = compound.getInt("InUse");
+        backwards = compound.getBoolean("Backwards");
         running = compound.getBoolean("Running");
         runningTicks = compound.getInt("Ticks");
         inputInventory.deserializeNBT(compound.getCompound("InputItems"));
@@ -389,12 +482,15 @@ public class CeramicMixingPotBlockEntity extends SmartBlockEntity implements IHa
         NBTHelper.iterateCompoundList(compound.getList("VisualizedFluids", Tag.TAG_COMPOUND),
                 c -> visualizedOutputFluids
                         .add(IntAttached.with(OUTPUT_ANIMATION_TIME, FluidStack.loadFluidStackFromNBT(c))));
+        
+        setAreFluidsMoving(running && runningTicks <= 20);
     }
     
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         compound.putInt("InUse", inUse);
+        compound.putBoolean("Backwards", backwards);
         compound.putBoolean("Running", running);
         compound.putInt("Ticks", runningTicks);
         compound.put("InputItems", inputInventory.serializeNBT());

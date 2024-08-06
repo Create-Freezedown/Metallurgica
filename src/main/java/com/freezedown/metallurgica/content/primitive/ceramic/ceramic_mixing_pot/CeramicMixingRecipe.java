@@ -1,9 +1,11 @@
 package com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot;
 
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
+import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.item.SmartInventory;
@@ -29,6 +31,24 @@ import java.util.List;
 public class CeramicMixingRecipe extends ProcessingRecipe<SmartInventory> {
     
     public static boolean match(CeramicMixingPotBlockEntity basin, Recipe<?> recipe) {
+        FilteringBehaviour filter = basin.getFilter();
+        if (filter == null)
+            return false;
+        
+        boolean filterTest = filter.test(recipe.getResultItem());
+        if (recipe instanceof CeramicMixingRecipe) {
+            CeramicMixingRecipe basinRecipe = (CeramicMixingRecipe) recipe;
+            if (basinRecipe.getRollableResults()
+                    .isEmpty()
+                    && !basinRecipe.getFluidResults()
+                    .isEmpty())
+                filterTest = filter.test(basinRecipe.getFluidResults()
+                        .get(0));
+        }
+        
+        if (!filterTest)
+            return false;
+        
         return apply(basin, recipe, true);
     }
     

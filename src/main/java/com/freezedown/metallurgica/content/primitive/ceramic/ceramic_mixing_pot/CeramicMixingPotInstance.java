@@ -30,10 +30,11 @@ public class CeramicMixingPotInstance extends BlockEntityInstance<CeramicMixingP
     private void rotateStirrer() {
         float angle = blockEntity.getIndependentAngle(AnimationTickHolder.getPartialTicks());
         
+        Direction.AxisDirection direction = blockEntity.backwards ? Direction.AxisDirection.NEGATIVE : Direction.AxisDirection.POSITIVE;
         stirrer.loadIdentity()
                 .translate(getInstancePosition())
                 .centre()
-                .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), angle)
+                .rotate(Direction.get(direction, Direction.Axis.Y), angle)
                 .unCentre();
     }
     
