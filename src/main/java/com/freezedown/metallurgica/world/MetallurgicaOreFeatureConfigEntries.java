@@ -1,12 +1,13 @@
 package com.freezedown.metallurgica.world;
 
+import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.world.striated.MetallurgicaLayeredPatterns;
-import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
-import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
+import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
+import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.simibubi.create.content.decoration.palettes.AllPaletteStoneTypes;
-import net.minecraft.data.worldgen.features.OreFeatures;
+import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.block.Blocks;
@@ -14,9 +15,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTes
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.common.ForgeConfigSpec;
-
-import static com.freezedown.metallurgica.registry.MetallurgicaBlocks.*;
-import static com.freezedown.metallurgica.registry.MetallurgicaMaterials.*;
 
 public class MetallurgicaOreFeatureConfigEntries {
     public static final RuleTest BAUXITE_CLUSTER_REPLACEABLE = new TagMatchTest(MetallurgicaTags.AllBlockTags.BAUXITE_ORE_REPLACEABLE.tag);
@@ -52,14 +50,26 @@ public class MetallurgicaOreFeatureConfigEntries {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
     
-    public static MOreFeatureConfigEntry create(String name, int clusterSize, float frequency,
-                                                int minHeight, int maxHeight) {
+    public static MOreFeatureConfigEntry create(String name, int clusterSize, float frequency, int minHeight, int maxHeight) {
         ResourceLocation id = Metallurgica.asResource(name);
         return new MOreFeatureConfigEntry(id, clusterSize, frequency, minHeight, maxHeight);
     }
     
+    public static MDepositFeatureConfigEntry createDeposit(String name, float frequency, int minHeight, int maxHeight) {
+        ResourceLocation id = Metallurgica.asResource(name);
+        return new MDepositFeatureConfigEntry(id, frequency, minHeight, maxHeight);
+    }
+    
     public static void fillConfig(ForgeConfigSpec.Builder builder, String namespace) {
         MOreFeatureConfigEntry.ALL
+                .forEach((id, entry) -> {
+                    if (id.getNamespace().equals(namespace)) {
+                        builder.push(entry.getName());
+                        entry.addToConfig(builder);
+                        builder.pop();
+                    }
+                });
+        MDepositFeatureConfigEntry.ALL
                 .forEach((id, entry) -> {
                     if (id.getNamespace().equals(namespace)) {
                         builder.push(entry.getName());

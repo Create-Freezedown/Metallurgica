@@ -2,7 +2,6 @@ package com.freezedown.metallurgica.world.biome_modifier;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
-import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -11,10 +10,9 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.freezedown.metallurgica.Metallurgica.oreGen_CODEC;
+import static com.freezedown.metallurgica.Metallurgica.surfaceDeposits_CODEC;
 import static net.minecraft.data.worldgen.placement.OrePlacements.*;
 
 public enum OreModifier implements BiomeModifier
@@ -69,6 +67,6 @@ public enum OreModifier implements BiomeModifier
     @Override
     public Codec<? extends BiomeModifier> codec()
     {
-        return oreGen_CODEC.get();
+        return surfaceDeposits_CODEC.get();
     }
 }

@@ -1,5 +1,6 @@
-package com.freezedown.metallurgica.foundation.worldgen;
+package com.freezedown.metallurgica.foundation.worldgen.config;
 
+import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.MConfigDrivenLayeredOreFeatureConfiguration;
 import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.MConfigDrivenOreFeatureConfiguration;
 import com.mojang.serialization.Codec;

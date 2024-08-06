@@ -1,178 +1,96 @@
 package com.freezedown.metallurgica.foundation.worldgen.feature;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.MOreDepositConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-
-import javax.annotation.Nullable;
+import net.minecraft.world.phys.Vec3;
 
 import static net.minecraft.world.level.block.Block.UPDATE_ALL;
 
 public class MOreDepositFeature extends Feature<MOreDepositConfiguration> {
     
-    public MOreDepositFeature(Codec<MOreDepositConfiguration> pCodec) {
-        super(pCodec);
+    public MOreDepositFeature() {
+        super(MOreDepositConfiguration.CODEC);
     }
     
-    public boolean place(FeaturePlaceContext<MOreDepositConfiguration> pContext) {
-        MOreDepositConfiguration depositConfiguration = pContext.config();
-        RandomSource random = pContext.random();
-        BlockPos origin = pContext.origin();
-        WorldGenLevel worldGenLevel = pContext.level();
-        BlockStateProvider decorativeBlock = depositConfiguration.getDecorativeBlock();
-        BlockStateProvider outerBlock = depositConfiguration.getOuterBlock();
-        BlockStateProvider innerBlock = depositConfiguration.getInnerBlock();
-        BlockStateProvider depositBlock = depositConfiguration.getDepositBlock();
-        Boolean underwater = depositConfiguration.isUnderwater();
-        int depth = depositConfiguration.getDepth().sample(random);
-        boolean suitableEnvironment = false;
+    @Override
+    public boolean place(FeaturePlaceContext<MOreDepositConfiguration> context) {
+        WorldGenLevel worldgenlevel = context.level();
+        RandomSource randomsource = context.random();
+        BlockPos pos = context.origin();
+        MOreDepositConfiguration config = context.config();
         
-        if (depth > 80 && underwater) {
-            depth = 80;
-        }
+        boolean large = randomsource.nextInt(5) == 0;
+        int tipMin = (int) ((large ? 25 : 10) * 0.6);
+        int tipRand = (int) ((large ? 35 : 20) * 0.3);
+        int radiusMin = large ? 5 : 3;
+        int radiusRand = large ? 3 : 1;
         
-        if (underwater && worldGenLevel.getBlockState(origin.above(2)).is(Blocks.WATER)) {
-            suitableEnvironment = true;
-        } else if (!underwater && !worldGenLevel.getBlockState(origin.below()).is(Blocks.WATER)) {
-            suitableEnvironment = true;
-        }
+        int tip = tipMin + worldgenlevel.getRandom().nextInt(tipRand);
+        int topX = worldgenlevel.getRandom().nextInt(tip) - tip / 2;
+        int topZ = worldgenlevel.getRandom().nextInt(tip) - tip / 2;
         
-        if (suitableEnvironment && worldGenLevel.getBlockState(origin.below()).getMaterial().isSolid()) {
-            placePartialDiagonal(worldGenLevel, random, origin.above(), outerBlock, 3, 0.8, decorativeBlock);
-            placeDiagonal(worldGenLevel, random, origin.above(), outerBlock, 3, 3, 0.66, decorativeBlock);
-            placePartialDiagonal(worldGenLevel, random, origin, outerBlock, 3, 0.7, decorativeBlock);
-            placeStraight(worldGenLevel, random, origin, outerBlock, 3, 3, 1, decorativeBlock);
-            placeDiagonal(worldGenLevel, random, origin, outerBlock, 0, 3, 1.6, null);
-            placeStraight(worldGenLevel, random, origin.below(), outerBlock, 3, 3, 1, null);
-            placeDiagonal(worldGenLevel, random, origin.below(), outerBlock, 0, 3, 1.6, null);
-            if (depth > 10) {
-                for (int y = 1; y <= (depth / 2) + 1; y++) {
-                    placeStraight(worldGenLevel, random, origin.below(y), outerBlock, 0, 2, 0.8, null);
-                    placeDiagonal(worldGenLevel, random, origin.below(y), outerBlock, 0, 2, 0.75, null);
-                    placeBlock(worldGenLevel, random, origin.below(y), depositBlock, 1, null);
-                }
-                
-                for (int y = (depth / 2) + 2; y <= depth + 1; y++) {
-                    placeStraight(worldGenLevel, random, origin.below(y), outerBlock, 0, 1, 0.33, null);
-                    placeDiagonal(worldGenLevel, random, origin.below(y), outerBlock, 0, 1, 0.275, null);
-                    placeBlock(worldGenLevel, random, origin.below(y), depositBlock, 1, null);
-                }
-            }
-            if (underwater) {
-                worldGenLevel.setBlock(origin, Blocks.WATER.defaultBlockState(), UPDATE_ALL);
-            } else {
-                worldGenLevel.setBlock(origin, Blocks.AIR.defaultBlockState(), UPDATE_ALL);
-            }
-            worldGenLevel.setBlock(origin.below(), innerBlock.getState(random, origin.below()), UPDATE_ALL);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    private void placeStraight(WorldGenLevel worldGenLevel, RandomSource random, BlockPos blockPos, BlockStateProvider blockStateProvider, int minRadius, int maxRadius, double probability, @Nullable BlockStateProvider decorate) {
-        minRadius--;
-        for (int radius = minRadius; radius < maxRadius; radius++) {
-            placeBlock(worldGenLevel, random, blockPos.north(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.east(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.west(radius), blockStateProvider, probability, decorate);
-        }
-    }
-    private void placeDiagonal(WorldGenLevel worldGenLevel, RandomSource random, BlockPos blockPos, BlockStateProvider blockStateProvider, int minRadius, int maxRadius, double probability, @Nullable BlockStateProvider decorate) {
-        minRadius--;
-        for (int radius = minRadius; radius < maxRadius; radius++) {
-            placeBlock(worldGenLevel, random, blockPos.north(radius).east(), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.north(radius).west(), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south(radius).west(), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south(radius).east(), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.north().east(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.north().west(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south().west(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south().east(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.north(radius).east(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.north(radius).west(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south(radius).west(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south(radius).east(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.north(radius).east(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.north(radius).west(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south(radius).west(radius), blockStateProvider, probability, decorate);
-            placeBlock(worldGenLevel, random, blockPos.south(radius).east(radius), blockStateProvider, probability, decorate);
-        }
-    }
-    private void placePartialDiagonal(WorldGenLevel worldGenLevel, RandomSource random, BlockPos blockPos, BlockStateProvider blockStateProvider, int radius, double probability, @Nullable BlockStateProvider decorate) {
-        placeBlock(worldGenLevel, random, blockPos.north(radius).east(), blockStateProvider, probability, decorate);
-        placeBlock(worldGenLevel, random, blockPos.north(radius).west(), blockStateProvider, probability, decorate);
-        placeBlock(worldGenLevel, random, blockPos.south(radius).west(), blockStateProvider, probability, decorate);
-        placeBlock(worldGenLevel, random, blockPos.south(radius).east(), blockStateProvider, probability, decorate);
-        placeBlock(worldGenLevel, random, blockPos.north().east(radius), blockStateProvider, probability, decorate);
-        placeBlock(worldGenLevel, random, blockPos.north().west(radius), blockStateProvider, probability, decorate);
-        placeBlock(worldGenLevel, random, blockPos.south().west(radius), blockStateProvider, probability, decorate);
-        placeBlock(worldGenLevel, random, blockPos.south().east(radius), blockStateProvider, probability, decorate);
-    }
-    private void placeBlock(WorldGenLevel worldGenLevel, RandomSource random, BlockPos blockPos, BlockStateProvider blockStateProvider, double probability, @Nullable BlockStateProvider decorate) {
-        boolean passedProbability = false;
-        if (probability >= 1) {
-            passedProbability = true;
-        } else {
-            int randomNumber = (int)(Math.random()*((100))+1);
-            if (randomNumber < probability*100) {
-                passedProbability = true;
-            }
-        }
-        if (passedProbability) {
-            BlockState blockState = blockStateProvider.getState(random, blockPos);
-            worldGenLevel.setBlock(blockPos, blockState, UPDATE_ALL);
-            if (decorate != null) {
-                boolean passedDecorateProbability = false;
-                double decorateProbability = probability / 3;
-                if (decorateProbability >= 1) {
-                    passedDecorateProbability = true;
-                } else {
-                    int randomNumber2 = (int) (Math.random() * ((100)) + 1);
-                    if (randomNumber2 < decorateProbability * 100) {
-                        passedDecorateProbability = true;
+        int radius = radiusMin + worldgenlevel.getRandom().nextInt(radiusRand);
+        Vec3 to = new Vec3(pos.getX() + topX, pos.getY() + tip, pos.getZ() + topZ);
+        
+        for (int x = -radius; x <= radius; x++) {
+            for (int z = -radius; z <= radius; z++) {
+                double fromCenter = Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2));
+                if (fromCenter <= radius) {
+                    Vec3 from = new Vec3(pos.getX() + x, pos.getY(), pos.getZ() + z);
+                    
+                    if(worldgenlevel.getBlockState(posFromVec(from).below()).isAir()) {
+                        continue;
                     }
-                }
-                if (passedDecorateProbability) {
-                    BlockPos offsetPos = randomOffset(blockPos);
-                    BlockState decorateBlockState = decorate.getState(random, offsetPos);
-                    worldGenLevel.setBlock(offsetPos, decorateBlockState, UPDATE_ALL);
-                    if (worldGenLevel.getBlockState(offsetPos.below()).isAir()) {
-                        worldGenLevel.setBlock(offsetPos.below(), blockState, UPDATE_ALL);
+                    
+                    Vec3 per = to.subtract(from).normalize();
+                    Vec3 current = from.add(0, 0, 0);
+                    double distance = from.distanceTo(to);
+                    
+                    for (double i = 0; i < distance; i++) {
+                        BlockPos targetPos = posFromVec(current);
+                        if (i > 0 && i < distance / 1.3) {
+                            int roll = randomsource.nextInt(3);
+                            if (roll == 0) {
+                                worldgenlevel.setBlock(targetPos, config.getSecondaryStone(), UPDATE_ALL);
+                            } else if (roll == 1) {
+                                worldgenlevel.setBlock(targetPos, config.getPrimaryStone(), UPDATE_ALL);
+                            } else if (roll == 2) {
+                                if (randomsource.nextInt(8) == 0) {
+                                    worldgenlevel.setBlock(targetPos, config.getDeposit(), UPDATE_ALL);
+                                } else {
+                                    worldgenlevel.setBlock(targetPos, config.getMineralStone(), UPDATE_ALL);
+                                }
+                            }
+                        } else {
+                            worldgenlevel.setBlock(targetPos, config.getMineralStone(), UPDATE_ALL);
+                        }
+                        if (i <= 0) {
+                            BlockPos getFromTarget = targetPos;
+                            while (worldgenlevel.isEmptyBlock(getFromTarget.below())) {
+                                if (randomsource.nextBoolean()) {
+                                    worldgenlevel.setBlock(getFromTarget, config.getPrimaryStone(), UPDATE_ALL);
+                                } else {
+                                    worldgenlevel.setBlock(getFromTarget, config.getSecondaryStone(), UPDATE_ALL);
+                                }
+                                getFromTarget = getFromTarget.below();
+                            }
+                        }
+                        current = current.add(per);
                     }
                 }
             }
         }
+        String deposit = config.getDeposit().getBlock().getName().getString();
+        Metallurgica.LOGGER.info("{} GENERATED AT: {} {} {}", deposit, pos.getX(), pos.getY(), pos.getZ());
+        return true;
     }
     
-    private BlockPos randomOffset(BlockPos blockPos) {
-        int randomNumber = (int)(Math.random()*((15))+1);
-        if (randomNumber <= 7) {
-            return blockPos.above();
-        } else if (randomNumber == 8) {
-            return blockPos.north();
-        } else if (randomNumber == 9) {
-            return blockPos.east();
-        } else if (randomNumber == 10) {
-            return blockPos.south();
-        } else if (randomNumber == 11) {
-            return blockPos.west();
-        } else if (randomNumber == 12) {
-            return blockPos.north().east();
-        } else if (randomNumber == 13) {
-            return blockPos.north().west();
-        } else if (randomNumber == 14) {
-            return blockPos.south().east();
-        } else {
-            return blockPos.south().west();
-        }
+    public BlockPos posFromVec(Vec3 vec3) {
+        return new BlockPos((int) vec3.x(), (int) vec3.y(), (int) vec3.z());
     }
 }

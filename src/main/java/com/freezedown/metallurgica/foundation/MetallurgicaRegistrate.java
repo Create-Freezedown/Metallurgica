@@ -19,6 +19,7 @@ import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.builders.FluidBuilder;
@@ -171,7 +172,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         }
         return builder.register();
     }
-
+    
     public MaterialEntry material(String name, boolean richb) {
         return new MaterialEntry(this, name, richb);
     }

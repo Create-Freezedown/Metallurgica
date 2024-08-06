@@ -1,21 +1,29 @@
 package com.freezedown.metallurgica.registry;
 
+import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
-import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
+import com.simibubi.create.foundation.utility.Couple;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+
+import javax.annotation.Nullable;
 
 public enum MetallurgicaMaterials {
     //COPPER
-    NATIVE_COPPER(26, 7, -3, 97, 8, -3, 97),
+    NATIVE_COPPER(26, 7, -3, 97, 8, -3, 97, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.23f),
     MALACHITE(true),
     //CHALKOPYRITE(),
 
     //GOLD
-    NATIVE_GOLD(12, 4, -12, 56, 5, -12, 56),
+    NATIVE_GOLD(12, 4, -12, 56, 5, -12, 56, Couple.create(() -> Blocks.STONE, () -> Blocks.DIORITE), 0.1f),
 
     //IRON
-    MAGNETITE(23, 4, -3, 128, 5, -3, 128, true),
+    MAGNETITE(23, 4, -3, 128, 5, -3, 128, true, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f),
     //HEMATITE(),
     //PENTLANDITE(),
 
@@ -65,6 +73,8 @@ public enum MetallurgicaMaterials {
 
     public MOreFeatureConfigEntry DEPOSIT;
     public MOreFeatureConfigEntry CLUSTER;
+    @Nullable
+    public MDepositFeatureConfigEntry SURFACE_DEPOSIT;
     public final MaterialEntry MATERIAL;
 
     MetallurgicaMaterials() {
@@ -76,18 +86,34 @@ public enum MetallurgicaMaterials {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
         MATERIAL = registrate.material(this.name().toLowerCase(), richb);
     }
-
+    
     MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight) {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
         MATERIAL = registrate.material(this.name().toLowerCase(), false);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
     }
-
+    
     MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb) {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
         MATERIAL = registrate.material(this.name().toLowerCase(), richb);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
+    }
+
+    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency) {
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MATERIAL = registrate.material(this.name().toLowerCase(), false);
+        DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
+        CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
+        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, accompanyingBlocks);
+    }
+
+    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency) {
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MATERIAL = registrate.material(this.name().toLowerCase(), richb);
+        DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
+        CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
+        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, accompanyingBlocks);
     }
 }

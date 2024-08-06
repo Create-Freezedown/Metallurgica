@@ -3,9 +3,12 @@ package com.freezedown.metallurgica.foundation.material;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
-import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
+import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -21,6 +24,7 @@ import javax.annotation.Nullable;
 import static com.freezedown.metallurgica.registry.MetallurgicaTags.NameSpace.MOD;
 import static com.freezedown.metallurgica.registry.MetallurgicaTags.optionalTag;
 import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.create;
+import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.createDeposit;
 
 public class MaterialEntry {
     private final BlockEntry<MineralDepositBlock> deposit;
@@ -42,6 +46,7 @@ public class MaterialEntry {
         name = pName;
         rich = richb ? reg.metallurgicaItem("rich_magnetite", "enriched_materials/" + pName, "enriched_materials") : null;
     }
+    
     public BlockEntry<MineralDepositBlock> depositBlock() { return deposit; }
     public BlockEntry<Block> stone() { return stone; }
 
@@ -63,6 +68,15 @@ public class MaterialEntry {
         return create(name + "_deposit", size, frequency, minHeight, maxHeight)
                 .customStandardDatagenExt()
                 .withBlock(stone, new TagMatchTest(tag))
+                .biomeTag(BiomeTags.IS_OVERWORLD)
+                .parent();
+    }
+    
+    @Nullable
+    public MDepositFeatureConfigEntry surfaceDeposit(float frequency, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones) {
+        return createDeposit(name + "_surface_deposit", frequency, 100, 320)
+                .standardDatagenExt()
+                .withBlocks(surfaceDepositStones, stone, deposit)
                 .biomeTag(BiomeTags.IS_OVERWORLD)
                 .parent();
     }

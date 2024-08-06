@@ -10,7 +10,7 @@ import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
 import com.freezedown.metallurgica.registry.*;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
-import com.freezedown.metallurgica.world.biome_modifier.OreModifier;
+import com.freezedown.metallurgica.world.biome_modifier.SurfaceDepositsModifier;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
@@ -19,14 +19,10 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipModifier;
-import com.simibubi.create.infrastructure.worldgen.AllOreFeatureConfigEntries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
@@ -46,9 +42,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.simibubi.create.foundation.item.TooltipHelper.styleFromColor;
 
@@ -81,7 +74,8 @@ public class Metallurgica
     }
 };
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);
-    public static final RegistryObject<Codec<? extends OreModifier>> oreGen_CODEC = BIOME_MODIFIERS.register("generation_ores", () -> Codec.unit(OreModifier.INSTANCE));
+    //public static final RegistryObject<Codec<? extends OreModifier>> oreGen_CODEC = BIOME_MODIFIERS.register("generation_ores", () -> Codec.unit(OreModifier.INSTANCE));
+    public static final RegistryObject<Codec<? extends SurfaceDepositsModifier>> surfaceDeposits_CODEC = BIOME_MODIFIERS.register("generation_surface_deposits", () -> Codec.unit(SurfaceDepositsModifier.INSTANCE));
     public static final TooltipHelper.Palette METALLURGICA_PALETTE = new TooltipHelper.Palette(styleFromColor(0x383d59), styleFromColor(0x717388));
     public static final TooltipHelper.Palette TFMG_PALETTE = new TooltipHelper.Palette(styleFromColor(0x292c2d), styleFromColor(0x494a4b));
     static {
@@ -114,7 +108,6 @@ public class Metallurgica
         MBuiltinRegistration.register(modEventBus);
         registrate.registerEventListeners(modEventBus);
         //MetallurgicaOreFeatures.register(modEventBus);
-        
         EventHandler commonHandler = new EventHandler();
         MinecraftForge.EVENT_BUS.register(commonHandler);
         

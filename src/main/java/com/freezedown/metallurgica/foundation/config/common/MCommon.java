@@ -17,5 +17,6 @@ public class MCommon extends ConfigBase {
     private static class Comments {
         static String worldGen = "Modify Metallurgica's impact on your terrain";
         static String vanillaWorldGen = "Modify Metallurgica's impact on Minecraft's ore generation";
+        static String surfaceDeposits = "Modify the rarity of surface deposits";
     }
 }

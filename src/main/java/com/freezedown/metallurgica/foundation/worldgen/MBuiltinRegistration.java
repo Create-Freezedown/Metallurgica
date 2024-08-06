@@ -1,6 +1,8 @@
 package com.freezedown.metallurgica.foundation.worldgen;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +25,19 @@ public class MBuiltinRegistration {
             ResourceLocation id = entry.getKey();
             if (id.getNamespace().equals(Metallurgica.ID)) {
                 MOreFeatureConfigEntry.DatagenExtension datagenExt = entry.getValue().datagenExt();
+                
+                if (datagenExt != null) {
+                    CONFIGURED_FEATURE_REGISTER.register(id.getPath(), () -> datagenExt.createConfiguredFeature(BuiltinRegistries.ACCESS));
+                    PLACED_FEATURE_REGISTER.register(id.getPath(), () -> datagenExt.createPlacedFeature(BuiltinRegistries.ACCESS));
+                    BIOME_MODIFIER_REGISTER.register(id.getPath(), () -> datagenExt.createBiomeModifier(BuiltinRegistries.ACCESS));
+                }
+            }
+        }
+        for (Map.Entry<ResourceLocation, MDepositFeatureConfigEntry> entry : MDepositFeatureConfigEntry.ALL.entrySet()) {
+            ResourceLocation id = entry.getKey();
+            if (id.getNamespace().equals(Metallurgica.ID)) {
+                MDepositFeatureConfigEntry.DatagenExtension datagenExt = entry.getValue().datagenExt();
+                
                 if (datagenExt != null) {
                     CONFIGURED_FEATURE_REGISTER.register(id.getPath(), () -> datagenExt.createConfiguredFeature(BuiltinRegistries.ACCESS));
                     PLACED_FEATURE_REGISTER.register(id.getPath(), () -> datagenExt.createPlacedFeature(BuiltinRegistries.ACCESS));

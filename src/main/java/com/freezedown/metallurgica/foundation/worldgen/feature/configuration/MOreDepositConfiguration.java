@@ -2,52 +2,44 @@ package com.freezedown.metallurgica.foundation.worldgen.feature.configuration;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-public record MOreDepositConfiguration(BlockStateProvider decorativeBlock, BlockStateProvider outerBlock, BlockStateProvider innerBlock, BlockStateProvider depositBlock, IntProvider depth, Boolean underwater) implements FeatureConfiguration {
+public record MOreDepositConfiguration(BlockState primaryStone, BlockState secondaryStone, BlockState mineralStone, BlockState deposit) implements FeatureConfiguration {
     public static final Codec<MOreDepositConfiguration> CODEC = RecordCodecBuilder.create((fields) -> {
-        return fields.group(BlockStateProvider.CODEC.fieldOf("decorativeBlock").forGetter((v) -> {
-            return v.decorativeBlock;
-        }), BlockStateProvider.CODEC.fieldOf("outerBlock").forGetter((v) -> {
-            return v.outerBlock;
-        }), BlockStateProvider.CODEC.fieldOf("innerBlock").forGetter((v) -> {
-            return v.innerBlock;
-        }), BlockStateProvider.CODEC.fieldOf("liquidBlock").forGetter((v) -> {
-            return v.depositBlock;
-        }), IntProvider.codec(10, 255).fieldOf("depth").forGetter((v) -> {
-            return v.depth;
-        }), Codec.BOOL.fieldOf("underwater").orElse(false).forGetter((v) -> {
-            return v.underwater;
+        return fields.group(
+            BlockState.CODEC.fieldOf("primaryStone").forGetter((v) -> {
+            return v.primaryStone;
+        }), BlockState.CODEC.fieldOf("secondaryStone").forGetter((v) -> {
+            return v.secondaryStone;
+        }), BlockState.CODEC.fieldOf("mineralStone").forGetter((v) -> {
+            return v.mineralStone;
+        }), BlockState.CODEC.fieldOf("deposit").forGetter((v) -> {
+            return v.deposit;
         })).apply(fields, MOreDepositConfiguration::new);
     });
     
-    public MOreDepositConfiguration(BlockStateProvider decorativeBlock, BlockStateProvider outerBlock, BlockStateProvider innerBlock, BlockStateProvider depositBlock, IntProvider depth, Boolean underwater) {
-        this.decorativeBlock = decorativeBlock;
-        this.outerBlock = outerBlock;
-        this.innerBlock = innerBlock;
-        this.depositBlock = depositBlock;
-        this.depth = depth;
-        this.underwater = underwater;
+    public MOreDepositConfiguration(BlockState primaryStone, BlockState secondaryStone, BlockState mineralStone, BlockState deposit) {
+        this.primaryStone = primaryStone;
+        this.secondaryStone = secondaryStone;
+        this.mineralStone = mineralStone;
+        this.deposit = deposit;
     }
     
-    public BlockStateProvider getDecorativeBlock() {
-        return decorativeBlock;
+    public BlockState getPrimaryStone() {
+        return primaryStone;
     }
-    public BlockStateProvider getOuterBlock() {
-        return this.outerBlock;
+    
+    public BlockState getSecondaryStone() {
+        return secondaryStone;
     }
-    public BlockStateProvider getInnerBlock() {
-        return this.innerBlock;
+    
+    public BlockState getMineralStone() {
+        return mineralStone;
     }
-    public BlockStateProvider getDepositBlock() {
-        return this.depositBlock;
-    }
-    public IntProvider getDepth() {
-        return this.depth;
-    }
-    public Boolean isUnderwater() {
-        return this.underwater;
+    
+    public BlockState getDeposit() {
+        return deposit;
     }
 }

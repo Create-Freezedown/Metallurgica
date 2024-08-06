@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.worldgen;
 
+import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
 public class MBaseConfigDrivenOreFeatureConfiguration implements FeatureConfiguration {
