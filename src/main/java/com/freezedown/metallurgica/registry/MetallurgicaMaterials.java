@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
@@ -106,7 +105,7 @@ public enum MetallurgicaMaterials {
         MATERIAL = registrate.material(this.name().toLowerCase(), false);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
-        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, accompanyingBlocks);
+        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, depositFrequency, accompanyingBlocks);
     }
 
     MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency) {
@@ -114,6 +113,6 @@ public enum MetallurgicaMaterials {
         MATERIAL = registrate.material(this.name().toLowerCase(), richb);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
-        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, accompanyingBlocks);
+        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, depositFrequency, accompanyingBlocks);
     }
 }

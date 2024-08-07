@@ -43,17 +43,19 @@ public class MOreFeatureConfigEntry extends ConfigBase {
     public final ResourceLocation id;
     public final ConfigInt clusterSize;
     public final ConfigFloat frequency;
+    public final ConfigInt chance;
     public final ConfigInt minHeight;
     public final ConfigInt maxHeight;
     
     private DatagenExtension datagenExt;
     
-    public MOreFeatureConfigEntry(ResourceLocation id, int clusterSize, float frequency, int minHeight, int maxHeight) {
+    public MOreFeatureConfigEntry(ResourceLocation id, int clusterSize, float frequency, int chance, int minHeight, int maxHeight) {
         this.id = id;
         
         this.clusterSize = i(clusterSize, 0, "clusterSize");
         this.frequency = f(frequency, 0, 512, "frequency", "Amount of clusters generated per Chunk.",
                 "  >1 to spawn multiple.", "  <1 to make it a chance.", "  0 to disable.");
+        this.chance = i(chance, "chance");
         this.minHeight = i(minHeight, "minHeight");
         this.maxHeight = i(maxHeight, "maxHeight");
         

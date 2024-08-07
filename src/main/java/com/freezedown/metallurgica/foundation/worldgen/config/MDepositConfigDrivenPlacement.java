@@ -7,6 +7,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
@@ -39,29 +42,34 @@ public class MDepositConfigDrivenPlacement extends PlacementModifier {
         return entry.frequency.getF();
     }
     
+    public int getChance() {
+        return entry.chance.get();
+    }
+    
+    protected boolean shouldPlace(PlacementContext pContext, RandomSource pRandom, BlockPos pPos) {
+        return pRandom.nextFloat() < 1.0F / (float)getChance();
+    }
+    
     @Override
     public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
         int count = getCount(getFrequency(), random);
-        if (count == 0) {
+        int heightmap = context.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+        if (count == 0 || heightmap < getMinY() || heightmap > getMaxY() || !shouldPlace(context, random, pos)) {
             return Stream.empty();
         }
-        
-        int minY = getMinY();
-        int maxY = getMaxY();
         
         return IntStream.range(0, count)
                 .mapToObj(i -> pos)
                 .map(p -> {
                     int x = random.nextInt(16) + p.getX();
                     int z = random.nextInt(16) + p.getZ();
-                    int y = Mth.randomBetweenInclusive(random, minY, maxY);
-                    return new BlockPos(x, y, z);
+                    return new BlockPos(x, heightmap, z);
                 });
     }
     
     public int getCount(float frequency, RandomSource random) {
         int floored = Mth.floor(frequency);
-        return floored + (random.nextFloat() < (frequency - floored) ? 1 : 0);
+        return floored + (random.nextFloat() < (frequency - floored) * 0.5 ? 1 : 0); // Adjust the threshold
     }
     
     @Override

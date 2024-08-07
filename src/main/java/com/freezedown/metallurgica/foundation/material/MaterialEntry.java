@@ -65,7 +65,7 @@ public class MaterialEntry {
     }
 
     public MOreFeatureConfigEntry deposit(int size, int frequency, int minHeight, int maxHeight) {
-        return create(name + "_deposit", size, frequency, minHeight, maxHeight)
+        return create(name + "_deposit", size, frequency, frequency, minHeight, maxHeight)
                 .customStandardDatagenExt()
                 .withBlock(stone, new TagMatchTest(tag))
                 .biomeTag(BiomeTags.IS_OVERWORLD)
@@ -73,8 +73,8 @@ public class MaterialEntry {
     }
     
     @Nullable
-    public MDepositFeatureConfigEntry surfaceDeposit(float frequency, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones) {
-        return createDeposit(name + "_surface_deposit", frequency, 100, 320)
+    public MDepositFeatureConfigEntry surfaceDeposit(float frequency, int chance, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones) {
+        return createDeposit(name + "_surface_deposit", frequency, chance, 100, 320)
                 .standardDatagenExt()
                 .withBlocks(surfaceDepositStones, stone, deposit)
                 .biomeTag(BiomeTags.IS_OVERWORLD)
@@ -82,7 +82,7 @@ public class MaterialEntry {
     }
     
     public MOreFeatureConfigEntry cluster(int size, int frequency, int minHeight, int maxHeight) {
-        return create(name + "_cluster", size, frequency, minHeight, maxHeight)
+        return create(name + "_cluster", size, frequency, frequency, minHeight, maxHeight)
                 .customStandardDatagenExt()
                 .withBlock(stone, OreFeatures.STONE_ORE_REPLACEABLES)
                 .biomeTag(BiomeTags.IS_OVERWORLD)

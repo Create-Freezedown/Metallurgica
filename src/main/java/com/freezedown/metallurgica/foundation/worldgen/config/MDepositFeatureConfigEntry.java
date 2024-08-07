@@ -8,10 +8,7 @@ import com.mojang.serialization.DataResult;
 import com.simibubi.create.foundation.config.ConfigBase;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.*;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -19,9 +16,15 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.minecraft.world.level.levelgen.blockpredicates.MatchingBlockTagPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.placement.EnvironmentScanPlacement;
+import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers;
@@ -40,16 +43,18 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
     
     public final ResourceLocation id;
     public final ConfigFloat frequency;
+    public final ConfigInt chance;
     public final ConfigInt minHeight;
     public final ConfigInt maxHeight;
     
     private DatagenExtension datagenExt;
     
-    public MDepositFeatureConfigEntry(ResourceLocation id, float frequency, int minHeight, int maxHeight) {
+    public MDepositFeatureConfigEntry(ResourceLocation id, float frequency, int chance, int minHeight, int maxHeight) {
         this.id = id;
         
         this.frequency = f(frequency, 0, 512, "frequency", "Amount of clusters generated per Chunk.",
                 "  >1 to spawn multiple.", "  <1 to make it a chance.", "  0 to disable.");
+        this.chance = i(chance, "chance");
         this.minHeight = i(minHeight, "minHeight");
         this.maxHeight = i(maxHeight, "maxHeight");
         
@@ -106,7 +111,7 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
         public PlacedFeature createPlacedFeature(RegistryAccess registryAccess) {
             Registry<ConfiguredFeature<?, ?>> featureRegistry = registryAccess.registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY);
             Holder<ConfiguredFeature<?, ?>> featureHolder = featureRegistry.getOrCreateHolderOrThrow(ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, id));
-            return new PlacedFeature(featureHolder, List.of(new MDepositConfigDrivenPlacement(MDepositFeatureConfigEntry.this)));
+            return new PlacedFeature(featureHolder, List.of(new MDepositConfigDrivenPlacement(MDepositFeatureConfigEntry.this), EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), MatchingBlockTagPredicate.ONLY_IN_AIR_PREDICATE, 12)));
         }
         
         public BiomeModifier createBiomeModifier(RegistryAccess registryAccess) {

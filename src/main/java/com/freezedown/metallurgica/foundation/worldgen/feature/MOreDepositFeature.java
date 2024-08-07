@@ -3,8 +3,13 @@ package com.freezedown.metallurgica.foundation.worldgen.feature;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.MOreDepositConfiguration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.phys.Vec3;
@@ -35,7 +40,7 @@ public class MOreDepositFeature extends Feature<MOreDepositConfiguration> {
         int topZ = worldgenlevel.getRandom().nextInt(tip) - tip / 2;
         
         int radius = radiusMin + worldgenlevel.getRandom().nextInt(radiusRand);
-        Vec3 to = new Vec3(pos.getX() + topX, pos.getY() + tip, pos.getZ() + topZ);
+        Vec3 to = new Vec3(pos.getX() + topX, pos.getY() - tip, pos.getZ() + topZ);
         
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
@@ -60,7 +65,7 @@ public class MOreDepositFeature extends Feature<MOreDepositConfiguration> {
                             } else if (roll == 1) {
                                 worldgenlevel.setBlock(targetPos, config.getPrimaryStone(), UPDATE_ALL);
                             } else if (roll == 2) {
-                                if (randomsource.nextInt(8) == 0) {
+                                if (randomsource.nextInt(13) == 0) {
                                     worldgenlevel.setBlock(targetPos, config.getDeposit(), UPDATE_ALL);
                                 } else {
                                     worldgenlevel.setBlock(targetPos, config.getMineralStone(), UPDATE_ALL);
@@ -85,6 +90,33 @@ public class MOreDepositFeature extends Feature<MOreDepositConfiguration> {
                 }
             }
         }
+        
+        for (int x = -radius - 1; x <= radius + 1; x++) {
+            for (int z = -radius - 1; z <= radius + 1; z++) {
+                double fromCenter = Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2));
+                if (fromCenter > radius && fromCenter <= radius + 1) {
+                    BlockPos edgePos = pos.offset(x, 0, z);
+                    BlockPos highestSolidPos = findHighestSolidBlock(worldgenlevel, edgePos);
+                    BlockState blockToPlace = worldgenlevel.getBlockState(highestSolidPos);
+                    worldgenlevel.setBlock(edgePos, blockToPlace, UPDATE_ALL);
+                }
+            }
+        }
+        
+        for (int x = -radius - 2; x <= radius + 2; x++) {
+            for (int z = -radius - 2; z <= radius + 2; z++) {
+                if (randomsource.nextInt(10) < 3) { // 20% chance to place secondaryStone
+                    BlockPos scatterPos = pos.offset(x, 0, z);
+                    BlockPos highestSolidPos = findHighestSolidBlock(worldgenlevel, scatterPos);
+                    if (randomsource.nextBoolean()) {
+                        worldgenlevel.setBlock(highestSolidPos, config.getPrimaryStone(), UPDATE_ALL);
+                    } else {
+                        worldgenlevel.setBlock(highestSolidPos, config.getSecondaryStone(), UPDATE_ALL);
+                    }
+                }
+            }
+        }
+        
         String deposit = config.getDeposit().getBlock().getName().getString();
         Metallurgica.LOGGER.info("{} GENERATED AT: {} {} {}", deposit, pos.getX(), pos.getY(), pos.getZ());
         return true;
@@ -92,5 +124,13 @@ public class MOreDepositFeature extends Feature<MOreDepositConfiguration> {
     
     public BlockPos posFromVec(Vec3 vec3) {
         return new BlockPos((int) vec3.x(), (int) vec3.y(), (int) vec3.z());
+    }
+    
+    private BlockPos findHighestSolidBlock(WorldGenLevel worldgenlevel, BlockPos pos) {
+        BlockPos.MutableBlockPos mutablePos = pos.mutable();
+        while (worldgenlevel.isEmptyBlock(mutablePos) && mutablePos.getY() > worldgenlevel.getMinBuildHeight()) {
+            mutablePos.move(Direction.DOWN);
+        }
+        return mutablePos.immutable();
     }
 }

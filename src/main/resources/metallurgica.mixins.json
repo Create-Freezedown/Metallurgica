@@ -12,7 +12,8 @@
     "MixinOpenEndFluidHandler",
     "MixinVanillaFluidTargets",
     "OreVeinifierHijacker",
-    "TFMGBlastFurnaceBGone"
+    "TFMGBlastFurnaceBGone",
+    "WorldGenRegionMixin"
   ],
   "client": [
     "MixinLiquidBlockRenderer"
