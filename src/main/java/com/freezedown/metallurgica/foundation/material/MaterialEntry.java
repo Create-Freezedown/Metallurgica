@@ -81,6 +81,15 @@ public class MaterialEntry {
                 .parent();
     }
     
+    @Nullable
+    public MDepositFeatureConfigEntry surfaceDepositNether(float frequency, int chance, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones) {
+        return createDeposit(name + "_surface_deposit", frequency, chance, 100, 320)
+                .standardDatagenExt()
+                .withBlocks(surfaceDepositStones, stone, deposit)
+                .biomeTag(BiomeTags.IS_NETHER)
+                .parent();
+    }
+    
     public MOreFeatureConfigEntry cluster(int size, int frequency, int minHeight, int maxHeight) {
         return create(name + "_cluster", size, frequency, frequency, minHeight, maxHeight)
                 .customStandardDatagenExt()

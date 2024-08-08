@@ -1,33 +1,40 @@
 package com.freezedown.metallurgica.registry;
 
+import com.drmangotea.createindustry.CreateTFMG;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
+import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.utility.Couple;
+import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public enum MetallurgicaMaterials {
     //COPPER
-    NATIVE_COPPER(26, 7, -3, 97, 8, -3, 97, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.23f),
+    NATIVE_COPPER(7, 7, -3, 97, 8, -3, 97, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.23f),
     MALACHITE(true),
     //CHALKOPYRITE(),
 
     //GOLD
-    NATIVE_GOLD(12, 4, -12, 56, 5, -12, 56, Couple.create(() -> Blocks.STONE, () -> Blocks.DIORITE), 0.1f),
+    NATIVE_GOLD(3, 4, -12, 56, 5, -12, 56, Couple.create(() -> Blocks.STONE, () -> Blocks.DIORITE), 0.1f),
 
     //IRON
-    MAGNETITE(23, 4, -3, 128, 5, -3, 128, true, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f),
+    MAGNETITE(4, 4, -3, 128, 5, -3, 128, true, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f),
     //HEMATITE(),
     //PENTLANDITE(),
 
     //LITHIUM/ALUMINUM
-    BAUXITE(19, 9, -30, 70, 10, -30, 70),
+    BAUXITE(5, 9, -30, 70, 10, -30, 70, Couple.create(() -> getBlock(CreateTFMG.asResource("bauxite")), () -> Blocks.GRANITE), 0.2f),
     //PETALITE(),
     //SPODUMENE(),
 
@@ -64,17 +71,22 @@ public enum MetallurgicaMaterials {
 
     //MAGNESIUM
     MAGNESITE(),
-    CASSITERITE(),
+    CASSITERITE(3, 5, -12, 87, 6, -12, 87, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.22f),
     
     //FLUORITE
     FLUORITE(),
     ;
-
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
     public MOreFeatureConfigEntry DEPOSIT;
     public MOreFeatureConfigEntry CLUSTER;
     @Nullable
     public MDepositFeatureConfigEntry SURFACE_DEPOSIT;
     public final MaterialEntry MATERIAL;
+    
+    private static Block getBlock(ResourceLocation id) {
+        Block block = Registry.BLOCK.get(id);
+        return block;
+    }
 
     MetallurgicaMaterials() {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
@@ -114,5 +126,13 @@ public enum MetallurgicaMaterials {
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
         SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, depositFrequency, accompanyingBlocks);
+    }
+    
+    MetallurgicaMaterials(Optional<MOreFeatureConfigEntry> deposit, Optional<MOreFeatureConfigEntry> cluster, Optional<MDepositFeatureConfigEntry> surfaceDeposit, boolean richb) {
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MATERIAL = registrate.material(this.name().toLowerCase(), richb);
+        deposit.ifPresent(mOreFeatureConfigEntry -> DEPOSIT = mOreFeatureConfigEntry);
+        cluster.ifPresent(mOreFeatureConfigEntry -> CLUSTER = mOreFeatureConfigEntry);
+        surfaceDeposit.ifPresent(mDepositFeatureConfigEntry -> SURFACE_DEPOSIT = mDepositFeatureConfigEntry);
     }
 }

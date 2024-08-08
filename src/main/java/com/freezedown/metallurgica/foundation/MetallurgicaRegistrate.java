@@ -10,6 +10,7 @@ import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
+import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
@@ -37,11 +38,13 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -58,8 +61,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.BiFunction;
 
+import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.createDeposit;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class MetallurgicaRegistrate extends CreateRegistrate {
@@ -171,6 +176,39 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
             builder.tag(AllTags.forgeItemTag(tag));
         }
         return builder.register();
+    }
+    
+    public MDepositFeatureConfigEntry surfaceDeposit(String name, float frequency, int chance, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones, NonNullSupplier<? extends Block> mineralStone, NonNullSupplier<? extends Block> deposit) {
+        return createDeposit(name + "_surface_deposit", frequency, chance, 100, 320)
+                .standardDatagenExt()
+                .withBlocks(surfaceDepositStones, mineralStone, deposit)
+                .biomeTag(BiomeTags.IS_OVERWORLD)
+                .parent();
+    }
+    
+    public MDepositFeatureConfigEntry surfaceDeposit(String name, float frequency, int chance, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones, NonNullSupplier<? extends Block> mineralStone, NonNullSupplier<? extends Block> deposit, TagKey<Biome> biomes, Dimension dimension) {
+        return createDeposit(name + "_surface_deposit", frequency, chance, 100, 320)
+                .standardDatagenExt()
+                .withBlocks(surfaceDepositStones, mineralStone, deposit)
+                .biomeTag(dimension.biomeTag())
+                .biomeTag(biomes)
+                .parent();
+    }
+    
+    public enum Dimension {
+        OVERWORLD(BiomeTags.IS_OVERWORLD),
+        NETHER(BiomeTags.IS_NETHER),
+        END(BiomeTags.IS_END);
+        
+        public final TagKey<Biome> biomeTag;
+        
+        Dimension(TagKey<Biome> biomeTag) {
+            this.biomeTag = biomeTag;
+        }
+        
+        public TagKey<Biome> biomeTag() {
+            return biomeTag;
+        }
     }
     
     public MaterialEntry material(String name, boolean richb) {

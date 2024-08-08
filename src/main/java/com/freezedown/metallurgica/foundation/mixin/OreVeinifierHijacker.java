@@ -37,7 +37,7 @@ public class OreVeinifierHijacker {
                     } else if (densityFunction1.compute(pos) >= 0.0D) {
                         return blockstate;
                     } else {
-                        double d3 = Mth.clampedMap(d1, 0.4F, 0.6F, 0.1F, 0.3F);
+                        double d3 = Mth.clampedMap(d1, 0.25F, 0.2F, 0.1F, 0.3F);
                         if ((double)randomsource.nextFloat() < d3 && densityFunction2.compute(pos) > (double)-0.3F) {
                             return randomsource.nextFloat() < 0.02F ? oreveinifier$veintype.rawOreBlock : oreveinifier$veintype.ore;
                         } else {

@@ -97,8 +97,8 @@ public class MOreDepositFeature extends Feature<MOreDepositConfiguration> {
                 if (fromCenter > radius && fromCenter <= radius + 1) {
                     BlockPos edgePos = pos.offset(x, 0, z);
                     BlockPos highestSolidPos = findHighestSolidBlock(worldgenlevel, edgePos);
-                    BlockState blockToPlace = worldgenlevel.getBlockState(highestSolidPos);
-                    worldgenlevel.setBlock(edgePos, blockToPlace, UPDATE_ALL);
+                    BlockState blockToPlace = worldgenlevel.getBlockState(highestSolidPos.offset(0, -2, 0));
+                    worldgenlevel.setBlock(highestSolidPos, blockToPlace, UPDATE_ALL);
                 }
             }
         }
