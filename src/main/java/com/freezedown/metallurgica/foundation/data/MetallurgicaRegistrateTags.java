@@ -19,6 +19,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
@@ -152,4 +154,11 @@ public class MetallurgicaRegistrateTags {
     
     }
     
+    private static void genBiomeTags(RegistrateTagsProvider<Biome> prov) {
+        prov.tag(MetallurgicaTags.AllBiomeTags.HAS_GOLD_SURFACE_DEPOSIT.tag).add(
+                Biomes.BADLANDS,
+                Biomes.ERODED_BADLANDS,
+                Biomes.WOODED_BADLANDS
+        );
+    }
 }

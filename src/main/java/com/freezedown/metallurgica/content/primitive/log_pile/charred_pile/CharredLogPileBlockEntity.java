@@ -18,10 +18,12 @@ import java.util.List;
 public class CharredLogPileBlockEntity extends SmartBlockEntity {
     private int burnTime;
     private int destructionTime;
+    private int coveredFaces;
     public CharredLogPileBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         burnTime = -1;
         destructionTime = -1;
+        coveredFaces = 0;
     }
     
     @Override
@@ -46,15 +48,13 @@ public class CharredLogPileBlockEntity extends SmartBlockEntity {
             burnTime--;
         } else {
             if (this.burnTime != -1) {
-                int layers = this.getBlockState().getValue(LogPileBlock.LAYERS);
-                int toSubtract = layers > 1 ? 1 : 0;
-                this.level.setBlock(this.worldPosition, MetallurgicaBlocks.ashedCharcoalPile.get().defaultBlockState().setValue(LogPileBlock.LAYERS, layers - toSubtract), 3);
+                convertToAshedPile();
             }
         }
         
         if (this.level.canSeeSky(this.worldPosition) || exposedToAir()) {
             if (destructionTime > 0) {
-                destructionTime--;
+                if (level.isRainingAt(this.worldPosition) && destructionTime - 2 >= 0) destructionTime -= 2; else destructionTime--;
             } else {
                 if (this.destructionTime != -1) {
                     shrinkStackHeight();
@@ -69,6 +69,7 @@ public class CharredLogPileBlockEntity extends SmartBlockEntity {
     protected void read(CompoundTag compound, boolean clientPacket) {
         burnTime = compound.getInt("BurnTime");
         destructionTime = compound.getInt("DestructionTime");
+        coveredFaces = compound.getInt("CoveredFaces");
         super.read(compound, clientPacket);
     }
     
@@ -76,6 +77,7 @@ public class CharredLogPileBlockEntity extends SmartBlockEntity {
     public void write(CompoundTag compound, boolean clientPacket) {
         compound.putInt("BurnTime", burnTime);
         compound.putInt("DestructionTime", destructionTime);
+        compound.putInt("CoveredFaces", coveredFaces);
         super.write(compound, clientPacket);
     }
     
@@ -83,23 +85,38 @@ public class CharredLogPileBlockEntity extends SmartBlockEntity {
         if (this.level == null) {
             return;
         }
-        int layers = this.getBlockState().getValue(LogPileBlock.LAYERS);
+        int layers = this.getBlockState().getValue(CharredLogPileBlock.LAYERS);
         int toSubtract = layers > 1 ? 1 : 0;
         BlockState aboveState = this.level.getBlockState(this.worldPosition.above());
         
         if (aboveState.getBlock() instanceof CharredLogPileBlock) {
-            layers = aboveState.getValue(LogPileBlock.LAYERS);
+            layers = aboveState.getValue(CharredLogPileBlock.LAYERS);
             if (layers > 1) {
-                this.level.setBlock(this.worldPosition.above(), MetallurgicaBlocks.charredLogPile.get().defaultBlockState().setValue(LogPileBlock.LAYERS, layers - toSubtract), 3);
+                this.level.setBlock(this.worldPosition.above(), MetallurgicaBlocks.charredLogPile.get().defaultBlockState().setValue(CharredLogPileBlock.LAYERS, layers - toSubtract), 3);
             } else {
                 this.level.destroyBlock(this.worldPosition.above(), false);
             }
         } else {
             if (layers > 1) {
-                this.level.setBlock(this.worldPosition, this.getBlockState().setValue(LogPileBlock.LAYERS, layers - 1), 3);
+                this.level.setBlock(this.worldPosition, this.getBlockState().setValue(CharredLogPileBlock.LAYERS, layers - 1), 3);
             } else {
                 this.level.destroyBlock(this.worldPosition, false);
             }
+        }
+    }
+    
+    public void convertToAshedPile() {
+        if (this.level == null) {
+            return;
+        }
+        int layers = this.getBlockState().getValue(CharredLogPileBlock.LAYERS);
+        int toSubtract = layers > 1 ? 1 : 0;
+        BlockState aboveState = this.level.getBlockState(this.worldPosition.above());
+        if (aboveState.getBlock() instanceof CharredLogPileBlock) {
+            layers = aboveState.getValue(CharredLogPileBlock.LAYERS);
+            this.level.setBlock(this.worldPosition.above(), MetallurgicaBlocks.ashedCharcoalPile.get().defaultBlockState().setValue(LogPileBlock.LAYERS, layers - toSubtract), 3);
+        } else {
+            this.level.setBlock(this.worldPosition, MetallurgicaBlocks.ashedCharcoalPile.get().defaultBlockState().setValue(LogPileBlock.LAYERS, layers - toSubtract), 3);
         }
     }
     
@@ -141,6 +158,7 @@ public class CharredLogPileBlockEntity extends SmartBlockEntity {
                 }
             }
         }
+        this.coveredFaces = coveredFaces;
         return coveredFaces < 5;
     }
     

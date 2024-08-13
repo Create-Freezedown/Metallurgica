@@ -111,7 +111,7 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
         public PlacedFeature createPlacedFeature(RegistryAccess registryAccess) {
             Registry<ConfiguredFeature<?, ?>> featureRegistry = registryAccess.registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY);
             Holder<ConfiguredFeature<?, ?>> featureHolder = featureRegistry.getOrCreateHolderOrThrow(ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, id));
-            return new PlacedFeature(featureHolder, List.of(new MDepositConfigDrivenPlacement(MDepositFeatureConfigEntry.this), EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), MatchingBlockTagPredicate.ONLY_IN_AIR_PREDICATE, 12)));
+            return new PlacedFeature(featureHolder, List.of(new MDepositConfigDrivenPlacement(MDepositFeatureConfigEntry.this)));
         }
         
         public BiomeModifier createBiomeModifier(RegistryAccess registryAccess) {

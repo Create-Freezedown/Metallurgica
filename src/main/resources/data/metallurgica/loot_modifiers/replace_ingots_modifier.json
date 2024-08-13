@@ -1,0 +1,15 @@
+{
+  "type": "metallurgica:replace_item_loot_modifier",
+  "conditions": [
+  ],
+  "replacements": [
+    {
+      "input": {
+        "id": "minecraft:iron_ingot"
+      },
+      "output": {
+        "id": "create:crushed_raw_iron"
+      }
+    }
+  ]
+}

@@ -15,6 +15,7 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -69,6 +70,15 @@ public class MaterialEntry {
                 .customStandardDatagenExt()
                 .withBlock(stone, new TagMatchTest(tag))
                 .biomeTag(BiomeTags.IS_OVERWORLD)
+                .parent();
+    }
+    
+    @Nullable
+    public MDepositFeatureConfigEntry surfaceDeposit(float frequency, int chance, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones, TagKey<Biome> biomeTag) {
+        return createDeposit(name + "_surface_deposit", frequency, chance, 100, 320)
+                .standardDatagenExt()
+                .withBlocks(surfaceDepositStones, stone, deposit)
+                .biomeTag(biomeTag)
                 .parent();
     }
     

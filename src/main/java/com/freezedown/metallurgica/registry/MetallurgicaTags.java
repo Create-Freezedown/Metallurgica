@@ -2,14 +2,13 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.simibubi.create.foundation.utility.Lang;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
+import net.minecraft.tags.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
@@ -86,6 +85,43 @@ public class MetallurgicaTags {
             this.id = id;
             this.optionalDefault = optionalDefault;
             this.alwaysDatagenDefault = alwaysDatagenDefault;
+        }
+    }
+    
+    public enum AllBiomeTags {
+        HAS_GOLD_SURFACE_DEPOSIT,
+        HAS_COPPER_SURFACE_DEPOSIT,
+        HAS_TIN_SURFACE_DEPOSIT,
+        HAS_ALUMINUM_SURFACE_DEPOSIT
+        ;
+        
+        public final TagKey<Biome> tag;
+        public final boolean alwaysDatagen;
+        
+        AllBiomeTags() {
+            this(MOD);
+        }
+        
+        AllBiomeTags(NameSpace namespace) {
+            this(namespace, namespace.optionalDefault, namespace.alwaysDatagenDefault);
+        }
+        
+        AllBiomeTags(NameSpace namespace, String path) {
+            this(namespace, path, namespace.optionalDefault, namespace.alwaysDatagenDefault);
+        }
+        
+        AllBiomeTags(NameSpace namespace, boolean optional, boolean alwaysDatagen) {
+            this(namespace, null, optional, alwaysDatagen);
+        }
+        
+        AllBiomeTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
+            ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
+            if (optional) {
+                tag = optionalTag(ForgeRegistries.BIOMES, id);
+            } else {
+                tag =  TagKey.create(Registry.BIOME_REGISTRY, id);
+            }
+            this.alwaysDatagen = alwaysDatagen;
         }
     }
     

@@ -13,6 +13,8 @@ import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -21,20 +23,20 @@ import java.util.Optional;
 
 public enum MetallurgicaMaterials {
     //COPPER
-    NATIVE_COPPER(7, 7, -3, 97, 8, -3, 97, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.23f),
+    NATIVE_COPPER(7, 7, -3, 97, 8, -3, 97, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.23f, 75),
     MALACHITE(true),
     //CHALKOPYRITE(),
 
     //GOLD
-    NATIVE_GOLD(3, 4, -12, 56, 5, -12, 56, Couple.create(() -> Blocks.STONE, () -> Blocks.DIORITE), 0.1f),
+    NATIVE_GOLD(3, 4, -12, 56, 5, -12, 56, Couple.create(() -> Blocks.STONE, () -> Blocks.DIORITE), 0.1f, 75, MetallurgicaTags.AllBiomeTags.HAS_GOLD_SURFACE_DEPOSIT.tag),
 
     //IRON
-    MAGNETITE(4, 4, -3, 128, 5, -3, 128, true, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f),
+    MAGNETITE(4, 4, -3, 128, 5, -3, 128, true, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f, 75),
     //HEMATITE(),
     //PENTLANDITE(),
 
     //LITHIUM/ALUMINUM
-    BAUXITE(5, 9, -30, 70, 10, -30, 70, Couple.create(() -> getBlock(CreateTFMG.asResource("bauxite")), () -> Blocks.GRANITE), 0.2f),
+    BAUXITE(5, 9, -30, 70, 10, -30, 70, Couple.create(() -> getBlock(CreateTFMG.asResource("bauxite")), () -> Blocks.GRANITE), 0.2f, 75),
     //PETALITE(),
     //SPODUMENE(),
 
@@ -71,7 +73,7 @@ public enum MetallurgicaMaterials {
 
     //MAGNESIUM
     MAGNESITE(),
-    CASSITERITE(3, 5, -12, 87, 6, -12, 87, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.22f),
+    CASSITERITE(3, 5, -12, 87, 6, -12, 87, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.22f, 75),
     
     //FLUORITE
     FLUORITE(),
@@ -112,20 +114,36 @@ public enum MetallurgicaMaterials {
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
     }
 
-    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency) {
+    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance) {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
         MATERIAL = registrate.material(this.name().toLowerCase(), false);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
-        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, depositFrequency, accompanyingBlocks);
+        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, chance, accompanyingBlocks);
     }
 
-    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency) {
+    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance) {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
         MATERIAL = registrate.material(this.name().toLowerCase(), richb);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
-        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, depositFrequency, accompanyingBlocks);
+        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, chance, accompanyingBlocks);
+    }
+    
+    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, TagKey<Biome> biomeTag) {
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MATERIAL = registrate.material(this.name().toLowerCase(), false);
+        DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
+        CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
+        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, chance, accompanyingBlocks, biomeTag);
+    }
+    
+    MetallurgicaMaterials(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, TagKey<Biome> biomeTag) {
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MATERIAL = registrate.material(this.name().toLowerCase(), richb);
+        DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
+        CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
+        SURFACE_DEPOSIT = MATERIAL.surfaceDeposit(frequency, chance, accompanyingBlocks, biomeTag);
     }
     
     MetallurgicaMaterials(Optional<MOreFeatureConfigEntry> deposit, Optional<MOreFeatureConfigEntry> cluster, Optional<MDepositFeatureConfigEntry> surfaceDeposit, boolean richb) {

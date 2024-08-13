@@ -95,6 +95,7 @@ public class Metallurgica
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         modEventBus.addListener(this::commonSetup);
         //BIOME_MODIFIERS.register(modEventBus);
+        MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
         MetallurgicaBlockEntities.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
