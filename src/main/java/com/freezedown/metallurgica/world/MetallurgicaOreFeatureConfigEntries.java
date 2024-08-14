@@ -3,11 +3,16 @@ package com.freezedown.metallurgica.world;
 import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.world.striated.MetallurgicaLayeredPatterns;
+<<<<<<< Updated upstream
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
 import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.simibubi.create.foundation.utility.Couple;
+=======
+import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
+import com.freezedown.metallurgica.registry.MetallurgicaTags;
+>>>>>>> Stashed changes
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.block.Blocks;

@@ -1,13 +1,12 @@
 package com.freezedown.metallurgica.foundation.data;
 
-import com.drmangotea.createindustry.blocks.machines.flarestack.FlarestackBlockEntity;
 import com.drmangotea.createindustry.registry.TFMGBlocks;
 import com.drmangotea.createindustry.registry.TFMGFluids;
 import com.drmangotea.createindustry.registry.TFMGItems;
 import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
-import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
+import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.freezedown.metallurgica.registry.MetallurgicaTags.AllBlockTags;
 import com.simibubi.create.AllBlocks;
@@ -55,7 +54,7 @@ public class MetallurgicaRegistrateTags {
                 );
         prov.tag(MetallurgicaTags.AllBlockTags.DEPOSITS.tag)
                 .add(
-                        MetallurgicaMaterials.FLUORITE.MATERIAL.depositBlock().get()
+                        MetallurgicaOre.FLUORITE.MATERIAL.depositBlock().get()
                 );
         prov.tag(MetallurgicaTags.AllBlockTags.AIR_BLOCKING.tag)
                 .add(

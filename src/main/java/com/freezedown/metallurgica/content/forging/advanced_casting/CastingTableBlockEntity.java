@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.content.forging.advanced_casting;
 
 import com.drmangotea.createindustry.blocks.machines.TFMGMachineBlockEntity;
-import com.drmangotea.createindustry.blocks.machines.metal_processing.casting_basin.CastingMoldItem;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -15,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -151,7 +151,7 @@ public class CastingTableBlockEntity extends TFMGMachineBlockEntity implements I
         }
         
         return null;
-    }
+    }IEnergyStorage
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -159,6 +159,7 @@ public class CastingTableBlockEntity extends TFMGMachineBlockEntity implements I
         } else {
             return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? this.fluidCapability.cast() : super.getCapability(cap, side);
         }
+        ForgeEventFactory.getMobGriefingEvent();
     }
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         LazyOptional<IFluidHandler> handler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);

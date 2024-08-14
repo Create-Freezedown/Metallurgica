@@ -70,7 +70,7 @@ public class Metallurgica
     public static final CreativeModeTab materialItemGroup = new CreativeModeTab(ID + "_materials") {
     @Override
     public @NotNull ItemStack makeIcon() {
-        return new ItemStack(MetallurgicaMaterials.BAUXITE.MATERIAL.depositBlock().get());
+        return new ItemStack(MetallurgicaOre.BAUXITE.MATERIAL.depositBlock().get());
     }
 };
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);

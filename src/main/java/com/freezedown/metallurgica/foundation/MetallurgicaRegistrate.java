@@ -10,8 +10,12 @@ import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
+<<<<<<< Updated upstream
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
+=======
+import com.freezedown.metallurgica.registry.MetallurgicaOre;
+>>>>>>> Stashed changes
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
 import com.simibubi.create.AllFluids;
@@ -316,7 +320,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return blockEntity(name, factory, null, null, blocks);
     }
 
-    public <T extends BlockEntity> BlockEntityEntry<T> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaMaterials[] blocks) {
+    public <T extends BlockEntity> BlockEntityEntry<T> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaOre[] blocks) {
         BlockEntry[] blocks2 = new BlockEntry[blocks.length];
         for (int i = 0; i < blocks.length; i++) {
             blocks2[i] = blocks[i].MATERIAL.depositBlock();

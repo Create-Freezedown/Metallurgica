@@ -88,7 +88,7 @@ public class MetallurgicaJei implements IModPlugin {
                         .addRecipes(() -> DrillingCategory.RECIPES)
                         .catalyst(MetallurgicaBlocks.drillActivator::get)
                         .catalyst(MetallurgicaBlocks.drillExpansion::get)
-                        .doubleItemIcon(MetallurgicaMaterials.BAUXITE.MATERIAL.depositBlock().get(), MetallurgicaItems.loosenedBauxite.get())
+                        .doubleItemIcon(MetallurgicaOre.BAUXITE.MATERIAL.depositBlock().get(), MetallurgicaItems.loosenedBauxite.get())
                         .emptyBackground(177, 150)
                         .build("deposit_drilling", DrillingCategory::new)
         );

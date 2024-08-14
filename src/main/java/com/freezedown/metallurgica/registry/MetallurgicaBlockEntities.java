@@ -38,7 +38,7 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
-import static com.freezedown.metallurgica.registry.MetallurgicaMaterials.*;
+import static com.freezedown.metallurgica.registry.MetallurgicaOre.*;
 
 public class MetallurgicaBlockEntities {
     

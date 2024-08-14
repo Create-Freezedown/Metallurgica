@@ -66,8 +66,8 @@ public class MetallurgicaItems {
                     ;
     
     public static final ItemEntry<SequencedAssemblyItem>
-            unprocessedTitaniumSheet = sequencedIngredient("unprocessed_titanium_sheet"),
-            unprocessedTitaniumAluminideSheet = sequencedIngredient("unprocessed_titanium_aluminide_sheet")
+            semiPressedTitaniumSheet = sequencedIngredient("semi_pressed_titanium_sheet"),
+            semiPressedTitaniumAluminideSheet = sequencedIngredient("semi_pressed_titanium_aluminide_sheet")
                     ;
     
     //ALLOYS

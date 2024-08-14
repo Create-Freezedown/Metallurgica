@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.infastructure;
 
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
-import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
+import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
 import com.simibubi.create.foundation.gui.ScreenOpener;
@@ -41,7 +41,7 @@ public class OpenMetallurgicaMenuButton extends Button {
     }
     
     static {
-        ICON = MetallurgicaMaterials.CASSITERITE.MATERIAL.raw().asStack();
+        ICON = MetallurgicaOre.CASSITERITE.MATERIAL.raw().asStack();
     }
     
     @Mod.EventBusSubscriber({Dist.CLIENT})
