@@ -5,6 +5,8 @@ import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -26,6 +28,7 @@ import static com.freezedown.metallurgica.registry.MetallurgicaTags.NameSpace.MO
 import static com.freezedown.metallurgica.registry.MetallurgicaTags.optionalTag;
 import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.create;
 import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.createDeposit;
+import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.createTypedDeposit;
 
 public class MaterialEntry {
     private final BlockEntry<MineralDepositBlock> deposit;
@@ -104,6 +107,24 @@ public class MaterialEntry {
         return create(name + "_cluster", size, frequency, frequency, minHeight, maxHeight)
                 .customStandardDatagenExt()
                 .withBlock(stone, OreFeatures.STONE_ORE_REPLACEABLES)
+                .biomeTag(BiomeTags.IS_OVERWORLD)
+                .parent();
+    }
+    
+    @Nullable
+    public MTypedDepositFeatureConfigEntry deposit(int maxHeight, int minHeight, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositBlockChance, DepositCapacity capacity, float frequency, int chance, Couple<NonNullSupplier<? extends Block>> depositStones, TagKey<Biome> biomes) {
+        return createTypedDeposit("large_" + name + "_deposit", maxWidth, minWidth, maxDepth, minDepth, depositBlockChance, capacity, frequency, chance, minHeight, maxHeight)
+                .standardDatagenExt()
+                .withBlocks(depositStones, stone, deposit)
+                .biomeTag(biomes)
+                .parent();
+    }
+    
+    @Nullable
+    public MTypedDepositFeatureConfigEntry deposit(int maxHeight, int minHeight, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositBlockChance, DepositCapacity capacity, float frequency, int chance, Couple<NonNullSupplier<? extends Block>> depositStones) {
+        return createTypedDeposit("large_" + name + "_deposit", maxWidth, minWidth, maxDepth, minDepth, depositBlockChance, capacity, frequency, chance, minHeight, maxHeight)
+                .standardDatagenExt()
+                .withBlocks(depositStones, stone, deposit)
                 .biomeTag(BiomeTags.IS_OVERWORLD)
                 .parent();
     }

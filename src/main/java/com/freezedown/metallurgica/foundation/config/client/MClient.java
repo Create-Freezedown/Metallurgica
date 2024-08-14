@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.foundation.config.client;
 
-import com.negodya1.vintageimprovements.infrastructure.config.VCClient;
 import com.simibubi.create.foundation.config.ConfigBase;
 
 public class MClient extends ConfigBase {

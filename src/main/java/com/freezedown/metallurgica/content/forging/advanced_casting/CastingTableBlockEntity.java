@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -151,7 +150,7 @@ public class CastingTableBlockEntity extends TFMGMachineBlockEntity implements I
         }
         
         return null;
-    }IEnergyStorage
+    }
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -159,7 +158,7 @@ public class CastingTableBlockEntity extends TFMGMachineBlockEntity implements I
         } else {
             return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? this.fluidCapability.cast() : super.getCapability(cap, side);
         }
-        ForgeEventFactory.getMobGriefingEvent();
+        //ForgeEventFactory.getMobGriefingEvent();
     }
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         LazyOptional<IFluidHandler> handler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);

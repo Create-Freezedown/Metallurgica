@@ -78,7 +78,7 @@ public class CeramicPotBlockEntity extends SmartBlockEntity implements IHaveGogg
     
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        tank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 1, 2000, true)
+        tank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 1, 1000, true)
                 .whenFluidUpdates(() -> {
                     if (!hasLevel())
                         return;

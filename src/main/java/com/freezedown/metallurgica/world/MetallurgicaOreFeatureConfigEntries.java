@@ -1,18 +1,12 @@
 package com.freezedown.metallurgica.world;
 
-import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.world.striated.MetallurgicaLayeredPatterns;
-<<<<<<< Updated upstream
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
-import com.freezedown.metallurgica.registry.MetallurgicaMaterials;
+import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.simibubi.create.foundation.utility.Couple;
-=======
-import com.freezedown.metallurgica.foundation.worldgen.MOreFeatureConfigEntry;
-import com.freezedown.metallurgica.registry.MetallurgicaTags;
->>>>>>> Stashed changes
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.block.Blocks;
@@ -65,6 +59,11 @@ public class MetallurgicaOreFeatureConfigEntries {
         return new MDepositFeatureConfigEntry(id, frequency, chance, minHeight, maxHeight);
     }
     
+    public static MTypedDepositFeatureConfigEntry createTypedDeposit(String name, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositBlockChance, DepositCapacity capacity, float frequency, int chance, int minHeight, int maxHeight) {
+        ResourceLocation id = Metallurgica.asResource(name);
+        return new MTypedDepositFeatureConfigEntry(id, maxWidth, minWidth, maxDepth, minDepth, depositBlockChance, capacity, frequency, chance, minHeight, maxHeight);
+    }
+    
     public static void fillConfig(ForgeConfigSpec.Builder builder, String namespace) {
         MOreFeatureConfigEntry.ALL
                 .forEach((id, entry) -> {
@@ -75,6 +74,14 @@ public class MetallurgicaOreFeatureConfigEntries {
                     }
                 });
         MDepositFeatureConfigEntry.ALL
+                .forEach((id, entry) -> {
+                    if (id.getNamespace().equals(namespace)) {
+                        builder.push(entry.getName());
+                        entry.addToConfig(builder);
+                        builder.pop();
+                    }
+                });
+        MTypedDepositFeatureConfigEntry.ALL
                 .forEach((id, entry) -> {
                     if (id.getNamespace().equals(namespace)) {
                         builder.push(entry.getName());

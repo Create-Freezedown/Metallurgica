@@ -83,15 +83,15 @@ public class MetallurgicaJei implements IModPlugin {
                         .emptyBackground(177, 103)
                         .build("electrolysis", ElectrolysisCategory::new)
         );
-        allCategories.add(
-                builder(DrillingRecipe.class)
-                        .addRecipes(() -> DrillingCategory.RECIPES)
-                        .catalyst(MetallurgicaBlocks.drillActivator::get)
-                        .catalyst(MetallurgicaBlocks.drillExpansion::get)
-                        .doubleItemIcon(MetallurgicaOre.BAUXITE.MATERIAL.depositBlock().get(), MetallurgicaItems.loosenedBauxite.get())
-                        .emptyBackground(177, 150)
-                        .build("deposit_drilling", DrillingCategory::new)
-        );
+        //allCategories.add(
+        //        builder(DrillingRecipe.class)
+        //                .addRecipes(() -> DrillingCategory.RECIPES)
+        //                .catalyst(MetallurgicaBlocks.drillActivator::get)
+        //                .catalyst(MetallurgicaBlocks.drillExpansion::get)
+        //                .doubleItemIcon(MetallurgicaOre.BAUXITE.MATERIAL.depositBlock().get(), MetallurgicaItems.loosenedBauxite.get())
+        //                .emptyBackground(177, 150)
+        //                .build("deposit_drilling", DrillingCategory::new)
+        //);
         allCategories.add(
                 builder(ShakingRecipe.class)
                         .addTypedRecipes(MetallurgicaRecipeTypes.shaking)

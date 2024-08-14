@@ -105,23 +105,6 @@ public class MetallurgicaFluids {
         return stacks;
     }
     
-    public static Collection<RegistryEntry<Fluid>> ALL_TFMG = CreateTFMG.REGISTRATE.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
-    
-    public static List<FluidStack> getTFMGVirtualFluidStacks() {
-        List<FluidStack> stacks = new ArrayList<>();
-        for (RegistryEntry<Fluid> entry : ALL_TFMG) {
-            if (entry instanceof FluidEntry<?> fluidEntry) {
-                if (fluidEntry.get() instanceof VirtualFluid virtualFluid) {
-                    FluidStack stack = new FluidStack(virtualFluid.getSource(), FluidType.BUCKET_VOLUME);
-                    stacks.add(stack);
-                }
-            }
-        }
-        return stacks;
-    }
-
-
-
     public static List<Acid> getAcids() {
         List<Acid> acids = new ArrayList<>();
         for (RegistryEntry<Fluid> entry : ALL) {

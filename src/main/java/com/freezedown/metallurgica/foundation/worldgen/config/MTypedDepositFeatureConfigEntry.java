@@ -2,12 +2,17 @@ package com.freezedown.metallurgica.foundation.worldgen.config;
 
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.MOreDepositConfiguration;
+import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.TypedDepositConfiguration;
+import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.simibubi.create.foundation.config.ConfigBase;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import net.minecraft.core.*;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -25,21 +30,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MDepositFeatureConfigEntry extends ConfigBase {
-    public static final Map<ResourceLocation, MDepositFeatureConfigEntry> ALL = new HashMap<>();
+public class MTypedDepositFeatureConfigEntry extends ConfigBase {
+    public static final Map<ResourceLocation, MTypedDepositFeatureConfigEntry> ALL = new HashMap<>();
     
-    public static final Codec<MDepositFeatureConfigEntry> CODEC = ResourceLocation.CODEC
-            .comapFlatMap(MDepositFeatureConfigEntry::read, entry -> entry.id);
+    public static final Codec<MTypedDepositFeatureConfigEntry> CODEC = ResourceLocation.CODEC
+            .comapFlatMap(MTypedDepositFeatureConfigEntry::read, entry -> entry.id);
     
     public final ResourceLocation id;
     public final ConfigFloat frequency;
     public final ConfigInt chance;
     public final ConfigInt minHeight;
     public final ConfigInt maxHeight;
+    public final int maxWidth;
+    public final int minWidth;
+    public final int maxDepth;
+    public final int minDepth;
+    public final float depositBlockChance;
+    public final DepositCapacity capacity;
+    
     
     private DatagenExtension datagenExt;
     
-    public MDepositFeatureConfigEntry(ResourceLocation id, float frequency, int chance, int minHeight, int maxHeight) {
+    public MTypedDepositFeatureConfigEntry(ResourceLocation id, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositBlockChance, DepositCapacity capacity, float frequency, int chance, int minHeight, int maxHeight) {
         this.id = id;
         
         this.frequency = f(frequency, 0, 512, "frequency", "Amount of clusters generated per Chunk.",
@@ -47,6 +59,13 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
         this.chance = i(chance, "chance");
         this.minHeight = i(minHeight, "minHeight");
         this.maxHeight = i(maxHeight, "maxHeight");
+        
+        this.maxWidth = maxWidth;
+        this.minWidth = minWidth;
+        this.maxDepth = maxDepth;
+        this.minDepth = minDepth;
+        this.depositBlockChance = depositBlockChance;
+        this.capacity = capacity;
         
         ALL.put(id, this);
     }
@@ -79,8 +98,8 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
         return id.getPath();
     }
     
-    public static DataResult<MDepositFeatureConfigEntry> read(ResourceLocation id) {
-        MDepositFeatureConfigEntry entry = ALL.get(id);
+    public static DataResult<MTypedDepositFeatureConfigEntry> read(ResourceLocation id) {
+        MTypedDepositFeatureConfigEntry entry = ALL.get(id);
         if (entry != null) {
             return DataResult.success(entry);
         } else {
@@ -101,7 +120,7 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
         public PlacedFeature createPlacedFeature(RegistryAccess registryAccess) {
             Registry<ConfiguredFeature<?, ?>> featureRegistry = registryAccess.registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY);
             Holder<ConfiguredFeature<?, ?>> featureHolder = featureRegistry.getOrCreateHolderOrThrow(ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, id));
-            return new PlacedFeature(featureHolder, List.of(new MDepositConfigDrivenPlacement(MDepositFeatureConfigEntry.this)));
+            return new PlacedFeature(featureHolder, List.of(new MTypedDepositConfigDrivenPlacement(parent())));
         }
         
         public BiomeModifier createBiomeModifier(RegistryAccess registryAccess) {
@@ -112,8 +131,8 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
             return new ForgeBiomeModifiers.AddFeaturesBiomeModifier(biomes, HolderSet.direct(featureHolder), GenerationStep.Decoration.UNDERGROUND_ORES);
         }
         
-        public MDepositFeatureConfigEntry parent() {
-            return MDepositFeatureConfigEntry.this;
+        public MTypedDepositFeatureConfigEntry parent() {
+            return MTypedDepositFeatureConfigEntry.this;
         }
     }
     
@@ -132,7 +151,7 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
             return this;
         }
         
-        public StandardDatagenExtension withBlocks( NonNullSupplier<? extends Block> mineralStone, NonNullSupplier<? extends Block> deposit) {
+        public StandardDatagenExtension withBlocks(NonNullSupplier<? extends Block> mineralStone, NonNullSupplier<? extends Block> deposit) {
             this.mineralStone = mineralStone;
             this.deposit = deposit;
             return this;
@@ -154,7 +173,7 @@ public class MDepositFeatureConfigEntry extends ConfigBase {
         
         @Override
         public ConfiguredFeature<?, ?> createConfiguredFeature(RegistryAccess registryAccess) {
-            return new ConfiguredFeature<>(MetallurgicaFeatures.ORE_DEPOSIT_SURFACE.get(), new MOreDepositConfiguration(primaryStone.get().defaultBlockState(), secondaryStone.get().defaultBlockState(), mineralStone.get().defaultBlockState(), deposit.get().defaultBlockState()));
+            return new ConfiguredFeature<>(MetallurgicaFeatures.LARGE_DEPOSIT.get(), new TypedDepositConfiguration(maxWidth, minWidth, maxDepth, minDepth, depositBlockChance, capacity, primaryStone.get().defaultBlockState(), secondaryStone.get().defaultBlockState(), mineralStone.get().defaultBlockState(), deposit.get().defaultBlockState()));
         }
     }
 }
