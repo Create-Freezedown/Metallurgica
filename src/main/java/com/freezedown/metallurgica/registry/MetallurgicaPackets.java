@@ -2,11 +2,13 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetActivationPacket;
+import com.freezedown.metallurgica.experimental.exposure_effects.BlurShaderPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.network.NetworkDirection;
@@ -27,6 +29,7 @@ public enum MetallurgicaPackets {
     
     // Server to Client
     faucetActivation(FaucetActivationPacket.class, FaucetActivationPacket::new, PLAY_TO_CLIENT),
+    blurShader(BlurShaderPacket.class, BlurShaderPacket::new, PLAY_TO_CLIENT)
     ;
     
     public static final ResourceLocation CHANNEL_NAME = Metallurgica.asResource("main");
@@ -63,6 +66,10 @@ public enum MetallurgicaPackets {
         if (world instanceof ServerLevel server) {
             sendToNear(server, position, 64, msg);
         }
+    }
+    
+    public static void sendToPlayer(ServerPlayer player, Object msg) {
+        getChannel().send(PacketDistributor.PLAYER.with(() -> player), msg);
     }
     
     private static class PacketType<T extends SimplePacketBase> {

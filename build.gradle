@@ -138,6 +138,13 @@ repositories {
         name = "TerraformersMC"
         url = "https://maven.terraformersmc.com/"
     }
+    maven {
+        name = 'ConstructLegacy'
+        url = 'https://repo.constructlegacy.ru/public'
+        content {
+            includeGroup 'com.github.dima_dencep.mods'
+        }
+    }
 }
 
 dependencies {

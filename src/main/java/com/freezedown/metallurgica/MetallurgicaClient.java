@@ -1,8 +1,10 @@
 package com.freezedown.metallurgica;
 
 import com.freezedown.metallurgica.registry.MetallurgicaPartialModels;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaShaders;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class MetallurgicaClient {
     
@@ -10,6 +12,8 @@ public class MetallurgicaClient {
         modEventBus.addListener(MetallurgicaClient::clientInit);
     }
     public static void clientInit(final FMLClientSetupEvent event) {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MetallurgicaPartialModels.init();
+        modEventBus.addListener(MetallurgicaShaders::renderShaders);
     }
 }
