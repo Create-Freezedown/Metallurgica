@@ -1,2 +1,2 @@
 # Metallurgica
-I have been given permission to torture y'all. Good luck
+Painfully realistic processing for all kinds of minerals
