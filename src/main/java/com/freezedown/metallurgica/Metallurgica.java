@@ -100,6 +100,7 @@ public class Metallurgica
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
         MetallurgicaFluids.register();
+        MetallurgicaEffects.register(modEventBus);
         MetallurgicaRecipeTypes.register(modEventBus);
         MetallurgicaPackets.registerPackets();
         MetallurgicaOreFeatureConfigEntries.init();
