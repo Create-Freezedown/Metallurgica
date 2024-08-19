@@ -1,7 +1,12 @@
 package com.freezedown.metallurgica.foundation.util;
 
+import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
+import com.simibubi.create.foundation.utility.LangBuilder;
+import com.simibubi.create.foundation.utility.LangNumberFormat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.StringUtils;
 
@@ -171,5 +176,33 @@ public class ClientUtil {
                 }
             }
         }
+    }
+    
+    public static LangBuilder lang() {
+        return new LangBuilder(Metallurgica.ID);
+    }
+    public static LangBuilder number(double d) {
+        return lang().text(LangNumberFormat.format(d));
+    }
+    
+    public static LangBuilder temp() {
+        return lang().translate("gui.goggles.temperature");
+    }
+    
+    public static LangBuilder celcius() {
+        return lang().translate("generic.unit.celcius");
+    }
+    
+    public static LangBuilder fahrenheit() {
+        return lang().translate("generic.unit.fahrenheit");
+    }
+    
+    public static LangBuilder temperature(double temperature) {
+        return MetallurgicaConfigs.client().imAmerican.get() ? number(temperature).space().add(celcius()) : CelciusToFahrenheit(temperature);
+    }
+    
+    public static LangBuilder CelciusToFahrenheit(double celcius) {
+        double fahrenheit = celcius * 9 / 5 + 32;
+        return number(fahrenheit).space().add(fahrenheit());
     }
 }

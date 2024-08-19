@@ -16,7 +16,6 @@
     "WorldGenRegionMixin"
   ],
   "client": [
-    "GameRendererMixin",
     "MixinLiquidBlockRenderer",
     "accessor.PostChainAccessor"
   ],

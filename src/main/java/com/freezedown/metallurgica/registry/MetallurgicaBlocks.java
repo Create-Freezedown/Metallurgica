@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldBlock;
 import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
 import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlock;
@@ -65,6 +66,17 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+    
+    public static final BlockEntry<IngotCastingMoldBlock> ingotCastingMold = registrate.block("ingot_casting_mold", IngotCastingMoldBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/ingot_casting_mold"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/ingot_casting_mold")))
+            .build()
+            .register();
     
     public static final BlockEntry<UnfiredCeramicBlock> unfiredCeramicPot = registrate.block("unfired_ceramic_pot", (p) -> new UnfiredCeramicBlock(p, MetallurgicaShapes.ceramicPot))
             .initialProperties(SharedProperties::stone)

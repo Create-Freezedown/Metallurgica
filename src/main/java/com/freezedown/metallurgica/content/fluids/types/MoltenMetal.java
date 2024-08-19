@@ -10,8 +10,19 @@ import net.minecraftforge.fluids.FluidType;
 import java.util.function.Consumer;
 
 public class MoltenMetal extends VirtualFluid {
+    public double moltenTemperature = 0;
+    
     public MoltenMetal(Properties properties) {
         super(properties);
+    }
+    
+    public MoltenMetal moltenTemperature(double moltenTemperature) {
+        this.moltenTemperature = moltenTemperature;
+        return this;
+    }
+    
+    public double getTemperature() {
+        return moltenTemperature;
     }
     
     public static FluidStack of(int amount, float impurity) {
