@@ -22,6 +22,11 @@ public class MetallurgicaItems {
     //MISC ITEMS
     public static final ItemEntry<MetallurgicaItem>
             salt =                registrate.metallurgicaItem("salt", "salt"),
+    //IRON PROCESSING
+            pigIron =      registrate.metallurgicaItem("pig_iron_ingot", "ingots/pig_iron_ingot", "ingot"), //I REFUSE TO REGISTER THIS ANYWHERE OTHER THAN IRON PROCESSING
+            impureIronBloom =      registrate.metallurgicaItem("impure_iron_bloom"),
+            pureIronBloom =      registrate.metallurgicaItem("pure_iron_bloom"),
+            ironSinter =      registrate.metallurgicaItem("iron_sinter"),
 
     //MAGNETITE PROCESSING
             magnetiteLumps =      registrate.metallurgicaItem("magnetite_lumps", "lumps/magnetite", "lumps"),
@@ -62,7 +67,9 @@ public class MetallurgicaItems {
             titaniumIngot =       registrate.metallurgicaItem("titanium_ingot", "ingots/titanium", "ingots"),
             titaniumNugget =      registrate.metallurgicaItem("titanium_nugget", "nuggets/titanium", "nuggets"),
             titaniumDust =        registrate.metallurgicaItem("titanium_dust", "dusts/titanium", "dusts"),
-            titaniumSheet =       registrate.metallurgicaItem("titanium_sheet", "plates/titanium", "plates")
+            titaniumSheet =       registrate.metallurgicaItem("titanium_sheet", "plates/titanium", "plates"),
+
+            wroughtironingot =       registrate.metallurgicaItem("wrought_iron_ingot", "ingots/wrought_iron", "ingots")
                     ;
     
     public static final ItemEntry<SequencedAssemblyItem>
