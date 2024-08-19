@@ -35,13 +35,14 @@ public enum MetallurgicaOre {
 
     //IRON
     MAGNETITE(true, 23, 4, -3, 128, 78, 45, 60, 20, 0.23f, DepositCapacity.SMALL, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f, 75, IRON),
-//    HEMATITE(IRON),
+    HEMATITE(true, 23, 4, -3, 128, 78, 45, 60, 20, 0.23f, DepositCapacity.SMALL, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f, 75, IRON),
 //    PENTLANDITE(IRON),
 
     //LITHIUM/ALUMINUM
     BAUXITE(19, 9, -30, 70, 56, 30, 30, 20, 0.23f, DepositCapacity.SMALL, 180, 230, Couple.create(() -> getBlock(CreateTFMG.asResource("bauxite")), () -> Blocks.GRANITE), 0.2f, 75, ALUMINUM),
 //    PETALITE(ALUMINUM, LITHIUM),
 //    SPODUMENE(ALUMINUM, LITHIUM),
+    SPODUMENE(true, 26, 4, 40, 96, 78, 45, 60, 20, 0.23f, DepositCapacity.SMALL, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.1f, 75, LITHIUM),
 
     //LEAD
 //    GALENA(LEAD),
@@ -49,8 +50,8 @@ public enum MetallurgicaOre {
 //    PYROMORPHITE(LEAD),
 
     //ZINC
-    SPHALRITE(ZINC),
-    CALAMINE(ZINC),
+    SPHALERITE(ZINC),
+    SMITHSONITE(ZINC),
     //SPHALRITE(),
 
     //TUNGSTEN
@@ -67,8 +68,7 @@ public enum MetallurgicaOre {
     //SPERRYLITE(),
     SPERRYLITE(PLATINUM),
 
-    //LOTION (????)
-    //CALAMINE(),
+    //LOTION ()
 
     //SILVER
 //    ARGENTITE(SILVER),

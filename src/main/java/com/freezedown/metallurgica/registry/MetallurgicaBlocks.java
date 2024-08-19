@@ -294,11 +294,21 @@ public class MetallurgicaBlocks {
             .register();
 
     //SAND
-    public static final BlockEntry<SandBlock> magnetiteSand = registrate.block("magnetite_sand", p -> new SandBlock(0x8D8388, p))
+    public static final BlockEntry<SandBlock> quartzSand = registrate.block("quartz_sand", p -> new SandBlock(0x8D8388, p))
             .loot(BlockLoot::dropSelf)
             .simpleItem()
             .register();
-    
+
+     public static final BlockEntry<SandBlock> blackSand = registrate.block("black_sand", p -> new SandBlock(0x8D8388, p))
+            .loot(BlockLoot::dropSelf)
+            .simpleItem()
+            .register();
+
+    public static final BlockEntry<SandBlock> siliconSand = registrate.block("silicon_sand", p -> new SandBlock(0x8D8388, p))
+            .loot(BlockLoot::dropSelf)
+            .simpleItem()
+            .register();
+
     public static final BlockEntry<SandBlock> magnetiteTracedSand = registrate.block("magnetite_traced_sand", p -> new SandBlock(0x8D8388, p))
             .transform(MBuilderTransformers.mineralStone("magnetite_traced_sand"))
             .loot((p, bl) -> p.add(bl,
