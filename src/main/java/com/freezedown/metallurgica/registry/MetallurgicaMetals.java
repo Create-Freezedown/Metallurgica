@@ -1,16 +1,15 @@
 package com.freezedown.metallurgica.registry;
 
-import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
+import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
-import com.tterrag.registrate.util.entry.FluidEntry;
-
-import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public enum MetallurgicaMetals {
     IRON (1538.0),
     GOLD (1064.2),
     COPPER (1084.6),
-    NETHERITE(100000.0),
+    NETHERIUM(3962.0),
+    NETHERITE(3562.0),
     BRASS(920.0),
     ALUMINUM (660.3),
     LEAD (327.5),
@@ -28,10 +27,9 @@ public enum MetallurgicaMetals {
     THORIUM (1750.0);
 
     public final MetalEntry METAL;
-    public final FluidEntry<MoltenMetal.Flowing> MOLTEN;
 
     MetallurgicaMetals(Double meltingPoint) {
-        METAL = new MetalEntry(meltingPoint);
-        MOLTEN = registrate.moltenMetal(this.name().toLowerCase());
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+        METAL = registrate.metal(this.name().toLowerCase(), meltingPoint);
     }
 }

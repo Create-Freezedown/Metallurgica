@@ -1,5 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
+import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldBlockEntity;
+import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldRenderer;
 import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlockEntity;
 import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlockEntity;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlockEntity;
@@ -41,6 +43,12 @@ import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.freezedown.metallurgica.registry.MetallurgicaOre.*;
 
 public class MetallurgicaBlockEntities {
+    
+    public static final BlockEntityEntry<IngotCastingMoldBlockEntity> ingotCastingMold = registrate
+            .blockEntity("ingot_casting_mold", IngotCastingMoldBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.ingotCastingMold)
+            .renderer(() -> IngotCastingMoldRenderer::new)
+            .register();
     
     public static final BlockEntityEntry<UnfiredCeramicBlockEntity> unfiredCeramic = registrate
             .blockEntity("unfired_ceramic", UnfiredCeramicBlockEntity::new)

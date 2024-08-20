@@ -3,7 +3,7 @@ package com.freezedown.metallurgica.experimental.exposure_effects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-
+@BlurryAt(2)
 public class LeadPoisoningEffect extends ExposureEffect {
     public static final DamageSource LEAD = (new DamageSource("leadPoisoning")).bypassArmor().bypassEnchantments().bypassMagic().setScalesWithDifficulty();
     public LeadPoisoningEffect(int pColor) {

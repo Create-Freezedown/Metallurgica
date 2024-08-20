@@ -2,7 +2,6 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetActivationPacket;
-import com.freezedown.metallurgica.experimental.exposure_effects.BlurShaderPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,7 +28,6 @@ public enum MetallurgicaPackets {
     
     // Server to Client
     faucetActivation(FaucetActivationPacket.class, FaucetActivationPacket::new, PLAY_TO_CLIENT),
-    blurShader(BlurShaderPacket.class, BlurShaderPacket::new, PLAY_TO_CLIENT)
     ;
     
     public static final ResourceLocation CHANNEL_NAME = Metallurgica.asResource("main");

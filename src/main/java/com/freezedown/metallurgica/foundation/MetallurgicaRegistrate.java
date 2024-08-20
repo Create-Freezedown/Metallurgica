@@ -10,10 +10,12 @@ import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
+import com.freezedown.metallurgica.foundation.material.MetalEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
+import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
 import com.simibubi.create.AllFluids;
@@ -144,19 +146,19 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return acid(name, color, still, flow, acidity);
     }
 
-    public FluidEntry<MoltenMetal.Flowing> moltenMetal(String name) {
+    public FluidEntry<MoltenMetal> moltenMetal(String name, double moltenTemperature) {
         String id = "molten_" + name;
         ResourceLocation modelParent = new ResourceLocation("item/generated");
         ResourceLocation itemTexture = Metallurgica.asResource("item/molten_metal_bucket");
         ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
-        return fluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, MoltenMetal.Flowing::new)
-                .source(MoltenMetal.Source::new)
+        return virtualFluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, p -> new MoltenMetal(p).moltenTemperature(moltenTemperature))
                 .bucket()
                 .model((ctx, prov) -> prov.singleTexture(ctx.getName(), modelParent, "layer0", itemTexture))
                 .build()
                 .lang(autoLang(id))
-                .source(MoltenMetal.Source::new)
+                .tag(MetallurgicaTags.modFluidTag("molten_metals/" + name))
+                .tag(MetallurgicaTags.modFluidTag("molten_metals"))
                 .register();
     }
 
@@ -224,6 +226,10 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     
     public MaterialEntry material(String name, boolean richb) {
         return new MaterialEntry(this, name, richb);
+    }
+    
+    public MetalEntry metal(String name, double meltingPoint) {
+        return new MetalEntry(this, name, meltingPoint);
     }
     
 

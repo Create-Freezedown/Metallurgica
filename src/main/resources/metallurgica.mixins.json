@@ -2,7 +2,7 @@
   "required": true,
   "priority": 1100,
   "package": "com.freezedown.metallurgica.foundation.mixin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "refmap": "metallurgica.refmap.json",
   "mixins": [
     "AllOreFeatureConfigEntriesMixin",
@@ -16,7 +16,8 @@
     "WorldGenRegionMixin"
   ],
   "client": [
-    "MixinLiquidBlockRenderer"
+    "MixinLiquidBlockRenderer",
+    "accessor.PostChainAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

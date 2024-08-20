@@ -2,7 +2,6 @@ package com.freezedown.metallurgica.events;
 
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.behaviours.interaction.FluidEntityInteractionHandler;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasMovementHandler;
-import com.freezedown.metallurgica.experimental.exposure_effects.BlurShaderPacket;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureEffect;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureMinerals;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureUtil;

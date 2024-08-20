@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldBlock;
 import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
 import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlock;
@@ -65,6 +66,17 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+    
+    public static final BlockEntry<IngotCastingMoldBlock> ingotCastingMold = registrate.block("ingot_casting_mold", IngotCastingMoldBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/ingot_casting_mold"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/ingot_casting_mold")))
+            .build()
+            .register();
     
     public static final BlockEntry<UnfiredCeramicBlock> unfiredCeramicPot = registrate.block("unfired_ceramic_pot", (p) -> new UnfiredCeramicBlock(p, MetallurgicaShapes.ceramicPot))
             .initialProperties(SharedProperties::stone)
@@ -294,11 +306,21 @@ public class MetallurgicaBlocks {
             .register();
 
     //SAND
-    public static final BlockEntry<SandBlock> magnetiteSand = registrate.block("magnetite_sand", p -> new SandBlock(0x8D8388, p))
+    public static final BlockEntry<SandBlock> quartzSand = registrate.block("quartz_sand", p -> new SandBlock(0x8D8388, p))
             .loot(BlockLoot::dropSelf)
             .simpleItem()
             .register();
-    
+
+     public static final BlockEntry<SandBlock> blackSand = registrate.block("black_sand", p -> new SandBlock(0x8D8388, p))
+            .loot(BlockLoot::dropSelf)
+            .simpleItem()
+            .register();
+
+    public static final BlockEntry<SandBlock> siliconSand = registrate.block("silicon_sand", p -> new SandBlock(0x8D8388, p))
+            .loot(BlockLoot::dropSelf)
+            .simpleItem()
+            .register();
+
     public static final BlockEntry<SandBlock> magnetiteTracedSand = registrate.block("magnetite_traced_sand", p -> new SandBlock(0x8D8388, p))
             .transform(MBuilderTransformers.mineralStone("magnetite_traced_sand"))
             .loot((p, bl) -> p.add(bl,

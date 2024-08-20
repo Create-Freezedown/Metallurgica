@@ -12,6 +12,7 @@ public class MClient extends ConfigBase {
     public final ConfigBase.ConfigInt mainMenuConfigButtonOffsetX = this.i(4, Integer.MIN_VALUE, Integer.MAX_VALUE, "mainMenuConfigButtonOffsetX", Comments.mainMenuConfigButtonOffsetX);
     public final ConfigBase.ConfigInt ingameMenuConfigButtonRow = this.i(2, 0, 5, "ingameMenuConfigButtonRow", Comments.ingameMenuConfigButtonRow);
     public final ConfigBase.ConfigInt ingameMenuConfigButtonOffsetX = this.i(4, Integer.MIN_VALUE, Integer.MAX_VALUE, "ingameMenuConfigButtonOffsetX", Comments.ingameMenuConfigButtonOffsetX);
+    public final ConfigBase.ConfigBool imAmerican = this.b(false, "imAmerican", Comments.imAmerican);
     @Override
     public String getName() {
         return "client";
@@ -25,6 +26,7 @@ public class MClient extends ConfigBase {
         static String[] mainMenuConfigButtonOffsetX = new String[]{"Offset Metallurgica's config button in the main menu by this many pixels on the X axis", "The sign (-/+) of this value determines what side of the row the button appears on (left/right)"};
         static String[] ingameMenuConfigButtonRow = new String[]{"Choose the menu row that Metallurgica's config button appears on in the in-game menu", "Set to 0 to disable the button altogether"};
         static String[] ingameMenuConfigButtonOffsetX = new String[]{"Offset Metallurgica's config button in the in-game menu by this many pixels on the X axis", "The sign (-/+) of this value determines what side of the row the button appears on (left/right)"};
+        static String imAmerican = "Whether or not to use absurd units of measurement";
         
     }
 }
