@@ -18,7 +18,10 @@ public class MetallurgicaFeatures {
     public static final RegistryObject<MLayeredOreFeature> LAYERED_ORE = REGISTER.register("layered_ore", MLayeredOreFeature::new);
     public static final RegistryObject<MOreDepositFeature> ORE_DEPOSIT_SURFACE = REGISTER.register("surface_ore_deposit", MOreDepositFeature::new);
     public static final RegistryObject<TypedDeposit> LARGE_DEPOSIT = REGISTER.register("large_deposit", TypedDeposit::new);
-    
+    //IGNORE THIS LOL
+    /*
+     public static final RegistryObject<SAND_DEPOSIT = REGISTER.register("sand_deposit", TypedDeposit::new);
+     */
     public static void register(IEventBus modEventBus) {
         REGISTER.register(modEventBus);
     }

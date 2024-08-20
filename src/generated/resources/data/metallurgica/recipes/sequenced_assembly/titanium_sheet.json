@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "metallurgica:titanium_ingot"
   },
-  "loops": 1,
+  "loops": 3,
   "results": [
     {
       "chance": 120.0,
@@ -15,43 +15,17 @@
       "type": "create:pressing",
       "ingredients": [
         {
-          "item": "metallurgica:unprocessed_titanium_sheet"
+          "item": "metallurgica:semi_pressed_titanium_sheet"
         }
       ],
       "results": [
         {
-          "item": "metallurgica:unprocessed_titanium_sheet"
-        }
-      ]
-    },
-    {
-      "type": "create:pressing",
-      "ingredients": [
-        {
-          "item": "metallurgica:unprocessed_titanium_sheet"
-        }
-      ],
-      "results": [
-        {
-          "item": "metallurgica:unprocessed_titanium_sheet"
-        }
-      ]
-    },
-    {
-      "type": "create:pressing",
-      "ingredients": [
-        {
-          "item": "metallurgica:unprocessed_titanium_sheet"
-        }
-      ],
-      "results": [
-        {
-          "item": "metallurgica:unprocessed_titanium_sheet"
+          "item": "metallurgica:semi_pressed_titanium_sheet"
         }
       ]
     }
   ],
   "transitionalItem": {
-    "item": "metallurgica:unprocessed_titanium_sheet"
+    "item": "metallurgica:semi_pressed_titanium_sheet"
   }
 }

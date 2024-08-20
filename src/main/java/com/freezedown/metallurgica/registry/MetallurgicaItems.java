@@ -69,6 +69,7 @@ public class MetallurgicaItems {
             titaniumDust =        registrate.metallurgicaItem("titanium_dust", "dusts/titanium", "dusts"),
             titaniumSheet =       registrate.metallurgicaItem("titanium_sheet", "plates/titanium", "plates"),
 
+            //Isn't this technically an alloy? where would we put steel?
             wroughtironingot =       registrate.metallurgicaItem("wrought_iron_ingot", "ingots/wrought_iron", "ingots")
                     ;
     
@@ -84,6 +85,9 @@ public class MetallurgicaItems {
             bronzeNugget =          registrate.alloyItem("bronze_nugget", "nuggets/bronze", "nuggets", "alloy_nuggets/bronze", "alloy_nuggets"),
             bronzeDust =          registrate.alloyItem("bronze_dust", "dusts/bronze", "dusts", "alloy_dusts/bronze", "alloy_dusts"),
             bronzeSheet =         registrate.alloyItem("bronze_sheet", "plates/bronze", "plates", "alloy_plates/bronze", "alloy_plates"),
+            arsenicalbronzeSheet =         registrate.alloyItem("arsenical_bronze_sheet", "plates/arsenical_bronze", "plates", "alloy_plates/arsenical_bronze", "alloy_plates"),
+            arsenicalBronzeIngot =         registrate.alloyItem("arsenical_bronze_ingot", "ingots/arsenical_bronze", "ingots", "alloy_ingots/arsenical_bronze", "alloy_ingots"),
+            arsenicalBronzeNugget =          registrate.alloyItem("arsenical_bronze_nugget", "nuggets/arsenical_bronze", "nuggets", "alloy_nuggets/arsenical_bronze", "alloy_nuggets"),
             titaniumAluminideIngot = registrate.alloyItem("titanium_aluminide_ingot", "ingots/titanium_aluminide", "ingots", "alloy_ingots/titanium_aluminide", "alloy_ingots"),
             titaniumAluminideNugget = registrate.alloyItem("titanium_aluminide_nugget", "nuggets/titanium_aluminide", "nuggets", "alloy_nuggets/titanium_aluminide", "alloy_nuggets"),
             titaniumAluminideDust = registrate.alloyItem("titanium_aluminide_dust", "dusts/titanium_aluminide", "dusts", "alloy_dusts/titanium_aluminide", "alloy_dusts"),

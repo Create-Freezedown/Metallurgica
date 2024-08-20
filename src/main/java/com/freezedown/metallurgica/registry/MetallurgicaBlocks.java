@@ -66,7 +66,7 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
-    
+
     public static final BlockEntry<IngotCastingMoldBlock> ingotCastingMold = registrate.block("ingot_casting_mold", IngotCastingMoldBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
@@ -77,7 +77,7 @@ public class MetallurgicaBlocks {
             .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/ingot_casting_mold")))
             .build()
             .register();
-    
+
     public static final BlockEntry<UnfiredCeramicBlock> unfiredCeramicPot = registrate.block("unfired_ceramic_pot", (p) -> new UnfiredCeramicBlock(p, MetallurgicaShapes.ceramicPot))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.sound(SoundType.STONE))
@@ -304,23 +304,32 @@ public class MetallurgicaBlocks {
             .simpleItem()
             .lang("Drill Expansion")
             .register();
-
+    //METAL STUFFS
+    public static final BlockEntry<Block>
+            bronzeBlock =              registrate.simpleMachineBlock("bronze_block", "Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
+    public static final BlockEntry<Block>
+            arsenicalBronzeBlock =              registrate.simpleMachineBlock("arsenical_bronze_block", "Arsenical Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
+    public static final BlockEntry<Block>
+            impureBronzeBlock =              registrate.simpleMachineBlock("impure_bronze_block", "Impure Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
     //SAND
     public static final BlockEntry<SandBlock> quartzSand = registrate.block("quartz_sand", p -> new SandBlock(0x8D8388, p))
+            .properties(p -> p.sound(SoundType.SAND))
             .loot(BlockLoot::dropSelf)
             .simpleItem()
             .register();
 
-     public static final BlockEntry<SandBlock> blackSand = registrate.block("black_sand", p -> new SandBlock(0x8D8388, p))
+    public static final BlockEntry<SandBlock> blackSand = registrate.block("black_sand", p -> new SandBlock(0x8D8388, p))
+            .properties(p -> p.sound(SoundType.SAND))
             .loot(BlockLoot::dropSelf)
             .simpleItem()
             .register();
 
     public static final BlockEntry<SandBlock> siliconSand = registrate.block("silicon_sand", p -> new SandBlock(0x8D8388, p))
+            .properties(p -> p.sound(SoundType.SAND))
             .loot(BlockLoot::dropSelf)
             .simpleItem()
             .register();
-
+//Are we sure we're still adding this guy?
     public static final BlockEntry<SandBlock> magnetiteTracedSand = registrate.block("magnetite_traced_sand", p -> new SandBlock(0x8D8388, p))
             .transform(MBuilderTransformers.mineralStone("magnetite_traced_sand"))
             .loot((p, bl) -> p.add(bl,
