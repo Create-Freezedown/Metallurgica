@@ -1,6 +1,7 @@
 {
   "values": [
     "metallurgica:unfired_ceramic_pot",
+    "metallurgica:unfired_crucible",
     "metallurgica:ceramic_pot",
     "metallurgica:ceramic_mixing_pot",
     "metallurgica:charred_log_pile",
@@ -21,6 +22,7 @@
     "metallurgica:bronze_block",
     "metallurgica:arsenical_bronze_block",
     "metallurgica:impure_bronze_block",
+    "metallurgica:silicon_block",
     "metallurgica:magnetite_traced_sand",
     "metallurgica:channel_depot",
     "metallurgica:channel",

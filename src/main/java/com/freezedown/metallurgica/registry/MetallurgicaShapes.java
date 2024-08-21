@@ -18,13 +18,14 @@ public class MetallurgicaShapes {
     //;
     // Static Block Shapes
     public static final VoxelShape
-            spoutputCeiling = shape( 3, 12,  3, 13, 16, 13).build(),
+            spoutputCeiling = shape(3, 12,  3, 13, 16, 13).build(),
             spoutputWallSouth = shape(3,  4,  0, 13, 14,  4).build(),
             spoutputWallNorth = shape(3,  4, 12, 13, 14, 16).build(),
             spoutputWallEast  = shape(0,  4,  3,  4, 14, 13).build(),
             spoutputWallWest  = shape(12, 4,  3, 16, 14, 13).build(),
-            ceramicPot = shape(2, 0, 2, 14, 15, 14).erase(4, 2, 4, 12, 15, 12).build()
-    ;
+            ceramicPot = shape(2, 0, 2, 14, 15, 14).erase(4, 2, 4, 12, 15, 12).build(),
+            crucible = shape(2, 0, 2, 14, 12, 14).erase(4, 2, 4, 12, 15, 12).build()
+                    ;
     
     private static MetallurgicaShapes.Builder shape(VoxelShape shape) {
         return new MetallurgicaShapes.Builder(shape);

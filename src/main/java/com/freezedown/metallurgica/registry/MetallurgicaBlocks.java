@@ -100,7 +100,38 @@ public class MetallurgicaBlocks {
             )
             .build()
             .register();
-    
+
+    public static final BlockEntry<UnfiredCeramicBlock> unfiredCrucible = registrate.block("unfired_crucible", (p) -> new UnfiredCeramicBlock(p, MetallurgicaShapes.crucible))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.sound(SoundType.STONE))
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent(ctx.getName(), prov.modLoc("block/crucible"))
+                    .texture("particle", prov.modLoc("block/unfired_ceramic_pot_side"))
+                    .texture("side", prov.modLoc("block/unfired_ceramic_pot_side"))
+                    .texture("bottom", prov.modLoc("block/unfired_crucible_bottom"))
+                    .texture("inner", prov.modLoc("block/unfired_ceramic_pot_inner"))
+            ))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/crucible"))
+                    .texture("particle", p.modLoc("block/unfired_ceramic_pot_side"))
+                    .texture("side", p.modLoc("block/unfired_ceramic_pot_side"))
+                    .texture("bottom", p.modLoc("block/unfired_crucible_bottom"))
+                    .texture("inner", p.modLoc("block/unfired_ceramic_pot_inner"))
+            )
+            .build()
+            .register();
+
+    public static final BlockEntry<CeramicPotBlock> crucible = registrate.block("crucible", CeramicPotBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.sound(SoundType.DEEPSLATE))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/crucible"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/crucible")))
+            .build()
+            .register();
+
     public static final BlockEntry<CeramicPotBlock> ceramicPot = registrate.block("ceramic_pot", CeramicPotBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.sound(SoundType.STONE))
@@ -311,6 +342,10 @@ public class MetallurgicaBlocks {
             arsenicalBronzeBlock =              registrate.simpleMachineBlock("arsenical_bronze_block", "Arsenical Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
     public static final BlockEntry<Block>
             impureBronzeBlock =              registrate.simpleMachineBlock("impure_bronze_block", "Impure Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
+    //PURE
+    public static final BlockEntry<Block>
+            siliconBlock =              registrate.simpleMachineBlock("silicon_block", "Silicon Block", Block::new, SoundType.STONE, (c, p) -> p.simpleBlock(c.get()));
+
     //SAND
     public static final BlockEntry<SandBlock> quartzSand = registrate.block("quartz_sand", p -> new SandBlock(0x8D8388, p))
             .properties(p -> p.sound(SoundType.SAND))
@@ -329,7 +364,7 @@ public class MetallurgicaBlocks {
             .loot(BlockLoot::dropSelf)
             .simpleItem()
             .register();
-//Are we sure we're still adding this guy?
+                //Are we sure we're still adding this guy?
     public static final BlockEntry<SandBlock> magnetiteTracedSand = registrate.block("magnetite_traced_sand", p -> new SandBlock(0x8D8388, p))
             .transform(MBuilderTransformers.mineralStone("magnetite_traced_sand"))
             .loot((p, bl) -> p.add(bl,
