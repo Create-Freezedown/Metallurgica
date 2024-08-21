@@ -12,6 +12,6 @@ public class MetallurgicaClient {
     }
     public static void clientInit(final FMLClientSetupEvent event) {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        MetallurgicaPartialModels.init();
+        //MetallurgicaPartialModels.init();
     }
 }
