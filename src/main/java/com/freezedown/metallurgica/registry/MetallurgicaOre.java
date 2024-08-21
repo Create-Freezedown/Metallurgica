@@ -46,10 +46,9 @@ public enum MetallurgicaOre {
 //    PYROMORPHITE(LEAD),
 
     //ZINC
-    /*SPHALERITE(ZINC),
-    SMITHSONITE(ZINC),
-    //SPHALRITE(),
-*/
+    SPHALERITE(ZINC),
+    //SMITHSONITE(ZINC),
+
     //TUNGSTEN
 //    WOLFRAMITE(TUNGSTEN),
 
