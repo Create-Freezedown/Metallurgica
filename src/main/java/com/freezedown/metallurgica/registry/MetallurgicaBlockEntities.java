@@ -53,13 +53,7 @@ public class MetallurgicaBlockEntities {
      */
     public static final BlockEntityEntry<UnfiredCeramicBlockEntity> unfiredCeramic = registrate
             .blockEntity("unfired_ceramic", UnfiredCeramicBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.unfiredCeramicPot)
-            .register();
-
-
-    public static final BlockEntityEntry<UnfiredCeramicBlockEntity> unfiredCrucible = registrate
-            .blockEntity("unfired_crucible", UnfiredCeramicBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.unfiredCrucible)
+            .validBlocks(MetallurgicaBlocks.unfiredCeramicPot, MetallurgicaBlocks.unfiredCrucible)
             .register();
 
     
