@@ -47,7 +47,7 @@ public enum MetallurgicaOre {
 
     //ZINC
     SPHALERITE(ZINC),
-    //SMITHSONITE(ZINC),
+    SMITHSONITE(ZINC),
 
     //TUNGSTEN
 //    WOLFRAMITE(TUNGSTEN),
@@ -74,7 +74,8 @@ public enum MetallurgicaOre {
 
     //MAGNESIUM
     //MAGNESITE(MAGNESIUM),
-    CASSITERITE(MAGNESIUM),
+    //TIN
+    CASSITERITE(TIN),
 
     //FLUORITE
     FLUORITE(),
