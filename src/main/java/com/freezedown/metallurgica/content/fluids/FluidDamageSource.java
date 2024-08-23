@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.content.fluids;
 
-import lombok.Getter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,7 +9,6 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 
 public class FluidDamageSource extends DamageSource {
-    @Getter
     protected final Fluid fluid;
     protected final Vec3 sourcePosition;
     

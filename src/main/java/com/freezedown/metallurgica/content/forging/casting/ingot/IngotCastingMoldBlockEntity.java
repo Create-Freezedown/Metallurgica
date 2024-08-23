@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.content.forging.casting.ingot;
 
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
+import com.freezedown.metallurgica.foundation.block_entity.behaviour.TemperatureStorageBehaviour;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagItemOutput;
 import com.freezedown.metallurgica.registry.MetallurgicaMetals;
@@ -42,12 +43,12 @@ public class IngotCastingMoldBlockEntity extends KineticBlockEntity implements I
     protected int luminosity;
     
     public SmartFluidTankBehaviour tank;
+    public TemperatureStorageBehaviour temperatureStorage;
     protected SmartInventory inventory;
     
     private boolean shouldShatter;
     
     private boolean contentsChanged;
-    private double internalTemperature;
     private double lastTemperature;
     private final double minTemperature = 20;
     
@@ -67,54 +68,83 @@ public class IngotCastingMoldBlockEntity extends KineticBlockEntity implements I
     
     @Override
     public void tick() {
-        if (!inventory.getStackInSlot(0).isEmpty()) {
-            tank.forbidInsertion();
-        } else {
-            tank.allowInsertion();
-        }
         super.tick();
         if (syncCooldown > 0) {
             syncCooldown--;
             if (syncCooldown == 0 && queuedSync)
                 sendData();
         }
+        if (!inventory.getStackInSlot(0).isEmpty()) {
+            tank.forbidInsertion();
+        } else {
+            if (temperatureStorage.getInternalTemperature() > minTemperature) {
+                tank.forbidInsertion();
+                tank.forbidExtraction();
+            }
+            tank.allowInsertion();
+        }
         if (level == null || level.isClientSide)
             return;
         String metalName = "";
+        boolean tempNotSet = temperatureStorage.getInternalTemperature() == lastTemperature;
+        double temperatureToSet = 20;
         
-        if (getTankInventory().getFluid().getFluid() instanceof MoltenMetal moltenMetal && moltenMetal.getTemperature() > internalTemperature && lastTemperature != moltenMetal.getTemperature()) {
-            internalTemperature = moltenMetal.getTemperature();
-            lastTemperature = moltenMetal.getTemperature();
+        if (getTankInventory().getFluid().getFluid() instanceof MoltenMetal moltenMetal && lastTemperature != moltenMetal.getTemperature()) {
+            temperatureToSet = moltenMetal.getTemperature();
         }
         
-        if (internalTemperature > minTemperature) {
+        if (tempNotSet) {
+            setInternalTemperature(temperatureToSet);
+            hasCasting = true;
+        }
+        
+        if (hasCasting) {
             if (level.getGameTime() % 20 == 0) {
-                internalTemperature-= 0.1d;
+                decreaseTemperature();
             }
         }
-        
-        
         
         for (MetallurgicaMetals metalEntry : MetallurgicaMetals.values()) {
-            if (metalEntry.METAL.getMolten().get().isSame(getTankInventory().getFluid().getFluid())) {
-                hasCasting = true;
-                if (getTankInventory().getFluidAmount() < 90) {
-                    internalTemperature = metalEntry.METAL.getMolten().get().getTemperature();
-                }
+            if (metalEntry.METAL.getMolten().get().isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
                 metalName = metalEntry.name().toLowerCase();
-                if (getTankInventory().getFluidAmount() >= 90 && hasCasting && internalTemperature < metalEntry.METAL.meltingPoint - 100 && inventory.getStackInSlot(0).isEmpty()) {
-                    ItemStack output = TagItemOutput.fromTag(MetallurgicaTags.forgeItemTag("ingots/" + metalName)).get();
-                    getTankInventory().drain(90, IFluidHandler.FluidAction.EXECUTE);
-                    inventory.setStackInSlot(0, output);
-                    break;
-                }
-            } else {
-                hasCasting = false;
-                internalTemperature = 20;
             }
         }
         
-        
+        if (!hasCasting && temperatureStorage.getInternalTemperature() <= minTemperature && inventory.getStackInSlot(0).isEmpty()) {
+            ItemStack output = TagItemOutput.fromTag(MetallurgicaTags.forgeItemTag("ingots/" + metalName)).get();
+            hasCasting = drain(90) && cast(output);
+            setInternalTemperature(minTemperature);
+        }
+    }
+    
+    protected void setInternalTemperature(double temperature) {
+        if (temperatureStorage.getInternalTemperature() == temperature)
+            return;
+        temperatureStorage.setInternalTemperature(temperature);
+        lastTemperature = temperature;
+        hasCasting = true;
+    }
+    
+    protected void decreaseTemperature() {
+        if (level == null)
+            return;
+        double randomAmount = switch (level.random.nextInt(3)) {
+            case 0 -> 0.1;
+            case 1 -> 0.2;
+            case 2 -> 0.3;
+            default -> 0.4;
+        };
+        if (temperatureStorage.getInternalTemperature() > minTemperature)
+            temperatureStorage.decreaseTemperature(randomAmount);
+    }
+    
+    protected boolean drain(int amount) {
+        tank.getPrimaryHandler().drain(amount, IFluidHandler.FluidAction.EXECUTE).getAmount();
+        return false;
+    }
+    protected boolean cast(ItemStack output) {
+        inventory.setStackInSlot(0, output);
+        return false;
     }
     
     protected void setLuminosity(int luminosity) {
@@ -129,7 +159,7 @@ public class IngotCastingMoldBlockEntity extends KineticBlockEntity implements I
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         ClientUtil.temp().forGoggles(tooltip);
-        ClientUtil.lang().add(ClientUtil.temperature(internalTemperature)).forGoggles(tooltip, 1);
+        ClientUtil.lang().add(ClientUtil.temperature(temperatureStorage.getInternalTemperature())).forGoggles(tooltip, 1);
         return containedFluidTooltip(tooltip, isPlayerSneaking,
                 this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
     }
@@ -141,6 +171,7 @@ public class IngotCastingMoldBlockEntity extends KineticBlockEntity implements I
     
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+        temperatureStorage = new TemperatureStorageBehaviour(TemperatureStorageBehaviour.TYPE, this).withResistance(4000);
         tank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 1, 90, true)
                 .whenFluidUpdates(() -> {
                     if (!hasLevel())
@@ -201,7 +232,6 @@ public class IngotCastingMoldBlockEntity extends KineticBlockEntity implements I
         luminosity = compound.getInt("Luminosity");
         shouldShatter = compound.getBoolean("ShouldShatter");
         inventory.deserializeNBT(compound.getCompound("Output"));
-        internalTemperature = compound.getDouble("InternalTemperature");
         hasCasting = compound.getBoolean("HasCasting");
         
         tank.getPrimaryHandler().readFromNBT(compound.getCompound("TankContent"));
@@ -236,7 +266,6 @@ public class IngotCastingMoldBlockEntity extends KineticBlockEntity implements I
         compound.putInt("Luminosity", luminosity);
         compound.putBoolean("ShouldShatter", shouldShatter);
         compound.put("Output", inventory.serializeNBT());
-        compound.putDouble("InternalTemperature", internalTemperature);
         compound.putBoolean("HasCasting", hasCasting);
         super.write(compound, clientPacket);
         if (!clientPacket)

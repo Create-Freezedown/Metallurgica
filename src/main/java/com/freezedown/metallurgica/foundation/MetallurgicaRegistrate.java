@@ -153,9 +153,6 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
         return virtualFluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, p -> new MoltenMetal(p).moltenTemperature(moltenTemperature))
-                .bucket()
-                .model((ctx, prov) -> prov.singleTexture(ctx.getName(), modelParent, "layer0", itemTexture))
-                .build()
                 .lang(autoLang(id))
                 .tag(MetallurgicaTags.modFluidTag("molten_metals/" + name))
                 .tag(MetallurgicaTags.modFluidTag("molten_metals"))

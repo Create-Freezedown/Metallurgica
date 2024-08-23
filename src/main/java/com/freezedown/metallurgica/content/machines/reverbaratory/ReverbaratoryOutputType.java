@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.content.machines.reverbaratory;
 
-import lombok.Getter;
 import net.minecraft.util.StringRepresentable;
 
 import java.util.Locale;
@@ -10,7 +9,6 @@ public enum ReverbaratoryOutputType implements StringRepresentable {
     CARBON_DIOXIDE(1),
     ;
     private final String name;
-    @Getter
     private final int tanks;
     
     private ReverbaratoryOutputType(int tanks) {

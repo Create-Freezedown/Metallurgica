@@ -145,11 +145,18 @@ repositories {
             includeGroup 'com.github.dima_dencep.mods'
         }
     }
+    maven { // Ritchie's Projectile Library
+        url = "https://maven.realrobotix.me/master/"
+        content {
+            includeGroup("com.rbasamoyai")
+        }
+    }
+    maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
 }
 
 dependencies {
-    implementation 'org.projectlombok:lombok:1.18.22'
-    implementation 'org.projectlombok:lombok:1.18.22'
+    //implementation 'org.projectlombok:lombok:1.18.22'
+    //implementation 'org.projectlombok:lombok:1.18.22'
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
@@ -165,6 +172,13 @@ dependencies {
     implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:slim") { transitive = false } //1.19
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}") //1.19 (Dependency of Create)
     implementation fg.deobf("maven.modrinth:create-tfmg:${tfmg_version}") //1.19
+
+    //implementation("com.rbasamoyai:createbigcannons-forge-1.19.2:0.5.1.a-nightly-02d9581")
+
+
+    //runtimeOnly("me.djtheredstoner:DevAuth-forge-latest:${devauth_forge_version}")
+
+    //compileOnly("com.rbasamoyai:ritchiesprojectilelib:2.0.0-dev+mc.1.19.2-forge-build.181")
 
     minecraftLibrary 'org.apfloat:apfloat:1.11.0'
     minecraftLibrary 'org.jgrapht:jgrapht:1.5.2'

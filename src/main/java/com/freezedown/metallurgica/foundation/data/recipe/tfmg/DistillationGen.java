@@ -26,6 +26,6 @@ public class DistillationGen extends MProcessingRecipeGen {
     
     @Override
     protected IRecipeTypeInfo getRecipeType() {
-        return TFMGRecipeTypes.ADVANCED_DISTILLATION;
+        return TFMGRecipeTypes.DISTILLATION;
     }
 }

@@ -8,7 +8,6 @@ import com.simibubi.create.content.fluids.FluidFX;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.VecHelper;
-import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -48,7 +47,6 @@ public class FaucetBlockEntity extends SmartBlockEntity {
     /** Current fluid in the faucet */
     private FluidStack drained = FluidStack.EMPTY;
     /** Fluid for rendering, used to reduce the number of packets. There is a brief moment where {@link this#drained} is empty but we should be rendering something */
-    @Getter
     private FluidStack renderFluid = FluidStack.EMPTY;
     /** Used for pulse detection */
     private boolean lastRedstoneState = false;

@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica;
 
 import com.drmangotea.createindustry.CreateTFMG;
+import com.freezedown.metallurgica.compat.cbc.BigCannonsCompat;
 import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
 import com.freezedown.metallurgica.experimental.ExperimentalEvents;
 import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
@@ -116,6 +117,8 @@ public class Metallurgica
         
         //MetallurgicaOreFeatureConfigEntries.init();
         
+        
+        
         modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         modEventBus.addListener(Metallurgica::init);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(modEventBus, forgeEventBus));
@@ -125,6 +128,7 @@ public class Metallurgica
     public static void init(final FMLCommonSetupEvent event) {
         LOGGER.info("Setting up Metallurgica's Open Ended Pipe Effects!");
         OpenEndedPipeEffects.init();
+        BigCannonsCompat.register();
         MinecraftForge.EVENT_BUS.register(new ExperimentalEvents());
     };
     

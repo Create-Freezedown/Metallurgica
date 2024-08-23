@@ -8,9 +8,10 @@ public class OpenEndedPipeEffects {
     
     public static void init() {
         OpenEndedPipe.registerEffectHandler(new MoltenMetalEffect());
-        for (Acid acid : MetallurgicaFluids.getAcids()) {
-            OpenEndedPipe.registerEffectHandler(new AcidEffect(acid));
-        }
+        OpenEndedPipe.registerEffectHandler(new AcidEffect(MetallurgicaFluids.hydrochloricAcid.get()));
+        OpenEndedPipe.registerEffectHandler(new AcidEffect(MetallurgicaFluids.sulfuricAcid.get()));
+        OpenEndedPipe.registerEffectHandler(new AcidEffect(MetallurgicaFluids.sodiumHydroxide.get()));
+        OpenEndedPipe.registerEffectHandler(new AcidEffect(MetallurgicaFluids.sodiumHypochlorite.get()));
     }
     
 }

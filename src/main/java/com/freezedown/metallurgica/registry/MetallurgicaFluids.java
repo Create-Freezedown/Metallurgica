@@ -105,18 +105,6 @@ public class MetallurgicaFluids {
         return stacks;
     }
     
-    public static List<Acid> getAcids() {
-        List<Acid> acids = new ArrayList<>();
-        for (RegistryEntry<Fluid> entry : ALL) {
-            if (entry instanceof FluidEntry<?> fluidEntry) {
-                if (fluidEntry.get() instanceof Acid acid) {
-                    acids.add(acid);
-                }
-            }
-        }
-        return acids;
-    }
-    
     @SafeVarargs
     public static FluidEntry<ForgeFlowingFluid.Flowing> flowing(String name, int color, TagKey<Fluid>... tags) {
         TagKey<Fluid> tag = FluidTags.create(Metallurgica.asResource(name));
@@ -128,6 +116,7 @@ public class MetallurgicaFluids {
             fluidTags = new TagKey[]{tag};
             
         }
+        
         
         return  registrate.tintedFluid(name, color)
                 .lang(ClientUtil.fromId(name))

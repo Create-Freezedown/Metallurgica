@@ -2,8 +2,6 @@ package com.freezedown.metallurgica.compat.jei;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.category.ceramic_mixing.CeramicMixingCategory;
-import com.freezedown.metallurgica.compat.jei.category.drill.DrillingCategory;
-import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
 import com.freezedown.metallurgica.compat.jei.category.electrolyzer.ElectrolysisCategory;
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
 import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
@@ -14,22 +12,17 @@ import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
-import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.freezedown.metallurgica.registry.MetallurgicaFluids.getVirtualFluidStacks;
 
 @ParametersAreNonnullByDefault
 @JeiPlugin
@@ -63,11 +56,11 @@ public class MetallurgicaJei implements IModPlugin {
     }
     
     
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        List<FluidStack> fluidIngredients = new ArrayList<>(getVirtualFluidStacks());
-        jeiRuntime.getIngredientManager().addIngredientsAtRuntime(ForgeTypes.FLUID_STACK,fluidIngredients);
-    }
+    //@Override
+    //public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+    //    List<FluidStack> fluidIngredients = new ArrayList<>(getVirtualFluidStacks());
+    //    jeiRuntime.getIngredientManager().addIngredientsAtRuntime(ForgeTypes.FLUID_STACK,fluidIngredients);
+    //}
     
     private static <T extends Recipe<?>> RecipeCategoryBuilder<T> builder(Class<T> cls) {
         return new RecipeCategoryBuilder<>(Metallurgica.ID, cls);
