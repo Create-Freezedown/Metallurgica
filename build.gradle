@@ -134,6 +134,7 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    maven { url = "https://maven.theillusivec4.top/" }
     maven {
         name = "TerraformersMC"
         url = "https://maven.terraformersmc.com/"
@@ -173,12 +174,7 @@ dependencies {
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}") //1.19 (Dependency of Create)
     implementation fg.deobf("maven.modrinth:create-tfmg:${tfmg_version}") //1.19
 
-    //implementation("com.rbasamoyai:createbigcannons-forge-1.19.2:0.5.1.a-nightly-02d9581")
-
-
-    //runtimeOnly("me.djtheredstoner:DevAuth-forge-latest:${devauth_forge_version}")
-
-    //compileOnly("com.rbasamoyai:ritchiesprojectilelib:2.0.0-dev+mc.1.19.2-forge-build.181")
+    implementation("com.rbasamoyai:createbigcannons:5.5.1+mc.1.19.2-forge")
 
     minecraftLibrary 'org.apfloat:apfloat:1.11.0'
     minecraftLibrary 'org.jgrapht:jgrapht:1.5.2'
