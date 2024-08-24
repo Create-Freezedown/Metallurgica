@@ -4,7 +4,7 @@ import com.drmangotea.createindustry.CreateTFMG;
 import com.freezedown.metallurgica.compat.cbc.BigCannonsCompat;
 import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
 import com.freezedown.metallurgica.experimental.ExperimentalEvents;
-import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
 import com.freezedown.metallurgica.foundation.worldgen.MBuiltinRegistration;
@@ -147,6 +147,7 @@ public class Metallurgica
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
+        MetallurgicaRegistrate.printCompositions();
         LOGGER.info("Double checking our cool little ore frequency thingy :3");
         //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
         //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);

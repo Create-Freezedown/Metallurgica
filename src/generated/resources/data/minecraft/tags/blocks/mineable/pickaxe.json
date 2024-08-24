@@ -1,5 +1,6 @@
 {
   "values": [
+    "metallurgica:ingot_casting_mold",
     "metallurgica:unfired_ceramic_pot",
     "metallurgica:unfired_crucible",
     "metallurgica:ceramic_pot",
@@ -45,6 +46,10 @@
     "metallurgica:bauxite_rich_stone",
     "metallurgica:spodumene_deposit",
     "metallurgica:spodumene_rich_stone",
+    "metallurgica:sphalerite_deposit",
+    "metallurgica:sphalerite_rich_stone",
+    "metallurgica:smithsonite_deposit",
+    "metallurgica:smithsonite_rich_stone",
     "metallurgica:rutile_deposit",
     "metallurgica:rutile_rich_stone",
     "metallurgica:cassiterite_deposit",

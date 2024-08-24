@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "magnesium"
+    },
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "chlorine"
+    }
+  ],
+  "item": "metallurgica:magnesium_chloride"
+}

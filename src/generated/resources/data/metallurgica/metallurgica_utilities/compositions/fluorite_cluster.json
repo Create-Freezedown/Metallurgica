@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "calcium"
+    },
+    {
+      "amount": 2,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "fluorine"
+    }
+  ],
+  "item": "metallurgica:fluorite_cluster"
+}

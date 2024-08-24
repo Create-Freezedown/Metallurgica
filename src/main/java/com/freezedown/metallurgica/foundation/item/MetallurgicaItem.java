@@ -33,18 +33,18 @@ public class MetallurgicaItem extends Item {
     }
     
     
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Lang.translateDirect("tooltip.holdForDescription", Lang.translateDirect("tooltip.keyShift").withStyle(Screen.hasShiftDown() ? ChatFormatting.WHITE : ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
-        if (Screen.hasShiftDown()) {
-            if (this.showElementComposition) {
-                pTooltipComponents.add(chemicalFormula());
-            }
-            if (this.showPun) {
-                pTooltipComponents.add(pun());
-            }
-        }
-    }
+    //public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    //    super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+    //    pTooltipComponents.add(Lang.translateDirect("tooltip.holdForDescription", Lang.translateDirect("tooltip.keyShift").withStyle(Screen.hasShiftDown() ? ChatFormatting.WHITE : ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+    //    if (Screen.hasShiftDown()) {
+    //        if (this.showElementComposition) {
+    //            pTooltipComponents.add(chemicalFormula());
+    //        }
+    //        if (this.showPun) {
+    //            pTooltipComponents.add(pun());
+    //        }
+    //    }
+    //}
     
     private MutableComponent chemicalFormula() {
         MutableComponent chemicalFormula = Component.translatable(this.getDescriptionId() + ".tooltip.chemical_formula");

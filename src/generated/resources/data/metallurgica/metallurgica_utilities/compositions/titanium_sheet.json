@@ -1,0 +1,11 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "titanium"
+    }
+  ],
+  "item": "metallurgica:titanium_sheet"
+}

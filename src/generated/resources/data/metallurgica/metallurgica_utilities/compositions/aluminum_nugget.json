@@ -1,0 +1,11 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "aluminum"
+    }
+  ],
+  "item": "metallurgica:aluminum_nugget"
+}

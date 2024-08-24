@@ -1,0 +1,23 @@
+{
+  "elements": [
+    {
+      "amount": 4,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "copper"
+    },
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "tin"
+    },
+    {
+      "amount": 3,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "arsenic"
+    }
+  ],
+  "item": "metallurgica:arsenical_bronze_sheet"
+}

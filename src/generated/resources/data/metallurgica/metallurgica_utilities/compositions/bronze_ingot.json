@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "amount": 7,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "copper"
+    },
+    {
+      "amount": 2,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "tin"
+    }
+  ],
+  "item": "metallurgica:bronze_ingot"
+}

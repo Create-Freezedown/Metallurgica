@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "amount": 2,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "titanium"
+    },
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "aluminum"
+    }
+  ],
+  "item": "metallurgica:semi_pressed_titanium_aluminide_sheet"
+}

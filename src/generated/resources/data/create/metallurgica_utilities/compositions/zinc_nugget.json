@@ -1,0 +1,11 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "zinc"
+    }
+  ],
+  "item": "create:zinc_nugget"
+}

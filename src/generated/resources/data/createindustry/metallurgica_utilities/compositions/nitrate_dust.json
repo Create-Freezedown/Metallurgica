@@ -1,0 +1,23 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "potassium"
+    },
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "nitrogen"
+    },
+    {
+      "amount": 3,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "oxygen"
+    }
+  ],
+  "item": "createindustry:nitrate_dust"
+}

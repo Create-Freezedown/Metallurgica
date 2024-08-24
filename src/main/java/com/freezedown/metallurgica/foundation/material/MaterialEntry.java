@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.material;
 
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
-import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;

@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
@@ -70,7 +70,7 @@ public class MetallurgicaItems {
             titaniumSheet =       registrate.metallurgicaItem("titanium_sheet", "plates/titanium", "plates"),
 
             //Isn't this technically an alloy? where would we put steel?
-            wroughtironingot =       registrate.metallurgicaItem("wrought_iron_ingot", "ingots/wrought_iron", "ingots")
+            wroughtIronIngot =       registrate.metallurgicaItem("wrought_iron_ingot", "ingots/wrought_iron", "ingots")
                     ;
     
     public static final ItemEntry<SequencedAssemblyItem>

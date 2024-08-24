@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "amount": 3,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "iron"
+    },
+    {
+      "amount": 4,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "oxygen"
+    }
+  ],
+  "item": "metallurgica:magnetite"
+}

@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldBlock;
+import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldGenerator;
 import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
 import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlock;
@@ -32,9 +33,8 @@ import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileGenerator;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
-import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
@@ -72,9 +72,9 @@ public class MetallurgicaBlocks {
             .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
             .transform(pickaxeOnly())
             .addLayer(() -> RenderType::cutoutMipped)
-            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/ingot_casting_mold"))))
+            .blockstate((ctx, prov) -> new IngotCastingMoldGenerator().generate(ctx, prov))
             .item()
-            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/ingot_casting_mold")))
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/ingot_casting_mold/item")))
             .build()
             .register();
 

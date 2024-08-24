@@ -1,0 +1,11 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "sulfur"
+    }
+  ],
+  "item": "createindustry:sulfur"
+}

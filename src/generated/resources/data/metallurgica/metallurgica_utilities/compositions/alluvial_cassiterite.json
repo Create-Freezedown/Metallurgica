@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "tin"
+    },
+    {
+      "amount": 2,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "oxygen"
+    }
+  ],
+  "item": "metallurgica:alluvial_cassiterite"
+}

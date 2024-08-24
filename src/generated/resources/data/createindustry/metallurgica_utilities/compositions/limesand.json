@@ -1,0 +1,23 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "calcium"
+    },
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "carbon"
+    },
+    {
+      "amount": 3,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "oxygen"
+    }
+  ],
+  "item": "createindustry:limesand"
+}

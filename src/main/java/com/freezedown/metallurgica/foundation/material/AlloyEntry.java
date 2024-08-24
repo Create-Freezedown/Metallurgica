@@ -1,8 +1,7 @@
 package com.freezedown.metallurgica.foundation.material;
 
-import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
-import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 
 public class AlloyEntry {

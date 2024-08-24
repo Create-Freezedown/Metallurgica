@@ -1,9 +1,9 @@
-// 1.19.2	2024-08-05T22:44:20.0913726	Metallurgica's Processing Recipes
-3a70ba3b17a1e7b93530bc0bba15305839b8beca data/metallurgica/recipes/advanced_distillation/titanium_tetrachloride.json
+// 1.19.2	2024-08-24T14:21:32.4793174	Metallurgica's Processing Recipes
 afccbcdff9a3598525bd2718cd3deac9a2d6255d data/metallurgica/recipes/ceramic_mixing/leather.json
 77cbee027e5612bb371413a6a8b0e65cb3703d76 data/metallurgica/recipes/compacting/titanium_aluminide_ingot.json
 ce21f452f42a841a590f3f66a910236320dfd9c7 data/metallurgica/recipes/compacting/titanium_ingot.json
 da781031f0b72a2794997a1644b5afe3b3fbc086 data/metallurgica/recipes/crushing/rutile_rubble.json
+8b5de5fcd2be4c6ba69ee55723c793b8d6008f62 data/metallurgica/recipes/distillation/titanium_tetrachloride.json
 8ea513777facf9bd31b50f11e02e22a8aa9a82c3 data/metallurgica/recipes/electrolysis/magnesium_chloride.json
 e0a6c2290e1ec6e166c709f9538504e7ad46f56b data/metallurgica/recipes/electrolysis/sodium_hydroxide.json
 d086cc31a8873e2b2061f568883e56e009880ff4 data/metallurgica/recipes/electrolysis/sodium_hydroxide_from_decontaminated_water.json

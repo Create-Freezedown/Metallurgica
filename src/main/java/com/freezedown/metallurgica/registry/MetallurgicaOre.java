@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.registry;
 
 import com.drmangotea.createindustry.CreateTFMG;
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;

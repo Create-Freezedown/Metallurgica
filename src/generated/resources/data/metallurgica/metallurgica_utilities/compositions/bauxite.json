@@ -1,0 +1,29 @@
+{
+  "elements": [
+    {
+      "amount": 2,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "aluminum"
+    },
+    {
+      "amount": 3,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "oxygen"
+    },
+    {
+      "amount": 2,
+      "areNumbersUp": true,
+      "bracketed": false,
+      "element": "hydrogen"
+    },
+    {
+      "amount": 2,
+      "areNumbersUp": true,
+      "bracketed": false,
+      "element": "oxygen"
+    }
+  ],
+  "item": "metallurgica:bauxite"
+}

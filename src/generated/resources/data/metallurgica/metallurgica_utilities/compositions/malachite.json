@@ -1,0 +1,29 @@
+{
+  "elements": [
+    {
+      "amount": 2,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "copper"
+    },
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "carbon"
+    },
+    {
+      "amount": 3,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "oxygen"
+    },
+    {
+      "amount": 2,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "hydrogen"
+    }
+  ],
+  "item": "metallurgica:malachite"
+}

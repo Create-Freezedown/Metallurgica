@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "amount": 3,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "copper"
+    },
+    {
+      "amount": 2,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "zinc"
+    }
+  ],
+  "item": "create:brass_ingot"
+}

@@ -1,0 +1,11 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "copper"
+    }
+  ],
+  "item": "create:copper_nugget"
+}
