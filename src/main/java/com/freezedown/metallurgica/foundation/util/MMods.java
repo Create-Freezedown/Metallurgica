@@ -11,7 +11,8 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public enum MMods {
-    CREATEBIGCANNONS()
+    CREATEBIGCANNONS(),
+    SHIMMER()
     ;
     
     private final String id;
