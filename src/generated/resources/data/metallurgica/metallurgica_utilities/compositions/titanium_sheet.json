@@ -2,9 +2,12 @@
   "elements": [
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "titanium"
+      "element": "titanium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     }
   ],
   "item": "metallurgica:titanium_sheet"

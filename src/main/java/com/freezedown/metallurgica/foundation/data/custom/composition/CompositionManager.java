@@ -1,7 +1,6 @@
-package com.freezedown.metallurgica.foundation.item.composition;
+package com.freezedown.metallurgica.foundation.data.custom.composition;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.mineral.deposit.Deposit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -12,7 +11,6 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.HashMap;

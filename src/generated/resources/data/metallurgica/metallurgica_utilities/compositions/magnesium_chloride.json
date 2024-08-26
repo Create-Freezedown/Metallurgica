@@ -2,15 +2,21 @@
   "elements": [
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "magnesium"
+      "element": "magnesium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "chlorine"
+      "element": "chlorine",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     }
   ],
   "item": "metallurgica:magnesium_chloride"

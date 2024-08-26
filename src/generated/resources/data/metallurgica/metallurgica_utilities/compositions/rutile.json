@@ -2,15 +2,21 @@
   "elements": [
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "titanium"
+      "element": "titanium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 2,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "oxygen"
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     }
   ],
   "item": "metallurgica:rutile"

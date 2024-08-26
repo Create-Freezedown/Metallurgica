@@ -2,9 +2,12 @@
   "elements": [
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "aluminum"
+      "element": "aluminum",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     }
   ],
   "item": "createindustry:aluminum_ingot"

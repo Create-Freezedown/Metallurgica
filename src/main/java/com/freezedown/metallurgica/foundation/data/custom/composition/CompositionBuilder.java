@@ -1,11 +1,9 @@
-package com.freezedown.metallurgica.foundation.item.composition;
+package com.freezedown.metallurgica.foundation.data.custom.composition;
 
 import com.freezedown.metallurgica.foundation.util.CommonUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -59,8 +57,11 @@ public class CompositionBuilder {
                 JsonObject elementObject = new JsonObject();
                 elementObject.addProperty("element", element.getName());
                 elementObject.addProperty("amount", element.getAmount());
+                elementObject.addProperty("groupedAmount", element.getGroupedAmount());
                 elementObject.addProperty("areNumbersUp", element.areNumbersUp());
                 elementObject.addProperty("bracketed", element.bracketed());
+                elementObject.addProperty("forceCloseBracket", element.isBracketForceClosed());
+                elementObject.addProperty("appendDash", element.hasDash());
                 elementsArray.add(elementObject);
             }
             json.add("elements", elementsArray);

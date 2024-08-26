@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.foundation.item.composition;
+package com.freezedown.metallurgica.foundation.data.custom.composition;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

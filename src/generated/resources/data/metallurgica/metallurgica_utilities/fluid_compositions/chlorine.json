@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "chlorine",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    }
+  ],
+  "fluid": {
+    "name": "metallurgica:chlorine",
+    "nbt": "{}"
+  }
+}

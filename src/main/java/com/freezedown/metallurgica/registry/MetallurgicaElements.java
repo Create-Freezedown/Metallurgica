@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.registry;
 
-import com.freezedown.metallurgica.foundation.item.composition.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 
 import java.util.function.BiConsumer;
 

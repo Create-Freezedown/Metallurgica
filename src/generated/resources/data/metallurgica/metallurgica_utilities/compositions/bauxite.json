@@ -2,27 +2,39 @@
   "elements": [
     {
       "amount": 2,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "aluminum"
+      "element": "aluminum",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 3,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "oxygen"
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 2,
+      "appendDash": false,
       "areNumbersUp": true,
       "bracketed": false,
-      "element": "hydrogen"
+      "element": "hydrogen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 2,
+      "appendDash": false,
       "areNumbersUp": true,
       "bracketed": false,
-      "element": "oxygen"
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     }
   ],
   "item": "metallurgica:bauxite"

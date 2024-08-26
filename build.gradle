@@ -117,8 +117,9 @@ repositories {
         }
     }
     maven {
-        name "JEI"
-        url "https://dvs1.progwml6.com/files/maven"
+        // location of the maven that hosts JEI files since January 2023
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
     }
     maven {
         name = 'tterrag maven'
@@ -165,7 +166,7 @@ dependencies {
 
     compileOnly fg.deobf("mezz.jei:jei-$minecraft_version-common-api:$jei_version")
     compileOnly fg.deobf("mezz.jei:jei-$minecraft_version-forge-api:$jei_version")
-    runtimeOnly fg.deobf("mezz.jei:jei-$minecraft_version-forge:$jei_version")
+    implementation fg.deobf("mezz.jei:jei-$minecraft_version-forge:$jei_version")
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
     testAnnotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
