@@ -2,21 +2,30 @@
   "elements": [
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "zinc"
+      "element": "zinc",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "carbon"
+      "element": "carbon",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 3,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "oxygen"
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     }
   ],
   "item": "metallurgica:smithsonite"

@@ -95,7 +95,10 @@ public class Metallurgica
         
         
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
-        modEventBus.addListener(this::commonSetup);
+        
+        
+        registrate.registerEventListeners(modEventBus);
+        
         //BIOME_MODIFIERS.register(modEventBus);
         MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
         MetallurgicaBlockEntities.register();
@@ -106,19 +109,16 @@ public class Metallurgica
         MetallurgicaRecipeTypes.register(modEventBus);
         MetallurgicaPackets.registerPackets();
         MetallurgicaOreFeatureConfigEntries.init();
-        MetallurgicaConfigs.register(modLoadingContext);
         MetallurgicaFeatures.register(modEventBus);
         MetallurgicaPlacementModifiers.register(modEventBus);
         MBuiltinRegistration.register(modEventBus);
-        registrate.registerEventListeners(modEventBus);
-        //MetallurgicaOreFeatures.register(modEventBus);
+        
+        MetallurgicaConfigs.register(modLoadingContext);
+        
         EventHandler commonHandler = new EventHandler();
         MinecraftForge.EVENT_BUS.register(commonHandler);
         
-        //MetallurgicaOreFeatureConfigEntries.init();
-        
-        
-        
+        modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         modEventBus.addListener(Metallurgica::init);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(modEventBus, forgeEventBus));

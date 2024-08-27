@@ -1,0 +1,23 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "hydrogen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "chlorine",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    }
+  ],
+  "item": "metallurgica:hydrochloric_acid_bucket"
+}

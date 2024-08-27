@@ -94,6 +94,16 @@ public class MetallurgicaItems {
             titaniumAluminideSheet = registrate.alloyItem("titanium_aluminide_sheet", "plates/titanium_aluminide", "plates", "alloy_plates/titanium_aluminide", "alloy_plates")
                     ;
     
+    public static final ItemEntry<MetallurgicaItem>
+            hornblendeShard =     registrate.metallurgicaItem("hornblende_shard", "shards/hornblende", "shards"),
+            plagioclaseShard =    registrate.metallurgicaItem("plagioclase_shard", "shards/plagioclase", "shards"),
+            biotiteShard =        registrate.metallurgicaItem("biotite_shard", "shards/biotite", "shards"),
+            clinopyroxeneShard =  registrate.metallurgicaItem("clinopyroxene_shard", "shards/clinopyroxene", "shards"),
+            orthopyroxeneShard =  registrate.metallurgicaItem("orthopyroxene_shard", "shards/orthopyroxene", "shards"),
+            quartzShard =         registrate.metallurgicaItem("quartz_shard", "shards/quartz", "shards"),
+            amphiboleShard =      registrate.metallurgicaItem("amphibole_shard", "shards/amphibole", "shards")
+                    ;
+    
     //PRIMITIVE
     public static final ItemEntry<Item> dirtyClayBall = registrate.simpleItem("dirty_clay_ball", "dirty_clay_balls", "primitive_materials");
 

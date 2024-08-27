@@ -1,0 +1,23 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "iron",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "chlorine",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    }
+  ],
+  "item": "metallurgica:iron_chloride_bucket"
+}

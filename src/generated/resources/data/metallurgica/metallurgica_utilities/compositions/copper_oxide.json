@@ -2,15 +2,21 @@
   "elements": [
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "copper"
+      "element": "copper",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "oxygen"
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     }
   ],
   "item": "metallurgica:copper_oxide"

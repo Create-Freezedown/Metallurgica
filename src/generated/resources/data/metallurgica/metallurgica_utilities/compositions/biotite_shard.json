@@ -1,0 +1,86 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "potassium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": true,
+      "element": "magnesium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": true,
+      "element": "iron",
+      "forceCloseBracket": true,
+      "groupedAmount": 3
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "aluminum",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 3,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "silicon",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 10,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": true,
+      "element": "fluorine",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": true,
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": true,
+      "element": "hydrogen",
+      "forceCloseBracket": true,
+      "groupedAmount": 2
+    }
+  ],
+  "item": "metallurgica:biotite_shard"
+}

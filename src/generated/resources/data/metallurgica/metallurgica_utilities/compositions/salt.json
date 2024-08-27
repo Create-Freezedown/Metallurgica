@@ -2,15 +2,21 @@
   "elements": [
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "sodium"
+      "element": "sodium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     },
     {
       "amount": 1,
+      "appendDash": false,
       "areNumbersUp": false,
       "bracketed": false,
-      "element": "chlorine"
+      "element": "chlorine",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
     }
   ],
   "item": "metallurgica:salt"

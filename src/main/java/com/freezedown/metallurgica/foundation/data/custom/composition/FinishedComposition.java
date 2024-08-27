@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.foundation.item.composition;
+package com.freezedown.metallurgica.foundation.data.custom.composition;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;

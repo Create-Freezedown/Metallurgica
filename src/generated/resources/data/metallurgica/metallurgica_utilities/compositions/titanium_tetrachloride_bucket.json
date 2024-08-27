@@ -1,0 +1,23 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "titanium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    },
+    {
+      "amount": 4,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "chlorine",
+      "forceCloseBracket": false,
+      "groupedAmount": 1
+    }
+  ],
+  "item": "metallurgica:titanium_tetrachloride_bucket"
+}
