@@ -32,6 +32,7 @@ import com.freezedown.metallurgica.content.primitive.log_pile.IgnitableLogPileBl
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileGenerator;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
+import com.freezedown.metallurgica.content.temperature.DebugTempBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
@@ -66,6 +67,17 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+    
+    public static final BlockEntry<DebugTempBlock> debugTemp = registrate.block("debug_temp", DebugTempBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/debug_temp")))
+            )
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/debug_temp")))
+            .build()
+            .register();
 
     public static final BlockEntry<IngotCastingMoldBlock> ingotCastingMold = registrate.block("ingot_casting_mold", IngotCastingMoldBlock::new)
             .initialProperties(SharedProperties::stone)

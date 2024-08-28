@@ -4,9 +4,11 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import com.simibubi.create.foundation.utility.LangNumberFormat;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +22,15 @@ import java.util.stream.DoubleStream;
 import static java.util.stream.Collectors.toList;
 
 public class ClientUtil {
+    
+    public static Level getWorld() {
+        return Minecraft.getInstance().level;
+    }
+    
+    public static Player getPlayer() {
+        return Minecraft.getInstance().player;
+    }
+    
     public static String fromId(String key) {
         String s = key.replaceAll("_", " ");
         s = Arrays.stream(StringUtils.splitByCharacterTypeCamelCase(s)).map(StringUtils::capitalize).collect(Collectors.joining(" "));

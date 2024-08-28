@@ -5,9 +5,8 @@ import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasMovem
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureEffect;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureMinerals;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureUtil;
-import com.freezedown.metallurgica.registry.MetallurgicaPackets;
+import com.freezedown.metallurgica.foundation.temperature.TempUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
@@ -89,7 +88,9 @@ public class CommonEvents {
                 player.getPersistentData().putBoolean("metallurgica:exposureEffect_fatigue", false);
             }
         }
-        if (player instanceof ServerPlayer serverPlayer)
-            MetallurgicaPackets.sendToPlayer(serverPlayer, /*new BlurShaderPacket(player.getPersistentData().getBoolean("metallurgica:exposureEffect_showBlur"))*/true);
+        //if (player instanceof ServerPlayer serverPlayer)
+        //    MetallurgicaPackets.sendToPlayer(serverPlayer, /*new BlurShaderPacket(player.getPersistentData().getBoolean("metallurgica:exposureEffect_showBlur"))*/true);
     }
+    
+    
 }

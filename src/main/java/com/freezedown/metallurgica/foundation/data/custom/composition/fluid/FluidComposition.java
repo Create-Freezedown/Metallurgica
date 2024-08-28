@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
@@ -23,4 +24,15 @@ public record FluidComposition(FluidStack fluidStack, List<Element> elements) {
             FLUIDSTACK_NO_AMOUNT_CODEC.fieldOf("fluid").forGetter(FluidComposition::fluidStack),
             Codec.list(Element.CODEC).fieldOf("elements").forGetter(FluidComposition::elements)
     ).apply(instance, FluidComposition::new));
+    
+    public void writeToPacket(FriendlyByteBuf buf) {
+        buf.writeFluidStack(fluidStack);
+        elements.forEach(element -> element.writeToPacket(buf));
+    }
+    
+    public static FluidComposition fromNetwork(FriendlyByteBuf buf) {
+        var fluidStack = buf.readFluidStack();
+        var elements = Element.listFromNetwork(buf);
+        return new FluidComposition(fluidStack, elements);
+    }
 }

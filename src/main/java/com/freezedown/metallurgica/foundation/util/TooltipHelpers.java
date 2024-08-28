@@ -48,37 +48,37 @@ public class TooltipHelpers {
         }
     }
     
-    public static void addFluidChemicalCompositionTooltip(FluidStack fluidStack, List<Component> tooltips, TooltipFlag flag) {
-        if (FluidCompositionManager.hasComposition(fluidStack)) {
-            Metallurgica.LOGGER.info("Adding fluid composition tooltip for fluid: {}, with elements: {}", fluidStack.getDisplayName().getString(), FluidCompositionManager.getElements(fluidStack));
-            StringBuilder compositionName = new StringBuilder();
-            int size = FluidCompositionManager.getElements(fluidStack).size();
-            for (int i = 0; i < size; i++) {
-                Element element = Objects.requireNonNull(FluidCompositionManager.getElements(fluidStack).get(i));
-                Element nextElement = i + 1 < size ? Objects.requireNonNull(FluidCompositionManager.getElements(fluidStack).get(i + 1)) : null;
-                Element previousElement = i - 1 >= 0 ? Objects.requireNonNull(FluidCompositionManager.getElements(fluidStack).get(i - 1)) : null;
-                String openBracket = element.bracketed() ? "(" : "";
-                String closeBracket = element.bracketed() ? ")" : "";
-                int groupedAmount = element.getGroupedAmount();
-                if (previousElement != null && previousElement.bracketed()) {
-                    openBracket = previousElement.isBracketForceClosed() && element.bracketed() ? "(" : "";
-                }
-                if (nextElement != null && nextElement.bracketed()) {
-                    groupedAmount = 1;
-                    closeBracket = (element.isBracketForceClosed() ? ")" : "");
-                }
-                String dash = element.hasDash() ? "-" : "";
-                String groupAmount = groupedAmount > 1 ? (element.areNumbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount))) : "";
-                compositionName.append(openBracket).append(element.getDisplay()).append(closeBracket).append(groupAmount).append(dash);
-            }
-            if (!compositionName.isEmpty()) {
-                tooltips.add(1, ClientUtil.lang().space().space().space().space()
-                        .text(compositionName.toString())
-                        .color(TooltipHelper.Palette.BLUE.highlight().getColor().getValue())
-                        .component());
-            }
-        } else {
-            Metallurgica.LOGGER.info("No fluid composition found for fluid: {}", fluidStack.getDisplayName().getString());
-        }
-    }
+    //public static void addFluidChemicalCompositionTooltip(FluidStack fluidStack, List<Component> tooltips, TooltipFlag flag) {
+    //    if (FluidCompositionManager.hasComposition(fluidStack)) {
+    //        Metallurgica.LOGGER.info("Adding fluid composition tooltip for fluid: {}, with elements: {}", fluidStack.getDisplayName().getString(), FluidCompositionManager.getElements(fluidStack));
+    //        StringBuilder compositionName = new StringBuilder();
+    //        int size = FluidCompositionManager.getElements(fluidStack).size();
+    //        for (int i = 0; i < size; i++) {
+    //            Element element = Objects.requireNonNull(FluidCompositionManager.getElements(fluidStack).get(i));
+    //            Element nextElement = i + 1 < size ? Objects.requireNonNull(FluidCompositionManager.getElements(fluidStack).get(i + 1)) : null;
+    //            Element previousElement = i - 1 >= 0 ? Objects.requireNonNull(FluidCompositionManager.getElements(fluidStack).get(i - 1)) : null;
+    //            String openBracket = element.bracketed() ? "(" : "";
+    //            String closeBracket = element.bracketed() ? ")" : "";
+    //            int groupedAmount = element.getGroupedAmount();
+    //            if (previousElement != null && previousElement.bracketed()) {
+    //                openBracket = previousElement.isBracketForceClosed() && element.bracketed() ? "(" : "";
+    //            }
+    //            if (nextElement != null && nextElement.bracketed()) {
+    //                groupedAmount = 1;
+    //                closeBracket = (element.isBracketForceClosed() ? ")" : "");
+    //            }
+    //            String dash = element.hasDash() ? "-" : "";
+    //            String groupAmount = groupedAmount > 1 ? (element.areNumbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount))) : "";
+    //            compositionName.append(openBracket).append(element.getDisplay()).append(closeBracket).append(groupAmount).append(dash);
+    //        }
+    //        if (!compositionName.isEmpty()) {
+    //            tooltips.add(1, ClientUtil.lang().space().space().space().space()
+    //                    .text(compositionName.toString())
+    //                    .color(TooltipHelper.Palette.BLUE.highlight().getColor().getValue())
+    //                    .component());
+    //        }
+    //    } else {
+    //        Metallurgica.LOGGER.info("No fluid composition found for fluid: {}", fluidStack.getDisplayName().getString());
+    //    }
+    //}
 }

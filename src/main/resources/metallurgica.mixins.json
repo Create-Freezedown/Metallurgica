@@ -9,13 +9,15 @@
     "AllOreFeatureConfigEntriesMixin",
     "ChemicalInfoTooltipMixin",
     "DefaultOreFeaturesMixin",
-    "jei.FluidHelperMixin",
     "MixinOpenEndedPipe",
     "MixinOpenEndFluidHandler",
     "MixinVanillaFluidTargets",
     "OreVeinifierHijacker",
+    "PlayerListMixin",
     "TFMGBlastFurnaceBGone",
-    "WorldGenRegionMixin"
+    "WorldGenRegionMixin",
+    "jei.DistillationCategoryMixin",
+    "jei.FluidHelperMixin"
   ],
   "client": [
     "MixinLiquidBlockRenderer",
