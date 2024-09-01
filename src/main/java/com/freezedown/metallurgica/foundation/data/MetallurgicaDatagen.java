@@ -4,6 +4,8 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.freezedown.metallurgica.foundation.data.recipe.create.MSequencedAssemblyGen;
 import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
+import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
+import com.freezedown.metallurgica.registry.MetallurgicaBiomeTemperatures;
 import com.freezedown.metallurgica.registry.MetallurgicaCompositions;
 import com.freezedown.metallurgica.registry.MetallurgicaElements;
 import com.google.gson.JsonElement;
@@ -31,6 +33,7 @@ public class MetallurgicaDatagen {
             generator.addProvider(true, new MStandardRecipeGen(generator));
             MProcessingRecipeGen.registerAll(generator);
             MetallurgicaCompositions.register(generator);
+            MetallurgicaBiomeTemperatures.register(generator);
             generator.addProvider(true, new  MSequencedAssemblyGen(generator));
         }
     }
@@ -40,11 +43,11 @@ public class MetallurgicaDatagen {
         
         Metallurgica.registrate.addDataGenerator(ProviderType.LANG, provider -> {
             BiConsumer<String, String> langConsumer = provider::add;
-            
             provideDefaultLang("interface", langConsumer);
             provideDefaultLang("compositions", langConsumer);
             provideDefaultLang("tooltips", langConsumer);
             MetallurgicaElements.provideElementLang(langConsumer);
+            MetallurgicaUnits.provideUnitLang(langConsumer);
         });
     }
     

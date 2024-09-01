@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.foundation.util;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
+import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import com.simibubi.create.foundation.utility.LangNumberFormat;
 import net.minecraft.client.Minecraft;
@@ -201,21 +202,19 @@ public class ClientUtil {
         return lang().translate("gui.goggles.temperature");
     }
     
-    public static LangBuilder celcius() {
-        return lang().translate("generic.unit.celcius");
-    }
-    
-    public static LangBuilder fahrenheit() {
-        return lang().translate("generic.unit.fahrenheit");
-    }
-    
     public static LangBuilder temperature(double temperature) {
-        return MetallurgicaConfigs.client().imAmerican.get() ? number(temperature).space().add(celcius()) : CelciusToFahrenheit(temperature);
+        return MetallurgicaConfigs.client().imAmerican.get() ? number(temperature).space().add(MetallurgicaUnits.C.UNIT.metricLang()) : CelciusToFahrenheit(temperature);
     }
     
     public static LangBuilder CelciusToFahrenheit(double celcius) {
-        double fahrenheit = celcius * 9 / 5 + 32;
-        return number(fahrenheit).space().add(fahrenheit());
+        double fahrenheit = MetallurgicaUnits.C.UNIT.convertToImperial(celcius);
+        return number(fahrenheit).space().add(MetallurgicaUnits.C.UNIT.imperialLang());
+    }
+    
+    public static boolean currentTemperatureTooltip(List<Component> tooltip, double temperature) {
+        lang().translate("gui.goggles.temperature").forGoggles(tooltip);
+        temperature(temperature).forGoggles(tooltip);
+        return true;
     }
     
     private static final int SMALL_DOWN_NUMBER_BASE = '\u2080';

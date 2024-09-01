@@ -3,6 +3,7 @@ package com.freezedown.metallurgica;
 import com.freezedown.metallurgica.content.mineral.deposit.DepositManager;
 import com.freezedown.metallurgica.foundation.data.custom.composition.CompositionManager;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionManager;
+import com.freezedown.metallurgica.foundation.data.custom.temp.BiomeTemperatureManager;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagPreferenceManager;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,9 +15,11 @@ public class EventHandler {
         TagPreferenceManager tagPreferenceManager = new TagPreferenceManager();
         CompositionManager compositionManager = new CompositionManager();
         FluidCompositionManager fluidCompositionManager = new FluidCompositionManager();
+        BiomeTemperatureManager biomeTemperatureManager = new BiomeTemperatureManager();
         event.addListener(tagPreferenceManager);
         event.addListener(depositManager);
         event.addListener(compositionManager);
         event.addListener(fluidCompositionManager);
+        event.addListener(biomeTemperatureManager);
     }
 }
