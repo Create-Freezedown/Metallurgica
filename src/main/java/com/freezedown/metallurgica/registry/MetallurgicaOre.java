@@ -70,10 +70,11 @@ public enum MetallurgicaOre {
 //    CHLORARGYRITE(SILVER),
 
     //LIMESTONE
+    //POTASH()
     //DOLOMITE(),
 
     //MAGNESIUM
-    //MAGNESITE(MAGNESIUM),
+//    MAGNESITE(MAGNESIUM),
     //TIN
     CASSITERITE(TIN),
 
