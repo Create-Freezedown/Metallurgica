@@ -60,10 +60,13 @@ public class FluidCompositionManager extends SimpleJsonResourceReloadListener {
     public static boolean hasComposition(FluidStack fluidStack) {
         boolean hasComposition = false;
         for (FluidStack stack : compositions.keySet()) {
-            if (fluidStack.hasTag()) {
-                hasComposition = stack.getFluid().equals(fluidStack.getFluid()) && stack.getTag().equals(fluidStack.getTag());
-            } else {
-                hasComposition = stack.getFluid().equals(fluidStack.getFluid());
+            if (fluidStack.getFluid() == stack.getFluid()) {
+                if (stack.hasTag()) {
+                    hasComposition = stack.getTag().equals(fluidStack.getTag());
+                } else {
+                    hasComposition = true;
+                }
+                break;
             }
         }
         return hasComposition;

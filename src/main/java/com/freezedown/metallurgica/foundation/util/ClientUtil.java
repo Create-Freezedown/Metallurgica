@@ -2,11 +2,14 @@ package com.freezedown.metallurgica.foundation.util;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
+import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import com.simibubi.create.foundation.utility.LangNumberFormat;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +23,15 @@ import java.util.stream.DoubleStream;
 import static java.util.stream.Collectors.toList;
 
 public class ClientUtil {
+    
+    public static Level getWorld() {
+        return Minecraft.getInstance().level;
+    }
+    
+    public static Player getPlayer() {
+        return Minecraft.getInstance().player;
+    }
+    
     public static String fromId(String key) {
         String s = key.replaceAll("_", " ");
         s = Arrays.stream(StringUtils.splitByCharacterTypeCamelCase(s)).map(StringUtils::capitalize).collect(Collectors.joining(" "));
@@ -190,21 +202,19 @@ public class ClientUtil {
         return lang().translate("gui.goggles.temperature");
     }
     
-    public static LangBuilder celcius() {
-        return lang().translate("generic.unit.celcius");
-    }
-    
-    public static LangBuilder fahrenheit() {
-        return lang().translate("generic.unit.fahrenheit");
-    }
-    
     public static LangBuilder temperature(double temperature) {
-        return MetallurgicaConfigs.client().imAmerican.get() ? number(temperature).space().add(celcius()) : CelciusToFahrenheit(temperature);
+        return MetallurgicaConfigs.client().imAmerican.get() ? number(temperature).space().add(MetallurgicaUnits.C.UNIT.metricLang()) : CelciusToFahrenheit(temperature);
     }
     
     public static LangBuilder CelciusToFahrenheit(double celcius) {
-        double fahrenheit = celcius * 9 / 5 + 32;
-        return number(fahrenheit).space().add(fahrenheit());
+        double fahrenheit = MetallurgicaUnits.C.UNIT.convertToImperial(celcius);
+        return number(fahrenheit).space().add(MetallurgicaUnits.C.UNIT.imperialLang());
+    }
+    
+    public static boolean currentTemperatureTooltip(List<Component> tooltip, double temperature) {
+        lang().translate("gui.goggles.temperature").forGoggles(tooltip);
+        temperature(temperature).forGoggles(tooltip);
+        return true;
     }
     
     private static final int SMALL_DOWN_NUMBER_BASE = '\u2080';

@@ -259,11 +259,11 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
 
     public ItemEntry<MetallurgicaItem> metallurgicaItem(String name, String... tags) {
-        return item(name, p -> new MetallurgicaItem(p), p->p, tags);
+        return item(name, MetallurgicaItem::new, p->p, tags);
     }
     
     public ItemEntry<MetallurgicaItem> cluster(String name) {
-        return this.item(name, p -> new MetallurgicaItem(p))
+        return this.item(name, MetallurgicaItem::new)
                 .tag(AllTags.forgeItemTag("gem_clusters/" + name))
                 .tag(AllTags.forgeItemTag("gem_clusters"))
                 .lang(autoLang(name))
@@ -271,7 +271,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
 
     public ItemEntry<MetallurgicaItem> raw(String name) {
-        return this.item(name, p -> new MetallurgicaItem(p))
+        return this.item(name, MetallurgicaItem::new)
                 .tag(AllTags.forgeItemTag("raw_materials/" + name))
                 .tag(AllTags.forgeItemTag("raw_materials"))
                 .lang(autoLang(name))
@@ -286,14 +286,14 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .register();
     }
     public ItemEntry<MetallurgicaItem> powder(String name) {
-        return this.item(name, p -> new MetallurgicaItem(p))
+        return this.item(name, MetallurgicaItem::new)
                 .tag(AllTags.forgeItemTag("powders/" + name))
                 .tag(AllTags.forgeItemTag("powders"))
                 .lang(autoLang(name))
                 .register();
     }
     public ItemEntry<AlloyItem> alloyItem(String name, String... tags) {
-        return item(name, p -> new AlloyItem(p), p->p, tags);
+        return item(name, AlloyItem::new, p->p, tags);
     }
     public ItemEntry<AlloyItem> alloyNugget(String name) {
         return this.item(name, AlloyItem::new)

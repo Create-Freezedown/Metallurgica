@@ -2,6 +2,8 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetActivationPacket;
+import com.freezedown.metallurgica.content.temperature.TemperatureUpdatePacket;
+import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,6 +30,10 @@ public enum MetallurgicaPackets {
     
     // Server to Client
     faucetActivation(FaucetActivationPacket.class, FaucetActivationPacket::new, PLAY_TO_CLIENT),
+    fluidComposition(FluidCompositionPacket.class, FluidCompositionPacket::new, PLAY_TO_CLIENT),
+    temperatureUpdate(TemperatureUpdatePacket.class, TemperatureUpdatePacket::new, PLAY_TO_CLIENT),
+    //climateData(ClimatePacket.class, ClimatePacket::new, PLAY_TO_CLIENT),
+    //bodyDataSync(BodyDataSyncPacket.class, BodyDataSyncPacket::new, PLAY_TO_CLIENT)
     ;
     
     public static final ResourceLocation CHANNEL_NAME = Metallurgica.asResource("main");
@@ -65,9 +71,18 @@ public enum MetallurgicaPackets {
             sendToNear(server, position, 64, msg);
         }
     }
+    public static void sendToClientsTracking(Object msg, @Nullable LevelAccessor world, BlockPos position) {
+        if (world instanceof ServerLevel server) {
+            getChannel().send(PacketDistributor.TRACKING_CHUNK.with(() -> server.getChunkAt(position)), msg);
+        }
+    }
     
     public static void sendToPlayer(ServerPlayer player, Object msg) {
         getChannel().send(PacketDistributor.PLAYER.with(() -> player), msg);
+    }
+    
+    public static void sendToAll(Object msg) {
+        getChannel().send(PacketDistributor.ALL.noArg(), msg);
     }
     
     private static class PacketType<T extends SimplePacketBase> {

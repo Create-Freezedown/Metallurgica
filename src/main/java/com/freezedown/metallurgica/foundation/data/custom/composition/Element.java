@@ -3,7 +3,9 @@ package com.freezedown.metallurgica.foundation.data.custom.composition;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.FriendlyByteBuf;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record Element(String name, int amount, boolean areNumbersUp, boolean bracketed, boolean forceCloseBracket, boolean appendDash, int groupedAmount) {
@@ -82,5 +84,35 @@ public record Element(String name, int amount, boolean areNumbersUp, boolean bra
         if (amount > 1)
             display += amount;
         return areNumbersUp ? ClientUtil.toSmallUpNumbers(display) : ClientUtil.toSmallDownNumbers(display);
+    }
+    
+    public void writeToPacket(FriendlyByteBuf buf) {
+        buf.writeUtf(name);
+        buf.writeInt(amount);
+        buf.writeBoolean(areNumbersUp);
+        buf.writeBoolean(bracketed);
+        buf.writeBoolean(forceCloseBracket);
+        buf.writeBoolean(appendDash);
+        buf.writeInt(groupedAmount);
+    }
+    
+    public static Element fromNetwork(FriendlyByteBuf buf) {
+        String name = buf.readUtf();
+        int amount = buf.readInt();
+        boolean areNumbersUp = buf.readBoolean();
+        boolean bracketed = buf.readBoolean();
+        boolean forceCloseBracket = buf.readBoolean();
+        boolean appendDash = buf.readBoolean();
+        int groupedAmount = buf.readInt();
+        return new Element(name, amount, areNumbersUp, bracketed, forceCloseBracket, appendDash, groupedAmount);
+    }
+    
+    public static List<Element> listFromNetwork(FriendlyByteBuf buf) {
+        int size = buf.readVarInt();
+        List<Element> elements = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            elements.add(fromNetwork(buf));
+        }
+        return elements;
     }
 }

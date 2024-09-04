@@ -34,6 +34,7 @@ import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotRenderer;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlockEntity;
+import com.freezedown.metallurgica.content.temperature.DebugTempBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.simibubi.create.content.kinetics.base.CutoutRotatingInstance;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
@@ -43,7 +44,10 @@ import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.freezedown.metallurgica.registry.MetallurgicaOre.*;
 
 public class MetallurgicaBlockEntities {
-    
+    public static final BlockEntityEntry<DebugTempBlockEntity> debugTemp = registrate
+            .blockEntity("debug_temp", DebugTempBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.debugTemp)
+            .register();
     public static final BlockEntityEntry<IngotCastingMoldBlockEntity> ingotCastingMold = registrate
             .blockEntity("ingot_casting_mold", IngotCastingMoldBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.ingotCastingMold)
