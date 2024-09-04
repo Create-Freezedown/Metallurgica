@@ -372,6 +372,6 @@
   "metallurgica.item_appendages.impure": "Impure",
   "metallurgica.jei.required_efficiency": "Required Efficiency: %s",
   "metallurgica.tooltips.impurities": "Impurities:",
-  "numbers": "â‚€â‚�â‚‚â‚ƒâ‚„â‚…â‚†â‚‡â‚ˆâ‚‰",
+  "numbers": "₀₁₂₃₄₅₆₇₈₉",
   "recipe.metallurgica.electrolysis": "Electrolysis"
 }
