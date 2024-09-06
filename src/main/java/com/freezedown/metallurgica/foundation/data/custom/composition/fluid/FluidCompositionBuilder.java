@@ -1,16 +1,12 @@
 package com.freezedown.metallurgica.foundation.data.custom.composition.fluid;
 
-import com.freezedown.metallurgica.foundation.data.custom.composition.CompositionBuilder;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
-import com.freezedown.metallurgica.foundation.util.CommonUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;

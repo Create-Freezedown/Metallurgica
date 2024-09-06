@@ -16,6 +16,7 @@
     "PlayerListMixin",
     "TFMGBlastFurnaceBGone",
     "WorldGenRegionMixin",
+    "jei.TooltipRendererAccessor",
     "jei.DistillationCategoryMixin",
     "jei.FluidHelperMixin"
   ],

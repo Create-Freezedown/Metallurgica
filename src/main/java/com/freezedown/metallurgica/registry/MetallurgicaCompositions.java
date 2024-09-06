@@ -3,7 +3,7 @@ package com.freezedown.metallurgica.registry;
 import com.drmangotea.createindustry.registry.TFMGBlocks;
 import com.drmangotea.createindustry.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.data.custom.composition.CompositionBuilder;
+import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionBuilder;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionBuilder;

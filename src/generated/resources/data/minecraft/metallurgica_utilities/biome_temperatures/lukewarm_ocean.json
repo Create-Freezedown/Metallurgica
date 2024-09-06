@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:lukewarm_ocean",
-  "surfaceTemperature": 2.1
+  "surfaceTemperature": 2.1,
+  "temperatureBlendBlacklist": []
 }

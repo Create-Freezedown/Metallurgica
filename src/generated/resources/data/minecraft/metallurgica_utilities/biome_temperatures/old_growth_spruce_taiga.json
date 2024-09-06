@@ -1,4 +1,8 @@
 {
   "biome": "minecraft:old_growth_spruce_taiga",
-  "surfaceTemperature": 8.2
+  "surfaceTemperature": 8.2,
+  "temperatureBlendBlacklist": [
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:taiga"
+  ]
 }

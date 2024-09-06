@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:dark_forest",
-  "surfaceTemperature": 6.3
+  "surfaceTemperature": 6.3,
+  "temperatureBlendBlacklist": []
 }

@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.foundation.data.custom.temp;
+package com.freezedown.metallurgica.foundation.data.custom.temp.biome;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.google.gson.Gson;
@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.level.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 public class BiomeTemperatureManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    public static Map<ResourceLocation, Double> biomeTemperatures = new HashMap<>();
+    public static Map<ResourceLocation, BiomeTemperature> biomeTemperatures = new HashMap<>();
     public static List<ResourceLocation> biomes = new ArrayList<>();
     
     public BiomeTemperatureManager() {
@@ -37,7 +36,7 @@ public class BiomeTemperatureManager extends SimpleJsonResourceReloadListener {
                 BiomeTemperature biomeTemperature = BiomeTemperature.CODEC.parse(JsonOps.INSTANCE, entry.getValue()).getOrThrow(true, e -> {
                     throw new IllegalArgumentException("Parsing error loading biome temperatures " + resourceLocation);
                 });
-                biomeTemperatures.put(biomeTemperature.getLoc(), biomeTemperature.getSurfaceTemperature());
+                biomeTemperatures.put(biomeTemperature.getLoc(), biomeTemperature);
                 biomes.add(biomeTemperature.getLoc());
                 Metallurgica.LOGGER.info("Loaded biome temperature for {} with temperature {}", biomeTemperature.getLoc().toString(), biomeTemperature.getSurfaceTemperature());
             } catch (IllegalArgumentException | NullPointerException e) {
@@ -49,6 +48,13 @@ public class BiomeTemperatureManager extends SimpleJsonResourceReloadListener {
     }
     
     public static double getTemperature(ResourceLocation biome) {
-        return biomeTemperatures.get(biome);
+        if (biomeTemperatures.get(biome) == null) {
+            return 23.0;
+        }
+        return biomeTemperatures.get(biome).getSurfaceTemperature();
+    }
+    
+    public static List<ResourceLocation> getBlendingBlacklist(ResourceLocation biome) {
+        return biomeTemperatures.get(biome).getTemperatureBlendBlacklist();
     }
 }

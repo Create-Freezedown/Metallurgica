@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:mushroom_fields",
-  "surfaceTemperature": 8.2
+  "surfaceTemperature": 8.2,
+  "temperatureBlendBlacklist": []
 }

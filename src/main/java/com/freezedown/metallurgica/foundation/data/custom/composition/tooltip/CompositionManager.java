@@ -1,6 +1,8 @@
-package com.freezedown.metallurgica.foundation.data.custom.composition;
+package com.freezedown.metallurgica.foundation.data.custom.composition.tooltip;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.data.custom.composition.Composition;
+import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;

@@ -1,4 +1,8 @@
 {
   "biome": "minecraft:sparse_jungle",
-  "surfaceTemperature": 32.3
+  "surfaceTemperature": 32.3,
+  "temperatureBlendBlacklist": [
+    "minecraft:jungle",
+    "minecraft:bamboo_jungle"
+  ]
 }

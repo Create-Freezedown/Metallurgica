@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:crimson_forest",
-  "surfaceTemperature": 179.4
+  "surfaceTemperature": 179.4,
+  "temperatureBlendBlacklist": []
 }

@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:deep_frozen_ocean",
-  "surfaceTemperature": -2.0
+  "surfaceTemperature": -2.0,
+  "temperatureBlendBlacklist": []
 }
