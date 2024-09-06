@@ -19,6 +19,7 @@
   "block.metallurgica.charred_log_pile": "Charred Log Pile",
   "block.metallurgica.clay_slip": "Clay Slip",
   "block.metallurgica.crucible": "Crucible",
+  "block.metallurgica.debug_temp": "Debug Temp",
   "block.metallurgica.dirty_clay": "Dirty Clay",
   "block.metallurgica.drill_activator": "Drill Activator",
   "block.metallurgica.drill_expansion": "Drill Expansion",
@@ -47,6 +48,7 @@
   "block.metallurgica.native_gold_deposit": "Native Gold Deposit",
   "block.metallurgica.native_gold_rich_stone": "Native Gold Rich Stone",
   "block.metallurgica.quartz_sand": "Quartz Sand",
+  "block.metallurgica.reaction_basin": "Reaction Basin",
   "block.metallurgica.reverbaratory": "Reverbaratory",
   "block.metallurgica.rotary_kiln_segment": "Rotary Kiln Segment",
   "block.metallurgica.rutile_deposit": "Rutile Deposit",
@@ -387,6 +389,6 @@
   "metallurgica.item_appendages.impure": "Impure",
   "metallurgica.jei.required_efficiency": "Required Efficiency: %s",
   "metallurgica.tooltips.impurities": "Impurities:",
-  "numbers": "₀₁₂₃₄₅₆₇₈₉",
+  "numbers": "â‚€â‚�â‚‚â‚ƒâ‚„â‚…â‚†â‚‡â‚ˆâ‚‰",
   "recipe.metallurgica.electrolysis": "Electrolysis"
 }

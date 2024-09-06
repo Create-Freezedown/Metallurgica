@@ -1,5 +1,6 @@
 {
   "values": [
+    "metallurgica:reaction_basin",
     "metallurgica:ingot_casting_mold",
     "metallurgica:unfired_ceramic_pot",
     "metallurgica:unfired_crucible",
@@ -44,8 +45,6 @@
     "metallurgica:hematite_rich_stone",
     "metallurgica:bauxite_deposit",
     "metallurgica:bauxite_rich_stone",
-    "metallurgica:petalite_deposit",
-    "metallurgica:petalite_rich_stone",
     "metallurgica:spodumene_deposit",
     "metallurgica:spodumene_rich_stone",
     "metallurgica:sphalerite_deposit",

@@ -203,11 +203,11 @@ public class ClientUtil {
     }
     
     public static LangBuilder temperature(double temperature) {
-        return MetallurgicaConfigs.client().imAmerican.get() ? number(temperature).space().add(MetallurgicaUnits.C.UNIT.metricLang()) : CelciusToFahrenheit(temperature);
+        return MetallurgicaConfigs.client().imAmerican.get() ? CelciusToFahrenheit(temperature) : number(temperature).space().add(MetallurgicaUnits.C.UNIT.metricLang());
     }
     
     public static LangBuilder CelciusToFahrenheit(double celcius) {
-        double fahrenheit = MetallurgicaUnits.C.UNIT.convertToImperial(celcius);
+        double fahrenheit = MetallurgicaUnits.C.UNIT.convertToImperial(celcius) / 10;
         return number(fahrenheit).space().add(MetallurgicaUnits.C.UNIT.imperialLang());
     }
     

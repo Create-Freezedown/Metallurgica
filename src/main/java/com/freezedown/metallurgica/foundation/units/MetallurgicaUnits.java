@@ -9,7 +9,7 @@ public enum MetallurgicaUnits {
     M(createCouple("meters", "m"), createCouple("feet", "ft"), 0.305),
     KG(createCouple("kilograms", "kg"), createCouple("pounds", "lbs"), 0.454),
     G(createCouple("grams", "g"), createCouple("ounces", "oz"), 28.35),
-    C(createCouple("celsius", "°C"), createCouple("fahrenheit", "°F"), (double) 9 / 5 + 32),
+    C(createCouple("celsius", "°C"), createCouple("fahrenheit", "°F"), (double) (9 / 5) + 32),
     K(createCouple("kelvin", "K"), createCouple("rankine", "°R"), 1.8),
     L(createCouple("liters", "L"), createCouple("pints", "pt"), 1.76)
     ;

@@ -19,6 +19,7 @@
   "block.metallurgica.charred_log_pile": "ǝןıԀ boꞀ pǝɹɹɐɥƆ",
   "block.metallurgica.clay_slip": "dıןS ʎɐןƆ",
   "block.metallurgica.crucible": "ǝןqıɔnɹƆ",
+  "block.metallurgica.debug_temp": "dɯǝ⟘ bnqǝᗡ",
   "block.metallurgica.dirty_clay": "ʎɐןƆ ʎʇɹıᗡ",
   "block.metallurgica.drill_activator": "ɹoʇɐʌıʇɔⱯ ןןıɹᗡ",
   "block.metallurgica.drill_expansion": "uoısuɐdxƎ ןןıɹᗡ",
@@ -47,6 +48,7 @@
   "block.metallurgica.native_gold_deposit": "ʇısodǝᗡ pןo⅁ ǝʌıʇɐN",
   "block.metallurgica.native_gold_rich_stone": "ǝuoʇS ɥɔıᴚ pןo⅁ ǝʌıʇɐN",
   "block.metallurgica.quartz_sand": "puɐS zʇɹɐnὉ",
+  "block.metallurgica.reaction_basin": "uısɐᗺ uoıʇɔɐǝᴚ",
   "block.metallurgica.reverbaratory": "ʎɹoʇɐɹɐqɹǝʌǝᴚ",
   "block.metallurgica.rotary_kiln_segment": "ʇuǝɯbǝS uןıʞ ʎɹɐʇoᴚ",
   "block.metallurgica.rutile_deposit": "ʇısodǝᗡ ǝןıʇnᴚ",
@@ -387,6 +389,6 @@
   "metallurgica.item_appendages.impure": "ǝɹndɯI",
   "metallurgica.jei.required_efficiency": "%s :ʎɔuǝıɔıɟɟƎ pǝɹınbǝᴚ",
   "metallurgica.tooltips.impurities": ":sǝıʇıɹndɯI",
-  "numbers": "₉₈₇₆₅₄₃₂₁₀",
+  "numbers": "‰‚âˆ‚â‡‚â†‚â…‚â„‚âƒ‚â‚‚â�‚â€‚â",
   "recipe.metallurgica.electrolysis": "sısʎןoɹʇɔǝןƎ"
 }

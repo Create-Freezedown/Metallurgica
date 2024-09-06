@@ -1,4 +1,4 @@
-// 1.19.2	2024-09-01T20:10:23.9117791	Registrate Provider for metallurgica [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2024-09-06T19:33:14.588405	Registrate Provider for metallurgica [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 d667b207526a952e617d5f2324582909e8a168b9 assets/metallurgica/blockstates/arsenical_bronze_block.json
 10811cfe0f93f3f9b8edaa6bdeccc627c164f73e assets/metallurgica/blockstates/ashed_charcoal_pile.json
 0d8cba54b05b67bef018f8c21b730acee2e0dcae assets/metallurgica/blockstates/bauxite_deposit.json
@@ -18,6 +18,7 @@ d3b2f60cd29576c0722ef7c43a866cbd577effb2 assets/metallurgica/blockstates/cassite
 4f44ab4c120fe74a470141fdbceb42b901b0eba9 assets/metallurgica/blockstates/charred_log_pile.json
 3a9e87c65888470d603a993a5add8c7fdef0b98a assets/metallurgica/blockstates/clay_slip.json
 e855331e3c3e4d7eec91d526d01adb53877908c0 assets/metallurgica/blockstates/crucible.json
+99bdcf80fa40822a0d32fb02e1753d046b8c76c0 assets/metallurgica/blockstates/debug_temp.json
 24587399931f113c07a9b1fdea4faa75d4c1c72e assets/metallurgica/blockstates/dirty_clay.json
 0fa2fc8e5558a271a5e89c075e5cc5996944b194 assets/metallurgica/blockstates/drill_activator.json
 c5a0f895e49c7a2a08bf9fce3c4989712cb54c36 assets/metallurgica/blockstates/drill_expansion.json
@@ -46,6 +47,7 @@ e3fce9ed8601fd1911a3b85cf379501a707131f3 assets/metallurgica/blockstates/ingot_c
 fa84bc4e3a612555562979b0c9aec41a9fe17da0 assets/metallurgica/blockstates/native_gold_deposit.json
 6b0cdd5ecc85713cef309b0dea979e6ba2ac6248 assets/metallurgica/blockstates/native_gold_rich_stone.json
 f59935cf2b4e8bf0139416575e24410961b7f1bf assets/metallurgica/blockstates/quartz_sand.json
+baec5ea0c30264c4d1ba93c0938e66034a32343e assets/metallurgica/blockstates/reaction_basin.json
 67e396ff93a4894315273fa5e2be0cc5ff5ee23b assets/metallurgica/blockstates/reverbaratory.json
 94b1f92958b853efa4842799853b3dda62ac7dd4 assets/metallurgica/blockstates/rotary_kiln_segment.json
 81c73ed3b850ca11cf913f715ca670b034f464d5 assets/metallurgica/blockstates/rutile_deposit.json
@@ -62,10 +64,8 @@ b224634f6857a88716e362c0fbbe5066a45dbb9e assets/metallurgica/blockstates/smithso
 54e6f581b3d35be5c3c33166f782882b2503afab assets/metallurgica/blockstates/tuyere.json
 380932457c72e4938dae0375845c8763457e2646 assets/metallurgica/blockstates/unfired_ceramic_pot.json
 c6842eb42172f6deace17075963dd2133a607c52 assets/metallurgica/blockstates/unfired_crucible.json
-1f6f51faba9c52b100db3d6b9b4c80c3df4fbebb assets/metallurgica/lang/en_ud.json
-dbe855c4b018a66cfd30e91b35bc8091e64450cd assets/metallurgica/lang/en_us.json
-06e114961398faa3989b2fa0f932073f91886125 assets/metallurgica/lang/en_ud.json
-10403dba04443c0093caf3012a85623ae117132a assets/metallurgica/lang/en_us.json
+75a88ed7b226f00152b920b49f8b56c4bedfc62b assets/metallurgica/lang/en_ud.json
+555c28157cbdbcc1a7f8a05d2ca067f83899e0b8 assets/metallurgica/lang/en_us.json
 68642dfd6bc315345ab64faebcbfd1addffea569 assets/metallurgica/models/block/arsenical_bronze_block.json
 0581a8cd954972a66911cbdfd289c634384eca1e assets/metallurgica/models/block/ashed_charcoal_pile_1.json
 23fbbe5d43ff05d8ad7e81dcf007051c4280de41 assets/metallurgica/models/block/ashed_charcoal_pile_2.json
@@ -204,6 +204,7 @@ b6a4f4d5aa072ea318ee2b726f01e3ec50c1adf9 assets/metallurgica/models/item/copper_
 d9b0b1c496ce7fd34d7d9f135092f63f469f2f08 assets/metallurgica/models/item/copper_rubble.json
 9fd50359933368ca9fbc57f47737ec6d6fd6d0e5 assets/metallurgica/models/item/crucible.json
 9743d1487882b655e2026579fa2f7b3b781c2384 assets/metallurgica/models/item/crude_titanium_tetrachloride_bucket.json
+7a10ce868ed631eeff0e2b3fd82c1014ec5328a6 assets/metallurgica/models/item/debug_temp.json
 e5a8f3b22f38597d461cf4896f78edacb8b26814 assets/metallurgica/models/item/dirty_clay.json
 c137097ad225fc748bf752eff66624cc428b6dc8 assets/metallurgica/models/item/dirty_clay_ball.json
 3b34b5558c86e0d5d0767c38322ee3ee1797fe1b assets/metallurgica/models/item/drill_activator.json
@@ -261,6 +262,7 @@ eee236cf35528e658ecf309ec83f3215abae5ffc assets/metallurgica/models/item/native_
 68077cda9e8cdb27edfdd596804066fc1e89338a assets/metallurgica/models/item/pure_iron_bloom.json
 7c5c703f63761d3fcddca71c16e5b215037f0676 assets/metallurgica/models/item/quartz_sand.json
 61f98ac5a3ca135c0bff666369e774bb8716498c assets/metallurgica/models/item/quartz_shard.json
+3f5baaa1948963532572f522fef8f6e7ef5264c5 assets/metallurgica/models/item/reaction_basin.json
 83722707c1105c1c96e3bbcbec06a4006bdd5438 assets/metallurgica/models/item/reverbaratory.json
 a10efe09cfdaae738a62f0bec0a829bea3711d64 assets/metallurgica/models/item/rich_magnetite.json
 2c6e1092b9884e0edd65cafe0989c8f8d1d56700 assets/metallurgica/models/item/rotary_kiln_segment.json
@@ -435,6 +437,7 @@ c3dc5d9bfc805fd12cb0a75f5ee825a27ab11796 data/metallurgica/loot_tables/blocks/ca
 fbb2821f494f1243f9d36c334f7e824cf7bd46d5 data/metallurgica/loot_tables/blocks/charcoal_pile.json
 97ab8e2758192c920864f9a8e34092f12f6fc9b9 data/metallurgica/loot_tables/blocks/charred_log_pile.json
 6ebc6666bf97a3d3d179c085630b581c5332e2a8 data/metallurgica/loot_tables/blocks/crucible.json
+554f1649e8151da336a8bb0831bb2a52baa7bf45 data/metallurgica/loot_tables/blocks/debug_temp.json
 472173b1cbd514199622aca3bf30811e2a9a64aa data/metallurgica/loot_tables/blocks/dirty_clay.json
 24379c28ad7a5d928079bfda5448104f49eb4e8f data/metallurgica/loot_tables/blocks/drill_activator.json
 27d484ab3637ddb4f6d7f35b4031e988cdc1cae9 data/metallurgica/loot_tables/blocks/drill_expansion.json
@@ -463,6 +466,7 @@ f08c5d7954ad0997e573fbca31d940ab0c922dc3 data/metallurgica/loot_tables/blocks/na
 7b173e79fe2eeec824cb747b55aa5c9fe3a360ac data/metallurgica/loot_tables/blocks/native_gold_deposit.json
 8257ead4b7e208ee1c98b700179fb40d8e1aa8c9 data/metallurgica/loot_tables/blocks/native_gold_rich_stone.json
 8b75b1fccac2e5481fd48f76d82ee69324c3df14 data/metallurgica/loot_tables/blocks/quartz_sand.json
+17305d46c09526e9242e70f17ca72f25f8f52bc8 data/metallurgica/loot_tables/blocks/reaction_basin.json
 53b711357cbb8b78bdfe9e1bd42450a099ad8ad1 data/metallurgica/loot_tables/blocks/reverbaratory.json
 2066c5f36026ec21dc35cf74be14f0bdc0329f3b data/metallurgica/loot_tables/blocks/rotary_kiln_segment.json
 66f8e1061e67c565bc84fd0b7e60b14dc5f11e81 data/metallurgica/loot_tables/blocks/rutile_deposit.json
@@ -483,6 +487,7 @@ a8b843c73f571f30a3d31927b77e3a4b6aaacf09 data/metallurgica/tags/blocks/air_block
 c93e03d746cae5143427d5605bebd2b2a4006219 data/metallurgica/tags/blocks/bauxite_ore_replaceable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/metallurgica/tags/blocks/budding_amethyst_replaceable.json
 54fffb365eddf8fed998cf3345df82b92207500d data/metallurgica/tags/blocks/ceramic_heat_sources.json
+6003d7fe860365cebc3bd8d2954d03ef49d97f02 data/metallurgica/tags/blocks/deposits.json
 530c7d2e7bd7b8690861d7b5b963708935fa7140 data/metallurgica/tags/blocks/deposit_replaceable/bauxite.json
 d0a43020280b5c5489978cc3692e45132c9eefef data/metallurgica/tags/blocks/deposit_replaceable/cassiterite.json
 5d3ff4e750ddcc75d90181a022657f5a32e368a9 data/metallurgica/tags/blocks/deposit_replaceable/fluorite.json
@@ -495,7 +500,6 @@ a81b47401620d4998a6fb7132103b5377ad2093e data/metallurgica/tags/blocks/deposit_r
 4db6b7eb1f841e65b78a56c4cb7e6a9e512eeb1b data/metallurgica/tags/blocks/deposit_replaceable/smithsonite.json
 0e2993b8481b2509591284b739505545e16febd5 data/metallurgica/tags/blocks/deposit_replaceable/sphalerite.json
 e25ee0b21ab88387711e97391e690d3a60623db0 data/metallurgica/tags/blocks/deposit_replaceable/spodumene.json
-6003d7fe860365cebc3bd8d2954d03ef49d97f02 data/metallurgica/tags/blocks/deposits.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/metallurgica/tags/blocks/high_heat_sources.json
 453f6a28d987ead3714b5efb84e48785220f6fab data/metallurgica/tags/blocks/low_heat_sources.json
 6b73bb0ce38222c428d54ee64e82ffa1d96c64d7 data/metallurgica/tags/blocks/medium_heat_sources.json
@@ -531,4 +535,4 @@ cb6605c22725d3eeb5fd5c2a8cb9245edea600d0 data/metallurgica/tags/fluids/molten_me
 9ba4d6eaaaa1c5ca5c6b9e376606b632b33f2d14 data/metallurgica/tags/items/needs_chemical_formula_tooltip.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/metallurgica/tags/items/water_containers.json
 b74de1c5ff7adeb56273675bb17592dbcb5b637a data/minecraft/tags/blocks/mineable/axe.json
-889fcfac40dff5ea3e1c705054a1048b017409b0 data/minecraft/tags/blocks/mineable/pickaxe.json
+8cccd00ba955fba1f15423877ee6567d43b81a7f data/minecraft/tags/blocks/mineable/pickaxe.json
