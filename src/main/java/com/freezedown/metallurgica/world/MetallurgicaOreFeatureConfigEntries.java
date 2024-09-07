@@ -21,7 +21,8 @@ public class MetallurgicaOreFeatureConfigEntries {
     public static final RuleTest BUDDING_AMETHYST_REPLACEABLE = new BlockMatchTest(Blocks.AMETHYST_BLOCK);
     
     public static final RuleTest GRAVEL_REPLACEABLE = new BlockMatchTest(Blocks.GRAVEL);
-    
+
+    public static final RuleTest SAND_REPLACEABLE = new BlockMatchTest(Blocks.SAND);
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     public static final MOreFeatureConfigEntry STRIATED_GEODES_OVERWORLD = create("striated_geodes_overworld", 48, 1 / 32f, 24, -50, 70)

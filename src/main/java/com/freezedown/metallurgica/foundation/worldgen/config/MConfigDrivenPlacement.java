@@ -28,6 +28,9 @@ public class MConfigDrivenPlacement extends PlacementModifier {
     public MConfigDrivenPlacement(MOreFeatureConfigEntry entry) {
         this.entry = entry;
     }
+    public MConfigDrivenPlacement(MSandFeatureConfigEntry entry) {
+        this.entry = entry;
+    }
     
     @Override
     public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {

@@ -51,6 +51,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SandBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -405,10 +406,21 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(sound))
                 .transform(pickaxeOnly())
                 .blockstate(blockstate)
-                .addLayer(() -> RenderType::cutoutMipped)
+//                .addLayer(() -> RenderType::cutoutMipped) //this kills runData fsr
                 .simpleItem();
         b = lang != null ? b.lang(lang) : b;
         return b.register();
+    }
+
+    public BlockEntry<SandBlock> sandBlock(
+            String name,
+            TagKey<SandBlock> sandBlockTagKey,
+            ItemEntry<MetallurgicaItem> sand
+    ){
+        return this.sandBlock(name, SandBlock::new)
+                .tag(sandBlockTagKey)
+                .lang(name)
+                .register();
     }
 
     //MISC

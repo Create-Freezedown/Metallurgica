@@ -1,15 +1,10 @@
-/*
 
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
-import com.freezedown.metallurgica.foundation.material.MetalEntry;
-import com.freezedown.metallurgica.registry.MetallurgicaElements;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
-import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MSandFeatureConfigEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,13 +14,12 @@ import java.util.List;
 
 
 public enum MetallurgicaSand {
-    BLACK_SAND(),
-    RED_SAND(),
+    BLACK_SAND(false),
+    RED_SAND(true),
+    QUARTZ_SAND(false)
     ;
 
-    public MOreFeatureConfigEntry DEPOSIT;
-    public MOreFeatureConfigEntry CLUSTER;
-    public MTypedDepositFeatureConfigEntry LARGE_DEPOSIT;
+    public MSandFeatureConfigEntry CLUSTER;
     public final MaterialEntry MATERIAL;
 
 
@@ -33,9 +27,19 @@ public enum MetallurgicaSand {
         return ForgeRegistries.BLOCKS.getValue(id);
     }
 
-    MetallurgicaSand() {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
-        MATERIAL = registrate.material(this.name().toLowerCase(), false),
+    MetallurgicaSand(boolean existing) {
+        if (existing != true) {
+            MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+            MATERIAL = registrate.material(this.name().toLowerCase(), false);
+        }
     }
+    MetallurgicaSand(boolean existing, int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight,) {
+        if (existing != true) {
+            MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+            MATERIAL = registrate.material(this.name().toLowerCase(), false);
+
+
+        }
+
     }
-}*/
+}
