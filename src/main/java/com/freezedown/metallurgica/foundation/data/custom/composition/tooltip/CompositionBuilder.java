@@ -64,6 +64,7 @@ public class CompositionBuilder {
                 elementObject.addProperty("bracketed", element.bracketed());
                 elementObject.addProperty("forceCloseBracket", element.isBracketForceClosed());
                 elementObject.addProperty("appendDash", element.hasDash());
+                elementObject.addProperty("textColor", element.getColor());
                 elementsArray.add(elementObject);
             }
             json.add("elements", elementsArray);

@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.machines.reaction_basin;
 
+import com.freezedown.metallurgica.foundation.block_entity.IntelligentBlockEntity;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.fluids.tank.FluidTankBlock;
@@ -22,7 +23,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 
-public class ReactionBasinBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IReactionBasinContainer {
+public class ReactionBasinBlockEntity extends IntelligentBlockEntity implements IHaveGoggleInformation, IReactionBasinContainer {
     private static final int MAX_SIZE = 16;
     
     protected LazyOptional<IFluidHandler> fluidCapability;
@@ -162,7 +163,7 @@ public class ReactionBasinBlockEntity extends SmartBlockEntity implements IHaveG
     
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-    
+        //registerAwardables(behaviours,);
     }
     
     @Override

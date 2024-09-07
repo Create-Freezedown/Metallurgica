@@ -1,7 +1,5 @@
 package com.freezedown.metallurgica.foundation.data.advancement;
 
-import com.simibubi.create.foundation.advancement.AdvancementBehaviour;
-import com.simibubi.create.foundation.advancement.CreateAdvancement;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -15,26 +13,26 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 public class MAdvancementBehaviour extends BlockEntityBehaviour {
     
-    public static final BehaviourType<AdvancementBehaviour> TYPE = new BehaviourType<>();
+    public static final BehaviourType<MAdvancementBehaviour> TYPE = new BehaviourType<>();
     
     private UUID playerId;
-    private Set<CreateAdvancement> advancements;
+    private Set<MAdvancement> advancements;
     
-    public MAdvancementBehaviour(SmartBlockEntity be, CreateAdvancement... advancements) {
+    public MAdvancementBehaviour(SmartBlockEntity be, MAdvancement... advancements) {
         super(be);
         this.advancements = new HashSet<>();
         add(advancements);
     }
     
-    public void add(CreateAdvancement... advancements) {
-        for (CreateAdvancement advancement : advancements)
-            this.advancements.add(advancement);
+    public void add(MAdvancement... advancements) {
+        this.advancements.addAll(Arrays.asList(advancements));
     }
     
     public boolean isOwnerPresent() {
@@ -67,7 +65,7 @@ public class MAdvancementBehaviour extends BlockEntityBehaviour {
         }
     }
     
-    public void awardPlayerIfNear(CreateAdvancement advancement, int maxDistance) {
+    public void awardPlayerIfNear(MAdvancement advancement, int maxDistance) {
         Player player = getPlayer();
         if (player == null)
             return;
@@ -76,14 +74,14 @@ public class MAdvancementBehaviour extends BlockEntityBehaviour {
         award(advancement, player);
     }
     
-    public void awardPlayer(CreateAdvancement advancement) {
+    public void awardPlayer(MAdvancement advancement) {
         Player player = getPlayer();
         if (player == null)
             return;
         award(advancement, player);
     }
     
-    private void award(CreateAdvancement advancement, Player player) {
+    private void award(MAdvancement advancement, Player player) {
         if (advancements.contains(advancement))
             advancement.awardTo(player);
         removeAwarded();
@@ -114,14 +112,14 @@ public class MAdvancementBehaviour extends BlockEntityBehaviour {
         return TYPE;
     }
     
-    public static void tryAward(BlockGetter reader, BlockPos pos, CreateAdvancement advancement) {
-        AdvancementBehaviour behaviour = BlockEntityBehaviour.get(reader, pos, AdvancementBehaviour.TYPE);
+    public static void tryAward(BlockGetter reader, BlockPos pos, MAdvancement advancement) {
+        MAdvancementBehaviour behaviour = BlockEntityBehaviour.get(reader, pos, MAdvancementBehaviour.TYPE);
         if (behaviour != null)
             behaviour.awardPlayer(advancement);
     }
     
     public static void setPlacedBy(Level worldIn, BlockPos pos, LivingEntity placer) {
-        AdvancementBehaviour behaviour = BlockEntityBehaviour.get(worldIn, pos, TYPE);
+        MAdvancementBehaviour behaviour = BlockEntityBehaviour.get(worldIn, pos, TYPE);
         if (behaviour == null)
             return;
         if (placer instanceof FakePlayer)

@@ -34,7 +34,7 @@ public class TooltipHelpers {
                 }
                 MutableComponent dash = element.hasDash() ? Component.literal("-") : blank;
                 MutableComponent groupAmount = groupedAmount > 1 ? (element.areNumbersUp() ? Component.literal(ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount))) : Component.literal(ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)))) : blank;
-                compositionName.add(openBracket).add(element.getDisplay()).add(closeBracket).add(groupAmount).add(dash);
+                compositionName.add(openBracket).add(Component.literal(element.getDisplay())).add(closeBracket).add(groupAmount).add(dash);
             }
             if (!compositionName.string().isEmpty()) {
                 tooltip.add(ClientUtil.lang().space().space().space().space()

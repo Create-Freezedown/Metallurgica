@@ -1,4 +1,8 @@
 {
+  "advancement.metallurgica.rocks_from_rocks": "Rocks from Rocks",
+  "advancement.metallurgica.rocks_from_rocks.desc": "Crush a Stone Into More Useful Shards",
+  "advancement.metallurgica.root": "Welcome to Metallurica",
+  "advancement.metallurgica.root.desc": "Prepare yourself for pain",
   "block.createindustry.sulfur.tooltip.chemical_formula": "S",
   "block.metallurgica.arsenical_bronze_block": "Arsenical Bronze Block",
   "block.metallurgica.ashed_charcoal_pile": "Ashed Charcoal Pile",

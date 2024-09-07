@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.data;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.data.advancement.MetallurgicaAdvancements;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.freezedown.metallurgica.foundation.data.recipe.create.MSequencedAssemblyGen;
 import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
@@ -10,7 +11,9 @@ import com.freezedown.metallurgica.registry.MetallurgicaCompositions;
 import com.freezedown.metallurgica.registry.MetallurgicaElements;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.utility.FilesHelper;
+import com.simibubi.create.infrastructure.data.CreateDatagen;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -28,7 +31,7 @@ public class MetallurgicaDatagen {
         
         boolean client = event.includeClient();
         boolean server = event.includeServer();
-        
+        generator.addProvider(server, new MetallurgicaAdvancements(generator));
         if (server) {
             generator.addProvider(true, new MStandardRecipeGen(generator));
             MProcessingRecipeGen.registerAll(generator);
@@ -46,6 +49,7 @@ public class MetallurgicaDatagen {
             provideDefaultLang("interface", langConsumer);
             provideDefaultLang("compositions", langConsumer);
             provideDefaultLang("tooltips", langConsumer);
+            MetallurgicaAdvancements.provideLang(langConsumer);
             MetallurgicaElements.provideElementLang(langConsumer);
             MetallurgicaUnits.provideUnitLang(langConsumer);
         });

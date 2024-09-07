@@ -91,11 +91,11 @@ public record Element(String name, int amount, boolean areNumbersUp, boolean bra
         return List.of(elements);
     }
     
-    public LangBuilder getDisplay() {
-        LangBuilder display = ClientUtil.lang().translate("element." + name.toLowerCase());
+    public String getDisplay() {
+        StringBuilder display = new StringBuilder(ClientUtil.lang().translate("element." + name.toLowerCase()).string());
         if (amount > 1)
-            display.text(String.valueOf(amount));
-        return areNumbersUp ? ClientUtil.lang().text(ClientUtil.toSmallUpNumbers(display.string())).color(color) : ClientUtil.lang().text(ClientUtil.toSmallDownNumbers(display.string())).color(color);
+            display.append(amount);
+        return areNumbersUp ? ClientUtil.toSmallUpNumbers(display.toString()) : ClientUtil.toSmallDownNumbers(display.toString());
     }
     
     public void writeToPacket(FriendlyByteBuf buf) {
