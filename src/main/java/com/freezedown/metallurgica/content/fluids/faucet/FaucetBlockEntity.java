@@ -15,6 +15,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -131,7 +132,9 @@ public class FaucetBlockEntity extends SmartBlockEntity {
         }
     }
     
-    
+    public void setFaucetState(FaucetState faucetState) {
+        this.faucetState = faucetState;
+    }
     /* Data */
     
     /**
@@ -192,6 +195,7 @@ public class FaucetBlockEntity extends SmartBlockEntity {
             createOutputFluidParticles(r);
         }
     }
+    
     private Vec3 spoutputOutVec(Direction direction, Vec3 directionVec) {
         return switch (direction) {
             case SOUTH -> VecHelper.getCenterOf(worldPosition).add(0, 1 / 16f, -2/16f);
@@ -200,6 +204,32 @@ public class FaucetBlockEntity extends SmartBlockEntity {
             case WEST -> VecHelper.getCenterOf(worldPosition).add(2/16f, 1 / 16f, 0);
             case DOWN -> VecHelper.getCenterOf(worldPosition).add(directionVec.add(0, 15 / 16f, 0));
             default -> VecHelper.getCenterOf(worldPosition).add(directionVec.add(0, 1 / 16f, 0));
+        };
+    }
+    // For Ponders
+    public static void createOutputFluidParticles(Level world, BlockState blockState, FluidStack renderFluid, BlockPos pos) {
+        if (!(blockState.getBlock() instanceof FaucetBlock))
+            return;
+        Direction direction = blockState.getValue(FaucetBlock.FACING);
+        Direction.Axis axis = direction.getAxis();
+        Vec3 directionVec = Vec3.atLowerCornerOf(direction.getNormal());
+        Vec3 outVec = spoutputOutVec(direction, directionVec, pos);
+        Vec3 outMotion = directionVec.scale(1 / 16f).add(0, -1 / 16f, 0);
+        
+        for (int i = 0; i < 2; i++) {
+            ParticleOptions fluidParticle = FluidFX.getFluidParticle(renderFluid);
+            Vec3 m = VecHelper.offsetRandomly(outMotion, world.random, 1 / 16f);
+            world.addAlwaysVisibleParticle(fluidParticle, outVec.x, outVec.y, outVec.z, m.x, m.y, m.z);
+        }
+    }
+    private static Vec3 spoutputOutVec(Direction direction, Vec3 directionVec, BlockPos pos) {
+        return switch (direction) {
+            case SOUTH -> VecHelper.getCenterOf(pos).add(0, 1 / 16f, -2/16f);
+            case EAST -> VecHelper.getCenterOf(pos).add(-2/16f, 1 / 16f, 0);
+            case NORTH -> VecHelper.getCenterOf(pos).add(0, 1 / 16f, 2/16f);
+            case WEST -> VecHelper.getCenterOf(pos).add(2/16f, 1 / 16f, 0);
+            case DOWN -> VecHelper.getCenterOf(pos).add(directionVec.add(0, 15 / 16f, 0));
+            default -> VecHelper.getCenterOf(pos).add(directionVec.add(0, 1 / 16f, 0));
         };
     }
     private void createOutputFluidParticles(RandomSource r) {
@@ -432,7 +462,7 @@ public class FaucetBlockEntity extends SmartBlockEntity {
         }
     }
     
-    private enum FaucetState {
+    public enum FaucetState {
         OFF,
         POURING,
         POWERED;

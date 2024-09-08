@@ -4,12 +4,12 @@ import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
-import com.simibubi.create.AllItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -38,6 +38,11 @@ public class MetallurgicaAdvancements implements DataProvider {
             .title("Rocks from Rocks")
             .description("Crush a Stone Into More Useful Shards")
             .whenItemCollected(MetallurgicaTags.forgeItemTag("rock_shards"))
+            .after(ROOT)),
+    
+    INEFFICIENT_CHARCOAL = create("inefficient_charcoal", b -> b.icon(Items.CHARCOAL)
+            .title("Inefficient Charcoal")
+            .description("Use a Charcoal Pit to Make Charcoal")
             .after(ROOT)),
     
     END = null;

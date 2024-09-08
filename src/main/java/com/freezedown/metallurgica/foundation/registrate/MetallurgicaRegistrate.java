@@ -12,6 +12,7 @@ import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
+import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
@@ -180,6 +181,11 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .lang(autoLang(id))
                 .tag(MetallurgicaTags.modFluidTag("molten_metals/" + name))
                 .tag(MetallurgicaTags.modFluidTag("molten_metals"))
+                .bucket()
+                .tag(AllTags.forgeItemTag("buckets/"+name))
+                .model((p, b) -> b.withExistingParent(p.getName(), "item/generated")
+                        .texture("layer0", itemTexture))
+                .build()
                 .register();
     }
 

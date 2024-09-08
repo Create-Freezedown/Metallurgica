@@ -7,7 +7,8 @@
       "bracketed": true,
       "element": "iron",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 1,
@@ -16,7 +17,8 @@
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
-      "groupedAmount": 6
+      "groupedAmount": 6,
+      "textColor": 5636095
     },
     {
       "amount": 1,
@@ -25,7 +27,8 @@
       "bracketed": true,
       "element": "titanium",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 4,
@@ -34,7 +37,8 @@
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
-      "groupedAmount": 24
+      "groupedAmount": 24,
+      "textColor": 5636095
     },
     {
       "amount": 1,
@@ -43,7 +47,8 @@
       "bracketed": true,
       "element": "tin",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 4,
@@ -52,7 +57,8 @@
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
-      "groupedAmount": 9
+      "groupedAmount": 9,
+      "textColor": 5636095
     },
     {
       "amount": 1,
@@ -61,7 +67,8 @@
       "bracketed": true,
       "element": "silicon",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 4,
@@ -70,7 +77,8 @@
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
-      "groupedAmount": 3
+      "groupedAmount": 3,
+      "textColor": 5636095
     }
   ],
   "item": "metallurgica:crude_titanium_tetrachloride_bucket"

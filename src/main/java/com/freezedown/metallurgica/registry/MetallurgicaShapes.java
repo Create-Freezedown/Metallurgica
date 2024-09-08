@@ -24,8 +24,17 @@ public class MetallurgicaShapes {
             spoutputWallEast  = shape(0,  4,  3,  4, 14, 13).build(),
             spoutputWallWest  = shape(12, 4,  3, 16, 14, 13).build(),
             ceramicPot = shape(2, 0, 2, 14, 15, 14).erase(4, 2, 4, 12, 15, 12).build(),
-            crucible = shape(2, 0, 2, 14, 12, 14).erase(4, 2, 4, 12, 15, 12).build()
+            crucible = shape(2, 0, 2, 14, 12, 14).erase(4, 2, 4, 12, 15, 12).build(),
+            
+    
+            colonThree = null
                     ;
+    
+    public static final VoxelShaper
+            ingotCastingMold = shape(3, 0, 1, 13, 6, 15).erase(5, 2, 3, 11, 6, 13).forHorizontal(Direction.NORTH),
+    
+            bleh = null;
+            ;
     // Reaction Basin Shapes
     public static final VoxelShape
             rbSingle = shape(1, 0, 1, 15, 2, 15).add(0, 2, 0, 16, 16, 16).erase(2, 3, 2, 14, 16, 14).build(),
@@ -59,7 +68,9 @@ public class MetallurgicaShapes {
             rbEmpty = shape(0, 0, 0, 16, 16, 16).build()
             ;
     
-    
+    public static VoxelShaper ingotMold(Direction direction) {
+        return shape(3, 0, 1, 13, 6, 15).erase(5, 2, 3, 11, 6, 13).forHorizontal(direction);
+    }
     private static MetallurgicaShapes.Builder shape(VoxelShape shape) {
         return new MetallurgicaShapes.Builder(shape);
     }
