@@ -17,7 +17,6 @@ import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -135,7 +134,7 @@ public class MOreFeatureConfigEntry extends ConfigBase {
         public PlacedFeature createPlacedFeature(RegistryAccess registryAccess) {
             Registry<ConfiguredFeature<?, ?>> featureRegistry = registryAccess.registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY);
             Holder<ConfiguredFeature<?, ?>> featureHolder = featureRegistry.getOrCreateHolderOrThrow(ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, id));
-            return new PlacedFeature(featureHolder, List.of(new MConfigDrivenPlacement(MOreFeatureConfigEntry.this)));
+            return new PlacedFeature(featureHolder, List.of(new MOreConfigDrivenPlacement(MOreFeatureConfigEntry.this)));
         }
         
         public BiomeModifier createBiomeModifier(RegistryAccess registryAccess) {

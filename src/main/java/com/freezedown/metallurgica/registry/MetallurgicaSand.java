@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public enum MetallurgicaSand {
     ;
 
     public MSandFeatureConfigEntry CLUSTER;
+    @Nullable
     public final MaterialEntry MATERIAL;
 
 
@@ -32,13 +34,19 @@ public enum MetallurgicaSand {
             MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
             MATERIAL = registrate.material(this.name().toLowerCase(), false);
         }
+        else{
+            MATERIAL = null;
+        }
     }
-    MetallurgicaSand(boolean existing, int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight,) {
+    MetallurgicaSand(boolean existing, int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight) {
         if (existing != true) {
             MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
             MATERIAL = registrate.material(this.name().toLowerCase(), false);
 
 
+        }
+        else{
+            MATERIAL = null;
         }
 
     }

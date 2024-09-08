@@ -411,7 +411,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         b = lang != null ? b.lang(lang) : b;
         return b.register();
     }
-
+/*
     public BlockEntry<SandBlock> sandBlock(
             String name,
             TagKey<SandBlock> sandBlockTagKey,
@@ -421,7 +421,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .tag(sandBlockTagKey)
                 .lang(name)
                 .register();
-    }
+    }*/
 
     //MISC
     public static class TintedFluid extends AllFluids.TintedFluidType {

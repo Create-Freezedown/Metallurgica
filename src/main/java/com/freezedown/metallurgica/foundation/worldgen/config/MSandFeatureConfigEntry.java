@@ -122,7 +122,7 @@ public class MSandFeatureConfigEntry extends ConfigBase {
         public PlacedFeature createPlacedFeature(RegistryAccess registryAccess) {
             Registry<ConfiguredFeature<?, ?>> featureRegistry = registryAccess.registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY);
             Holder<ConfiguredFeature<?, ?>> featureHolder = featureRegistry.getOrCreateHolderOrThrow(ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, id));
-            return new PlacedFeature(featureHolder, List.of(new MConfigDrivenPlacement(MSandFeatureConfigEntry.this)));
+            return new PlacedFeature(featureHolder, List.of(new MSandFeatureConfigDrivenPlacement(MSandFeatureConfigEntry.this)));
         }
 
         public BiomeModifier createBiomeModifier(RegistryAccess registryAccess) {
@@ -180,7 +180,7 @@ public class MSandFeatureConfigEntry extends ConfigBase {
                 targetStates.add(OreConfiguration.target(OreFeatures.NETHER_ORE_REPLACEABLES, netherBlock.get()
                         .defaultBlockState()));
             MConfigDrivenSandFeatureConfiguration config = new MConfigDrivenSandFeatureConfiguration(MSandFeatureConfigEntry.this, 0, targetStates);
-            return new ConfiguredFeature<>(MetallurgicaFeatures.SAND_CLUSTER.get(), config);
+            return new ConfiguredFeature<>(MetallurgicaFeatures.SAND_DEPOSIT.get(), config);
         }
     }
     public class CustomStandardDatagenExtension extends MSandFeatureConfigEntry.DatagenExtension {
@@ -219,7 +219,7 @@ public class MSandFeatureConfigEntry extends ConfigBase {
                 targetStates.add(OreConfiguration.target(secondaryRuleTest, secondaryBlock.get()
                         .defaultBlockState()));
             MConfigDrivenSandFeatureConfiguration config = new MConfigDrivenSandFeatureConfiguration(MSandFeatureConfigEntry.this, 0, targetStates);
-            return new ConfiguredFeature<>(MetallurgicaFeatures.SAND_CLUSTER.get(), config);
+            return new ConfiguredFeature<>(MetallurgicaFeatures.SAND_DEPOSIT.get(), config);
         }
     }
 }

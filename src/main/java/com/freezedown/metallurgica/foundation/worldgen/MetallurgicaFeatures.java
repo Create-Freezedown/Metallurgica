@@ -4,7 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.worldgen.feature.MLayeredOreFeature;
 import com.freezedown.metallurgica.foundation.worldgen.feature.MOreDepositFeature;
 import com.freezedown.metallurgica.foundation.worldgen.feature.MStandardOreFeature;
-import com.freezedown.metallurgica.foundation.worldgen.feature.MSandClusterFeature;
+import com.freezedown.metallurgica.foundation.worldgen.feature.MSandDepositFeature;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.TypedDeposit;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,7 +19,7 @@ public class MetallurgicaFeatures {
     public static final RegistryObject<MLayeredOreFeature> LAYERED_ORE = REGISTER.register("layered_ore", MLayeredOreFeature::new);
     public static final RegistryObject<MOreDepositFeature> ORE_DEPOSIT_SURFACE = REGISTER.register("surface_ore_deposit", MOreDepositFeature::new);
     public static final RegistryObject<TypedDeposit> LARGE_DEPOSIT = REGISTER.register("large_deposit", TypedDeposit::new);
-    public static final RegistryObject<MSandClusterFeature> SAND_CLUSTER = REGISTER.register("standard_ore", MSandClusterFeature::new);
+    public static final RegistryObject<MSandDepositFeature> SAND_DEPOSIT = REGISTER.register("sand_deposit", MSandDepositFeature::new);
 
     //IGNORE THIS LOL
 //    public static final RegistryObject<SandDepositFeature> SAND_DEPOSIT = REGISTER.register("sand_deposit", SandDepositFeature::new);

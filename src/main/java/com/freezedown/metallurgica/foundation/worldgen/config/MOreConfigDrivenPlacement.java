@@ -14,23 +14,21 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class MConfigDrivenPlacement extends PlacementModifier {
-    public static final Codec<MConfigDrivenPlacement> CODEC = RecordCodecBuilder.create(instance -> {
+public class MOreConfigDrivenPlacement extends PlacementModifier {
+    public static final Codec<MOreConfigDrivenPlacement> CODEC = RecordCodecBuilder.create(instance -> {
         return instance.group(
                 MOreFeatureConfigEntry.CODEC
                         .fieldOf("entry")
-                        .forGetter(MConfigDrivenPlacement::getEntry)
-        ).apply(instance, MConfigDrivenPlacement::new);
+                        .forGetter(MOreConfigDrivenPlacement::getEntry)
+        ).apply(instance, MOreConfigDrivenPlacement::new);
     });
     
     private final MOreFeatureConfigEntry entry;
     
-    public MConfigDrivenPlacement(MOreFeatureConfigEntry entry) {
+    public MOreConfigDrivenPlacement(MOreFeatureConfigEntry entry) {
         this.entry = entry;
     }
-    public MConfigDrivenPlacement(MSandFeatureConfigEntry entry) {
-        this.entry = entry;
-    }
+
     
     @Override
     public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {

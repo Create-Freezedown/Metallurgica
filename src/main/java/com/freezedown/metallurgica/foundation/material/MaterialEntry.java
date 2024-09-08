@@ -49,7 +49,7 @@ public class MaterialEntry {
         ResourceLocation id = new ResourceLocation(MOD.id, "deposit_replaceable/" + pName);
         tag = MOD.optionalDefault ? optionalTag(ForgeRegistries.BLOCKS, id) : BlockTags.create(id);
         stone = reg.mineralBlock(pName, tag, raw);
-        sand = reg.sandBlock(pName, tag, raw);
+        sand = sand();
         name = pName;
         rich = richb ? reg.metallurgicaItem("rich_magnetite", "enriched_materials/" + pName, "enriched_materials") : null;
     }
