@@ -29,12 +29,12 @@ import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntr
 
 
 public class SandEntry {
-    private final BlockEntry<SandBlock> sand;
+    private final BlockEntry<Block> sand;
     private final TagKey<Block> tag;
     private final String name;
     private final Boolean existing;
 
-    public SandEntry(MetallurgicaRegistrate reg, String pName, Boolean pExisting) {
+    public SandEntry(MetallurgicaRegistrate reg, String pName, boolean pExisting) {
         ResourceLocation id = new ResourceLocation(MOD.id, "deposit_replaceable/" + pName);
         tag = MOD.optionalDefault ? optionalTag(ForgeRegistries.BLOCKS, id) : BlockTags.create(id);
         existing = pExisting;
@@ -45,7 +45,7 @@ public class SandEntry {
 
 
     public TagKey<Block> tag() { return tag; }
-    public BlockEntry<SandBlock> sand() { return sand; }
+    public BlockEntry<Block> sand() { return sand; }
 
     public MSandFeatureConfigEntry deposit(int size, int frequency, int minHeight, int maxHeight) {
         return createSandDeposit(name + "_deposit", size, frequency, frequency, minHeight, maxHeight)

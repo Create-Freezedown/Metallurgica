@@ -59,6 +59,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -401,15 +402,16 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .register();
     }
 
-    public BlockEntry<SandBlock> sandBlock(
+    public BlockEntry<Block> sandBlock(
             String name,
             TagKey<Block> tag
     ) {
-        return this.block(name,  p ->  new SandBlock(0x3B3537, p))
+        return this.block(name,  (p) ->  new Block(Properties.of(Material.SAND)))
                 .properties(p -> p.sound(SoundType.SAND))
                 .loot(BlockLoot::dropSelf)
                 .tag(tag)
                 .lang(autoLang(name))
+                .blockstate((c, p) -> p.simpleBlock(c.get()))
                 .item().build()
                 .register();
     }
