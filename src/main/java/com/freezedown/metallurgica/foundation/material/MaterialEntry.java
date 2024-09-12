@@ -34,7 +34,6 @@ import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntr
 public class MaterialEntry {
     private final BlockEntry<MineralDepositBlock> deposit;
     private final BlockEntry<Block> stone;
-    private final BlockEntry<SandBlock> sand;
     private final TagKey<Block> tag;
     private final String name;
     private final ItemEntry<MetallurgicaItem> raw;
@@ -49,14 +48,12 @@ public class MaterialEntry {
         ResourceLocation id = new ResourceLocation(MOD.id, "deposit_replaceable/" + pName);
         tag = MOD.optionalDefault ? optionalTag(ForgeRegistries.BLOCKS, id) : BlockTags.create(id);
         stone = reg.mineralBlock(pName, tag, raw);
-        sand = sand();
         name = pName;
         rich = richb ? reg.metallurgicaItem("rich_magnetite", "enriched_materials/" + pName, "enriched_materials") : null;
     }
     
     public BlockEntry<MineralDepositBlock> depositBlock() { return deposit; }
     public BlockEntry<Block> stone() { return stone; }
-    public BlockEntry<SandBlock> sand() { return sand; }
 
     public TagKey<Block> tag() { return tag; }
 

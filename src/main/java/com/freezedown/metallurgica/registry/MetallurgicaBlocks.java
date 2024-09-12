@@ -359,6 +359,7 @@ public class MetallurgicaBlocks {
             siliconBlock =              registrate.simpleMachineBlock("silicon_block", "Silicon Block", Block::new, SoundType.STONE, (c, p) -> p.simpleBlock(c.get()));
 
     //SAND
+/*
     public static final BlockEntry<SandBlock> quartzSand = registrate.block("quartz_sand", p -> new SandBlock(0x8D8388, p))
             .properties(p -> p.sound(SoundType.SAND))
             .loot(BlockLoot::dropSelf)
@@ -370,6 +371,7 @@ public class MetallurgicaBlocks {
             .loot(BlockLoot::dropSelf)
             .simpleItem()
             .register();
+*/
 
     public static final BlockEntry<SandBlock> siliconSand = registrate.block("silicon_sand", p -> new SandBlock(0x8D8388, p))
             .properties(p -> p.sound(SoundType.SAND))
@@ -383,6 +385,7 @@ public class MetallurgicaBlocks {
                     RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
                             RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(Items.SAND)))))
             .register();
+
 
     //SIMPLE MACHINES
     public static final BlockEntry<ChannelDepotBlock>

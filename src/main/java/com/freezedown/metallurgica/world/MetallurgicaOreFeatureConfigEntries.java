@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.world.striated.MetallurgicaLayeredPatterns;
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.config.MSandFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
@@ -54,7 +55,12 @@ public class MetallurgicaOreFeatureConfigEntries {
         ResourceLocation id = Metallurgica.asResource(name);
         return new MOreFeatureConfigEntry(id, clusterSize, frequency, chance, minHeight, maxHeight);
     }
-    
+
+    public static MSandFeatureConfigEntry createSandDeposit(String name, int clusterSize, float frequency, int chance, int minHeight, int maxHeight) {
+        ResourceLocation id = Metallurgica.asResource(name);
+        return new MSandFeatureConfigEntry(id, clusterSize, frequency, chance, minHeight, maxHeight);
+    }
+
     public static MDepositFeatureConfigEntry createDeposit(String name, float frequency, int chance, int minHeight, int maxHeight) {
         ResourceLocation id = Metallurgica.asResource(name);
         return new MDepositFeatureConfigEntry(id, frequency, chance, minHeight, maxHeight);

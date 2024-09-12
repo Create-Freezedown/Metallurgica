@@ -1,5 +1,7 @@
 package com.freezedown.metallurgica.foundation.registrate;
 
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.Acid;
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
@@ -12,6 +14,7 @@ import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
+import com.freezedown.metallurgica.foundation.material.SandEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
@@ -38,10 +41,10 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
@@ -68,7 +71,6 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -249,6 +251,10 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     public MaterialEntry material(String name, boolean richb) {
         return new MaterialEntry(this, name, richb);
     }
+
+    public SandEntry sand(String name, boolean pExisting) {
+        return new SandEntry(this, name, pExisting);
+    }
     
     public MetalEntry metal(String name, double meltingPoint, String element) {
         return new MetalEntry(this, name, meltingPoint, element);
@@ -395,6 +401,19 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .register();
     }
 
+    public BlockEntry<SandBlock> sandBlock(
+            String name,
+            TagKey<Block> tag
+    ) {
+        return this.block(name,  p ->  new SandBlock(0x3B3537, p))
+                .properties(p -> p.sound(SoundType.SAND))
+                .loot(BlockLoot::dropSelf)
+                .tag(tag)
+                .lang(autoLang(name))
+                .item().build()
+                .register();
+    }
+
     public <T extends Block> BlockEntry<T> simpleMachineBlock(
             String name,
             @Nullable String lang,
@@ -411,17 +430,6 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         b = lang != null ? b.lang(lang) : b;
         return b.register();
     }
-/*
-    public BlockEntry<SandBlock> sandBlock(
-            String name,
-            TagKey<SandBlock> sandBlockTagKey,
-            ItemEntry<MetallurgicaItem> sand
-    ){
-        return this.sandBlock(name, SandBlock::new)
-                .tag(sandBlockTagKey)
-                .lang(name)
-                .register();
-    }*/
 
     //MISC
     public static class TintedFluid extends AllFluids.TintedFluidType {
