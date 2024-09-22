@@ -3,6 +3,7 @@ package com.freezedown.metallurgica;
 import com.drmangotea.createindustry.CreateTFMG;
 import com.freezedown.metallurgica.compat.cbc.BigCannonsCompat;
 import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
+import com.freezedown.metallurgica.content.forging.casting.SpoutCastingBehaviour;
 import com.freezedown.metallurgica.experimental.ExperimentalEvents;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.simibubi.create.api.behaviour.BlockSpoutingBehaviour;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
@@ -113,6 +115,7 @@ public class Metallurgica
         MetallurgicaPlacementModifiers.register(modEventBus);
         MBuiltinRegistration.register(modEventBus);
         
+        BlockSpoutingBehaviour.addCustomSpoutInteraction(asResource("casting_mold_cooling"), new SpoutCastingBehaviour());
         MetallurgicaConfigs.register(modLoadingContext);
         
         EventHandler commonHandler = new EventHandler();
@@ -121,6 +124,7 @@ public class Metallurgica
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         modEventBus.addListener(Metallurgica::init);
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MetallurgicaClient::new);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(modEventBus, forgeEventBus));
         MinecraftForge.EVENT_BUS.register(this);
     }

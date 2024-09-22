@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:stony_shore",
-  "surfaceTemperature": 6.2
+  "surfaceTemperature": 6.2,
+  "temperatureBlendBlacklist": []
 }

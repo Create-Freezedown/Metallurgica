@@ -2,11 +2,12 @@ package com.freezedown.metallurgica.content.primitive.log_pile.charred_pile;
 
 import com.freezedown.metallurgica.content.primitive.log_pile.IgnitableLogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
+import com.freezedown.metallurgica.foundation.block_entity.IntelligentBlockEntity;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
+import com.freezedown.metallurgica.foundation.data.advancement.MetallurgicaAdvancements;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class CharredLogPileBlockEntity extends SmartBlockEntity {
+public class CharredLogPileBlockEntity extends IntelligentBlockEntity {
     private int burnTime;
     private int destructionTime;
     private int coveredFaces;
@@ -28,6 +29,7 @@ public class CharredLogPileBlockEntity extends SmartBlockEntity {
     
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+        registerAwardables(behaviours, MetallurgicaAdvancements.INEFFICIENT_CHARCOAL);
     }
     
     @Override
@@ -48,6 +50,7 @@ public class CharredLogPileBlockEntity extends SmartBlockEntity {
             burnTime--;
         } else {
             if (this.burnTime != -1) {
+                awardIfNear(MetallurgicaAdvancements.INEFFICIENT_CHARCOAL, 32);
                 convertToAshedPile();
             }
         }

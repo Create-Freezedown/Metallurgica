@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:flower_forest",
-  "surfaceTemperature": 7.5
+  "surfaceTemperature": 7.5,
+  "temperatureBlendBlacklist": []
 }

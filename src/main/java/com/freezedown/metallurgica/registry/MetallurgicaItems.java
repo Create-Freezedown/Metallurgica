@@ -95,13 +95,13 @@ public class MetallurgicaItems {
                     ;
     
     public static final ItemEntry<MetallurgicaItem>
-            hornblendeShard =     registrate.metallurgicaItem("hornblende_shard", "shards/hornblende", "shards"),
-            plagioclaseShard =    registrate.metallurgicaItem("plagioclase_shard", "shards/plagioclase", "shards"),
-            biotiteShard =        registrate.metallurgicaItem("biotite_shard", "shards/biotite", "shards"),
-            clinopyroxeneShard =  registrate.metallurgicaItem("clinopyroxene_shard", "shards/clinopyroxene", "shards"),
-            orthopyroxeneShard =  registrate.metallurgicaItem("orthopyroxene_shard", "shards/orthopyroxene", "shards"),
-            quartzShard =         registrate.metallurgicaItem("quartz_shard", "shards/quartz", "shards"),
-            amphiboleShard =      registrate.metallurgicaItem("amphibole_shard", "shards/amphibole", "shards")
+            hornblendeShard =     registrate.metallurgicaItem("hornblende_shard", "shards/hornblende", "shards", "rock_shards"),
+            plagioclaseShard =    registrate.metallurgicaItem("plagioclase_shard", "shards/plagioclase", "shards", "rock_shards"),
+            biotiteShard =        registrate.metallurgicaItem("biotite_shard", "shards/biotite", "shards", "rock_shards"),
+            clinopyroxeneShard =  registrate.metallurgicaItem("clinopyroxene_shard", "shards/clinopyroxene", "shards", "rock_shards"),
+            orthopyroxeneShard =  registrate.metallurgicaItem("orthopyroxene_shard", "shards/orthopyroxene", "shards", "rock_shards"),
+            quartzShard =         registrate.metallurgicaItem("quartz_shard", "shards/quartz", "shards", "rock_shards"),
+            amphiboleShard =      registrate.metallurgicaItem("amphibole_shard", "shards/amphibole", "shards", "rock_shards")
                     ;
     
     //PRIMITIVE

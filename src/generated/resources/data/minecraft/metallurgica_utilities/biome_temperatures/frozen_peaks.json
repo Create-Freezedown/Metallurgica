@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:frozen_peaks",
-  "surfaceTemperature": 3.4
+  "surfaceTemperature": 3.4,
+  "temperatureBlendBlacklist": []
 }

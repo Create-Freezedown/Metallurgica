@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:basalt_deltas",
-  "surfaceTemperature": 245.3
+  "surfaceTemperature": 245.3,
+  "temperatureBlendBlacklist": []
 }

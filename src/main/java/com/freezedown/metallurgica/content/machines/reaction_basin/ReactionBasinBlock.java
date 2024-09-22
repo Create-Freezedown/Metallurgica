@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.machines.reaction_basin;
 
+import com.freezedown.metallurgica.registry.MetallurgicaShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -7,10 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -33,26 +31,33 @@ public class ReactionBasinBlock extends Block implements IWrenchable {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(TOP, true)
                 .setValue(BOTTOM, true)
-                .setValue(SHAPE, Shape.WINDOW));
+                .setValue(SHAPE, Shape.PLAIN));
     }
     
     public static boolean isRB(BlockState state) {
         return state.getBlock() instanceof ReactionBasinBlock;
     }
     
-    static final VoxelShape CAMPFIRE_SMOKE_CLIP = Block.box(0, 4, 0, 16, 16, 16);
-    
-    @Override
-    public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos,
-                                        CollisionContext pContext) {
-        if (pContext == CollisionContext.empty())
-            return CAMPFIRE_SMOKE_CLIP;
-        return pState.getShape(pLevel, pPos);
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return getCollision(pState);
     }
     
-    @Override
+    public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        if (!pState.getValue(BOTTOM) && pState.getValue(SHAPE) == Shape.CENTER)
+            return Shapes.empty();
+        return getCollision(pState);
+    }
+    
     public VoxelShape getBlockSupportShape(BlockState pState, BlockGetter pReader, BlockPos pPos) {
+        return getCollision(pState);
+    }
+    
+    public VoxelShape getVisualShape(BlockState pState, BlockGetter pReader, BlockPos pPos, CollisionContext pContext) {
         return Shapes.block();
+    }
+    
+    public boolean useShapeForLightOcclusion(BlockState pState) {
+        return true;
     }
     
     @Override
@@ -71,10 +76,14 @@ public class ReactionBasinBlock extends Block implements IWrenchable {
             return state;
         boolean x = mirror == Mirror.FRONT_BACK;
         return switch (state.getValue(SHAPE)) {
-            case WINDOW_NE -> state.setValue(SHAPE, x ? Shape.WINDOW_NW : Shape.WINDOW_SE);
-            case WINDOW_NW -> state.setValue(SHAPE, x ? Shape.WINDOW_NE : Shape.WINDOW_SW);
-            case WINDOW_SE -> state.setValue(SHAPE, x ? Shape.WINDOW_SW : Shape.WINDOW_NE);
-            case WINDOW_SW -> state.setValue(SHAPE, x ? Shape.WINDOW_SE : Shape.WINDOW_NW);
+            case N -> state.setValue(SHAPE, x ? Shape.S : Shape.N);
+            case S -> state.setValue(SHAPE, x ? Shape.N : Shape.S);
+            case W -> state.setValue(SHAPE, x ? Shape.E : Shape.W);
+            case E -> state.setValue(SHAPE, x ? Shape.W : Shape.E);
+            case NE -> state.setValue(SHAPE, x ? Shape.NW : Shape.SE);
+            case NW -> state.setValue(SHAPE, x ? Shape.NE : Shape.SW);
+            case SE -> state.setValue(SHAPE, x ? Shape.SW : Shape.NE);
+            case SW -> state.setValue(SHAPE, x ? Shape.SE : Shape.NW);
             default -> state;
         };
     }
@@ -88,21 +97,29 @@ public class ReactionBasinBlock extends Block implements IWrenchable {
     
     private BlockState rotateOnce(BlockState state) {
         return switch (state.getValue(SHAPE)) {
-            case WINDOW_NE -> state.setValue(SHAPE, Shape.WINDOW_SE);
-            case WINDOW_NW -> state.setValue(SHAPE, Shape.WINDOW_NE);
-            case WINDOW_SE -> state.setValue(SHAPE, Shape.WINDOW_SW);
-            case WINDOW_SW -> state.setValue(SHAPE, Shape.WINDOW_NW);
+            case N -> state.setValue(SHAPE, Shape.E);
+            case S -> state.setValue(SHAPE, Shape.W);
+            case W -> state.setValue(SHAPE, Shape.N);
+            case E -> state.setValue(SHAPE, Shape.S);
+            case NE -> state.setValue(SHAPE, Shape.SE);
+            case NW -> state.setValue(SHAPE, Shape.NE);
+            case SE -> state.setValue(SHAPE, Shape.SW);
+            case SW -> state.setValue(SHAPE, Shape.NW);
             default -> state;
         };
     }
     
     public static enum Shape implements StringRepresentable {
         PLAIN,
-        WINDOW,
-        WINDOW_NW,
-        WINDOW_SW,
-        WINDOW_NE,
-        WINDOW_SE;
+        CENTER,
+        N,
+        S,
+        W,
+        E,
+        NW,
+        SW,
+        NE,
+        SE;
         
         private Shape() {
         }
@@ -110,5 +127,23 @@ public class ReactionBasinBlock extends Block implements IWrenchable {
         public String getSerializedName() {
             return Lang.asId(this.name());
         }
+    }
+    
+    private VoxelShape getCollision(BlockState state) {
+        Boolean top = state.getValue(ReactionBasinBlock.TOP);
+        Boolean bottom = state.getValue(ReactionBasinBlock.BOTTOM);
+        ReactionBasinBlock.Shape shape = state.getValue(ReactionBasinBlock.SHAPE);
+        return switch (shape) {
+            case CENTER -> top || !bottom ? MetallurgicaShapes.rbEmpty : MetallurgicaShapes.rbCenter;
+            case PLAIN -> top && bottom ? MetallurgicaShapes.rbSingle : !bottom ? MetallurgicaShapes.rbSingleMiddle : MetallurgicaShapes.rbSingle;
+            case NW -> top && bottom ? MetallurgicaShapes.rbSingleNW : !bottom ? !top ? MetallurgicaShapes.rbMiddleNW : MetallurgicaShapes.rbTopNW : MetallurgicaShapes.rbSingleNW;
+            case SW -> top && bottom ? MetallurgicaShapes.rbSingleSW : !bottom ? !top ? MetallurgicaShapes.rbMiddleSW : MetallurgicaShapes.rbTopSW : MetallurgicaShapes.rbSingleSW;
+            case NE -> top && bottom ? MetallurgicaShapes.rbSingleNE : !bottom ? !top ? MetallurgicaShapes.rbMiddleNE : MetallurgicaShapes.rbTopNE : MetallurgicaShapes.rbSingleNE;
+            case SE -> top && bottom ? MetallurgicaShapes.rbSingleSE : !bottom ? !top ? MetallurgicaShapes.rbMiddleSE : MetallurgicaShapes.rbTopSE : MetallurgicaShapes.rbSingleSE;
+            case N -> top && bottom ? MetallurgicaShapes.rbSingleN : !bottom ? !top ? MetallurgicaShapes.rbMiddleN : MetallurgicaShapes.rbTopN : MetallurgicaShapes.rbSingleN;
+            case S -> top && bottom ? MetallurgicaShapes.rbSingleS : !bottom ? !top ? MetallurgicaShapes.rbMiddleS : MetallurgicaShapes.rbTopS : MetallurgicaShapes.rbSingleS;
+            case W -> top && bottom ? MetallurgicaShapes.rbSingleW : !bottom ? !top ? MetallurgicaShapes.rbMiddleW : MetallurgicaShapes.rbTopW : MetallurgicaShapes.rbSingleW;
+            case E -> top && bottom ? MetallurgicaShapes.rbSingleE : !bottom ? !top ? MetallurgicaShapes.rbMiddleE : MetallurgicaShapes.rbTopE : MetallurgicaShapes.rbSingleE;
+        };
     }
 }

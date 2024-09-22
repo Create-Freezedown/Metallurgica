@@ -1,4 +1,11 @@
 {
   "biome": "minecraft:windswept_forest",
-  "surfaceTemperature": 8.1
+  "surfaceTemperature": 8.1,
+  "temperatureBlendBlacklist": [
+    "minecraft:birch_forest",
+    "minecraft:forest",
+    "minecraft:old_growth_birch_forest",
+    "minecraft:grove",
+    "minecraft:meadow"
+  ]
 }

@@ -7,7 +7,8 @@
       "bracketed": false,
       "element": "sodium",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 1,
@@ -16,7 +17,8 @@
       "bracketed": false,
       "element": "aluminum",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 3,
@@ -25,7 +27,8 @@
       "bracketed": false,
       "element": "silicon",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 8,
@@ -34,7 +37,8 @@
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 1,
@@ -43,7 +47,8 @@
       "bracketed": false,
       "element": "calcium",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 2,
@@ -52,7 +57,8 @@
       "bracketed": false,
       "element": "aluminum",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 2,
@@ -61,7 +67,8 @@
       "bracketed": false,
       "element": "silicon",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     },
     {
       "amount": 1,
@@ -70,7 +77,8 @@
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     }
   ],
   "item": "metallurgica:plagioclase_shard"

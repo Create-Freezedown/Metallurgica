@@ -1,4 +1,7 @@
 {
   "biome": "minecraft:sunflower_plains",
-  "surfaceTemperature": 9.4
+  "surfaceTemperature": 9.4,
+  "temperatureBlendBlacklist": [
+    "minecraft:plains"
+  ]
 }

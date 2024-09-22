@@ -17,7 +17,8 @@
     "TFMGBlastFurnaceBGone",
     "WorldGenRegionMixin",
     "jei.DistillationCategoryMixin",
-    "jei.FluidHelperMixin"
+    "jei.FluidHelperMixin",
+    "jei.TooltipRendererAccessor"
   ],
   "client": [
     "MixinLiquidBlockRenderer",

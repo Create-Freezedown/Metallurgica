@@ -7,7 +7,8 @@
       "bracketed": false,
       "element": "aluminum",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "textColor": 5636095
     }
   ],
   "item": "metallurgica:aluminum_nugget"

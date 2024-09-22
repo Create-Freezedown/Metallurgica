@@ -24,9 +24,53 @@ public class MetallurgicaShapes {
             spoutputWallEast  = shape(0,  4,  3,  4, 14, 13).build(),
             spoutputWallWest  = shape(12, 4,  3, 16, 14, 13).build(),
             ceramicPot = shape(2, 0, 2, 14, 15, 14).erase(4, 2, 4, 12, 15, 12).build(),
-            crucible = shape(2, 0, 2, 14, 12, 14).erase(4, 2, 4, 12, 15, 12).build()
+            crucible = shape(2, 0, 2, 14, 12, 14).erase(4, 2, 4, 12, 15, 12).build(),
+            
+    
+            colonThree = null
                     ;
     
+    public static final VoxelShaper
+            ingotCastingMold = shape(3, 0, 1, 13, 6, 15).erase(5, 2, 3, 11, 6, 13).forHorizontal(Direction.NORTH),
+    
+            bleh = null;
+            ;
+    // Reaction Basin Shapes
+    public static final VoxelShape
+            rbSingle = shape(1, 0, 1, 15, 2, 15).add(0, 2, 0, 16, 16, 16).erase(2, 3, 2, 14, 16, 14).build(),
+            rbSingleMiddle = shape(0, 0, 0, 16, 16, 16).erase(2, 0, 2, 14, 16, 14).build(),
+            rbSingleTop = rbSingleMiddle,
+            rbSingleNW = shape(2, 0, 2, 16, 2, 16).add(0, 2, 0, 16, 16, 16).erase(2, 3, 2, 16, 16, 16).build(),
+            rbSingleNE = shape(0, 0, 2, 14, 2, 16).add(0, 2, 0, 16, 16, 16).erase(0, 3, 2, 14, 16, 16).build(),
+            rbSingleSW = shape(2, 0, 0, 16, 2, 14).add(0, 2, 0, 16, 16, 16).erase(2, 3, 0, 16, 16, 14).build(),
+            rbSingleSE = shape(0, 0, 0, 14, 2, 14).add(0, 2, 0, 16, 16, 16).erase(0, 3, 0, 14, 16, 14).build(),
+            rbMiddleNW = shape(0, 0, 0, 16, 16, 16).erase(2, 0, 2, 16, 16, 16).build(),
+            rbMiddleNE = shape(0, 0, 0, 16, 16, 16).erase(0, 0, 2, 14, 16, 16).build(),
+            rbMiddleSW = shape(0, 0, 0, 16, 16, 16).erase(2, 0, 0, 16, 16, 14).build(),
+            rbMiddleSE = shape(0, 0, 0, 16, 16, 16).erase(0, 0, 0, 14, 16, 14).build(),
+            rbTopNW = shape(0, 0, 0, 16, 16, 16).erase(2, 0, 2, 16, 16, 16).build(),
+            rbTopNE = shape(0, 0, 0, 16, 16, 16).erase(0, 0, 2, 14, 16, 16).build(),
+            rbTopSW = shape(0, 0, 0, 16, 16, 16).erase(2, 0, 0, 16, 16, 14).build(),
+            rbTopSE = shape(0, 0, 0, 16, 16, 16).erase(0, 0, 0, 14, 16, 14).build(),
+            rbSingleN = shape(0, 0, 2, 16, 2, 16).add(0, 2, 0, 16, 16, 16).erase(0, 3, 2, 16, 16, 16).build(),
+            rbSingleS = shape(0, 0, 0, 16, 2, 14).add(0, 2, 0, 16, 16, 16).erase(0, 3, 0, 16, 16, 14).build(),
+            rbSingleW = shape(2, 0, 0, 16, 2, 16).add(0, 2, 0, 16, 16, 16).erase(2, 3, 0, 16, 16, 16).build(),
+            rbSingleE = shape(0, 0, 0, 14, 2, 16).add(0, 2, 0, 16, 16, 16).erase(0, 3, 0, 14, 16, 16).build(),
+            rbMiddleN = shape(0, 0, 0, 16, 16, 2).build(),
+            rbMiddleS = shape(0, 0, 14, 16, 16, 16).build(),
+            rbMiddleW = shape(0, 0, 0, 2, 16, 16).build(),
+            rbMiddleE = shape(14, 0, 0, 16, 16, 16).build(),
+            rbTopN = shape(0, 0, 0, 16, 16, 2).build(),
+            rbTopS = shape(0, 0, 14, 16, 16, 16).build(),
+            rbTopW = shape(0, 0, 0, 2, 16, 16).build(),
+            rbTopE = shape(14, 0, 0, 16, 16, 16).build(),
+            rbCenter = shape(0, 0, 0, 16, 3, 16).build(),
+            rbEmpty = shape(0, 0, 0, 16, 16, 16).build()
+            ;
+    
+    public static VoxelShaper ingotMold(Direction direction) {
+        return shape(3, 0, 1, 13, 6, 15).erase(5, 2, 3, 11, 6, 13).forHorizontal(direction);
+    }
     private static MetallurgicaShapes.Builder shape(VoxelShape shape) {
         return new MetallurgicaShapes.Builder(shape);
     }

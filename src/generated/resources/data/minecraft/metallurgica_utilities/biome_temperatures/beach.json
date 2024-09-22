@@ -1,4 +1,5 @@
 {
   "biome": "minecraft:beach",
-  "surfaceTemperature": 16.8
+  "surfaceTemperature": 16.8,
+  "temperatureBlendBlacklist": []
 }

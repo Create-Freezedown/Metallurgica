@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.advancement;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.simibubi.create.Create;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.advancement.SimpleCreateTrigger;
 import com.simibubi.create.foundation.utility.Components;
@@ -51,7 +50,7 @@ public class MAdvancement {
         }
         
         builder.display(t.icon, Components.translatable(titleKey()),
-                Components.translatable(descriptionKey()).withStyle(s -> s.withColor(0xDBA213)),
+                Components.translatable(descriptionKey()).withStyle(s -> s.withColor(0x3E4A63)),
                 id.equals("root") ? BACKGROUND : null, t.type.frame, t.type.toast, t.type.announce, t.type.hide);
         
         if (t.type == TaskType.SECRET)
@@ -73,7 +72,7 @@ public class MAdvancement {
             return true;
         Advancement advancement = sp.getServer()
                 .getAdvancements()
-                .getAdvancement(Create.asResource(id));
+                .getAdvancement(Metallurgica.asResource(id));
         if (advancement == null)
             return true;
         return sp.getAdvancements()
@@ -93,7 +92,7 @@ public class MAdvancement {
     void save(Consumer<Advancement> t) {
         if (parent != null)
             builder.parent(parent.datagenResult);
-        datagenResult = builder.save(t, Create.asResource(id)
+        datagenResult = builder.save(t, Metallurgica.asResource(id)
                 .toString());
     }
     

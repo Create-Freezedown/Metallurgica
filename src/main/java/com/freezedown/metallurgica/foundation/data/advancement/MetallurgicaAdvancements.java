@@ -1,13 +1,15 @@
 package com.freezedown.metallurgica.foundation.data.advancement;
 
+import com.freezedown.metallurgica.registry.MetallurgicaItems;
+import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
-import com.simibubi.create.AllItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -26,11 +28,22 @@ public class MetallurgicaAdvancements implements DataProvider {
     public static final List<MAdvancement> ENTRIES = new ArrayList<>();
     public static final MAdvancement START = null,
     
-    ROOT = create("root", b -> b.icon(AllItems.BRASS_HAND)
+    ROOT = create("root", b -> b.icon(MetallurgicaItems.dirtyClayBall)
             .title("Welcome to Metallurica")
             .description("Prepare yourself for pain")
             .awardedForFree()
             .special(SILENT)),
+    
+    ROCKS_FROM_ROCKS = create("rocks_from_rocks", b -> b.icon(MetallurgicaItems.amphiboleShard)
+            .title("Rocks from Rocks")
+            .description("Crush a Stone Into More Useful Shards")
+            .whenItemCollected(MetallurgicaTags.forgeItemTag("rock_shards"))
+            .after(ROOT)),
+    
+    INEFFICIENT_CHARCOAL = create("inefficient_charcoal", b -> b.icon(Items.CHARCOAL)
+            .title("Inefficient Charcoal")
+            .description("Use a Charcoal Pit to Make Charcoal")
+            .after(ROOT)),
     
     END = null;
     
@@ -48,7 +61,7 @@ public class MetallurgicaAdvancements implements DataProvider {
     }
     
     @Override
-    public void run(CachedOutput cache) throws IOException {
+    public void run(CachedOutput cache) {
         Path path = this.generator.getOutputFolder();
         Set<ResourceLocation> set = Sets.newHashSet();
         Consumer<Advancement> consumer = (p_204017_3_) -> {

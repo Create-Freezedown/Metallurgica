@@ -1,10 +1,12 @@
 package com.freezedown.metallurgica.foundation.mixin;
 
-import com.freezedown.metallurgica.foundation.data.custom.composition.CompositionManager;
+import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.utility.LangBuilder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -22,6 +24,7 @@ public class ChemicalInfoTooltipMixin {
     
     @Inject(method = "appendHoverText", at = @At("HEAD"))
     private void vanillaItemTooltips(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag isAdvanced, CallbackInfo ci) {
+        String blank = "";
         if (CompositionManager.hasComposition(stack.getItem())) {
             StringBuilder compositionName = new StringBuilder();
             int size = CompositionManager.getElements(stack.getItem()).size();
@@ -29,24 +32,23 @@ public class ChemicalInfoTooltipMixin {
                 Element element = Objects.requireNonNull(CompositionManager.getElements(stack.getItem()).get(i));
                 Element nextElement = i + 1 < size ? Objects.requireNonNull(CompositionManager.getElements(stack.getItem()).get(i + 1)) : null;
                 Element previousElement = i - 1 >= 0 ? Objects.requireNonNull(CompositionManager.getElements(stack.getItem()).get(i - 1)) : null;
-                String openBracket = element.bracketed() ? "(" : "";
-                String closeBracket = element.bracketed() ? ")" : "";
+                String openBracket = element.bracketed() ? "(" : blank;
+                String closeBracket = element.bracketed() ? ")" : blank;
                 int groupedAmount = element.getGroupedAmount();
                 if (previousElement != null && previousElement.bracketed()) {
-                    openBracket = previousElement.isBracketForceClosed() && element.bracketed() ? "(" : "";
+                    openBracket = previousElement.isBracketForceClosed() && element.bracketed() ? "(" : blank;
                 }
                 if (nextElement != null && nextElement.bracketed()) {
                     groupedAmount = 1;
-                    closeBracket = (element.isBracketForceClosed() ? ")" : "");
+                    closeBracket = (element.isBracketForceClosed() ? ")" : blank);
                 }
-                String dash = element.hasDash() ? "-" : "";
-                String groupAmount = groupedAmount > 1 ? (element.areNumbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount))) : "";
+                String dash = element.hasDash() ? "-" : blank;
+                String groupAmount = groupedAmount > 1 ? element.areNumbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)) : blank;
                 compositionName.append(openBracket).append(element.getDisplay()).append(closeBracket).append(groupAmount).append(dash);
             }
             if (!compositionName.isEmpty()) {
                 tooltip.add(ClientUtil.lang().space().space().space().space()
                         .text(compositionName.toString())
-                        .color(TooltipHelper.Palette.BLUE.highlight().getColor().getValue())
                         .component());
             }
         }

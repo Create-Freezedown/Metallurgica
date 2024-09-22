@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "bottom=false,shape=center,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_center"
+    },
+    "bottom=false,shape=center,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_center"
+    },
+    "bottom=false,shape=e,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_e"
+    },
+    "bottom=false,shape=e,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_e"
+    },
+    "bottom=false,shape=n,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_n"
+    },
+    "bottom=false,shape=n,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_n"
+    },
+    "bottom=false,shape=ne,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_ne"
+    },
+    "bottom=false,shape=ne,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_ne"
+    },
+    "bottom=false,shape=nw,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_nw"
+    },
+    "bottom=false,shape=nw,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_nw"
+    },
+    "bottom=false,shape=plain,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle"
+    },
+    "bottom=false,shape=plain,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top"
+    },
+    "bottom=false,shape=s,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_s"
+    },
+    "bottom=false,shape=s,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_s"
+    },
+    "bottom=false,shape=se,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_se"
+    },
+    "bottom=false,shape=se,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_se"
+    },
+    "bottom=false,shape=sw,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_sw"
+    },
+    "bottom=false,shape=sw,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_sw"
+    },
+    "bottom=false,shape=w,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_middle_w"
+    },
+    "bottom=false,shape=w,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_top_w"
+    },
+    "bottom=true,shape=center,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_center"
+    },
+    "bottom=true,shape=center,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_center"
+    },
+    "bottom=true,shape=e,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_e"
+    },
+    "bottom=true,shape=e,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_e"
+    },
+    "bottom=true,shape=n,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_n"
+    },
+    "bottom=true,shape=n,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_n"
+    },
+    "bottom=true,shape=ne,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_ne"
+    },
+    "bottom=true,shape=ne,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_ne"
+    },
+    "bottom=true,shape=nw,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_nw"
+    },
+    "bottom=true,shape=nw,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_nw"
+    },
+    "bottom=true,shape=plain,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom"
+    },
+    "bottom=true,shape=plain,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single"
+    },
+    "bottom=true,shape=s,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_s"
+    },
+    "bottom=true,shape=s,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_s"
+    },
+    "bottom=true,shape=se,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_se"
+    },
+    "bottom=true,shape=se,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_se"
+    },
+    "bottom=true,shape=sw,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_sw"
+    },
+    "bottom=true,shape=sw,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_sw"
+    },
+    "bottom=true,shape=w,top=false": {
+      "model": "metallurgica:block/reaction_basin/block_bottom_w"
+    },
+    "bottom=true,shape=w,top=true": {
+      "model": "metallurgica:block/reaction_basin/block_single_w"
+    }
+  }
+}

@@ -13,6 +13,8 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
+import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinBlock;
+import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinGenerator;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
 import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentBlock;
 import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentGenerator;
@@ -68,12 +70,21 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
     
+    public static final BlockEntry<ReactionBasinBlock> reactionBasin = registrate.block("reaction_basin", ReactionBasinBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> new ReactionBasinGenerator().generate(ctx, prov))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/reaction_basin/block_single")))
+            .build()
+            .register();
     public static final BlockEntry<DebugTempBlock> debugTemp = registrate.block("debug_temp", DebugTempBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
             .addLayer(() -> RenderType::cutoutMipped)
-            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/debug_temp")))
-            )
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/debug_temp"))))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/debug_temp")))
             .build()
