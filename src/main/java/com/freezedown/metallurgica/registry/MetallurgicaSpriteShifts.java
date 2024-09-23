@@ -12,7 +12,8 @@ public class MetallurgicaSpriteShifts {
     
     public static final CTSpriteShiftEntry drillExpansion = vertical("drill_expansion");
     public static final CTSpriteShiftEntry blastProofGlass = omni("blast_proof_glass");
-    
+    public static final CTSpriteShiftEntry directionalMetalBlock = horizontal("directional_metal_block");
+
     private static CTSpriteShiftEntry omni(String name) {
         return getCT(AllCTTypes.OMNIDIRECTIONAL, name);
     }

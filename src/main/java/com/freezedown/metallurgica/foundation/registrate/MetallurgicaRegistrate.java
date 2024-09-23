@@ -17,12 +17,16 @@ import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureCon
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
+import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
+import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import com.simibubi.create.content.fluids.VirtualFluid;
+import com.simibubi.create.foundation.block.connected.RotatedPillarCTBehaviour;
 import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -51,8 +55,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FluidState;
@@ -411,9 +414,26 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(sound))
                 .transform(pickaxeOnly())
                 .blockstate(blockstate)
-                .addLayer(() -> RenderType::cutoutMipped)
+//                .addLayer(() -> RenderType::cutoutMipped)
                 .simpleItem();
         b = lang != null ? b.lang(lang) : b;
+        return b.register();
+    }
+
+    public <T extends ConnectedPillarBlock> BlockEntry<T> directionalMetalBlock(
+            String name,
+            String lang,
+            NonNullFunction<BlockBehaviour.Properties, T> builder,
+            SoundType sound,
+            NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> blockstate
+    ) {
+        BlockBuilder<T, CreateRegistrate> b = this.block(name, builder)
+                .initialProperties(() -> Blocks.IRON_BLOCK)
+                .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(sound))
+                .blockstate(blockstate)
+                .onRegister(connectedTextures(() -> new RotatedPillarCTBehaviour(MetallurgicaSpriteShifts.directionalMetalBlock, MetallurgicaSpriteShifts.directionalMetalBlock)))
+                .simpleItem();
+        b = b.lang(lang);
         return b.register();
     }
 

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "metallurgica:block/palettes/metals/wrought_iron_block_cap",
+    "side": "metallurgica:block/palettes/metals/wrought_iron_block_side"
+  }
+}

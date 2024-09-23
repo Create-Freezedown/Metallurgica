@@ -71,6 +71,7 @@
   "block.metallurgica.tuyere": "Tuyere",
   "block.metallurgica.unfired_ceramic_pot": "Unfired Ceramic Pot",
   "block.metallurgica.unfired_crucible": "Unfired Crucible",
+  "block.metallurgica.wrought_iron_block": "Wrought Iron Block",
   "create.goggles.drill_activator": "Drill Status:",
   "create.goggles.drill_activator.deposit": "Extracting: %s",
   "create.goggles.drill_activator.deposit_location": "Deposit Location: %s",
@@ -415,6 +416,6 @@
   "metallurgica.item_appendages.impure": "Impure",
   "metallurgica.jei.required_efficiency": "Required Efficiency: %s",
   "metallurgica.tooltips.impurities": "Impurities:",
-  "numbers": "â‚€â‚�â‚‚â‚ƒâ‚„â‚…â‚†â‚‡â‚ˆâ‚‰",
+  "numbers": "₀₁₂₃₄₅₆₇₈₉",
   "recipe.metallurgica.electrolysis": "Electrolysis"
 }
