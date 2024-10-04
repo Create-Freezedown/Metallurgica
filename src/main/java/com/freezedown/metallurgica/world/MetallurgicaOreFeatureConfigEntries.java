@@ -5,6 +5,7 @@ import com.freezedown.metallurgica.content.world.striated.MetallurgicaLayeredPat
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
+import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.GenericFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +46,11 @@ public class MetallurgicaOreFeatureConfigEntries {
             .withBlock(() -> Blocks.SAND, GRAVEL_REPLACEABLE)
             .biomeTag(BiomeTags.IS_RIVER)
             .parent();
-    
+
+    public static final GenericFeatureConfigEntry LAKE = createGeneric("lake", 15, 1 / 8f, 24, 0, 70)
+            .standardDatagenExt()
+            .biomeTag(BiomeTags.IS_RIVER)
+            .parent();
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
     
@@ -62,6 +67,10 @@ public class MetallurgicaOreFeatureConfigEntries {
     public static MTypedDepositFeatureConfigEntry createTypedDeposit(String name, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositBlockChance, DepositCapacity capacity, float frequency, int chance, int minHeight, int maxHeight) {
         ResourceLocation id = Metallurgica.asResource(name);
         return new MTypedDepositFeatureConfigEntry(id, maxWidth, minWidth, maxDepth, minDepth, depositBlockChance, capacity, frequency, chance, minHeight, maxHeight);
+    }
+
+    public static GenericFeatureConfigEntry createGeneric(String name, int size, float frequency, int chance, int minHeight, int maxHeight) {
+        return new GenericFeatureConfigEntry(Metallurgica.asResource(name), size, frequency, chance, minHeight, maxHeight);
     }
     
     public static void fillConfig(ForgeConfigSpec.Builder builder, String namespace) {
@@ -82,6 +91,14 @@ public class MetallurgicaOreFeatureConfigEntries {
                     }
                 });
         MTypedDepositFeatureConfigEntry.ALL
+                .forEach((id, entry) -> {
+                    if (id.getNamespace().equals(namespace)) {
+                        builder.push(entry.getName());
+                        entry.addToConfig(builder);
+                        builder.pop();
+                    }
+                });
+        GenericFeatureConfigEntry.ALL
                 .forEach((id, entry) -> {
                     if (id.getNamespace().equals(namespace)) {
                         builder.push(entry.getName());

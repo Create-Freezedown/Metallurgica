@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.worldgen;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.worldgen.feature.LakeFeature;
 import com.freezedown.metallurgica.foundation.worldgen.feature.MLayeredOreFeature;
 import com.freezedown.metallurgica.foundation.worldgen.feature.MOreDepositFeature;
 import com.freezedown.metallurgica.foundation.worldgen.feature.MStandardOreFeature;
@@ -19,6 +20,8 @@ public class MetallurgicaFeatures {
     public static final RegistryObject<MLayeredOreFeature> LAYERED_ORE = REGISTER.register("layered_ore", MLayeredOreFeature::new);
     public static final RegistryObject<MOreDepositFeature> ORE_DEPOSIT_SURFACE = REGISTER.register("surface_ore_deposit", MOreDepositFeature::new);
     public static final RegistryObject<TypedDeposit> LARGE_DEPOSIT = REGISTER.register("large_deposit", TypedDeposit::new);
+
+    public static final RegistryObject<LakeFeature> LAKE = REGISTER.register("lake", LakeFeature::new);
     //IGNORE THIS LOL
 //    public static final RegistryObject<SandDepositFeature> SAND_DEPOSIT = REGISTER.register("sand_deposit", SandDepositFeature::new);
     public static void register(IEventBus modEventBus) {
