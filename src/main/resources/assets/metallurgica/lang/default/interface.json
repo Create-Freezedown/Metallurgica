@@ -14,5 +14,6 @@
   "create.goggles.reverbaratory.fuel_info": "Fuel Info",
   "create.goggles.reverbaratory.stats": "Stats",
   "metallurgica.jei.required_efficiency": "Required Efficiency: %s",
-  "metallurgica.gui.goggles.temperature": "Temperature:"
+  "metallurgica.gui.goggles.temperature": "Temperature:",
+  "metallurgica.jei.category.element_composition": "Element Compositions"
 }

@@ -1,6 +1,10 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
+import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.foundation.util.ClientUtil;
+import com.pouffydev.krystal_core.foundation.data.lang.Components;
+import net.minecraft.network.chat.MutableComponent;
 
 import java.util.function.BiConsumer;
 
@@ -128,7 +132,7 @@ public enum MetallurgicaElements {
     
     public final Element ELEMENT;
     public final String symbol;
-    
+
     MetallurgicaElements(String pSymbol) {
         ELEMENT = Element.create(name().toLowerCase());
         symbol = pSymbol;
@@ -137,6 +141,7 @@ public enum MetallurgicaElements {
     public static void provideElementLang(BiConsumer<String, String> consumer) {
         for (MetallurgicaElements element : values()) {
             consumer.accept("metallurgica.element." + element.ELEMENT.getName(), getSymbol(element.ELEMENT.getName()));
+            consumer.accept("metallurgica.element.name." + element.ELEMENT.getName(), MetallurgicaRegistrate.autoLang(element.ELEMENT.getName().toLowerCase()));
         }
     }
     
@@ -156,5 +161,10 @@ public enum MetallurgicaElements {
             }
         }
         return null;
+    }
+
+    public MutableComponent getFullName() {
+        MutableComponent component = Components.translatable("metallurgica.element.name." + name().toLowerCase());
+        return component;
     }
 }

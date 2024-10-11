@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.compat.jei;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.category.ceramic_mixing.CeramicMixingCategory;
+import com.freezedown.metallurgica.compat.jei.category.composition.ItemCompositionCategory;
 import com.freezedown.metallurgica.compat.jei.category.electrolyzer.ElectrolysisCategory;
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
 import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
@@ -12,11 +13,15 @@ import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
+import mezz.jei.common.Internal;
+import mezz.jei.common.gui.textures.Textures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 
@@ -40,12 +45,20 @@ public class MetallurgicaJei implements IModPlugin {
     
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
+        IJeiHelpers jeiHelpers = registration.getJeiHelpers();
+        IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
+        Textures textures = Internal.getTextures();
+        registration.addRecipeCategories(new ItemCompositionCategory(guiHelper, textures));
         loadCategories(registration);
         registration.addRecipeCategories(allCategories.toArray(IRecipeCategory[]::new));
     }
     
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        IJeiHelpers jeiHelpers = registration.getJeiHelpers();
+        IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
+        Textures textures = Internal.getTextures();
+        new ItemCompositionCategory(guiHelper, textures).registerRecipes(registration);
         ingredientManager = registration.getIngredientManager();
         allCategories.forEach(c -> c.registerRecipes(registration));
     }
