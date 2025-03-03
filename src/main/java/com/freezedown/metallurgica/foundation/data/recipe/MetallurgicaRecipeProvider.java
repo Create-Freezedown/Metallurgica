@@ -1,8 +1,8 @@
 package com.freezedown.metallurgica.foundation.data.recipe;
 
-import com.drmangotea.createindustry.CreateTFMG;
-import com.drmangotea.createindustry.registry.TFMGFluids;
-import com.drmangotea.createindustry.registry.TFMGItems;
+import com.drmangotea.tfmg.CreateTFMG;
+import com.drmangotea.tfmg.registry.TFMGFluids;
+import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
 import com.freezedown.metallurgica.registry.*;
@@ -28,20 +28,20 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
     protected final List<GeneratedRecipe> all = new ArrayList<>();
     
     public MetallurgicaRecipeProvider(DataGenerator generator) {
-        super(generator);
-    }
-    
-    @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> p_200404_1_) {
-        all.forEach(c -> c.register(p_200404_1_));
-        Metallurgica.LOGGER.info("{} registered {} recipe{}", getName(), all.size(), all.size() == 1 ? "" : "s");
+        super(generator.getPackOutput());
     }
     
     protected GeneratedRecipe register(GeneratedRecipe recipe) {
         all.add(recipe);
         return recipe;
     }
-    
+
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+        all.forEach(c -> c.register(consumer));
+        Metallurgica.LOGGER.info("{} registered {} recipe{}", getName(), all.size(), all.size() == 1 ? "" : "s");
+    }
+
     @FunctionalInterface
     public interface GeneratedRecipe {
         void register(Consumer<FinishedRecipe> consumer);

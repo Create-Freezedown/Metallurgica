@@ -204,7 +204,7 @@ public class MultiblockStructure {
     public void createMissingParticles() {
         ParticleOptions smokeParticle = ParticleTypes.SMOKE;
         if (master.getLevel() == null) {
-            Metallurgica.LOGGER.error("Level is null, cannot create particles");
+            Metallurgica.LOGGER.error("Level is null, cannot createIngot particles");
             return;
         }
         

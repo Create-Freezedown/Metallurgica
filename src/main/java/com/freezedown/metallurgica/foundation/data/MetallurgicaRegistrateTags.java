@@ -1,9 +1,9 @@
 package com.freezedown.metallurgica.foundation.data;
 
-import com.drmangotea.createindustry.registry.TFMGBlocks;
-import com.drmangotea.createindustry.registry.TFMGFluids;
-import com.drmangotea.createindustry.registry.TFMGItems;
-import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
+import com.drmangotea.tfmg.registry.TFMGBlocks;
+import com.drmangotea.tfmg.registry.TFMGFluids;
+import com.drmangotea.tfmg.registry.TFMGItems;
+import com.drmangotea.tfmg.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
@@ -12,8 +12,10 @@ import com.freezedown.metallurgica.registry.MetallurgicaTags.AllBlockTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
+import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -23,15 +25,21 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class MetallurgicaRegistrateTags {
+    public MetallurgicaRegistrateTags() {
+    }
+
     public static void addGenerators() {
         Metallurgica.registrate.addDataGenerator(ProviderType.BLOCK_TAGS, MetallurgicaRegistrateTags::genBlockTags);
         Metallurgica.registrate.addDataGenerator(ProviderType.ITEM_TAGS, MetallurgicaRegistrateTags::genItemTags);
         Metallurgica.registrate.addDataGenerator(ProviderType.FLUID_TAGS, MetallurgicaRegistrateTags::genFluidTags);
         Metallurgica.registrate.addDataGenerator(ProviderType.ENTITY_TAGS, MetallurgicaRegistrateTags::genEntityTags);
     }
-    private static void genBlockTags(RegistrateTagsProvider<Block> prov) {
+
+    private static void genBlockTags(RegistrateTagsProvider<Block> provIn) {
+        TagGen.CreateTagsProvider<Block> prov = new TagGen.CreateTagsProvider(provIn, Block::builtInRegistryHolder);
         prov.tag(MetallurgicaTags.AllBlockTags.BAUXITE_ORE_REPLACEABLE.tag)
                 .add(TFMGPaletteStoneTypes.BAUXITE.getBaseBlock().get())
                 ;
@@ -91,8 +99,9 @@ public class MetallurgicaRegistrateTags {
             }
         }
     }
-    
-    private static void genItemTags(RegistrateTagsProvider<Item> prov) {
+
+    private static void genItemTags(RegistrateTagsProvider<Item> provIn) {
+        TagGen.CreateTagsProvider<Item> prov = new TagGen.CreateTagsProvider(provIn, Item::builtInRegistryHolder);
         
         for (MetallurgicaTags.AllItemTags tag : MetallurgicaTags.AllItemTags.values()) {
             if (tag.alwaysDatagen) {
@@ -129,7 +138,8 @@ public class MetallurgicaRegistrateTags {
         );
     }
     
-    private static void genFluidTags(RegistrateTagsProvider<Fluid> prov) {
+    private static void genFluidTags(RegistrateTagsProvider<Fluid> provIn) {
+        TagGen.CreateTagsProvider<Fluid> prov = new TagGen.CreateTagsProvider(provIn, Fluid::builtInRegistryHolder);
         prov.tag(MetallurgicaTags.modFluidTag("fluid_reactive/chlorine")).add(TFMGFluids.GASOLINE.get().getFlowing(), TFMGFluids.GASOLINE.get().getSource());
         
         prov.tag(MetallurgicaTags.AllFluidTags.REVERBARATORY_FUELS.tag)
@@ -151,13 +161,5 @@ public class MetallurgicaRegistrateTags {
     
     private static void genEntityTags(RegistrateTagsProvider<EntityType<?>> prov) {
     
-    }
-    
-    private static void genBiomeTags(RegistrateTagsProvider<Biome> prov) {
-        prov.tag(MetallurgicaTags.AllBiomeTags.HAS_GOLD_SURFACE_DEPOSIT.tag).add(
-                Biomes.BADLANDS,
-                Biomes.ERODED_BADLANDS,
-                Biomes.WOODED_BADLANDS
-        );
     }
 }

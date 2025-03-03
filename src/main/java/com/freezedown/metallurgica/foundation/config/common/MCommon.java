@@ -3,7 +3,7 @@ package com.freezedown.metallurgica.foundation.config.common;
 import com.freezedown.metallurgica.foundation.config.common.experiments.MExperiments;
 import com.freezedown.metallurgica.foundation.config.common.subcat.MVanillaWorldGen;
 import com.freezedown.metallurgica.foundation.config.common.subcat.MWorldGen;
-import com.simibubi.create.foundation.config.ConfigBase;
+import net.createmod.catnip.config.ConfigBase;
 
 public class MCommon extends ConfigBase {
     

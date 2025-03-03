@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.createindustry.CreateTFMG;
+import com.drmangotea.tfmg.CreateTFMG;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
@@ -8,8 +8,8 @@ import com.freezedown.metallurgica.foundation.material.MetalEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
-import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -93,12 +93,12 @@ public enum MetallurgicaOre {
     }
 
     MetallurgicaOre() {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         MATERIAL = registrate.material(this.name().toLowerCase(), false);
     }
 
     MetallurgicaOre(MetallurgicaMetals... metals) {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         MATERIAL = registrate.material(this.name().toLowerCase(), false);
         for(MetallurgicaMetals metal : metals) {
             METALS.add(metal.METAL);
@@ -106,7 +106,7 @@ public enum MetallurgicaOre {
     }
 
     MetallurgicaOre(boolean richb, MetallurgicaMetals... metals) {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         MATERIAL = registrate.material(this.name().toLowerCase(), richb);
         for(MetallurgicaMetals metal : metals) {
             METALS.add(metal.METAL);
@@ -114,7 +114,7 @@ public enum MetallurgicaOre {
     }
 
     MetallurgicaOre(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositChance, DepositCapacity capacity, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, MetallurgicaMetals... metals) {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         MATERIAL = registrate.material(this.name().toLowerCase(), false);
         //DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
@@ -124,7 +124,7 @@ public enum MetallurgicaOre {
         }
     }
     MetallurgicaOre(boolean richb, int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositChance, DepositCapacity capacity, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, MetallurgicaMetals... metals) {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         MATERIAL = registrate.material(this.name().toLowerCase(), richb);
         //DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
@@ -135,7 +135,7 @@ public enum MetallurgicaOre {
     }
 
     MetallurgicaOre(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, MetallurgicaMetals... metals) {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         MATERIAL = registrate.material(this.name().toLowerCase(), false);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
@@ -145,7 +145,7 @@ public enum MetallurgicaOre {
     }
     
     MetallurgicaOre(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, MetallurgicaMetals... metals) {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         MATERIAL = registrate.material(this.name().toLowerCase(), richb);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);
@@ -155,7 +155,7 @@ public enum MetallurgicaOre {
     }
 
     MetallurgicaOre(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, MetallurgicaMetals... metals) {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         MATERIAL = registrate.material(this.name().toLowerCase(), richb);
         DEPOSIT = MATERIAL.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         CLUSTER = MATERIAL.cluster(clusterSize, clusterFrequency, clusterMinHeight, clusterMaxHeight);

@@ -3,6 +3,8 @@ package com.freezedown.metallurgica.content.machines.electolizer;
 import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlockItem;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,12 +19,12 @@ public class ElectrolyzerBlock extends HorizontalKineticBlock implements IBE<Ele
     public ElectrolyzerBlock(Properties properties) {
         super(properties);
     }
-    
+
     @Override
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        return !AllBlocks.BASIN.has(worldIn.getBlockState(pos.below()));
+        return AllBlocks.BASIN.has(worldIn.getBlockState(pos.below()));
     }
-    
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction prefferedSide = getPreferredHorizontalFacing(context);

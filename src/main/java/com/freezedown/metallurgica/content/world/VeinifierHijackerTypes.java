@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.content.world;
 
-import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
+import com.drmangotea.tfmg.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;

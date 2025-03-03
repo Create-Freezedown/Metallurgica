@@ -1,17 +1,12 @@
 package com.freezedown.metallurgica.content.forging.casting.ingot;
 
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
-import com.freezedown.metallurgica.content.temperature.ITemperature;
 import com.freezedown.metallurgica.content.temperature.KineticTemperatureBlockEntity;
-import com.freezedown.metallurgica.content.temperature.TemperatureBlockEntity;
-import com.freezedown.metallurgica.foundation.block_entity.behaviour.TemperatureStorageBehaviour;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagItemOutput;
 import com.freezedown.metallurgica.registry.MetallurgicaMetals;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
@@ -25,12 +20,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
@@ -164,7 +158,7 @@ public class IngotCastingMoldBlockEntity extends KineticTemperatureBlockEntity i
         ClientUtil.temp().forGoggles(tooltip);
         ClientUtil.lang().add(ClientUtil.temperature(getTemperature())).forGoggles(tooltip, 1);
         return containedFluidTooltip(tooltip, isPlayerSneaking,
-                this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
+                this.getCapability(ForgeCapabilities.FLUID_HANDLER));
     }
     
     
@@ -216,9 +210,9 @@ public class IngotCastingMoldBlockEntity extends KineticTemperatureBlockEntity i
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if (cap == ForgeCapabilities.ITEM_HANDLER)
             return itemCapability.cast();
-        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        if (cap == ForgeCapabilities.FLUID_HANDLER)
             return fluidCapability.cast();
         return super.getCapability(cap, side);
     }

@@ -1,12 +1,10 @@
 package com.freezedown.metallurgica.content.fluids.channel.channel_depot;
 
 import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
-import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
 import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
-import com.simibubi.create.content.processing.basin.BasinBlock;
 import com.simibubi.create.content.processing.basin.BasinOperatingBlockEntity;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.fluid.FluidHelper;
@@ -34,8 +32,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 @SuppressWarnings("removal")
 public class ChannelDepotBlock extends Block implements IBE<ChannelDepotBlockEntity>, IWrenchable {
@@ -81,7 +79,7 @@ public class ChannelDepotBlock extends Block implements IBE<ChannelDepotBlockEnt
                     return InteractionResult.SUCCESS;
                 if (heldItem.getItem()
                         .equals(Items.SPONGE)
-                        && !be.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+                        && !be.getCapability(ForgeCapabilities.FLUID_HANDLER)
                         .map(iFluidHandler -> iFluidHandler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE))
                         .orElse(FluidStack.EMPTY)
                         .isEmpty()) {

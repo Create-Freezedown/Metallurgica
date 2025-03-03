@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.config.common.experiments;
 
-import com.simibubi.create.foundation.config.ConfigBase;
+
+import net.createmod.catnip.config.ConfigBase;
 
 public class MChemicalBurns extends ConfigBase {
     public final ConfigFloat chemicalBurnHealthReduction = f(1.5f, 0f, 4f, "Chemical Burn Health Reduction", Comments.chemicalBurnHealthReduction);

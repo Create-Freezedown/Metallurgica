@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.content.primitive.log_pile;
 
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlockEntity;
-import com.simibubi.create.foundation.config.ConfigBase;
+import net.createmod.catnip.config.ConfigBase;
 
 public class LogPileConfig extends ConfigBase {
     

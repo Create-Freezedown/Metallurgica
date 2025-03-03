@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 
 public class MetallurgicaPartialModels {
     public static final PartialModel
@@ -12,7 +12,7 @@ public class MetallurgicaPartialModels {
             ;
     
     private static PartialModel block(String path) {
-        return new PartialModel(Metallurgica.asResource("block/" + path));
+        return PartialModel.of(Metallurgica.asResource("block/" + path));
     }
     
     public static void init() {

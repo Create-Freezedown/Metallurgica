@@ -39,7 +39,7 @@ public class MoltenMetal extends VirtualFluid {
     public static float getImpurity(FluidStack fluidStack) {
         return fluidStack.getOrCreateTag().getFloat("Impurity");
     }
-    
+
     public static class MoltenMetalFluidType extends FluidType {
         public final ResourceLocation still;
         public final ResourceLocation flow;

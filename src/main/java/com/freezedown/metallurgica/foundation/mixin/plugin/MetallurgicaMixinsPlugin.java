@@ -13,7 +13,7 @@ public class MetallurgicaMixinsPlugin implements IMixinConfigPlugin {
     public void onLoad(String mixinPackage) {
     
     }
-    
+
     @Override
     public String getRefMapperConfig() {
         return null;
@@ -23,6 +23,9 @@ public class MetallurgicaMixinsPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (mixinClassName.contains("com.freezedown.metallurgica.foundation.mixin.jei")) {
             return CommonUtil.isClassFound("mezz.jei.api.IModPlugin");
+        }
+        if (mixinClassName.contains("com.freezedown.metallurgica.foundation.mixin.emi")) {
+            return CommonUtil.isClassFound("dev.emi.emi.api.EmiPlugin");
         }
         return true;
     }

@@ -2,8 +2,7 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.foundation.util.ClientUtil;
-import com.pouffydev.krystal_core.foundation.data.lang.Components;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
 import java.util.function.BiConsumer;
@@ -164,7 +163,7 @@ public enum MetallurgicaElements {
     }
 
     public MutableComponent getFullName() {
-        MutableComponent component = Components.translatable("metallurgica.element.name." + name().toLowerCase());
+        MutableComponent component = Component.translatable("metallurgica.element.name." + name().toLowerCase());
         return component;
     }
 }

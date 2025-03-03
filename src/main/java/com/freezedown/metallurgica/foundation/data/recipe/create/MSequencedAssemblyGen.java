@@ -35,7 +35,7 @@ public class MSequencedAssemblyGen extends MetallurgicaRecipeProvider {
     //    for (MetallurgicaTools pTool : MetallurgicaTools.values()) {
     //        for (MetallurgicaMetals pMetal : MetallurgicaMetals.values()) {
     //            if () {
-    //                GeneratedRecipe tool = create(pTool.name().toLowerCase(), (b) -> b
+    //                GeneratedRecipe tool = createIngot(pTool.name().toLowerCase(), (b) -> b
     //                        .require(Items.STICK)
     //                        .transitionTo()
     //                        .addOutput()

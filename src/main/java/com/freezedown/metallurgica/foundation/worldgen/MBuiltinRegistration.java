@@ -6,7 +6,8 @@ import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigE
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.GenericFeatureConfigEntry;
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -18,10 +19,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Map;
 
 public class MBuiltinRegistration {
-    private static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURE_REGISTER = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, Metallurgica.ID);
-    private static final DeferredRegister<PlacedFeature> PLACED_FEATURE_REGISTER = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, Metallurgica.ID);
+    private static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURE_REGISTER = DeferredRegister.create(Registries.CONFIGURED_FEATURE, Metallurgica.ID);
+    private static final DeferredRegister<PlacedFeature> PLACED_FEATURE_REGISTER = DeferredRegister.create(Registries.PLACED_FEATURE, Metallurgica.ID);
     private static final DeferredRegister<BiomeModifier> BIOME_MODIFIER_REGISTER = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIERS, Metallurgica.ID);
-    
+
     static {
         for (Map.Entry<ResourceLocation, MOreFeatureConfigEntry> entry : MOreFeatureConfigEntry.ALL.entrySet()) {
             ResourceLocation id = entry.getKey();
@@ -29,7 +30,7 @@ public class MBuiltinRegistration {
                 MOreFeatureConfigEntry.DatagenExtension datagenExt = entry.getValue().datagenExt();
                 
                 if (datagenExt != null) {
-                    CONFIGURED_FEATURE_REGISTER.register(id.getPath(), () -> datagenExt.createConfiguredFeature(BuiltinRegistries.ACCESS));
+                    CONFIGURED_FEATURE_REGISTER.register(id.getPath(), () -> datagenExt.createConfiguredFeature(BuiltInRegistries.REGISTRY));
                     PLACED_FEATURE_REGISTER.register(id.getPath(), () -> datagenExt.createPlacedFeature(BuiltinRegistries.ACCESS));
                     BIOME_MODIFIER_REGISTER.register(id.getPath(), () -> datagenExt.createBiomeModifier(BuiltinRegistries.ACCESS));
                 }

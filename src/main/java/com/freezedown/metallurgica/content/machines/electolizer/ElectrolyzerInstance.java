@@ -1,21 +1,21 @@
 package com.freezedown.metallurgica.content.machines.electolizer;
 
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.simibubi.create.content.kinetics.base.ShaftInstance;
+import com.simibubi.create.content.kinetics.base.ShaftVisual;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 
-public class ElectrolyzerInstance extends ShaftInstance<ElectrolyzerBlockEntity> {
+public class ElectrolyzerInstance extends ShaftVisual<ElectrolyzerBlockEntity> {
     
-    public ElectrolyzerInstance(MaterialManager materialManager, ElectrolyzerBlockEntity blockEntity) {
-        super(materialManager, blockEntity);
+    public ElectrolyzerInstance(VisualizationContext visualizationContext, ElectrolyzerBlockEntity blockEntity, float partialTick) {
+        super(visualizationContext, blockEntity, partialTick);
     }
     
     @Override
-    public void updateLight() {
-        super.updateLight();
+    public void updateLight(float partialTick) {
+        super.updateLight(partialTick);
     }
     
     @Override
-    public void remove() {
-        super.remove();
+    public void _delete() {
+        super._delete();
     }
 }

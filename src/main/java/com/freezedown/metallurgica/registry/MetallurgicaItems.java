@@ -1,6 +1,9 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.items.metals.MagnesiumItem;
+import com.freezedown.metallurgica.content.items.metals.MagnesiumOxideItem;
+import com.freezedown.metallurgica.content.items.sealed_storage.SealedBundleItem;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
@@ -9,7 +12,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 
 public class MetallurgicaItems {
-    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.itemGroup);
+    private static final MetallurgicaRegistrate registrate = Metallurgica.registrate();
     
     private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(String name) {
         return registrate.item(name, SequencedAssemblyItem::new)
@@ -19,6 +22,9 @@ public class MetallurgicaItems {
     public static final ItemEntry<Item>
             armorPlatingMold =    registrate.item("armor_plating_mold", Item::new, p->p.stacksTo(1).fireResistant(), "advanced_casting_molds/armor_plating", "advanced_casting_molds");
 
+    public static final ItemEntry<SealedBundleItem>
+            sealedBundle = registrate.item("sealed_bundle", SealedBundleItem::new, p->p.stacksTo(1))
+                    ;
     //MISC ITEMS
     public static final ItemEntry<MetallurgicaItem>
             salt =                registrate.metallurgicaItem("salt", "salt"),
@@ -55,7 +61,6 @@ public class MetallurgicaItems {
     
     //MAGNESIUM
     public static final ItemEntry<MetallurgicaItem>
-            magnesiumOxide =      registrate.metallurgicaItem("magnesium_oxide", "dusts/magnesium_oxide", "dusts"),
             magnesiumChloride =   registrate.metallurgicaItem("magnesium_chloride" )
                     ;
     //METALS
@@ -71,6 +76,14 @@ public class MetallurgicaItems {
 
             //Isn't this technically an alloy? where would we put steel?
             wroughtIronIngot =       registrate.metallurgicaItem("wrought_iron_ingot", "ingots/wrought_iron", "ingots")
+                    ;
+
+    public static final ItemEntry<MagnesiumOxideItem>
+            magnesiumOxide = registrate.item("magnesium_oxide", MagnesiumOxideItem::new, p->p.stacksTo(1), "dusts/magnesium_oxide", "dusts"),
+            oxidisedMagnesiumIngot = registrate.item("oxidised_magnesium_ingot", MagnesiumOxideItem::new, p->p.stacksTo(1), "ingots/oxidised_magnesium", "ingots")
+                    ;
+    public static final ItemEntry<MagnesiumItem>
+            magnesiumIngot = registrate.item("magnesium_ingot", MagnesiumItem::createIngot, p->p.stacksTo(1), "ingots/magnesium", "ingots")
                     ;
     
     public static final ItemEntry<SequencedAssemblyItem>

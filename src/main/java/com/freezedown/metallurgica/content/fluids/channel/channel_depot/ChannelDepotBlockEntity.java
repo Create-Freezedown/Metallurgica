@@ -31,9 +31,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -156,7 +156,7 @@ public class ChannelDepotBlockEntity extends SmartBlockEntity implements IHaveGo
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        if (cap == ForgeCapabilities.FLUID_HANDLER)
             return fluidCapability.cast();
         return super.getCapability(cap, side);
     }
@@ -265,7 +265,7 @@ public class ChannelDepotBlockEntity extends SmartBlockEntity implements IHaveGo
             filter = BlockEntityBehaviour.get(level, be.getBlockPos(), FilteringBehaviour.TYPE);
         }
         IFluidHandler targetTank = be == null ? null
-                : be.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite())
+                : be.getCapability(ForgeCapabilities.FLUID_HANDLER, direction.getOpposite())
                 .orElse(null);
         
         boolean update = false;
@@ -367,7 +367,7 @@ public class ChannelDepotBlockEntity extends SmartBlockEntity implements IHaveGo
             BlockEntity be = level.getBlockEntity(worldPosition.below()
                     .relative(direction));
             IFluidHandler targetTank = be == null ? null
-                    : be.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite())
+                    : be.getCapability(ForgeCapabilities.FLUID_HANDLER, direction.getOpposite())
                     .orElse(null);
             boolean externalTankNotPresent = targetTank == null;
             

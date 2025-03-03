@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.recipe.vanilla;
 
-import com.drmangotea.createindustry.registry.TFMGItems;
+import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MetallurgicaRecipeProvider;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
@@ -138,7 +139,7 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
         
         GeneratedRecipe viaShaped(UnaryOperator<ShapedRecipeBuilder> builder) {
             return register(consumer -> {
-                ShapedRecipeBuilder b = builder.apply(ShapedRecipeBuilder.shaped(result.get(), amount));
+                ShapedRecipeBuilder b = builder.apply(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result.get(), amount));
                 if (unlockedBy != null)
                     b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
                 b.save(consumer, createLocation("crafting"));
@@ -147,18 +148,17 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
         
         GeneratedRecipe viaShapeless(UnaryOperator<ShapelessRecipeBuilder> builder) {
             return register(consumer -> {
-                ShapelessRecipeBuilder b = builder.apply(ShapelessRecipeBuilder.shapeless(result.get(), amount));
+                ShapelessRecipeBuilder b = builder.apply(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result.get(), amount));
                 if (unlockedBy != null)
                     b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
                 b.save(consumer, createLocation("crafting"));
             });
         }
         
-        GeneratedRecipe viaSmithing(Supplier<? extends Item> base, Supplier<Ingredient> upgradeMaterial) {
+        GeneratedRecipe viaSmithing(Supplier<? extends Item> template, Supplier<? extends Item> base, Supplier<? extends Item> addition, Supplier<? extends Item> result) {
             return register(consumer -> {
-                UpgradeRecipeBuilder b =
-                        UpgradeRecipeBuilder.smithing(Ingredient.of(base.get()), upgradeMaterial.get(), result.get()
-                                .asItem());
+                SmithingTransformRecipeBuilder b =
+                        SmithingTransformRecipeBuilder.smithing(Ingredient.of(template.get()), Ingredient.of(base.get()), Ingredient.of(addition.get()), RecipeCategory.MISC, result.get().asItem());
                 b.unlocks("has_item", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(base.get())
                         .build()));
@@ -191,14 +191,17 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
             return new GeneratedRecipeBuilder.GeneratedCookingRecipeBuilder(ingredient);
         }
         
+        @SuppressWarnings("unchecked")
         class GeneratedCookingRecipeBuilder {
             
             private Supplier<Ingredient> ingredient;
             private float exp;
             private int cookingTime;
             
-            private final SimpleCookingSerializer<?> FURNACE = RecipeSerializer.SMELTING_RECIPE,
-                    SMOKER = RecipeSerializer.SMOKING_RECIPE, BLAST = RecipeSerializer.BLASTING_RECIPE,
+            private final RecipeSerializer<?>
+                    FURNACE = RecipeSerializer.SMELTING_RECIPE,
+                    SMOKER = RecipeSerializer.SMOKING_RECIPE,
+                    BLAST = RecipeSerializer.BLASTING_RECIPE,
                     CAMPFIRE = RecipeSerializer.CAMPFIRE_COOKING_RECIPE;
             
             GeneratedCookingRecipeBuilder(Supplier<Ingredient> ingredient) {
@@ -255,14 +258,12 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
                 return create(BLAST, builder, 1f);
             }
             
-            private GeneratedRecipe create(SimpleCookingSerializer<?> serializer,
-                                                                UnaryOperator<SimpleCookingRecipeBuilder> builder, float cookingTimeModifier) {
+            private GeneratedRecipe create(RecipeSerializer<?> serializer, UnaryOperator<SimpleCookingRecipeBuilder> builder, float cookingTimeModifier) {
                 return register(consumer -> {
                     boolean isOtherMod = compatDatagenOutput != null;
                     
                     SimpleCookingRecipeBuilder b = builder.apply(
-                            SimpleCookingRecipeBuilder.cooking(ingredient.get(), isOtherMod ? Items.DIRT : result.get(),
-                                    exp, (int) (cookingTime * cookingTimeModifier), serializer));
+                            SimpleCookingRecipeBuilder.generic(ingredient.get(), RecipeCategory.MISC, isOtherMod ? Items.DIRT : result.get(), exp, (int) (cookingTime * cookingTimeModifier), (RecipeSerializer<? extends AbstractCookingRecipe>) serializer));
                     if (unlockedBy != null)
                         b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
                     b.save(result -> {
@@ -319,11 +320,6 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
             object.add("conditions", conds);
         }
         
-    }
-    
-    @Override
-    public String getName() {
-        return "Metallurgica's Standard Recipes";
     }
     
     public MStandardRecipeGen(DataGenerator generator) {

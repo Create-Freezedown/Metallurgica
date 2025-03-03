@@ -1,38 +1,37 @@
-package com.freezedown.metallurgica.foundation.mixin.jei;
+package com.freezedown.metallurgica.foundation.client;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.ClientFluidCompositions;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionManager;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
-import mezz.jei.forge.platform.FluidHelper;
+import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.minecraftforge.fluids.FluidType;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
-@Mixin(FluidHelper.class)
-public class FluidHelperMixin {
-    
-    @Inject(method = "getTooltip*", at = @At("TAIL"), remap = false)
-    private void metallurgica$injectFluidTooltips(FluidStack ingredient, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
-        var tooltip = cir.getReturnValue();
+public class TooltipHelper {
+
+    public static void appendFluidTooltips(FluidStack fluidStack, Consumer<Component> tooltips) {
+        Fluid fluid = fluidStack.getFluid();
+        int amount = fluidStack.getAmount();
+        FluidType fluidType = fluid.getFluidType();
+
         MutableComponent blank = Component.literal("");
-        if (ClientFluidCompositions.getInstance().hasComposition(ingredient)) {
-            Metallurgica.LOGGER.info("Adding fluid composition tooltip for fluid: {}, with elements: {}", ingredient.getDisplayName().getString(), FluidCompositionManager.getElements(ingredient));
+        if (ClientFluidCompositions.getInstance().hasComposition(fluidStack)) {
+            Metallurgica.LOGGER.info("Adding fluid composition tooltip for fluid: {}, with elements: {}", fluidStack.getDisplayName().getString(), FluidCompositionManager.getElements(fluidStack));
             StringBuilder compositionName = new StringBuilder();
-            int size = ClientFluidCompositions.getInstance().getElements(ingredient).size();
+            int size = ClientFluidCompositions.getInstance().getElements(fluidStack).size();
             for (int i = 0; i < size; i++) {
-                Element element = Objects.requireNonNull(ClientFluidCompositions.getInstance().getElements(ingredient).get(i));
-                Element nextElement = i + 1 < size ? Objects.requireNonNull(ClientFluidCompositions.getInstance().getElements(ingredient).get(i + 1)) : null;
-                Element previousElement = i - 1 >= 0 ? Objects.requireNonNull(ClientFluidCompositions.getInstance().getElements(ingredient).get(i - 1)) : null;
+                Element element = Objects.requireNonNull(ClientFluidCompositions.getInstance().getElements(fluidStack).get(i));
+                Element nextElement = i + 1 < size ? Objects.requireNonNull(ClientFluidCompositions.getInstance().getElements(fluidStack).get(i + 1)) : null;
+                Element previousElement = i - 1 >= 0 ? Objects.requireNonNull(ClientFluidCompositions.getInstance().getElements(fluidStack).get(i - 1)) : null;
                 MutableComponent openBracket = element.bracketed() ? Component.literal("(") : blank;
                 MutableComponent closeBracket = element.bracketed() ? Component.literal(")") : blank;
                 int groupedAmount = element.getGroupedAmount();
@@ -48,9 +47,7 @@ public class FluidHelperMixin {
                 compositionName.append(openBracket).append(element.getDisplay()).append(closeBracket).append(groupAmount).append(dash);
             }
             if (!compositionName.isEmpty()) {
-                tooltip.add(2, ClientUtil.lang().space().space().space().space()
-                        .text(compositionName.toString())
-                        .component());
+                tooltips.accept(Components.literal(compositionName.toString()));
             }
         }
     }

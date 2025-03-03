@@ -2,18 +2,19 @@ package com.freezedown.metallurgica.content.forging.casting;
 
 import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldBlockEntity;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.api.behaviour.BlockSpoutingBehaviour;
+import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class SpoutCastingBehaviour extends BlockSpoutingBehaviour {
+public enum SpoutCastingBehaviour implements BlockSpoutingBehaviour {
+    INSTANCE;
+
     IngotCastingMoldBlockEntity castingMoldBE;
     @Override
     public int fillBlock(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack availableFluid, boolean simulate) {
@@ -26,7 +27,7 @@ public class SpoutCastingBehaviour extends BlockSpoutingBehaviour {
             return 0;
         }
         
-        IFluidHandler handler = castingMoldBE.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, Direction.UP)
+        IFluidHandler handler = castingMoldBE.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP)
                 .orElse(null);
         if (handler == null)
             return 0;

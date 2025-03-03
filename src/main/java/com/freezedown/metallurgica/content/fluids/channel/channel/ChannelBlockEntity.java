@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.content.fluids.channel.channel;
 
-import com.drmangotea.createindustry.blocks.machines.TFMGMachineBlockEntity;
+import com.drmangotea.tfmg.blocks.machines.TFMGMachineBlockEntity;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.core.BlockPos;

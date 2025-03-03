@@ -1,11 +1,10 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.createindustry.CreateTFMG;
+import com.drmangotea.tfmg.CreateTFMG;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.Acid;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid.*;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
-import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.fluids.VirtualFluid;
@@ -82,7 +81,7 @@ public class MetallurgicaFluids {
     //        moltenTitanium = registrate.moltenMetal("titanium"),
     //        moltenUranium = registrate.moltenMetal("uranium"),
     //        moltenLithium = registrate.moltenMetal("lithium"),
-    //        moltenMagnesium = registrate.moltenMetal("magnesium"),
+    //        moltenMagnesium = registrate.moltenMetal("magnesiumIngot"),
     //        moltenTungsten = registrate.moltenMetal("tungsten"),
     //        moltenOsmium = registrate.moltenMetal("osmium"),
     //        moltenThorium = registrate.moltenMetal("thorium")
@@ -199,6 +198,10 @@ public class MetallurgicaFluids {
                 .tag(AllTags.forgeItemTag("buckets/"+name))
                 .build()
                 .register();
+    }
+
+    public static void registerFluidInteractions() {
+
     }
 
     public static void register() {

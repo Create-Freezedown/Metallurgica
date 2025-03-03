@@ -9,6 +9,7 @@ import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
 import com.freezedown.metallurgica.registry.*;
+import com.jozufozu.flywheel.util.Textures;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;
@@ -20,8 +21,6 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
-import mezz.jei.common.Internal;
-import mezz.jei.common.gui.textures.Textures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 
@@ -47,8 +46,7 @@ public class MetallurgicaJei implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         IJeiHelpers jeiHelpers = registration.getJeiHelpers();
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
-        Textures textures = Internal.getTextures();
-        registration.addRecipeCategories(new ItemCompositionCategory(guiHelper, textures));
+        registration.addRecipeCategories(new ItemCompositionCategory(guiHelper));
         loadCategories(registration);
         registration.addRecipeCategories(allCategories.toArray(IRecipeCategory[]::new));
     }
@@ -57,8 +55,7 @@ public class MetallurgicaJei implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         IJeiHelpers jeiHelpers = registration.getJeiHelpers();
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
-        Textures textures = Internal.getTextures();
-        new ItemCompositionCategory(guiHelper, textures).registerRecipes(registration);
+        new ItemCompositionCategory(guiHelper).registerRecipes(registration);
         ingredientManager = registration.getIngredientManager();
         allCategories.forEach(c -> c.registerRecipes(registration));
     }

@@ -5,11 +5,10 @@ import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public record BiomeTemperature(ResourceLocation biomeLoc, double surfaceTemperat
     ).apply(instance, BiomeTemperature::new));
     
     public Biome getBiome() {
-        return fromKey(ResourceKey.create(BuiltinRegistries.BIOME.key(), biomeLoc)).get();
+        return fromKey(ResourceKey.create(ForgeRegistries.Keys.BIOMES, biomeLoc)).get();
     }
     
     public double getSurfaceTemperature() {
@@ -35,7 +34,7 @@ public record BiomeTemperature(ResourceLocation biomeLoc, double surfaceTemperat
     }
     
     public Holder<Biome> fromKey(ResourceKey<Biome> key) {
-        return HolderLookup.forRegistry(BuiltinRegistries.BIOME).get(key).isPresent() ? HolderLookup.forRegistry(BuiltinRegistries.BIOME).get(key).get() : null;
+        return ForgeRegistries.BIOMES.getDelegate(key).isPresent() ? ForgeRegistries.BIOMES.getDelegate(key).get() : null;
     }
     
     public static JsonElement serializeBlacklist(List<ResourceLocation> blacklist) {

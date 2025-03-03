@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.foundation.config.server.subcat;
 
 import com.freezedown.metallurgica.content.primitive.ceramic.CeramicConfig;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileConfig;
-import com.simibubi.create.foundation.config.ConfigBase;
+import net.createmod.catnip.config.ConfigBase;
 
 public class MMachineConfig extends ConfigBase {
     

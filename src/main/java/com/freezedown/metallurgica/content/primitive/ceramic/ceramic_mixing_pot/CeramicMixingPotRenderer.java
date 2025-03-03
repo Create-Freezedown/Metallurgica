@@ -1,22 +1,20 @@
 package com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot;
 
-import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotBlockEntity;
-import com.jozufozu.flywheel.backend.Backend;
-import com.jozufozu.flywheel.util.transform.TransformStack;
+import com.freezedown.metallurgica.registry.MetallurgicaPartialModels;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.content.kinetics.crank.HandCrankInstance;
-import com.simibubi.create.content.kinetics.crank.HandCrankRenderer;
-import com.simibubi.create.content.processing.basin.BasinBlock;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
-import com.simibubi.create.content.processing.basin.BasinRenderer;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
-import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.simibubi.create.foundation.fluid.FluidRenderer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.IntAttached;
-import com.simibubi.create.foundation.utility.VecHelper;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.data.IntAttached;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -26,6 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -42,11 +41,21 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
     @Override
     protected void renderSafe(CeramicMixingPotBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
-        
+
+        if (VisualizationManager.supportsVisualization(be.getLevel())) return;
+
+        BlockState blockState = be.getBlockState();
+
+        VertexConsumer vb = buffer.getBuffer(RenderType.solid());
+
+        VertexConsumer vbCutout = buffer.getBuffer(RenderType.cutoutMipped());
         Direction.AxisDirection rotDirection = be.backwards ? Direction.AxisDirection.NEGATIVE : Direction.AxisDirection.POSITIVE;
-        be.getRenderedStirrer().light(light);
-        be.getRenderedStirrer().rotateCentered(Direction.get(rotDirection, Direction.Axis.Y), be.getIndependentAngle(partialTicks)).renderInto(ms, buffer.getBuffer(RenderType.solid()));
-        
+
+        SuperByteBuffer headRender = CachedBuffers.partial(MetallurgicaPartialModels.ceramicMixerStirrer, blockState);
+
+        headRender.light(light);
+        headRender.rotateCentered(be.getIndependentAngle(partialTicks), Direction.get(rotDirection, Direction.Axis.Y)).renderInto(ms, vbCutout);
+
         float fluidLevel = renderFluids(be, partialTicks, ms, buffer, light, overlay);
         float level = Mth.clamp(fluidLevel - .3f, .125f, .6f);
         
@@ -54,8 +63,8 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
         
         BlockPos pos = be.getBlockPos();
         ms.translate(.5, .2f, .5);
-        TransformStack.cast(ms)
-                .rotateY(be.ingredientRotation.getValue(partialTicks));
+        TransformStack.of(ms)
+                .rotateYDegrees(be.ingredientRotation.getValue(partialTicks));
         
         RandomSource r = RandomSource.create(pos.hashCode());
         Vec3 baseVector = new Vec3(.125, level, 0);
@@ -88,7 +97,7 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
             
             Vec3 itemPosition = VecHelper.rotate(baseVector, anglePartition * itemCount, Direction.Axis.Y);
             ms.translate(itemPosition.x, itemPosition.y, itemPosition.z);
-            TransformStack.cast(ms)
+            TransformStack.of(ms)
                     .rotateY(anglePartition * itemCount + 35)
                     .rotateX(65);
             
@@ -107,7 +116,6 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
         }
         ms.popPose();
         
-        BlockState blockState = be.getBlockState();
         if (!(blockState.getBlock() instanceof CeramicMixingPotBlock))
             return;
         Direction direction = Direction.DOWN;
@@ -130,7 +138,7 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
                 continue;
             
             ms.pushPose();
-            TransformStack.cast(ms)
+            TransformStack.of(ms)
                     .translate(outVec)
                     .translate(new Vec3(0, Math.max(-.55f, -(progress * progress * 2)), 0))
                     .translate(directionVec.scale(progress * .5f))
@@ -142,9 +150,9 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
     }
     
     protected void renderItem(PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack stack) {
-        Minecraft.getInstance()
-                .getItemRenderer()
-                .renderStatic(stack, ItemTransforms.TransformType.GROUND, light, overlay, ms, buffer, 0);
+        Minecraft mc = Minecraft.getInstance();
+        mc.getItemRenderer()
+                .renderStatic(stack, ItemDisplayContext.GROUND, light, overlay, ms, buffer, mc.level, 0);
     }
     
     protected float renderFluids(CeramicMixingPotBlockEntity pot, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
@@ -179,8 +187,8 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
                 
                 float partial = Mth.clamp(units / totalUnits, 0, 1);
                 xMax += partial * 8 / 16f;
-                FluidRenderer.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light,
-                        false);
+                FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light,
+                        false, false, renderedFluid.getTag());
                 
                 xMin = xMax;
             }

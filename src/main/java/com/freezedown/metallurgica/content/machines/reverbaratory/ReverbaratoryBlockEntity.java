@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.content.machines.reverbaratory;
 
-import com.drmangotea.createindustry.registry.TFMGFluids;
+import com.drmangotea.tfmg.registry.TFMGFluids;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.MultiblockStructure;

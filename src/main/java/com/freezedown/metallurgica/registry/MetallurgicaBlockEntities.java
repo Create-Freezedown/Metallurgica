@@ -15,30 +15,25 @@ import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBloc
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerInstance;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlockEntity;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentBlockEntity;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentInstance;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentRenderer;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.segment.RotaryKilnSegmentBlockEntity;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlockEntity;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableInstance;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableRenderer;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
-import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorInstance;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotBlockEntity;
-import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotInstance;
+import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotVisual;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotRenderer;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotRenderer;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlockEntity;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
-import com.simibubi.create.content.kinetics.base.CutoutRotatingInstance;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+
+import java.util.Arrays;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.freezedown.metallurgica.registry.MetallurgicaOre.*;
@@ -75,46 +70,55 @@ public class MetallurgicaBlockEntities {
 
     public static final BlockEntityEntry<CeramicMixingPotBlockEntity> ceramicMixingPot = registrate
             .blockEntity("ceramic_mixing_pot", CeramicMixingPotBlockEntity::new)
-            .instance(() -> CeramicMixingPotInstance::new)
+            .visual(() -> CeramicMixingPotVisual::new)
             .validBlocks(MetallurgicaBlocks.ceramicMixingPot)
             .renderer(() -> CeramicMixingPotRenderer::new)
             .register();
     
-    public static final BlockEntityEntry<RotaryKilnSegmentBlockEntity> rotaryKilnSegment = registrate.blockEntity("rotary_kiln_segment", RotaryKilnSegmentBlockEntity::new)
-            .instance(() -> CutoutRotatingInstance::new, false)
-            .validBlocks(MetallurgicaBlocks.rotaryKilnSegment)
-            .renderer(() -> KineticBlockEntityRenderer::new)
-            .register();
-    
-    public static final BlockEntityEntry<HeaterSegmentBlockEntity> heaterSegment = registrate.blockEntity("heater_segment", HeaterSegmentBlockEntity::new)
-            .instance(() -> HeaterSegmentInstance::new, false)
-            .validBlocks(MetallurgicaBlocks.heaterSegment)
-            .renderer(() -> HeaterSegmentRenderer::new)
-            .register();
-    
     public static final BlockEntityEntry<ElectrolyzerBlockEntity> electrolyzer =
-            registrate.blockEntity("electrolyzer", ElectrolyzerBlockEntity::new, ElectrolyzerInstance::new, ElectrolyzerRenderer::new, MetallurgicaBlocks.electrolyzer);
+            registrate.blockEntity("electrolyzer", ElectrolyzerBlockEntity::new)
+                    .visual(() -> ElectrolyzerInstance::new)
+                    .renderer(() -> ElectrolyzerRenderer::new)
+                    .validBlocks(MetallurgicaBlocks.electrolyzer)
+                    .register();
     
     public static final BlockEntityEntry<DrillActivatorBlockEntity> drillActivator =
-            registrate.blockEntity("drill_activator", DrillActivatorBlockEntity::new, DrillActivatorInstance::new, DrillActivatorRenderer::new, MetallurgicaBlocks.drillActivator);
+            registrate.blockEntity("drill_activator", DrillActivatorBlockEntity::new)
+                    .renderer(() -> DrillActivatorRenderer::new)
+                    .validBlocks(MetallurgicaBlocks.drillActivator)
+                    .register();
 
     public static final BlockEntityEntry<DrillTowerDeployerBlockEntity> drillTowerDeployer =
-            registrate.simpleBlockEntity("drill_tower_deployer", DrillTowerDeployerBlockEntity::new, MetallurgicaBlocks.drillTowerDeployer);
+            registrate.blockEntity("drill_tower_deployer", DrillTowerDeployerBlockEntity::new)
+                    .validBlocks(MetallurgicaBlocks.drillTowerDeployer)
+                    .register();
 
     public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit =
-            registrate.simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new, values());
+            registrate.blockEntity("mineral_deposit", MineralDepositBlockEntity::new)
+                    .validBlocks(Arrays.stream(values()))
+                    .register();
     
     public static final BlockEntityEntry<ChannelDepotBlockEntity> channelDepot =
-            registrate.blockEntity("channel_depot", ChannelDepotBlockEntity::new, null, ChannelDepotRenderer::new, MetallurgicaBlocks.channelDepot);
+            registrate.blockEntity("channel_depot", ChannelDepotBlockEntity::new)
+                    .renderer(() -> ChannelDepotRenderer::new)
+                    .validBlocks(MetallurgicaBlocks.channelDepot)
+                    .register();
     
     public static final BlockEntityEntry<ChannelBlockEntity> channel =
-            registrate.blockEntity("channel", ChannelBlockEntity::new, null, ChannelRenderer::new, MetallurgicaBlocks.channelDepot);
+            registrate.blockEntity("channel", ChannelBlockEntity::new)
+                    .renderer(() -> ChannelRenderer::new)
+                    .validBlocks(MetallurgicaBlocks.channelDepot)
+                    .register();
     
     public static final BlockEntityEntry<FaucetBlockEntity> faucet =
-            registrate.simpleBlockEntity("faucet", FaucetBlockEntity::new, MetallurgicaBlocks.faucet);
+            registrate.blockEntity("faucet", FaucetBlockEntity::new)
+                    .validBlocks(MetallurgicaBlocks.faucet)
+                    .register();
     
     public static final BlockEntityEntry<TuyereBlockEntity> tuyere =
-            registrate.simpleBlockEntity("tuyere", TuyereBlockEntity::new, MetallurgicaBlocks.tuyere);
+            registrate.blockEntity("tuyere", TuyereBlockEntity::new)
+                    .validBlocks(MetallurgicaBlocks.tuyere)
+                    .register();
     
     public static final BlockEntityEntry<ReverbaratoryBlockEntity> reverbaratory = registrate
             .blockEntity("reverbaratory", ReverbaratoryBlockEntity::new)
@@ -127,18 +131,27 @@ public class MetallurgicaBlockEntities {
             .register();
     
     public static final BlockEntityEntry<ShakingTableBlockEntity> shakingTable =
-            registrate.blockEntity("shaking_table", ShakingTableBlockEntity::new, ShakingTableInstance::new, ShakingTableRenderer::new, MetallurgicaBlocks.shakingTable);
+            registrate.blockEntity("shaking_table", ShakingTableBlockEntity::new)
+                    .visual(() -> ShakingTableInstance::new)
+                    .renderer(() -> ShakingTableRenderer::new)
+                    .validBlocks(MetallurgicaBlocks.shakingTable)
+                    .register();
 
 
 
     public static final BlockEntityEntry<HearthBlockEntity> hearth =
-            registrate.simpleBlockEntity("hearth", HearthBlockEntity::new, MetallurgicaBlocks.hearth);
+            registrate.blockEntity("hearth", HearthBlockEntity::new)
+                    .validBlocks(MetallurgicaBlocks.hearth).register();
 
     public static final BlockEntityEntry<CastingTableBlockEntity> castingTable =
-            registrate.blockEntity("casting_table", CastingTableBlockEntity::new, null, CastingTableRenderer::new, MetallurgicaBlocks.castingTable);
+            registrate.blockEntity("casting_table", CastingTableBlockEntity::new)
+                    .renderer(() -> CastingTableRenderer::new)
+                    .validBlocks(MetallurgicaBlocks.castingTable)
+                    .register();
     
     public static final BlockEntityEntry<CharredLogPileBlockEntity> charredLogPile =
-            registrate.simpleBlockEntity("charred_log_pile", CharredLogPileBlockEntity::new, MetallurgicaBlocks.charredLogPile);
+            registrate.blockEntity("charred_log_pile", CharredLogPileBlockEntity::new)
+                    .validBlocks(MetallurgicaBlocks.charredLogPile).register();
 
     public static void register() {}
 }

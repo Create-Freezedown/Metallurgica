@@ -3,23 +3,27 @@ package com.freezedown.metallurgica.content.machines.shaking_table;
 import com.freezedown.metallurgica.registry.MetallurgicaPartialModels;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.belt.BeltHelper;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
+import com.simibubi.create.content.logistics.depot.DepotRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransform;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
@@ -111,7 +115,7 @@ public class ShakingTableRenderer extends KineticBlockEntityRenderer<ShakingTabl
             ItemStack itemStack = tis.stack;
             int angle = tis.angle;
             Random r = new Random(0);
-            renderItem(ms, buffer, light, overlay, itemStack, angle, r, itemPosition);
+            renderItem(be.getLevel(), ms, buffer, light, overlay, itemStack, angle, r, itemPosition);
             ms.popPose();
         }
         
@@ -133,14 +137,14 @@ public class ShakingTableRenderer extends KineticBlockEntityRenderer<ShakingTabl
                 msr.rotateY(-(360 / 8f * i));
             Random r = new Random(i + 1);
             int angle = (int) (360 * r.nextFloat());
-            renderItem(ms, buffer, light, overlay, stack, renderUpright ? angle + 90 : angle, r, itemPosition);
+            renderItem(be.getLevel(), ms, buffer, light, overlay, stack, renderUpright ? angle + 90 : angle, r, itemPosition);
             ms.popPose();
         }
         
         ms.popPose();
     }
     
-    public static void renderItem(PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack itemStack,
+    public static void renderItem(Level level, PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack itemStack,
                                   int angle, Random r, Vec3 itemPosition) {
         ItemRenderer itemRenderer = Minecraft.getInstance()
                 .getItemRenderer();
@@ -160,11 +164,10 @@ public class ShakingTableRenderer extends KineticBlockEntityRenderer<ShakingTabl
                 Vec3 vectorForOffset = itemPosition;
                 Vec3 diff = vectorForOffset.subtract(positionVec);
                 float yRot = (float) (Mth.atan2(diff.x, diff.z) + Math.PI);
-                ms.mulPose(Vector3f.YP.rotation(yRot));
+                ms.mulPose(Axis.YP.rotation(yRot));
             }
             ms.translate(0, 3 / 32d, -1 / 16f);
         }
-        
         for (int i = 0; i <= count; i++) {
             ms.pushPose();
             if (blockItem)
@@ -174,7 +177,7 @@ public class ShakingTableRenderer extends KineticBlockEntityRenderer<ShakingTabl
                 ms.translate(0, -3 / 16f, 0);
                 msr.rotateX(90);
             }
-            itemRenderer.renderStatic(itemStack, ItemTransforms.TransformType.FIXED, light, overlay, ms, buffer, 0);
+            itemRenderer.renderStatic(itemStack, ItemDisplayContext.FIXED, light, overlay, ms, buffer, level, 0);
             ms.popPose();
             
             if (!renderUpright) {

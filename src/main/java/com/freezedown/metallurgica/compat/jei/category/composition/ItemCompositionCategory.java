@@ -2,8 +2,9 @@ package com.freezedown.metallurgica.compat.jei.category.composition;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.pouffydev.krystal_core.foundation.data.lang.Components;
+import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
+import com.simibubi.create.foundation.utility.Components;
 import mezz.jei.api.gui.builder.IIngredientAcceptor;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -15,14 +16,13 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.common.gui.textures.Textures;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
         });
     }
 
-    public ItemCompositionCategory(IGuiHelper guiHelper, Textures textures) {
+    public ItemCompositionCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(160, 125);;
         this.icon = asDrawable(AllGuiTextures.JEI_QUESTION_MARK);
         this.slotBackground = asDrawable(AllGuiTextures.JEI_SLOT);
@@ -62,7 +62,6 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
         return Components.translatable("metallurgica.jei.category.element_composition");
     }
 
-    @Override
     public IDrawable getBackground() {
         return background;
     }
@@ -72,7 +71,7 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
         return icon;
     }
 
-    public void draw(ItemCompositionRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack poseStack, double mouseX, double mouseY) {
+    public void draw(ItemCompositionRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         int xPos = 0;
         int yPos = slotBackground.getHeight() + 4;
         Minecraft minecraft = Minecraft.getInstance();
@@ -80,7 +79,7 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
         for(MutableComponent element : recipe.createElementLine()) {
             int yOff = yPos += 10;
             MutableComponent descriptionLine = element.copy();
-            minecraft.font.draw(poseStack, Language.getInstance().getVisualOrder(descriptionLine), (float)xPos, (float)yOff, -16777216);
+            graphics.drawString(Minecraft.getInstance().font, Language.getInstance().getVisualOrder(descriptionLine), xPos, yOff, -16777216);
             Objects.requireNonNull(minecraft.font);
         }
     }
@@ -135,8 +134,9 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
                 return texture.height;
             }
 
-            public void draw(PoseStack poseStack, int xOffset, int yOffset) {
-                texture.render(poseStack, xOffset, yOffset);
+            @Override
+            public void draw(GuiGraphics graphics, int xOffset, int yOffset) {
+                texture.render(graphics, xOffset, yOffset);
             }
         };
     }

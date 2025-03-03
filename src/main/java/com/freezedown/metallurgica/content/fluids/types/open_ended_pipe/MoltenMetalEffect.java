@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.content.fluids.types.open_ended_pipe;
 
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
+import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.simibubi.create.content.fluids.OpenEndedPipe;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -11,7 +12,7 @@ import java.util.List;
 public class MoltenMetalEffect implements OpenEndedPipe.IEffectHandler {
     @Override
     public boolean canApplyEffects(OpenEndedPipe pipe, FluidStack fluid) {
-        return fluid.getFluid() instanceof MoltenMetal;
+        return fluid.getFluid().is(MetallurgicaTags.AllFluidTags.MOLTEN_METAL.tag);
     }
     
     @Override

@@ -5,7 +5,6 @@ import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasMovem
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureEffect;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureMinerals;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureUtil;
-import com.freezedown.metallurgica.foundation.temperature.TempUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;

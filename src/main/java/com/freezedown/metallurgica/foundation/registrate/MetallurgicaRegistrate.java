@@ -12,25 +12,20 @@ import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
-import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.foundation.block.connected.RotatedPillarCTBehaviour;
 import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.builders.FluidBuilder;
@@ -43,7 +38,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import net.minecraft.client.renderer.RenderType;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -59,7 +54,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -71,7 +66,6 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -333,42 +327,32 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
 
     //BLOCK ENTITY
-    public <T extends BlockEntity> BlockEntityEntry<T> blockEntity(
-            String name,
-            BlockEntityBuilder.BlockEntityFactory<T> factory,
-            @Nullable BiFunction<MaterialManager, T, BlockEntityInstance<? super T>> instance,
-            @Nullable NonNullFunction<BlockEntityRendererProvider.Context, BlockEntityRenderer<? super T>> renderer,
-            BlockEntry<? extends Block>... blocks) {
-        CreateBlockEntityBuilder<T, CreateRegistrate> builder = this.blockEntity(name, factory);
-        if(instance != null) {
-            builder = builder.instance(() -> instance);
-        }
-        NonNullSupplier<? extends Block>[] blocks2 = new NonNullSupplier[blocks.length];
-
-        for (int i = 0; i < blocks.length; i++) {
-            BlockEntry<? extends Block> blockEntry = blocks[i];
-            blocks2[i] = (NonNullSupplier<Block>) blockEntry::get;
-        }
-        BlockEntityBuilder<T, ?> builder2 = builder.validBlocks(blocks2);
-        if (renderer != null) {
-            builder2 = builder2.renderer(() -> renderer);
-        }
-        return builder2.register();
+    @Override
+    public <T extends BlockEntity> CreateBlockEntityBuilder<T, CreateRegistrate> blockEntity(String name,
+                                                                                             BlockEntityBuilder.BlockEntityFactory<T> factory) {
+        return blockEntity(self(), name, factory);
     }
 
-    public <T extends BlockEntity> BlockEntityEntry<T> simpleBlockEntity(
-            String name,
-            BlockEntityBuilder.BlockEntityFactory<T> factory,
-            BlockEntry<?>... blocks) {
-        return blockEntity(name, factory, null, null, blocks);
+    @Override
+    public <T extends BlockEntity, P> CreateBlockEntityBuilder<T, P> blockEntity(P parent, String name,
+                                                                                 BlockEntityBuilder.BlockEntityFactory<T> factory) {
+        return (CreateBlockEntityBuilder<T, P>) entry(name,
+                (callback) -> CreateBlockEntityBuilder.create(this, parent, name, callback, factory));
     }
 
-    public <T extends BlockEntity> BlockEntityEntry<T> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaOre[] blocks) {
+    public <T extends BlockEntity, P> CreateBlockEntityBuilder<T, P> simpleBlockEntity(
+            P parent,
+            String name,
+            BlockEntityBuilder.BlockEntityFactory<T> factory) {
+        return blockEntity(parent, name, factory);
+    }
+
+    public <T extends BlockEntity, P> CreateBlockEntityBuilder<T, P> simpleBlockEntity(P parent, String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaOre[] blocks) {
         BlockEntry[] blocks2 = new BlockEntry[blocks.length];
         for (int i = 0; i < blocks.length; i++) {
             blocks2[i] = blocks[i].MATERIAL.depositBlock();
         }
-        return simpleBlockEntity(name, factory, blocks2);
+        return simpleBlockEntity(parent, name, factory);
     }
 
     //BLOCKS
@@ -378,8 +362,8 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     ) {
         return this.block(name, MineralDepositBlock::new)
                 .transform(MBuilderTransformers.mineralDeposit())
-                .loot((p, bl) -> p.add(bl, RegistrateBlockLootTables.createSingleItemTable(Items.COBBLESTONE)
-                        .withPool(RegistrateBlockLootTables.applyExplosionCondition(mineral.get(), LootPool.lootPool()
+                .loot((lt, bl) -> lt.add(bl, lt.createSingleItemTable(Items.COBBLESTONE)
+                        .withPool(lt.applyExplosionCondition(mineral.get(), LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(2.0f, 5.0f))
                                 .add(LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
                 .lang(autoLang(name))
@@ -393,11 +377,8 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     ) {
         return this.block(name + "_rich_stone", Block::new)
                 .transform(MBuilderTransformers.mineralStone(name))
-                .loot(
-                        (lt, bl) -> lt.add(bl,
-                                RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
-                                        RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1)))
-                                                .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
+                .loot((lt, bl) -> lt.add(bl,
+                        RegistrateBlockLootTables.createSilkTouchDispatchTable(bl, lt.applyExplosionDecay(bl, LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
                 .tag(tag)
                 .lang(autoLang(name + "_rich_stone"))
                 .register();
@@ -411,7 +392,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
             NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> blockstate) {
         BlockBuilder<T, CreateRegistrate> b = this.block(name, builder)
                 .initialProperties(SharedProperties::stone)
-                .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(sound))
+                .properties(p -> p.mapColor(MapColor.COLOR_GRAY).sound(sound))
                 .transform(pickaxeOnly())
                 .blockstate(blockstate)
 //                .addLayer(() -> RenderType::cutoutMipped)
@@ -429,7 +410,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     ) {
         BlockBuilder<T, CreateRegistrate> b = this.block(name, builder)
                 .initialProperties(() -> Blocks.IRON_BLOCK)
-                .properties(p -> p.color(MaterialColor.COLOR_GRAY).sound(sound))
+                .properties(p -> p.mapColor(MapColor.COLOR_GRAY).sound(sound))
                 .blockstate(blockstate)
                 .onRegister(connectedTextures(() -> new RotatedPillarCTBehaviour(MetallurgicaSpriteShifts.directionalMetalBlock, MetallurgicaSpriteShifts.directionalMetalBlock)))
                 .simpleItem();

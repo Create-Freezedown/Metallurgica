@@ -1,13 +1,13 @@
 package com.freezedown.metallurgica.content.mineral.drill.drill_activator;
 
-import com.jozufozu.flywheel.api.Instancer;
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.content.kinetics.base.SingleRotatingInstance;
-import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 
-public class DrillActivatorInstance extends SingleRotatingInstance<DrillActivatorBlockEntity> {
-    public DrillActivatorInstance(MaterialManager materialManager, DrillActivatorBlockEntity blockEntity) {
+import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.kinetics.base.SingleAxisRotatingVisual;
+import com.simibubi.create.content.kinetics.millstone.MillstoneRenderer;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+
+public class DrillActivatorInstance extends SingleAxisRotatingVisual<DrillActivatorBlockEntity> {
+    public DrillActivatorInstance(VisualizationContext context, DrillActivatorBlockEntity blockEntity) {
         super(materialManager, blockEntity);
     }
     

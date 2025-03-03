@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.content.primitive.ceramic;
 
-import com.simibubi.create.foundation.config.ConfigBase;
+
+import net.createmod.catnip.config.ConfigBase;
 
 public class CeramicConfig extends ConfigBase {
     public final ConfigInt ceramicCookTime = i(2400, "ceramicCookTime", Comments.ceramicCookTime);

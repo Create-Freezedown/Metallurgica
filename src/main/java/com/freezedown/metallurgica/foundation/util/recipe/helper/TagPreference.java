@@ -45,7 +45,7 @@ public class TagPreference {
         return RegistryHelper.getTagValueStream(tag).min(getComparator(registry));
     }
     
-    /** Don't create a new lambda instance every time we call {@link #getPreference(TagKey)} */
+    /** Don't createIngot a new lambda instance every time we call {@link #getPreference(TagKey)} */
     private static final Function<TagKey<?>,Optional<?>> PREFERENCE_LOOKUP = TagPreference::getUncachedPreference;
     
     /**

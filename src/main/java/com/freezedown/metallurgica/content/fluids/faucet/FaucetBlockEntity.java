@@ -2,7 +2,6 @@ package com.freezedown.metallurgica.content.fluids.faucet;
 
 import com.freezedown.metallurgica.foundation.util.WeakConsumerWrapper;
 import com.freezedown.metallurgica.registry.MetallurgicaPackets;
-import com.mojang.math.Vector3f;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.fluids.FluidFX;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -23,12 +22,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.util.NonNullConsumer;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.EmptyFluidHandler;
+import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -82,7 +82,7 @@ public class FaucetBlockEntity extends SmartBlockEntity {
         assert level != null;
         BlockEntity te = level.getBlockEntity(worldPosition.relative(side));
         if (te != null) {
-            LazyOptional<IFluidHandler> handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite());
+            LazyOptional<IFluidHandler> handler = te.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite());
             if (handler.isPresent()) {
                 return handler;
             }

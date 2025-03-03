@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica;
 
-import com.drmangotea.createindustry.CreateTFMG;
 import com.freezedown.metallurgica.compat.cbc.BigCannonsCompat;
 import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
 import com.freezedown.metallurgica.content.forging.casting.SpoutCastingBehaviour;
@@ -18,15 +17,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import com.simibubi.create.api.behaviour.BlockSpoutingBehaviour;
+import com.simibubi.create.AllBlockSpoutingBehaviours;
+import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
-import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipModifier;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
@@ -63,30 +61,13 @@ public class Metallurgica
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting()
             .disableHtmlEscaping()
             .create();
-    
-    public static final CreativeModeTab itemGroup = new CreativeModeTab(ID) {
-        @Override
-        public @NotNull ItemStack makeIcon() {
-            return new ItemStack(MetallurgicaBlocks.drillExpansion.get());
-        }
-    };
 
-    public static final CreativeModeTab materialItemGroup = new CreativeModeTab(ID + "_materials") {
-    @Override
-    public @NotNull ItemStack makeIcon() {
-        return new ItemStack(MetallurgicaOre.BAUXITE.MATERIAL.depositBlock().get());
-    }
-};
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Metallurgica.ID);
     //public static final RegistryObject<Codec<? extends OreModifier>> oreGen_CODEC = BIOME_MODIFIERS.register("generation_ores", () -> Codec.unit(OreModifier.INSTANCE));
     public static final RegistryObject<Codec<? extends SurfaceDepositsModifier>> surfaceDeposits_CODEC = BIOME_MODIFIERS.register("generation_surface_deposits", () -> Codec.unit(SurfaceDepositsModifier.INSTANCE));
-    public static final TooltipHelper.Palette METALLURGICA_PALETTE = new TooltipHelper.Palette(styleFromColor(0x383d59), styleFromColor(0x717388));
-    public static final TooltipHelper.Palette TFMG_PALETTE = new TooltipHelper.Palette(styleFromColor(0x292c2d), styleFromColor(0x494a4b));
+    public static final FontHelper.Palette METALLURGICA_PALETTE = new FontHelper.Palette(styleFromColor(0x383d59), styleFromColor(0x717388));
     static {
-        registrate.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, METALLURGICA_PALETTE)
-                .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
-        CreateTFMG.REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, TFMG_PALETTE)
-                .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
+        registrate.setTooltipModifierFactory((item) -> (new ItemDescription.Modifier(item, METALLURGICA_PALETTE)).andThen(TooltipModifier.mapNull(KineticStats.create(item))));
     }
     
     public Metallurgica()
@@ -103,6 +84,7 @@ public class Metallurgica
         
         //BIOME_MODIFIERS.register(modEventBus);
         MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
+        MetallurgicaCreativeTab.register(modEventBus);
         MetallurgicaBlockEntities.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
@@ -114,8 +96,8 @@ public class Metallurgica
         MetallurgicaFeatures.register(modEventBus);
         MetallurgicaPlacementModifiers.register(modEventBus);
         MBuiltinRegistration.register(modEventBus);
-        
-        BlockSpoutingBehaviour.addCustomSpoutInteraction(asResource("casting_mold_cooling"), new SpoutCastingBehaviour());
+        MetallurgicaEntityTypes.register();
+
         MetallurgicaConfigs.register(modLoadingContext);
         
         EventHandler commonHandler = new EventHandler();
@@ -133,6 +115,7 @@ public class Metallurgica
         LOGGER.info("Setting up Metallurgica's Open Ended Pipe Effects!");
         OpenEndedPipeEffects.init();
         BigCannonsCompat.register();
+        MetallurgicaBlockSpoutingBehaviours.registerDefaults();
         MinecraftForge.EVENT_BUS.register(new ExperimentalEvents());
     };
     

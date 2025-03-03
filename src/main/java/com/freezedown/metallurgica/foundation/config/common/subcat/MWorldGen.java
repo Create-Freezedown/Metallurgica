@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.foundation.config.common.subcat;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
-import com.simibubi.create.foundation.config.ConfigBase;
+import net.createmod.catnip.config.ConfigBase;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class MWorldGen extends ConfigBase {

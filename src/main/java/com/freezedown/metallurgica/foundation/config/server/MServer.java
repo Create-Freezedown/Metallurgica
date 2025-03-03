@@ -2,8 +2,7 @@ package com.freezedown.metallurgica.foundation.config.server;
 
 import com.freezedown.metallurgica.foundation.config.server.subcat.MKinetics;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MMachineConfig;
-import com.freezedown.metallurgica.foundation.config.server.subcat.MStressConfig;
-import com.simibubi.create.foundation.config.ConfigBase;
+import net.createmod.catnip.config.ConfigBase;
 
 public class MServer extends ConfigBase {
     

@@ -1,13 +1,9 @@
 package com.freezedown.metallurgica.foundation.ponder.scenes.primitive;
 
-import com.drmangotea.createindustry.registry.TFMGPaletteStoneTypes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
 import com.simibubi.create.foundation.ponder.*;
 import com.simibubi.create.foundation.ponder.element.WorldSectionElement;
-import com.simibubi.create.infrastructure.ponder.scenes.KineticsScenes;
-import com.simibubi.create.infrastructure.ponder.scenes.ProcessingScenes;
-import com.simibubi.create.infrastructure.ponder.scenes.fluid.FluidTankScenes;
 import net.minecraft.core.Direction;
 
 public class DrillTowerScenes {

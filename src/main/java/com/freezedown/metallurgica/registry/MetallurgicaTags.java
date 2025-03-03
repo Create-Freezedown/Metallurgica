@@ -1,8 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.simibubi.create.foundation.utility.Lang;
-import net.minecraft.core.Registry;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.*;
 import net.minecraft.world.item.BlockItem;
@@ -119,7 +118,7 @@ public class MetallurgicaTags {
             if (optional) {
                 tag = optionalTag(ForgeRegistries.BIOMES, id);
             } else {
-                tag =  TagKey.create(Registry.BIOME_REGISTRY, id);
+                tag =  TagKey.create(ForgeRegistries.Keys.BIOMES, id);
             }
             this.alwaysDatagen = alwaysDatagen;
         }
@@ -237,6 +236,7 @@ public class MetallurgicaTags {
         GAS(TFMG),
         CHLORIDE(MOD),
         ACID(MOD),
+        MOLTEN_METAL(MOD),
         ;
         
         public final TagKey<Fluid> tag;

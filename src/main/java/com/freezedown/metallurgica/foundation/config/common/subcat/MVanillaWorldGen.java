@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.config.common.subcat;
 
-import com.simibubi.create.foundation.config.ConfigBase;
+
+import net.createmod.catnip.config.ConfigBase;
 
 public class MVanillaWorldGen extends ConfigBase {
     public static final int FORCED_UPDATE_VERSION = 1;

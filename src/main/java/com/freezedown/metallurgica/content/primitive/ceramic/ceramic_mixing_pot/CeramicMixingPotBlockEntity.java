@@ -1,25 +1,17 @@
 package com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot;
 
-import com.freezedown.metallurgica.registry.MetallurgicaPartialModels;
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
-import com.jozufozu.flywheel.api.Instancer;
-import com.jozufozu.flywheel.api.Material;
-import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.fluids.FluidFX;
 import com.simibubi.create.content.fluids.particle.FluidParticleData;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
-import com.simibubi.create.content.kinetics.crank.HandCrankBlock;
-import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlockEntity;
-import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.processing.basin.BasinBlock;
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
@@ -30,10 +22,14 @@ import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.item.SmartInventory;
 import com.simibubi.create.foundation.recipe.RecipeFinder;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.*;
-import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.animation.LerpedFloat;
+import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.data.IntAttached;
+import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -55,12 +51,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.*;
@@ -134,18 +128,6 @@ public class CeramicMixingPotBlockEntity extends GeneratingKineticBlockEntity im
     
     public float getIndependentAngle(float partialTicks) {
         return (independentAngle + partialTicks * chasingVelocity) / 360;
-    }
-    
-    @OnlyIn(Dist.CLIENT)
-    public SuperByteBuffer getRenderedStirrer() {
-        BlockState blockState = getBlockState();
-        return CachedBufferer.partial(MetallurgicaPartialModels.ceramicMixerStirrer, blockState);
-    }
-    
-    @OnlyIn(Dist.CLIENT)
-    public Instancer<ModelData> getRenderedStirrerInstance(Material<ModelData> material) {
-        BlockState blockState = getBlockState();
-        return material.getModel(MetallurgicaPartialModels.ceramicMixerStirrer, blockState);
     }
     
     public void stir(boolean back) {
@@ -357,8 +339,8 @@ public class CeramicMixingPotBlockEntity extends GeneratingKineticBlockEntity im
             BlockEntity be = level.getBlockEntity(worldPosition.below().relative(direction));
             
             InvManipulationBehaviour inserter = be == null ? null : BlockEntityBehaviour.get(level, be.getBlockPos(), InvManipulationBehaviour.TYPE);
-            IItemHandler targetInv = be == null ? null : be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite()).orElse(inserter == null ? null : inserter.getInventory());
-            IFluidHandler targetTank = be == null ? null : be.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite()).orElse(null);
+            IItemHandler targetInv = be == null ? null : be.getCapability(ForgeCapabilities.ITEM_HANDLER, direction.getOpposite()).orElse(inserter == null ? null : inserter.getInventory());
+            IFluidHandler targetTank = be == null ? null : be.getCapability(ForgeCapabilities.FLUID_HANDLER, direction.getOpposite()).orElse(null);
             boolean externalTankNotPresent = targetTank == null;
             
             if (!outputItems.isEmpty() && targetInv == null)
@@ -534,9 +516,9 @@ public class CeramicMixingPotBlockEntity extends GeneratingKineticBlockEntity im
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if (cap == ForgeCapabilities.ITEM_HANDLER)
             return itemCapability.cast();
-        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        if (cap == ForgeCapabilities.FLUID_HANDLER)
             return fluidCapability.cast();
         return super.getCapability(cap, side);
     }
@@ -732,7 +714,7 @@ public class CeramicMixingPotBlockEntity extends GeneratingKineticBlockEntity im
     
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        Lang.translate("gui.goggles.basin_contents")
+        MetalLang.translate("gui.goggles.basin_contents")
                 .forGoggles(tooltip);
         
         IItemHandlerModifiable items = itemCapability.orElse(new ItemStackHandler());
@@ -743,25 +725,25 @@ public class CeramicMixingPotBlockEntity extends GeneratingKineticBlockEntity im
             ItemStack stackInSlot = items.getStackInSlot(i);
             if (stackInSlot.isEmpty())
                 continue;
-            Lang.text("")
-                    .add(Components.translatable(stackInSlot.getDescriptionId())
+            MetalLang.text("")
+                    .add(Component.translatable(stackInSlot.getDescriptionId())
                             .withStyle(ChatFormatting.GRAY))
-                    .add(Lang.text(" x" + stackInSlot.getCount())
+                    .add(MetalLang.text(" x" + stackInSlot.getCount())
                             .style(ChatFormatting.GREEN))
                     .forGoggles(tooltip, 1);
             isEmpty = false;
         }
         
-        LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+        LangBuilder mb = MetalLang.translate("generic.unit.millibuckets");
         for (int i = 0; i < fluids.getTanks(); i++) {
             FluidStack fluidStack = fluids.getFluidInTank(i);
             if (fluidStack.isEmpty())
                 continue;
-            Lang.text("")
-                    .add(Lang.fluidName(fluidStack)
-                            .add(Lang.text(" "))
+            MetalLang.text("")
+                    .add(MetalLang.fluidName(fluidStack)
+                            .add(MetalLang.text(" "))
                             .style(ChatFormatting.GRAY)
-                            .add(Lang.number(fluidStack.getAmount())
+                            .add(MetalLang.number(fluidStack.getAmount())
                                     .add(mb)
                                     .style(ChatFormatting.BLUE)))
                     .forGoggles(tooltip, 1);

@@ -9,6 +9,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.BlockItem;
@@ -44,9 +45,9 @@ public class DrillingCategory extends CreateRecipeCategory<DrillingRecipe> {
         builder.addSlot(RecipeIngredientRole.OUTPUT, 160, 117).setBackground(getRenderedSlot(), -1, -1).addItemStack(recipe.getRollableResults().get(0).getStack());
     }
     
-    public void draw(DrillingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
-        AllGuiTextures.JEI_ARROW.render(matrixStack, 15, 121);
-        AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 45, 15);
+    public void draw(DrillingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+        AllGuiTextures.JEI_ARROW.render(graphics, 15, 121);
+        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 45, 15);
         
         int expansionHeight = (int) ((5 * recipe.getMinEfficiency()) / 1.1) - 1;
         
@@ -63,6 +64,6 @@ public class DrillingCategory extends CreateRecipeCategory<DrillingRecipe> {
         BlockState state = blockItem.getBlock().defaultBlockState();
         
         AnimatedDrill animatedDrill = new AnimatedDrill(state, expansionHeight);
-        animatedDrill.draw(matrixStack, 60, 135);
+        animatedDrill.draw(graphics, 60, 135);
     }
 }

@@ -1,20 +1,20 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.createindustry.registry.TFMGBlocks;
-import com.drmangotea.createindustry.registry.TFMGItems;
+import com.drmangotea.tfmg.registry.TFMGBlocks;
+import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionBuilder;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionBuilder;
 import com.google.common.collect.Sets;
-import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.AllItems;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -26,35 +26,31 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.IOException;
-import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class MetallurgicaCompositions implements DataProvider {
     private static final Logger LOGGER = LogUtils.getLogger();
-    protected final DataGenerator.PathProvider compositionPathProvider;
-    protected final DataGenerator.PathProvider fluidCompositionPathProvider;
+    protected final PackOutput.PathProvider compositionPathProvider;
+    protected final PackOutput.PathProvider fluidCompositionPathProvider;
     
     public MetallurgicaCompositions(DataGenerator pGenerator) {
-        this.compositionPathProvider = pGenerator.createPathProvider(DataGenerator.Target.DATA_PACK, "metallurgica_utilities/compositions");
-        this.fluidCompositionPathProvider = pGenerator.createPathProvider(DataGenerator.Target.DATA_PACK, "metallurgica_utilities/fluid_compositions");
+        this.compositionPathProvider = pGenerator.getPackOutput().createPathProvider(PackOutput.Target.DATA_PACK, "metallurgica_utilities/compositions");
+        this.fluidCompositionPathProvider = pGenerator.getPackOutput().createPathProvider(PackOutput.Target.DATA_PACK, "metallurgica_utilities/fluid_compositions");
     }
-    
+
     public static void register(DataGenerator gen) {
         MetallurgicaCompositions metallurgicaCompositions = new MetallurgicaCompositions(gen);
         gen.addProvider(true, new DataProvider() {
             
             @Override
-            public void run(CachedOutput cachedOutput) {
-                try {
-                    metallurgicaCompositions.run(cachedOutput);
-                } catch (Exception e) {
-                    Metallurgica.LOGGER.error("Failed to save compositions", e);
-                }
+            public CompletableFuture<?> run(CachedOutput cachedOutput) {
+                return metallurgicaCompositions.run(cachedOutput);
             }
             
             @Override
@@ -65,31 +61,24 @@ public class MetallurgicaCompositions implements DataProvider {
     }
     
     @Override
-    public void run(CachedOutput cachedOutput) {
+    public CompletableFuture<?> run(CachedOutput cachedOutput) {
         Set<ResourceLocation> set = Sets.newHashSet();
+        List<CompletableFuture<?>> list = new ArrayList();
         this.buildCompositions((pFinishedComposition) -> {
             if (!set.add(pFinishedComposition.getId())) {
                 throw new IllegalStateException("Duplicate composition " + pFinishedComposition.getId());
             } else {
-                saveComposition(cachedOutput, pFinishedComposition.serializeComposition(), this.compositionPathProvider.json(pFinishedComposition.getId()));
+                list.add(DataProvider.saveStable(cachedOutput, pFinishedComposition.serializeComposition(), this.compositionPathProvider.json(pFinishedComposition.getId())));
             }
         });
         this.buildFluidCompositions((pFinishedComposition) -> {
             if (!set.add(pFinishedComposition.getId())) {
                 throw new IllegalStateException("Duplicate composition " + pFinishedComposition.getId());
             } else {
-                saveComposition(cachedOutput, pFinishedComposition.serializeComposition(), this.fluidCompositionPathProvider.json(pFinishedComposition.getId()));
+                list.add(DataProvider.saveStable(cachedOutput, pFinishedComposition.serializeComposition(), this.fluidCompositionPathProvider.json(pFinishedComposition.getId())));
             }
         });
-    }
-    
-    private static void saveComposition(CachedOutput pOutput, JsonObject pCompositionJson, Path pPath) {
-        try {
-            DataProvider.saveStable(pOutput, pCompositionJson, pPath);
-        } catch (IOException ioexception) {
-            LOGGER.error("Couldn't save composition {}", pPath, ioexception);
-        }
-        
+        return CompletableFuture.allOf(list.toArray(CompletableFuture[]::new));
     }
     
     

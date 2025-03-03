@@ -1,12 +1,13 @@
 package com.freezedown.metallurgica.foundation.config.server.subcat;
 
-import com.simibubi.create.foundation.config.ConfigBase;
+
+import net.createmod.catnip.config.ConfigBase;
 
 public class MKinetics extends ConfigBase {
-    public final MStressConfig stressValues;
+    public final MStress stressValues;
     
     public MKinetics() {
-        this.stressValues = (MStressConfig)this.nested(1, MStressConfig::new, new String[]{MKinetics.Comments.stress});
+        this.stressValues = this.nested(1, MStress::new, Comments.stress);
     }
     
     public String getName() {

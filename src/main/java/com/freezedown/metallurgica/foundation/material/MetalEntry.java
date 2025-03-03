@@ -3,8 +3,11 @@ package com.freezedown.metallurgica.foundation.material;
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.tterrag.registrate.util.entry.FluidEntry;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.minecraft.world.item.Item;
 
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 public class MetalEntry {
     

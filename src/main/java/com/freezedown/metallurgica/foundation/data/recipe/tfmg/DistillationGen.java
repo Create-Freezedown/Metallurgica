@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.recipe.tfmg;
 
-import com.drmangotea.createindustry.registry.TFMGRecipeTypes;
+import com.drmangotea.tfmg.registry.TFMGRecipeTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;

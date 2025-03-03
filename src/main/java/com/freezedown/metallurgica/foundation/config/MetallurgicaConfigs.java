@@ -3,8 +3,9 @@ package com.freezedown.metallurgica.foundation.config;
 import com.freezedown.metallurgica.foundation.config.client.MClient;
 import com.freezedown.metallurgica.foundation.config.common.MCommon;
 import com.freezedown.metallurgica.foundation.config.server.MServer;
-import com.simibubi.create.content.kinetics.BlockStressValues;
-import com.simibubi.create.foundation.config.ConfigBase;
+import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
+import com.simibubi.create.api.stress.BlockStressValues;
+import net.createmod.catnip.config.ConfigBase;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -63,8 +64,10 @@ public class MetallurgicaConfigs {
         for (Map.Entry<ModConfig.Type, ConfigBase> pair : CONFIGS.entrySet()) {
             context.registerConfig(pair.getKey(), pair.getValue().specification);
         }
-        
-        BlockStressValues.registerProvider(context.getActiveNamespace(), server().kinetics.stressValues);
+
+        MStress stress = server().kinetics.stressValues;
+        BlockStressValues.IMPACTS.registerProvider(stress::getImpact);
+        BlockStressValues.CAPACITIES.registerProvider(stress::getCapacity);
     }
     
     @SubscribeEvent

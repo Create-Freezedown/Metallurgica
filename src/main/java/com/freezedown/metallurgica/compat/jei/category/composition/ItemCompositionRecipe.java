@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.compat.jei.category.composition;
 
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
-import com.pouffydev.krystal_core.foundation.data.lang.Components;
+import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 

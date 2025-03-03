@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.config.client;
 
-import com.simibubi.create.foundation.config.ConfigBase;
+
+import net.createmod.catnip.config.ConfigBase;
 
 public class MClient extends ConfigBase {
     

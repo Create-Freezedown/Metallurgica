@@ -1,9 +1,9 @@
 package com.freezedown.metallurgica.content.machines.blast_furnace.hearth;
 
-import com.drmangotea.createindustry.blocks.machines.TFMGMachineBlockEntity;
-import com.drmangotea.createindustry.registry.TFMGItems;
+
+import com.drmangotea.tfmg.blocks.machines.TFMGMachineBlockEntity;
+import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.content.machines.blast_furnace.HeavyBlastingRecipe;
-import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -23,12 +23,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -229,7 +228,7 @@ public class HearthBlockEntity extends TFMGMachineBlockEntity implements IHaveGo
         Lang.translate("goggles.blast_furnace.nothing_lol").style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
         
         
-        LazyOptional<IFluidHandler> handler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+        LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
         Optional<IFluidHandler> resolve = handler.resolve();
         if (!resolve.isPresent()) {
             return false;
@@ -292,10 +291,10 @@ public class HearthBlockEntity extends TFMGMachineBlockEntity implements IHaveGo
     
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return this.itemCapability.cast();
         } else {
-            return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? this.fluidCapability.cast() : super.getCapability(cap, side);
+            return cap == ForgeCapabilities.FLUID_HANDLER ? this.fluidCapability.cast() : super.getCapability(cap, side);
         }
     }
     private AABB hearthItemGrabber(Direction direction, BlockPos pos) {

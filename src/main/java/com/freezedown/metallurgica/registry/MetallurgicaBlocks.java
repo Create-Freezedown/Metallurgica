@@ -16,11 +16,6 @@ import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBloc
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinGenerator;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentBlock;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentGenerator;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.heater_segment.HeaterSegmentStructuralBlock;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.segment.RotaryKilnSegmentBlock;
-import com.freezedown.metallurgica.content.machines.rotary_kiln.segment.RotaryKilnSegmentGenerator;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlock;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableGenerator;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
@@ -36,28 +31,25 @@ import com.freezedown.metallurgica.content.primitive.log_pile.LogPileGenerator;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
+import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
-import com.simibubi.create.foundation.data.DirectionalAxisBlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
@@ -183,10 +175,9 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<Block> dirtyClay = registrate.block("dirty_clay", Block::new)
             .initialProperties(() -> Blocks.CLAY)
             .properties(p -> p.strength(0.6F).sound(SoundType.GRAVEL))
-            .loot(
-                    (lt, bl) -> lt.add(bl,
-                            RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
-                                    RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(MetallurgicaItems.dirtyClayBall.get()).apply(LimitCount.limitCount(IntRange.exact(4))))
+            .loot((lt, b) -> lt.add(b,
+                    RegistrateBlockLootTables.createSilkTouchDispatchTable(b,
+                            lt.applyExplosionDecay(b, LootItem.lootTableItem(MetallurgicaItems.dirtyClayBall.get()).apply(LimitCount.limitCount(IntRange.exact(4))))
                                             .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))
             .simpleItem()
             .register();
@@ -241,7 +232,7 @@ public class MetallurgicaBlocks {
     
     public static final BlockEntry<ConnectedGlassBlock> blastProofGlass = registrate.block("blast_proof_glass", ConnectedGlassBlock::new)
             .initialProperties(SharedProperties::stone)
-            .properties((p) -> p.color(MaterialColor.COLOR_GRAY).sound(SoundType.GLASS).strength(1.5f, 8.0f))
+            .properties((p) -> p.mapColor(MapColor.COLOR_GRAY).sound(SoundType.GLASS).strength(1.5f, 8.0f))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::translucent)
             .transform(pickaxeOnly())
@@ -252,37 +243,37 @@ public class MetallurgicaBlocks {
             .build()
             .register();
     
-    public static final BlockEntry<RotaryKilnSegmentBlock> rotaryKilnSegment  = registrate.block("rotary_kiln_segment", RotaryKilnSegmentBlock::new)
-            .initialProperties(SharedProperties::copperMetal)
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .addLayer(() -> RenderType::cutoutMipped)
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(new RotaryKilnSegmentGenerator()::generate)
-            .item().transform(customItemModel())
-            .register();
-    
-    public static final BlockEntry<HeaterSegmentStructuralBlock> heaterSegmentStructural = registrate.block("heater_segment_structural", HeaterSegmentStructuralBlock::new)
-            .initialProperties(SharedProperties::copperMetal)
-            .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStatesExcept(BlockStateGen.mapToAir(p), HeaterSegmentStructuralBlock.FACING))
-            .properties(p -> p.noOcclusion().color(MaterialColor.COLOR_LIGHT_GRAY))
-            .transform(pickaxeOnly())
-            .lang("Rotary Kiln Heater Segment")
-            .register();
-    
-    public static final BlockEntry<HeaterSegmentBlock> heaterSegment = registrate.block("heater_segment", HeaterSegmentBlock::new)
-            .initialProperties(SharedProperties::copperMetal)
-            .blockstate(new HeaterSegmentGenerator()::generate)
-            .properties(p -> p.noOcclusion().color(MaterialColor.COLOR_LIGHT_GRAY))
-            .transform(pickaxeOnly())
-            .lang("Rotary Kiln Heater Segment")
-            .simpleItem()
-            .register();
+    //public static final BlockEntry<RotaryKilnSegmentBlock> rotaryKilnSegment  = registrate.block("rotary_kiln_segment", RotaryKilnSegmentBlock::new)
+    //        .initialProperties(SharedProperties::copperMetal)
+    //        .properties(BlockBehaviour.Properties::noOcclusion)
+    //        .addLayer(() -> RenderType::cutoutMipped)
+    //        .transform(TagGen.pickaxeOnly())
+    //        .blockstate(new RotaryKilnSegmentGenerator()::generate)
+    //        .item().transform(customItemModel())
+    //        .register();
+    //
+    //public static final BlockEntry<HeaterSegmentStructuralBlock> heaterSegmentStructural = registrate.block("heater_segment_structural", HeaterSegmentStructuralBlock::new)
+    //        .initialProperties(SharedProperties::copperMetal)
+    //        .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStatesExcept(BlockStateGen.mapToAir(p), HeaterSegmentStructuralBlock.FACING))
+    //        .properties(p -> p.noOcclusion().color(MaterialColor.COLOR_LIGHT_GRAY))
+    //        .transform(pickaxeOnly())
+    //        .lang("Rotary Kiln Heater Segment")
+    //        .register();
+    //
+    //public static final BlockEntry<HeaterSegmentBlock> heaterSegment = registrate.block("heater_segment", HeaterSegmentBlock::new)
+    //        .initialProperties(SharedProperties::copperMetal)
+    //        .blockstate(new HeaterSegmentGenerator()::generate)
+    //        .properties(p -> p.mapColor(MapColor.COLOR_LIGHT_GRAY))
+    //        .transform(pickaxeOnly())
+    //        .lang("Rotary Kiln Heater Segment")
+    //        .simpleItem()
+    //        .register();
     
     //MACHINES
     public static final BlockEntry<ShakingTableBlock> shakingTable = registrate.block("shaking_table", ShakingTableBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(12.0))
+            .transform(MStress.setImpact(12.0))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .blockstate(new ShakingTableGenerator()::generate)
@@ -312,7 +303,7 @@ public class MetallurgicaBlocks {
             .initialProperties(SharedProperties::copperMetal)
             .blockstate(BlockStateGen.horizontalBlockProvider(true))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(8.0))
+            .transform(MStress.setImpact(8.0))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .item(AssemblyOperatorBlockItem::new)
@@ -322,7 +313,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<DrillActivatorBlock> drillActivator = registrate.block("drill_activator", DrillActivatorBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(6.0))
+            .transform(MStress.setImpact(6.0))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/drill_activator/block"))))
@@ -351,7 +342,7 @@ public class MetallurgicaBlocks {
 
     public static final BlockEntry<Block> drillExpansion = registrate.block("drill_expansion", Block::new)
             .initialProperties(SharedProperties::copperMetal)
-            .properties(p -> p.color(MaterialColor.COLOR_YELLOW))
+            .properties(p -> p.mapColor(MapColor.COLOR_YELLOW))
             .properties(p -> p.strength(3))
             .transform(pickaxeOnly())
             .onRegister(connectedTextures(() -> new HorizontalCTBehaviour(MetallurgicaSpriteShifts.drillExpansion)))
@@ -381,27 +372,27 @@ public class MetallurgicaBlocks {
     //SAND
     public static final BlockEntry<SandBlock> quartzSand = registrate.block("quartz_sand", p -> new SandBlock(0x8D8388, p))
             .properties(p -> p.sound(SoundType.SAND))
-            .loot(BlockLoot::dropSelf)
+            .loot(RegistrateBlockLootTables::dropSelf)
             .simpleItem()
             .register();
 
     public static final BlockEntry<SandBlock> blackSand = registrate.block("black_sand", p -> new SandBlock(0x8D8388, p))
             .properties(p -> p.sound(SoundType.SAND))
-            .loot(BlockLoot::dropSelf)
+            .loot(RegistrateBlockLootTables::dropSelf)
             .simpleItem()
             .register();
 
     public static final BlockEntry<SandBlock> siliconSand = registrate.block("silicon_sand", p -> new SandBlock(0x8D8388, p))
             .properties(p -> p.sound(SoundType.SAND))
-            .loot(BlockLoot::dropSelf)
+            .loot(RegistrateBlockLootTables::dropSelf)
             .simpleItem()
             .register();
                 //Are we sure we're still adding this guy?
     public static final BlockEntry<SandBlock> magnetiteTracedSand = registrate.block("magnetite_traced_sand", p -> new SandBlock(0x8D8388, p))
             .transform(MBuilderTransformers.mineralStone("magnetite_traced_sand"))
-            .loot((p, bl) -> p.add(bl,
+            .loot((lt, bl) -> lt.add(bl,
                     RegistrateBlockLootTables.createSilkTouchDispatchTable(bl,
-                            RegistrateBlockLootTables.applyExplosionDecay(bl, LootItem.lootTableItem(Items.SAND)))))
+                            lt.applyExplosionDecay(bl, LootItem.lootTableItem(Items.SAND)))))
             .register();
 
     //SIMPLE MACHINES

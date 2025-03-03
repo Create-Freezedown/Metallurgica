@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot;
 
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
+import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -16,10 +17,9 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -35,7 +35,7 @@ public class CeramicMixingRecipe extends ProcessingRecipe<SmartInventory> {
         if (filter == null)
             return false;
         
-        boolean filterTest = filter.test(recipe.getResultItem());
+        boolean filterTest = filter.test(recipe.getResultItem(basin.getLevel().registryAccess()));
         if (recipe instanceof CeramicMixingRecipe) {
             CeramicMixingRecipe basinRecipe = (CeramicMixingRecipe) recipe;
             if (basinRecipe.getRollableResults()
@@ -58,9 +58,9 @@ public class CeramicMixingRecipe extends ProcessingRecipe<SmartInventory> {
     
     private static boolean apply(CeramicMixingPotBlockEntity basin, Recipe<?> recipe, boolean test) {
         boolean isBasinRecipe = recipe instanceof CeramicMixingRecipe;
-        IItemHandler availableItems = basin.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        IItemHandler availableItems = basin.getCapability(ForgeCapabilities.ITEM_HANDLER)
                 .orElse(null);
-        IFluidHandler availableFluids = basin.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        IFluidHandler availableFluids = basin.getCapability(ForgeCapabilities.FLUID_HANDLER)
                 .orElse(null);
         
         if (availableItems == null || availableFluids == null)
@@ -148,7 +148,7 @@ public class CeramicMixingRecipe extends ProcessingRecipe<SmartInventory> {
                     recipeOutputFluids.addAll(basinRecipe.getFluidResults());
                     recipeOutputItems.addAll(basinRecipe.getRemainingItems(basin.getInputInventory()));
                 } else {
-                    recipeOutputItems.add(recipe.getResultItem());
+                    recipeOutputItems.add(recipe.getResultItem(basin.getLevel().registryAccess()));
                     
                     if (recipe instanceof CraftingRecipe craftingRecipe) {
                         recipeOutputItems.addAll(craftingRecipe.getRemainingItems(new DummyCraftingContainer(availableItems, extractedItemsFromSlot)));

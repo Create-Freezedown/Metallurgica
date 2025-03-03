@@ -1,4 +1,5 @@
 {
+  "itemGroup.metallurgica.base": "Metallurgica",
   "create.goggles.drill_activator.insufficient_efficiency": "Efficiency is too low. Try increasing the size of the drill.",
   "create.goggles.drill_activator.height": "Height: %s",
   "create.goggles.drill_activator.efficiency": "Efficiency: %s",
@@ -15,5 +16,5 @@
   "create.goggles.reverbaratory.stats": "Stats",
   "metallurgica.jei.required_efficiency": "Required Efficiency: %s",
   "metallurgica.gui.goggles.temperature": "Temperature:",
-  "metallurgica.jei.category.element_composition": "Element Compositions"
+  "metallurgica.jei.category.element_composition": "Element Compositions",
 }
