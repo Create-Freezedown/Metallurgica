@@ -1,9 +1,8 @@
 package com.freezedown.metallurgica.foundation.units;
 
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.LangBuilder;
-import net.minecraft.network.chat.Component;
+import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.lang.LangBuilder;
 
 import java.util.function.BiConsumer;
 

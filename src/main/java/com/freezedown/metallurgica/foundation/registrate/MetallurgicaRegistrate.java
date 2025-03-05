@@ -39,8 +39,6 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.createmod.catnip.data.Couple;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -68,7 +66,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.createDeposit;
 import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.createTypedDeposit;
@@ -340,19 +337,12 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 (callback) -> CreateBlockEntityBuilder.create(this, parent, name, callback, factory));
     }
 
-    public <T extends BlockEntity, P> CreateBlockEntityBuilder<T, P> simpleBlockEntity(
-            P parent,
-            String name,
-            BlockEntityBuilder.BlockEntityFactory<T> factory) {
-        return blockEntity(parent, name, factory);
-    }
-
-    public <T extends BlockEntity, P> CreateBlockEntityBuilder<T, P> simpleBlockEntity(P parent, String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaOre[] blocks) {
-        BlockEntry[] blocks2 = new BlockEntry[blocks.length];
-        for (int i = 0; i < blocks.length; i++) {
-            blocks2[i] = blocks[i].MATERIAL.depositBlock();
+    public <T extends BlockEntity> BlockEntityBuilder<T, CreateRegistrate> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaOre[] blocks) {
+        BlockEntityBuilder<T, CreateRegistrate> builder = blockEntity(self(), name, factory);
+        for (MetallurgicaOre ore : blocks) {
+            builder.validBlock(ore.MATERIAL.depositBlock());
         }
-        return simpleBlockEntity(parent, name, factory);
+        return builder;
     }
 
     //BLOCKS

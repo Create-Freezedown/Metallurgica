@@ -93,10 +93,7 @@ public class MetallurgicaBlockEntities {
                     .validBlocks(MetallurgicaBlocks.drillTowerDeployer)
                     .register();
 
-    public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit =
-            registrate.blockEntity("mineral_deposit", MineralDepositBlockEntity::new)
-                    .validBlocks(Arrays.stream(values()))
-                    .register();
+    public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit = registrate.simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new, values()).register();
     
     public static final BlockEntityEntry<ChannelDepotBlockEntity> channelDepot =
             registrate.blockEntity("channel_depot", ChannelDepotBlockEntity::new)

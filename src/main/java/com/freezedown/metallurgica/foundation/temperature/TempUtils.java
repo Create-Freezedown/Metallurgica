@@ -8,6 +8,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -59,7 +60,7 @@ public class TempUtils {
     
     private static Pair<ResourceLocation, Integer> getNearestValidBiome(BlockPos pos, ServerLevel level) {
         Pair<BlockPos, Holder<Biome>> locatedBiome = null;
-        for (ResourceLocation biome : level.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).keySet().stream().toList()) {
+        for (ResourceLocation biome : level.registryAccess().registryOrThrow(Registries.BIOME).keySet().stream().toList()) {
             Predicate<Holder<Biome>> biomePredicate = (biomeHolder) -> biomeHolder.get() != level.getBiome(pos).get();
             locatedBiome = level.findClosestBiome3d(biomePredicate, pos, 6400, 32, 64);
             if (locatedBiome == null) return null;
@@ -112,7 +113,7 @@ public class TempUtils {
     }
     
     public static double getPrecipitationModifier(BlockPos pos, Level level) {
-        Biome.Precipitation precipitation = level.getBiome(pos).get().getPrecipitation();
+        Biome.Precipitation precipitation = level.getBiome(pos).get().getPrecipitationAt(pos);
         boolean isRaining = level.isRaining() && level.canSeeSky(pos);
         if (precipitation == Biome.Precipitation.RAIN) {
             return isRaining ? 0.93 : 1;
@@ -138,10 +139,10 @@ public class TempUtils {
         //if (entity.level.isClientSide)
         //    entity.getPersistentData()
         //            .remove("CurrentTemperature");
-        if (entity.level.isClientSide)
+        if (entity.level().isClientSide)
             entity.getPersistentData()
                     .putDouble("CurrentTemperature",
-                            getCurrentTemperature(entity.blockPosition().mutable(), entity.level));
+                            getCurrentTemperature(entity.blockPosition().mutable(), entity.level()));
         Metallurgica.LOGGER.debug("Temperature updated t0 {}", entity.getPersistentData().getDouble("CurrentTemperature"));
     }
 }

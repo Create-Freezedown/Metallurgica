@@ -7,8 +7,8 @@ import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import com.google.common.base.Supplier;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
@@ -175,7 +175,7 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
         }
         
         private ResourceLocation getRegistryName() {
-            return compatDatagenOutput == null ? RegisteredObjects.getKeyOrThrow(result.get()
+            return compatDatagenOutput == null ? CatnipServices.REGISTRIES.getKeyOrThrow(result.get()
                     .asItem()) : compatDatagenOutput;
         }
         
@@ -270,7 +270,7 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
                         consumer.accept(
                                 isOtherMod ? new ModdedCookingRecipeResult(result, compatDatagenOutput, recipeConditions)
                                         : result);
-                    }, createSimpleLocation(RegisteredObjects.getKeyOrThrow(serializer)
+                    }, createSimpleLocation(CatnipServices.REGISTRIES.getKeyOrThrow(serializer)
                             .getPath()));
                 });
             }

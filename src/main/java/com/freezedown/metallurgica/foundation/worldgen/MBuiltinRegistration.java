@@ -5,7 +5,6 @@ import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureCon
 import com.freezedown.metallurgica.foundation.worldgen.config.MOreFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.GenericFeatureConfigEntry;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

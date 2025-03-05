@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.units;
 
-import com.simibubi.create.foundation.utility.Couple;
+
+import net.createmod.catnip.data.Couple;
 
 import java.util.function.BiConsumer;
 

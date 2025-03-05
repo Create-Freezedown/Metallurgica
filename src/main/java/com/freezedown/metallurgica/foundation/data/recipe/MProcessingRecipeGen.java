@@ -7,8 +7,9 @@ import com.freezedown.metallurgica.foundation.data.recipe.tfmg.DistillationGen;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
+import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -20,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
@@ -27,7 +29,7 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
     protected static final List<MProcessingRecipeGen> GENERATORS = new ArrayList<>();
     protected static final int BUCKET = FluidType.BUCKET_VOLUME;
     protected static final int BOTTLE = 250;
-    
+
     public MProcessingRecipeGen(DataGenerator generator) {
         super(generator);
     }
@@ -56,16 +58,12 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
             public String getName() {
                 return "Metallurgica's Processing Recipes";
             }
-            
+
             @Override
-            public void run(@NotNull CachedOutput dc) {
-                GENERATORS.forEach(g -> {
-                    try {
-                        g.run(dc);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+            public CompletableFuture<?> run(CachedOutput dc) {
+                return CompletableFuture.allOf(GENERATORS.stream()
+                        .map(gen -> gen.run(dc))
+                        .toArray(CompletableFuture[]::new));
             }
         });
     }
@@ -81,7 +79,7 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
             ItemLike itemLike = singleIngredient.get();
             transform
                     .apply(new ProcessingRecipeBuilder<>(serializer.getFactory(),
-                            new ResourceLocation(namespace, RegisteredObjects.getKeyOrThrow(itemLike.asItem())
+                            new ResourceLocation(namespace, CatnipServices.REGISTRIES.getKeyOrThrow(itemLike.asItem())
                                     .getPath())).withItemIngredients(Ingredient.of(itemLike)))
                     .build(c);
         };
@@ -134,7 +132,7 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
     
     protected Supplier<ResourceLocation> idWithSuffix(Supplier<ItemLike> item, String suffix) {
         return () -> {
-            ResourceLocation registryName = RegisteredObjects.getKeyOrThrow(item.get()
+            ResourceLocation registryName = CatnipServices.REGISTRIES.getKeyOrThrow(item.get()
                     .asItem());
             return Metallurgica.asResource(registryName.getPath() + suffix);
         };

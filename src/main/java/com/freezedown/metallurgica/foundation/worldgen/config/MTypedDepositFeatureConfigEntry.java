@@ -6,13 +6,14 @@ import com.freezedown.metallurgica.foundation.worldgen.feature.configuration.Typ
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.simibubi.create.foundation.config.ConfigBase;
-import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import net.createmod.catnip.config.ConfigBase;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -103,7 +104,7 @@ public class MTypedDepositFeatureConfigEntry extends ConfigBase {
         if (entry != null) {
             return DataResult.success(entry);
         } else {
-            return DataResult.error("Not a valid DepositFeatureConfigEntry: " + id);
+            return DataResult.error(() -> "Not a valid DepositFeatureConfigEntry: " + id);
         }
     }
     
@@ -118,16 +119,19 @@ public class MTypedDepositFeatureConfigEntry extends ConfigBase {
         public abstract ConfiguredFeature<?, ?> createConfiguredFeature(RegistryAccess registryAccess);
         
         public PlacedFeature createPlacedFeature(RegistryAccess registryAccess) {
-            Registry<ConfiguredFeature<?, ?>> featureRegistry = registryAccess.registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY);
-            Holder<ConfiguredFeature<?, ?>> featureHolder = featureRegistry.getOrCreateHolderOrThrow(ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, id));
+            Registry<ConfiguredFeature<?, ?>> featureRegistry = registryAccess.registryOrThrow(Registries.CONFIGURED_FEATURE);
+            Holder<ConfiguredFeature<?, ?>> featureHolder = featureRegistry.getHolderOrThrow(ResourceKey.create(Registries.CONFIGURED_FEATURE, id));
             return new PlacedFeature(featureHolder, List.of(new MTypedDepositConfigDrivenPlacement(parent())));
         }
         
         public BiomeModifier createBiomeModifier(RegistryAccess registryAccess) {
-            Registry<Biome> biomeRegistry = registryAccess.registryOrThrow(Registry.BIOME_REGISTRY);
-            Registry<PlacedFeature> featureRegistry = registryAccess.registryOrThrow(Registry.PLACED_FEATURE_REGISTRY);
-            HolderSet<Biome> biomes = new HolderSet.Named<>(biomeRegistry, biomeTag);
-            Holder<PlacedFeature> featureHolder = featureRegistry.getOrCreateHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, id));
+            Registry<Biome> biomeRegistry = registryAccess.registryOrThrow(Registries.BIOME);
+            Registry<PlacedFeature> featureRegistry = registryAccess.registryOrThrow(Registries.PLACED_FEATURE);
+            HolderSet<Biome> biomes = biomeRegistry.freeze().getTag(biomeTag).orElse(null);
+            Holder<PlacedFeature> featureHolder = featureRegistry.getHolderOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, id));
+            if (biomes == null) {
+
+            }
             return new ForgeBiomeModifiers.AddFeaturesBiomeModifier(biomes, HolderSet.direct(featureHolder), GenerationStep.Decoration.UNDERGROUND_ORES);
         }
         
