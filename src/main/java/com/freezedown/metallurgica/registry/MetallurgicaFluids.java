@@ -62,7 +62,7 @@ public class MetallurgicaFluids {
             sodiumHypochlorite =       acid("sodium_hypochlorite", 0xE8f1C7, 1.1f);
 
     public static final FluidEntry<RiverSandFluid> riverSand =
-            registrate.virtualFluid("river_sand", RiverSandFluidType::new, RiverSandFluid::new).lang("River Sand").register();
+            registrate.virtualFluid("river_sand", RiverSandFluidType::new, RiverSandFluid::createSource, RiverSandFluid::createFlowing).lang("River Sand").register();
 
     public static final FluidEntry<VirtualFluid>
             chlorine = gas("chlorine", 0xDBD971, AllTags.forgeFluidTag("chlorine"));

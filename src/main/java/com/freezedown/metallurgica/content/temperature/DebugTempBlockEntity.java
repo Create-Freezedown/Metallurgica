@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.content.temperature;
 
 import com.freezedown.metallurgica.foundation.temperature.TempUtils;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;

@@ -74,7 +74,7 @@ public class ChannelDepotRenderer extends SmartBlockEntityRenderer<ChannelDepotB
                 
                 float partial = Mth.clamp(units / totalUnits, 0, 1);
                 xMax += partial * 7 / 16f;
-                FluidRenderer.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light, false);
+                FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light, false, false);
                 
                 xMin = xMax;
             }

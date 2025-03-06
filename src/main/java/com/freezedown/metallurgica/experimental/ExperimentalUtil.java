@@ -34,7 +34,7 @@ public class ExperimentalUtil {
             level.addFreshEntity(shrapnel);
         }
 
-        level.explode(null, pos.getX(), pos.getY(), pos.getZ(), radius, Explosion.BlockInteraction.BREAK);
+        level.explode(null, pos.getX(), pos.getY(), pos.getZ(), radius, Level.ExplosionInteraction.BLOCK);
     }
 
 }

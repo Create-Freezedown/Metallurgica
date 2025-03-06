@@ -36,7 +36,7 @@ public class ExperimentalEvents {
     
     @SubscribeEvent
     public void onUpdate(TickEvent.PlayerTickEvent event) {
-        Level level = event.player.getLevel();
+        Level level = event.player.level();
         
         if (level.isClientSide() && level.getGameTime() % 10 == 0) {
             

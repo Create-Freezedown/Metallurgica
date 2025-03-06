@@ -14,12 +14,16 @@ import com.google.gson.JsonObject;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.simibubi.create.infrastructure.data.CreateDatagen;
+import com.simibubi.create.infrastructure.data.GeneratedEntriesProvider;
 import com.tterrag.registrate.providers.ProviderType;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
 public class MetallurgicaDatagen {
@@ -28,10 +32,16 @@ public class MetallurgicaDatagen {
         
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        PackOutput output = generator.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         
         boolean client = event.includeClient();
         boolean server = event.includeServer();
-        generator.addProvider(server, new MetallurgicaAdvancements(generator));
+        GeneratedEntriesProvider generatedEntriesProvider = new GeneratedEntriesProvider(output, lookupProvider);
+        lookupProvider = generatedEntriesProvider.getRegistryProvider();
+        generator.addProvider(event.includeServer(), generatedEntriesProvider);
+
+        generator.addProvider(server, new MetallurgicaAdvancements(output));
         if (server) {
             generator.addProvider(true, new MStandardRecipeGen(generator));
             MProcessingRecipeGen.registerAll(generator);

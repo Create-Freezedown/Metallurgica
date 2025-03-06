@@ -1,34 +1,21 @@
 package com.freezedown.metallurgica.content.forging.casting.ingot;
 
 import com.freezedown.metallurgica.content.forging.casting.AbstractCastingMoldBlock;
-import com.jozufozu.flywheel.core.StitchedSprite;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.kinetics.KineticDebugger;
-import com.simibubi.create.content.kinetics.base.IRotate;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.waterwheel.WaterWheelRenderer;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.model.BakedModelHelper;
-import com.simibubi.create.foundation.render.BakedModelRenderHelper;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.render.SuperByteBufferCache.Compartment;
-import com.simibubi.create.foundation.utility.Color;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
+import net.createmod.catnip.platform.CatnipServices;
+import net.createmod.catnip.render.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -37,7 +24,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.ChunkRenderTypeSet;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
@@ -57,7 +43,7 @@ public class IngotCastingMoldRenderer extends KineticBlockEntityRenderer<IngotCa
         
     }
     
-    public static final Compartment<IngotModelKey> INGOT = new Compartment<>();
+    public static final SuperByteBufferCache.Compartment<IngotModelKey> INGOT = new SuperByteBufferCache.Compartment<>();
     public static final StitchedSprite COPPER_BLOCK_TEMPLATE = new StitchedSprite(new ResourceLocation("block/copper_block"));
     
     private static final String[] BLOCK_SUFFIXES = new String[]{"_block", "_storage_block"};
@@ -65,12 +51,12 @@ public class IngotCastingMoldRenderer extends KineticBlockEntityRenderer<IngotCa
     
     protected SuperByteBuffer getRotatedModel(IngotCastingMoldBlockEntity be, BlockState state) {
         IngotModelKey key = new IngotModelKey(state, be.getOutput());
-        return CreateClient.BUFFER_CACHE.get(INGOT, key, () -> {
+        return SuperByteBufferCache.getInstance().get(INGOT, key, () -> {
             BakedModel model = generateModel(key);
             BlockState state1 = key.state();
             Direction dir = state1.getValue(AbstractCastingMoldBlock.FACING);
-            PoseStack transform = CachedBufferer.rotateToFaceVertical(dir).get();
-            return BakedModelRenderHelper.standardModelRender(model, Blocks.AIR.defaultBlockState(), transform);
+            PoseStack transform = CachedBuffers.rotateToFaceVertical(dir).get();
+            return SuperBufferFactory.getInstance().createForBlock(model, Blocks.AIR.defaultBlockState(), transform);
         });
     }
     
@@ -81,7 +67,7 @@ public class IngotCastingMoldRenderer extends KineticBlockEntityRenderer<IngotCa
     
     public static BakedModel generateModel(BakedModel template, ItemStack itemStack) {
         Item ingot = itemStack.getItem();
-        ResourceLocation id = RegisteredObjects.getKeyOrThrow(ingot);
+        ResourceLocation id = CatnipServices.REGISTRIES.getKeyOrThrow(ingot);
         ResourceLocation blockId = id.getPath().startsWith("ingot_") ? new ResourceLocation(id.getNamespace(), id.getPath().replace("ingot_", "block_")) : id.getPath().endsWith("_ingot") ? new ResourceLocation(id.getNamespace(), id.getPath().replace("_ingot", "_block")) : new ResourceLocation("copper_block");
         String path = blockId.getPath();
         

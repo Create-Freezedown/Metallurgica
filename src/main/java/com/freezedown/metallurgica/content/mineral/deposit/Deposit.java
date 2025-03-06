@@ -3,13 +3,14 @@ package com.freezedown.metallurgica.content.mineral.deposit;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 @SuppressWarnings("deprecation")
 public record Deposit(ItemStack mineralItem, float chance, float minimumEfficiency, BlockState replaceWith) {
-    public static final Codec<ItemStack> SINGLE_ITEM_CODEC = RecordCodecBuilder.create((instance) -> instance.group(Registry.ITEM.byNameCodec().fieldOf("id").forGetter(ItemStack::getItem)).apply(instance, (item) -> new ItemStack(item, 1)));
+    public static final Codec<ItemStack> SINGLE_ITEM_CODEC = RecordCodecBuilder.create((instance) -> instance.group(BuiltInRegistries.ITEM.byNameCodec().fieldOf("id").forGetter(ItemStack::getItem)).apply(instance, (item) -> new ItemStack(item, 1)));
     
     public static final Codec<Deposit> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             SINGLE_ITEM_CODEC.fieldOf("mineralItem").forGetter(Deposit::mineralItem),

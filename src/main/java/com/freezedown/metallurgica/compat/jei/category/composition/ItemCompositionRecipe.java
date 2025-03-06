@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.compat.jei.category.composition;
 
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
-import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 
@@ -42,12 +42,12 @@ public class ItemCompositionRecipe {
             String elementName = entry.getKey();
             int elementAmount = entry.getValue();
 
-            MutableComponent line = Components.empty();
+            MutableComponent line = Component.empty();
             float percentage = (float) elementAmount / totalElementsAmount * 100;
 
-            line.append(Components.translatable("metallurgica.element." + elementName)).append(" ");
+            line.append(Component.translatable("metallurgica.element." + elementName)).append(" ");
             if (MetallurgicaConfigs.client().whatAreTheseElements.get()) {
-                line.append("(").append(Components.translatable("metallurgica.element.name." + elementName.toLowerCase())).append(") ");
+                line.append("(").append(Component.translatable("metallurgica.element.name." + elementName.toLowerCase())).append(") ");
             }
             //The percentage should only have 3 decimal places
             percentage = (float) Math.round(percentage * 1000) / 1000;

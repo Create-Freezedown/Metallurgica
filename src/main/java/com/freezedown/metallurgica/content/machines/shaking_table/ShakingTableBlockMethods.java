@@ -78,7 +78,7 @@ public class ShakingTableBlockMethods {
             return;
         if (!entityIn.isAlive())
             return;
-        if (entityIn.level.isClientSide)
+        if (entityIn.level().isClientSide)
             return;
         
         ItemEntity itemEntity = (ItemEntity) entityIn;

@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class ChemicalBurnEffect extends MobEffect {
-    public static final DamageSource CHEMICAL_BURN = (new DamageSource("chemicalBurn")).bypassArmor().bypassEnchantments().bypassMagic().setScalesWithDifficulty();
+    //public static final DamageSource CHEMICAL_BURN = (new DamageSource("chemicalBurn")).bypassArmor().bypassEnchantments().bypassMagic().setScalesWithDifficulty();
     public ChemicalBurnEffect(int pColor) {
         super(MobEffectCategory.HARMFUL, pColor);
     }

@@ -12,11 +12,11 @@ import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlockEntity;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTableBlockEntity;
 import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTableRenderer;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlockEntity;
-import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerInstance;
+import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerVisual;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlockEntity;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlockEntity;
-import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableInstance;
+import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableVisual;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableRenderer;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
@@ -32,8 +32,6 @@ import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.Charr
 import com.freezedown.metallurgica.content.temperature.DebugTempBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-
-import java.util.Arrays;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.freezedown.metallurgica.registry.MetallurgicaOre.*;
@@ -77,7 +75,7 @@ public class MetallurgicaBlockEntities {
     
     public static final BlockEntityEntry<ElectrolyzerBlockEntity> electrolyzer =
             registrate.blockEntity("electrolyzer", ElectrolyzerBlockEntity::new)
-                    .visual(() -> ElectrolyzerInstance::new)
+                    .visual(() -> ElectrolyzerVisual::new)
                     .renderer(() -> ElectrolyzerRenderer::new)
                     .validBlocks(MetallurgicaBlocks.electrolyzer)
                     .register();
@@ -129,7 +127,7 @@ public class MetallurgicaBlockEntities {
     
     public static final BlockEntityEntry<ShakingTableBlockEntity> shakingTable =
             registrate.blockEntity("shaking_table", ShakingTableBlockEntity::new)
-                    .visual(() -> ShakingTableInstance::new)
+                    .visual(() -> ShakingTableVisual::new)
                     .renderer(() -> ShakingTableRenderer::new)
                     .validBlocks(MetallurgicaBlocks.shakingTable)
                     .register();

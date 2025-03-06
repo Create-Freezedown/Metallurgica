@@ -1,13 +1,10 @@
 package com.freezedown.metallurgica.content.fluids.types.open_ended_pipe;
 
-import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.fluids.FluidDamageSource;
 import com.freezedown.metallurgica.content.fluids.types.Acid;
-import com.simibubi.create.content.fluids.OpenEndedPipe;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaDamageSources;
+import com.simibubi.create.api.effect.OpenPipeEffectHandler;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -18,70 +15,48 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
 
-public class AcidEffect implements OpenEndedPipe.IEffectHandler {
-    protected final Acid acidType;
-    
-    public AcidEffect(Acid acidType) {
-        this.acidType = acidType;
+public class AcidHandler implements OpenPipeEffectHandler {
+
+    public AcidHandler() {
     }
     
-    @Override
-    public boolean canApplyEffects(OpenEndedPipe pipe, FluidStack fluid) {
-        return fluid.getFluid().isSame(acidType);
-    }
-    
-    @Override
-    public void applyEffects(OpenEndedPipe pipe, FluidStack fluid) {
-        Level world = pipe.getWorld();
-        if (world.getGameTime() % 5 != 0) return;
-        float acidity = acidType.getAcidity();
-        if (acidType.isNeutral()) {
-            neutralEffect(pipe, acidType, world, acidity);
-        } else if (acidType.isBase()) {
-            baseEffect(pipe, acidType, world, acidity);
-        } else if (acidType.isAcid()) {
-            acidEffect(pipe, acidType, world, acidity);
-        }
-    }
-    
-    private void neutralEffect(OpenEndedPipe pipe, Acid acid, Level level, float acidity) {
-        List<Entity> entities = level.getEntities((Entity) null, pipe.getAOE(), entity -> !entity.fireImmune());
+    private void neutralEffect(AABB area, Acid acid, Level level, float acidity) {
+        List<Entity> entities = level.getEntities((Entity) null, area, entity -> !entity.fireImmune());
         for (Entity entity : entities) {
             entity.clearFire();
-            BlockPos.betweenClosedStream(pipe.getAOE()).forEach(pos -> dowseFire(level, pos));
+            BlockPos.betweenClosedStream(area).forEach(pos -> dowseFire(level, pos));
         }
     }
     
-    private void baseEffect(OpenEndedPipe pipe, Acid acid, Level level, float acidity) {
+    private void baseEffect(AABB area, Acid acid, Level level, float acidity) {
         if (acid.dousesFire()) {
-            List<Entity> entities = level.getEntities((Entity) null, pipe.getAOE(), entity -> !entity.fireImmune());
+            List<Entity> entities = level.getEntities((Entity) null, area, entity -> !entity.fireImmune());
             for (Entity entity : entities) {
                 entity.clearFire();
-                BlockPos.betweenClosedStream(pipe.getAOE()).forEach(pos -> dowseFire(level, pos));
+                BlockPos.betweenClosedStream(area).forEach(pos -> dowseFire(level, pos));
             }
         }
     }
     
-    private void acidEffect(OpenEndedPipe pipe, Acid acid, Level level, float acidity) {
-        Vec3 sourcePosition = new Vec3(pipe.getOutputPos().getX(), pipe.getOutputPos().getY(), pipe.getOutputPos().getZ());
-        DamageSource acidDamage = new FluidDamageSource("acid", acid, sourcePosition).bypassMagic();
+    private void acidEffect(AABB area, Acid acid, Level level, float acidity) {
         int fireSeconds = acid.isAcid() ? (int) (7 - acidity) * 2 : 3;
         boolean causeBlindness = acidity < 3;
-        List<LivingEntity> mobs = level.getEntitiesOfClass(LivingEntity.class, pipe.getAOE());
+        List<LivingEntity> mobs = level.getEntitiesOfClass(LivingEntity.class, area);
         for (LivingEntity mob : mobs) {
             if (causeBlindness) {
                 MobEffectInstance blindness = new MobEffectInstance(MobEffects.BLINDNESS, 40, 4, false, false);
                 mob.addEffect(blindness);
             }
             float hurtAmount = mob.fireImmune() ? 0.5F : 1.0F;
-            mob.hurt(acidDamage, hurtAmount * fireSeconds);
+            mob.hurt(MetallurgicaDamageSources.acidBurn(level, mob, acid), hurtAmount * fireSeconds);
         }
-        BlockPos.betweenClosedStream(pipe.getAOE()).forEach(pos -> corrodeCopper(level, pos));
+        BlockPos.betweenClosedStream(area).forEach(pos -> corrodeCopper(level, pos));
     }
     
     private static void dowseFire(Level level, BlockPos pos) {
@@ -105,5 +80,23 @@ public class AcidEffect implements OpenEndedPipe.IEffectHandler {
         if (block instanceof WeatheringCopper weatheringCopper && WeatheringCopper.getNext(block).isPresent()) {
             weatheringCopper.getNext(blockState).ifPresent(state -> level.setBlockAndUpdate(pos, state));
         }
+    }
+
+    @Override
+    public void apply(Level level, AABB area, FluidStack fluidStack) {
+        if (level.getGameTime() % 5 != 0) return;
+        Fluid fluid = fluidStack.getFluid();
+        float acidity;
+        if (fluid instanceof Acid acid) {
+            acidity = acid.getAcidity();
+            if (acid.isNeutral()) {
+                neutralEffect(area, acid, level, acidity);
+            } else if (acid.isBase()) {
+                baseEffect(area, acid, level, acidity);
+            } else if (acid.isAcid()) {
+                acidEffect(area, acid, level, acidity);
+            }
+        }
+
     }
 }

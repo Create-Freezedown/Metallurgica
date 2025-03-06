@@ -39,8 +39,8 @@ public class DrillingCategory extends CreateRecipeCategory<DrillingRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 4, 112)
                 .setBackground(getRenderedSlot(), -1, -1)
                 .addIngredients(recipe.getIngredients().get(0))
-                .addTooltipCallback((recipeSlotView, tooltip) -> {
-                    tooltip.add(1, Component.translatable("metallurgica.jei.required_efficiency", recipe.getMinEfficiency()).withStyle(Style.EMPTY.withColor(0x8c4a2d)));
+                .addRichTooltipCallback((recipeSlotView, tooltip) -> {
+                    tooltip.add(Component.translatable("metallurgica.jei.required_efficiency", recipe.getMinEfficiency()).withStyle(Style.EMPTY.withColor(0x8c4a2d)));
                 });
         builder.addSlot(RecipeIngredientRole.OUTPUT, 160, 117).setBackground(getRenderedSlot(), -1, -1).addItemStack(recipe.getRollableResults().get(0).getStack());
     }

@@ -1,14 +1,14 @@
 package com.freezedown.metallurgica.content.forging.advanced_casting;
 
 import com.drmangotea.tfmg.blocks.machines.TFMGMachineBlockEntity;
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.item.SmartInventory;
 import com.simibubi.create.foundation.recipe.RecipeFinder;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -82,7 +82,7 @@ public class CastingTableBlockEntity extends TFMGMachineBlockEntity implements I
                     }
                     
                     if (this.timer == 0) {
-                        this.outputInventory.setStackInSlot(0, this.recipe.getRecipeOutput().copy());
+                        this.outputInventory.setStackInSlot(0, this.recipe.getRecipeOutput(level.registryAccess()).copy());
                         this.tank1.getPrimaryHandler().setFluid(new FluidStack(Fluids.EMPTY, 0));
                         this.timer = -1;
                     }
@@ -169,14 +169,14 @@ public class CastingTableBlockEntity extends TFMGMachineBlockEntity implements I
             if (tank.getTanks() == 0) {
                 return false;
             } else {
-                LangBuilder mb = Lang.translate("generic.unit.millibuckets", new Object[0]);
+                LangBuilder mb = MetalLang.translate("generic.unit.millibuckets", new Object[0]);
                 boolean isEmpty = true;
                 
                 for(int i = 0; i < tank.getTanks(); ++i) {
                     FluidStack fluidStack = tank.getFluidInTank(i);
                     if (!fluidStack.isEmpty()) {
-                        Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                        Lang.builder().add(Lang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.DARK_GREEN)).text(ChatFormatting.GRAY, " / ").add(Lang.number(tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+                        MetalLang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+                        MetalLang.builder().add(MetalLang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.DARK_GREEN)).text(ChatFormatting.GRAY, " / ").add(MetalLang.number(tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
                         isEmpty = false;
                     }
                 }
@@ -190,7 +190,7 @@ public class CastingTableBlockEntity extends TFMGMachineBlockEntity implements I
                 } else if (!isEmpty) {
                     return true;
                 } else {
-                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number((double)tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                    MetalLang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(MetalLang.number((double)tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
                     return true;
                 }
             }

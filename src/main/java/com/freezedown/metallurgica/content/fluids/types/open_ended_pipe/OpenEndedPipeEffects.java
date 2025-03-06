@@ -1,17 +1,18 @@
 package com.freezedown.metallurgica.content.fluids.types.open_ended_pipe;
 
-import com.freezedown.metallurgica.content.fluids.types.Acid;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
-import com.simibubi.create.content.fluids.OpenEndedPipe;
+import com.freezedown.metallurgica.registry.MetallurgicaTags;
+import com.simibubi.create.api.effect.OpenPipeEffectHandler;
+import com.simibubi.create.api.registry.SimpleRegistry;
 
 public class OpenEndedPipeEffects {
     
     public static void init() {
-        OpenEndedPipe.registerEffectHandler(new MoltenMetalEffect());
-        OpenEndedPipe.registerEffectHandler(new AcidEffect(MetallurgicaFluids.hydrochloricAcid.get()));
-        OpenEndedPipe.registerEffectHandler(new AcidEffect(MetallurgicaFluids.sulfuricAcid.get()));
-        OpenEndedPipe.registerEffectHandler(new AcidEffect(MetallurgicaFluids.sodiumHydroxide.get()));
-        OpenEndedPipe.registerEffectHandler(new AcidEffect(MetallurgicaFluids.sodiumHypochlorite.get()));
+        OpenPipeEffectHandler.REGISTRY.registerProvider(SimpleRegistry.Provider.forFluidTag(MetallurgicaTags.AllFluidTags.MOLTEN_METAL.tag, new MoltenMetalHandler()));
+        OpenPipeEffectHandler.REGISTRY.register(MetallurgicaFluids.hydrochloricAcid.getSource(), new AcidHandler());
+        OpenPipeEffectHandler.REGISTRY.register(MetallurgicaFluids.sulfuricAcid.getSource(), new AcidHandler());
+        OpenPipeEffectHandler.REGISTRY.register(MetallurgicaFluids.sodiumHydroxide.getSource(), new AcidHandler());
+        OpenPipeEffectHandler.REGISTRY.register(MetallurgicaFluids.sodiumHypochlorite.getSource(), new AcidHandler());
     }
     
 }

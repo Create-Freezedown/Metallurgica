@@ -3,9 +3,9 @@ package com.freezedown.metallurgica.content.machines.electolizer;
 import com.simibubi.create.content.kinetics.base.ShaftVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 
-public class ElectrolyzerInstance extends ShaftVisual<ElectrolyzerBlockEntity> {
+public class ElectrolyzerVisual extends ShaftVisual<ElectrolyzerBlockEntity> {
     
-    public ElectrolyzerInstance(VisualizationContext visualizationContext, ElectrolyzerBlockEntity blockEntity, float partialTick) {
+    public ElectrolyzerVisual(VisualizationContext visualizationContext, ElectrolyzerBlockEntity blockEntity, float partialTick) {
         super(visualizationContext, blockEntity, partialTick);
     }
     

@@ -148,7 +148,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
     
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
-        return virtualFluid(name, still, flow, TintedFluid.create(color, still, flow), VirtualFluid::new);
+        return virtualFluid(name, still, flow, TintedFluid.create(color, still, flow), VirtualFluid::createSource, VirtualFluid::createFlowing);
     }
     
     
@@ -171,7 +171,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         ResourceLocation itemTexture = Metallurgica.asResource("item/molten_metal_bucket");
         ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
-        return virtualFluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, p -> new MoltenMetal(p).moltenTemperature(moltenTemperature))
+        return virtualFluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, p -> MoltenMetal.createSource(p).moltenTemperature(moltenTemperature), p -> MoltenMetal.createFlowing(p).moltenTemperature(moltenTemperature))
                 .lang(autoLang(id))
                 .tag(MetallurgicaTags.modFluidTag("molten_metals/" + name))
                 .tag(MetallurgicaTags.modFluidTag("molten_metals"))
@@ -191,7 +191,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         if (acidity > 14 || acidity < 0) {
             throw new IllegalArgumentException("Acidity must be between 0 and 14 for " + name);
         }
-        return virtualFluid(name, still, flow, TintedFluid.create(color), p -> new Acid(p).acidity(acidity));
+        return virtualFluid(name, still, flow, TintedFluid.create(color), (p) -> Acid.createSource(p).acidity(acidity), (p) -> Acid.createFlowing(p).acidity(acidity));
     }
 
     //ITEM

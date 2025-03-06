@@ -6,6 +6,7 @@ import com.freezedown.metallurgica.foundation.util.CommonUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.ItemLike;
 import java.util.List;
 import java.util.function.Consumer;
 
+@SuppressWarnings("deprecation")
 public class CompositionBuilder {
     private final ItemLike item;
     private final List<Element> elements;
@@ -27,7 +29,7 @@ public class CompositionBuilder {
     }
     
     static ResourceLocation getDefaultCompositionId(ItemLike pItemLike) {
-        return Registry.ITEM.getKey(pItemLike.asItem());
+        return BuiltInRegistries.ITEM.getKey(pItemLike.asItem());
     }
     
     public void save(Consumer<FinishedComposition> pFinishedCompositionConsumer) {

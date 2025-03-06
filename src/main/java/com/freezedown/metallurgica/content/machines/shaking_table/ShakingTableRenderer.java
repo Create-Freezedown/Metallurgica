@@ -1,21 +1,18 @@
 package com.freezedown.metallurgica.content.machines.shaking_table;
 
 import com.freezedown.metallurgica.registry.MetallurgicaPartialModels;
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.belt.BeltHelper;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
-import com.simibubi.create.content.logistics.depot.DepotRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.VecHelper;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransform;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
@@ -56,7 +53,7 @@ public class ShakingTableRenderer extends KineticBlockEntityRenderer<ShakingTabl
             offset = getTableVibration(partialTicks);
         }
         float constOffset = (float) (1.5 / 16.0F);
-        SuperByteBuffer superBuffer = CachedBufferer.partialFacing(MetallurgicaPartialModels.shakerPlatform, blockState, blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
+        SuperByteBuffer superBuffer = CachedBuffers.partialFacing(MetallurgicaPartialModels.shakerPlatform, blockState, blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
         if (blockState.getValue(ShakingTableBlock.HORIZONTAL_FACING).getAxis() == Direction.Axis.Z) {
             if (blockState.getValue(ShakingTableBlock.HORIZONTAL_FACING) == Direction.NORTH) {
                 superBuffer.translate(0.0, 0.0, -constOffset);
@@ -80,7 +77,7 @@ public class ShakingTableRenderer extends KineticBlockEntityRenderer<ShakingTabl
     public static void renderItemsOf(ShakingTableBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, ShakingTableBehaviour shakingTableBehaviour) {
         
         TransportedItemStack transported = shakingTableBehaviour.heldItem;
-        TransformStack msr = TransformStack.cast(ms);
+        TransformStack msr = TransformStack.of(ms);
         Vec3 itemPosition = VecHelper.getCenterOf(be.getBlockPos());
         float itemOffset = 0.0F;
         if (be.haveRecipe()) {
@@ -148,7 +145,7 @@ public class ShakingTableRenderer extends KineticBlockEntityRenderer<ShakingTabl
                                   int angle, Random r, Vec3 itemPosition) {
         ItemRenderer itemRenderer = Minecraft.getInstance()
                 .getItemRenderer();
-        TransformStack msr = TransformStack.cast(ms);
+        TransformStack msr = TransformStack.of(ms);
         int count = (int) (Mth.log2((int) (itemStack.getCount()))) / 2;
         boolean renderUpright = BeltHelper.isItemUpright(itemStack);
         boolean blockItem = itemRenderer.getModel(itemStack, null, null, 0)

@@ -37,7 +37,7 @@ public class ShakingCategory extends CreateRecipeCategory<ShakingRecipe> {
             ProcessingOutput output = var7.next();
             int xOffset = i % 2 == 0 ? 0 : 19;
             int yOffset = i / 2 * -19;
-            builder.addSlot(RecipeIngredientRole.OUTPUT, single ? 139 : 133 + xOffset, 27 + yOffset).setBackground(getRenderedSlot(output), -1, -1).addItemStack(output.getStack()).addTooltipCallback(addStochasticTooltip(output));
+            builder.addSlot(RecipeIngredientRole.OUTPUT, single ? 139 : 133 + xOffset, 27 + yOffset).setBackground(getRenderedSlot(output), -1, -1).addItemStack(output.getStack()).addRichTooltipCallback(addStochasticTooltip(output));
         }
     }
     

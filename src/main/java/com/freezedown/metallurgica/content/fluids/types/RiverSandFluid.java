@@ -11,8 +11,18 @@ import net.minecraftforge.fluids.FluidType;
 import java.util.function.Consumer;
 
 public class RiverSandFluid extends VirtualFluid {
-    public RiverSandFluid(Properties properties) {
-        super(properties);
+
+
+    public static RiverSandFluid createSource(Properties properties) {
+        return new RiverSandFluid(properties, true);
+    }
+
+    public static RiverSandFluid createFlowing(Properties properties) {
+        return new RiverSandFluid(properties, false);
+    }
+
+    public RiverSandFluid(Properties properties, boolean source) {
+        super(properties, source);
     }
     
     public static FluidStack of(int amount, String mineral) {

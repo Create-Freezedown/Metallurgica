@@ -1,17 +1,15 @@
 package com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot;
 
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
+
+import com.freezedown.metallurgica.foundation.util.MetalLang;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -37,10 +35,10 @@ public class CeramicPotBlockItem extends BlockItem {
     
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+        LangBuilder mb = MetalLang.translate("generic.unit.millibuckets");
         if (hasFluid(pStack)) {
             pTooltipComponents.add(getFluid(pStack).getDisplayName());
-            pTooltipComponents.add(Lang.builder().add(Lang.number(getFluid(pStack).getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number(1000).add(mb).style(ChatFormatting.DARK_GRAY)).component());
+            pTooltipComponents.add(MetalLang.builder().add(MetalLang.number(getFluid(pStack).getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(MetalLang.number(1000).add(mb).style(ChatFormatting.DARK_GRAY)).component());
         }
     }
     

@@ -9,7 +9,6 @@ import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
 import com.freezedown.metallurgica.registry.*;
-import com.jozufozu.flywheel.util.Textures;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;

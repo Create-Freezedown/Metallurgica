@@ -4,13 +4,13 @@ package com.freezedown.metallurgica.content.machines.blast_furnace.hearth;
 import com.drmangotea.tfmg.blocks.machines.TFMGMachineBlockEntity;
 import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.content.machines.blast_furnace.HeavyBlastingRecipe;
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.item.SmartInventory;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
-import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import net.createmod.catnip.animation.LerpedFloat;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -213,19 +213,19 @@ public class HearthBlockEntity extends TFMGMachineBlockEntity implements IHaveGo
     }
     
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        Lang.translate("goggles.blast_furnace.stats").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+        MetalLang.translate("goggles.blast_furnace.stats").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
         if (this.timer > 0) {
-            Lang.translate("goggles.blast_furnace.status.running").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+            MetalLang.translate("goggles.blast_furnace.status.running").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
         } else {
-            Lang.translate("goggles.blast_furnace.status.off").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+            MetalLang.translate("goggles.blast_furnace.status.off").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
         }
+
+        MetalLang.translate("goggles.blast_furnace.size_stats").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
         
-        Lang.translate("goggles.blast_furnace.size_stats").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
-        
-        Lang.translate("goggles.misc.storage_info").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
-        Lang.translate("goggles.blast_furnace.item_count", this.inputInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
-        Lang.translate("goggles.blast_furnace.fuel_amount", this.fuelInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
-        Lang.translate("goggles.blast_furnace.nothing_lol").style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
+        MetalLang.translate("goggles.misc.storage_info").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+        MetalLang.translate("goggles.blast_furnace.item_count", this.inputInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
+        MetalLang.translate("goggles.blast_furnace.fuel_amount", this.fuelInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
+        MetalLang.translate("goggles.blast_furnace.nothing_lol").style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
         
         
         LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
@@ -237,14 +237,14 @@ public class HearthBlockEntity extends TFMGMachineBlockEntity implements IHaveGo
             if (tank.getTanks() == 0) {
                 return false;
             } else {
-                LangBuilder mb = Lang.translate("generic.unit.millibuckets", new Object[0]);
+                LangBuilder mb = MetalLang.translate("generic.unit.millibuckets", new Object[0]);
                 boolean isEmpty = true;
                 
                 for(int i = 0; i < tank.getTanks(); ++i) {
                     FluidStack fluidStack = tank.getFluidInTank(i);
                     if (!fluidStack.isEmpty()) {
-                        Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                        Lang.builder().add(Lang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.DARK_GREEN)).text(ChatFormatting.GRAY, " / ").add(Lang.number(tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+                        MetalLang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+                        MetalLang.builder().add(MetalLang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.DARK_GREEN)).text(ChatFormatting.GRAY, " / ").add(MetalLang.number(tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
                         isEmpty = false;
                     }
                 }
@@ -258,7 +258,7 @@ public class HearthBlockEntity extends TFMGMachineBlockEntity implements IHaveGo
                 } else if (!isEmpty) {
                     return true;
                 } else {
-                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                    MetalLang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(MetalLang.number(tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
                     return true;
                 }
             }

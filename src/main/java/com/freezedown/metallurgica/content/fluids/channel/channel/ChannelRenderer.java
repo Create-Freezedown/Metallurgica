@@ -1,12 +1,13 @@
 package com.freezedown.metallurgica.content.fluids.channel.channel;
 
 import com.freezedown.metallurgica.registry.MetallurgicaPartialModels;
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.fluid.FluidRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
+import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -24,19 +25,19 @@ public class ChannelRenderer extends SafeBlockEntityRenderer<ChannelBlockEntity>
         BlockState blockState = be.getBlockState();
         VertexConsumer vb = buffer.getBuffer(RenderType.solid());
         ms.pushPose();
-        TransformStack msr = TransformStack.cast(ms);
+        TransformStack<PoseTransformStack> msr = TransformStack.of(ms);
         msr.translate(0.5, 0.5, 0.5);
         if (be.north) {
-            CachedBufferer.partial(MetallurgicaPartialModels.channelSide, blockState).unCentre().light(light).renderInto(ms, vb);
+            CachedBuffers.partial(MetallurgicaPartialModels.channelSide, blockState).uncenter().light(light).renderInto(ms, vb);
         }
         if (be.east) {
-            CachedBufferer.partial(MetallurgicaPartialModels.channelSide, blockState).rotateY(270.0).unCentre().light(light).renderInto(ms, vb);
+            CachedBuffers.partial(MetallurgicaPartialModels.channelSide, blockState).rotateY(270.0f).uncenter().light(light).renderInto(ms, vb);
         }
         if (be.south) {
-            CachedBufferer.partial(MetallurgicaPartialModels.channelSide, blockState).rotateY(180.0).unCentre().light(light).renderInto(ms, vb);
+            CachedBuffers.partial(MetallurgicaPartialModels.channelSide, blockState).rotateY(180.0f).uncenter().light(light).renderInto(ms, vb);
         }
         if (be.west) {
-            CachedBufferer.partial(MetallurgicaPartialModels.channelSide, blockState).rotateY(90.0).unCentre().light(light).renderInto(ms, vb);
+            CachedBuffers.partial(MetallurgicaPartialModels.channelSide, blockState).rotateY(90.0f).uncenter().light(light).renderInto(ms, vb);
         }
         
         ms.popPose();
@@ -84,11 +85,11 @@ public class ChannelRenderer extends SafeBlockEntityRenderer<ChannelBlockEntity>
         
         if (!fluidStack.isEmpty()) {
             ms.pushPose();
-            FluidRenderer.renderFluidBox(fluidStack, xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light, false);
-            FluidRenderer.renderFluidBox(fluidStack, xMinN, yMin, zMinN, xMaxN, yMaxN, zMaxN, buffer, ms, light, false);
-            FluidRenderer.renderFluidBox(fluidStack, xMinE, yMin, zMinE, xMaxE, yMaxE, zMaxE, buffer, ms, light, false);
-            FluidRenderer.renderFluidBox(fluidStack, xMinS, yMin, zMinS, xMaxS, yMaxS, zMaxS, buffer, ms, light, false);
-            FluidRenderer.renderFluidBox(fluidStack, xMinW, yMin, zMinW, xMaxW, yMaxW, zMaxW, buffer, ms, light, false);
+            FluidRenderer.renderFluidBox(fluidStack.getFluid(), fluidStack.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light, false, false);
+            FluidRenderer.renderFluidBox(fluidStack.getFluid(), fluidStack.getAmount(), xMinN, yMin, zMinN, xMaxN, yMaxN, zMaxN, buffer, ms, light, false, false);
+            FluidRenderer.renderFluidBox(fluidStack.getFluid(), fluidStack.getAmount(), xMinE, yMin, zMinE, xMaxE, yMaxE, zMaxE, buffer, ms, light, false, false);
+            FluidRenderer.renderFluidBox(fluidStack.getFluid(), fluidStack.getAmount(), xMinS, yMin, zMinS, xMaxS, yMaxS, zMaxS, buffer, ms, light, false, false);
+            FluidRenderer.renderFluidBox(fluidStack.getFluid(), fluidStack.getAmount(), xMinW, yMin, zMinW, xMaxW, yMaxW, zMaxW, buffer, ms, light, false, false);
             
             ms.popPose();
         }

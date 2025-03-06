@@ -5,12 +5,11 @@ import com.freezedown.metallurgica.content.mineral.deposit.Deposit;
 import com.freezedown.metallurgica.content.mineral.deposit.DepositManager;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.item.SmartInventory;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
 import joptsimple.internal.Strings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -289,24 +288,24 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
         }
         String extracting = deposit.mineralItem().getDisplayName().getString().replace("[", "").replace("]", "");
         Component extractingComponent = Component.literal(extracting);
-        Lang.translate("goggles.drill_activator").forGoggles(tooltip);
-        Lang.translate("goggles.drill_activator.deposit", extractingComponent).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+        MetalLang.translate("goggles.drill_activator").forGoggles(tooltip);
+        MetalLang.translate("goggles.drill_activator.deposit", extractingComponent).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
         if (isPlayerSneaking) {
-            Lang.translate("goggles.drill_activator.item").forGoggles(tooltip);
+            MetalLang.translate("goggles.drill_activator.item").forGoggles(tooltip);
             if (inventory.getStackInSlot(0).isEmpty()) {
-                Lang.translate("goggles.drill_activator.item.empty").style(ChatFormatting.DARK_RED).forGoggles(tooltip);
+                MetalLang.translate("goggles.drill_activator.item.empty").style(ChatFormatting.DARK_RED).forGoggles(tooltip);
             } else {
                 tooltip.add(storedItem());
             }
         }
         if (efficiency < deposit.minimumEfficiency()) {
-            Lang.translate("goggles.drill_activator.insufficient_efficiency").style(ChatFormatting.DARK_RED).forGoggles(tooltip);
+            MetalLang.translate("goggles.drill_activator.insufficient_efficiency").style(ChatFormatting.DARK_RED).forGoggles(tooltip);
         } else {
             if (!isPlayerSneaking) {
-                Lang.translate("goggles.drill_activator.height", height).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
-                Lang.translate("goggles.drill_activator.efficiency", efficiency).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+                MetalLang.translate("goggles.drill_activator.height", height).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
+                MetalLang.translate("goggles.drill_activator.efficiency", efficiency).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip);
             }
-            Lang.translate("goggles.drill_activator.progress", progress).forGoggles(tooltip);
+            MetalLang.translate("goggles.drill_activator.progress", progress).forGoggles(tooltip);
             tooltip.add(progressBar(progress));
         }
         
@@ -314,7 +313,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
     }
     private MutableComponent storedItem() {
         MutableComponent itemName = Component.literal(inventory.getStackInSlot(0).getDisplayName().getString().replace("[", "").replace("]", ""));
-        return Lang.builder()
+        return MetalLang.builder()
                 .text(Strings.repeat(' ', 4))
                 .add(itemName)
                 .text(" x" + inventory.getStackInSlot(0).getCount())
@@ -323,7 +322,7 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
     }
     private MutableComponent progressBar(int progress) {
         int redBars = maxProgress - progress;
-        return Lang.builder().text(Strings.repeat(' ', 4))
+        return MetalLang.builder().text(Strings.repeat(' ', 4))
                 .add(bars(progress, ChatFormatting.DARK_GREEN))
                 .add(bars(redBars, ChatFormatting.DARK_RED))
                 .add(percent(progress))
@@ -332,12 +331,12 @@ public class DrillActivatorBlockEntity extends KineticBlockEntity implements IHa
     
     private MutableComponent percent(int progress) {
         float percent = Math.round((float) progress / maxProgress * 100);
-        return Lang.builder().text(" ")
+        return MetalLang.builder().text(" ")
                 .text(percent + "%")
                 .component();
     }
     private MutableComponent bars(int level, ChatFormatting format) {
-        return Components.literal(Strings.repeat('|', level))
+        return Component.literal(Strings.repeat('|', level))
                 .withStyle(format);
     }
 }

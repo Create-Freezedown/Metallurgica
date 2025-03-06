@@ -11,6 +11,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
@@ -18,31 +19,30 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class MetallurgicaBiomeTemperatures implements DataProvider {
     private static final Logger LOGGER = LogUtils.getLogger();
-    protected final DataGenerator.PathProvider tempPathProvider;
-    protected final DataGenerator.PathProvider dimensionPathProvider;
+    protected final PackOutput.PathProvider tempPathProvider;
+    protected final PackOutput.PathProvider dimensionPathProvider;
     
-    public MetallurgicaBiomeTemperatures(DataGenerator pGenerator) {
-        this.tempPathProvider = pGenerator.createPathProvider(DataGenerator.Target.DATA_PACK, "metallurgica_utilities/biome_temperatures");
-        this.dimensionPathProvider = pGenerator.createPathProvider(DataGenerator.Target.DATA_PACK, "metallurgica_utilities/dimension_data");
+    public MetallurgicaBiomeTemperatures(PackOutput packOutput) {
+        this.tempPathProvider = packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "metallurgica_utilities/biome_temperatures");
+        this.dimensionPathProvider = packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "metallurgica_utilities/dimension_data");
     }
     
     public static void register(DataGenerator gen) {
-        MetallurgicaBiomeTemperatures metallurgicaBiomeTemperatures = new MetallurgicaBiomeTemperatures(gen);
+        MetallurgicaBiomeTemperatures metallurgicaBiomeTemperatures = new MetallurgicaBiomeTemperatures(gen.getPackOutput());
         gen.addProvider(true, new DataProvider() {
             
             @Override
-            public void run(CachedOutput cachedOutput) {
-                try {
-                    metallurgicaBiomeTemperatures.run(cachedOutput);
-                } catch (Exception e) {
-                    Metallurgica.LOGGER.error("Failed to save temperatures", e);
-                }
+            public CompletableFuture<?> run(CachedOutput cachedOutput) {
+                return metallurgicaBiomeTemperatures.run(cachedOutput);
             }
             
             @Override
@@ -53,30 +53,24 @@ public class MetallurgicaBiomeTemperatures implements DataProvider {
     }
     
     @Override
-    public void run(CachedOutput cachedOutput) throws IOException {
+    public CompletableFuture<?> run(CachedOutput cachedOutput) {
+        List<CompletableFuture<?>> futures = new ArrayList<>();
         Set<ResourceLocation> set = Sets.newHashSet();
         this.buildTemperatures((pFinishedTemp) -> {
             if (!set.add(pFinishedTemp.getId())) {
                 throw new IllegalStateException("Duplicate composition " + pFinishedTemp.getId());
             } else {
-                saveTemp(cachedOutput, pFinishedTemp.serialize(), this.tempPathProvider.json(pFinishedTemp.getId()));
+                futures.add(DataProvider.saveStable(cachedOutput, pFinishedTemp.serialize(), this.tempPathProvider.json(pFinishedTemp.getId())));
             }
         });
         this.buildDimensions((pFinishedDimension) -> {
             if (!set.add(pFinishedDimension.getId())) {
                 throw new IllegalStateException("Duplicate composition " + pFinishedDimension.getId());
             } else {
-                saveTemp(cachedOutput, pFinishedDimension.serialize(), this.dimensionPathProvider.json(pFinishedDimension.getId()));
+                futures.add(DataProvider.saveStable(cachedOutput, pFinishedDimension.serialize(), this.dimensionPathProvider.json(pFinishedDimension.getId())));
             }
         });
-    }
-    
-    private static void saveTemp(CachedOutput pOutput, JsonObject pCompositionJson, Path pPath) {
-        try {
-            DataProvider.saveStable(pOutput, pCompositionJson, pPath);
-        } catch (IOException ioexception) {
-            LOGGER.error("Couldn't save composition {}", pPath, ioexception);
-        }
+        return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
     }
     
     protected void buildTemperatures(Consumer<FinishedData> pFinishedTemperatureConsumer) {

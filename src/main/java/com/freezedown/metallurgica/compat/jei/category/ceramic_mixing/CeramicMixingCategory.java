@@ -1,26 +1,23 @@
 package com.freezedown.metallurgica.compat.jei.category.ceramic_mixing;
 
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.compat.jei.category.MixingCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedBlazeBurner;
-import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.item.ItemHelper;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.Pair;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
@@ -67,7 +64,7 @@ public class CeramicMixingCategory extends CreateRecipeCategory<CeramicMixingRec
                     .addSlot(RecipeIngredientRole.INPUT, 17 + xOffset + (i % 3) * 19, 51 - (i / 3) * 19)
                     .setBackground(getRenderedSlot(), -1, -1)
                     .addIngredients(ForgeTypes.FLUID_STACK, withImprovedVisibility(fluidIngredient.getMatchingFluidStacks()))
-                    .addTooltipCallback(addFluidTooltip(fluidIngredient.getRequiredAmount()));
+                    .addRichTooltipCallback(addFluidTooltip(fluidIngredient.getRequiredAmount()));
             i++;
         }
         
@@ -82,7 +79,7 @@ public class CeramicMixingCategory extends CreateRecipeCategory<CeramicMixingRec
                     .addSlot(RecipeIngredientRole.OUTPUT, xPosition, yPosition)
                     .setBackground(getRenderedSlot(result), -1, -1)
                     .addItemStack(result.getStack())
-                    .addTooltipCallback(addStochasticTooltip(result));
+                    .addRichTooltipCallback(addStochasticTooltip(result));
             i++;
         }
         
@@ -94,7 +91,7 @@ public class CeramicMixingCategory extends CreateRecipeCategory<CeramicMixingRec
                     .addSlot(RecipeIngredientRole.OUTPUT, xPosition, yPosition)
                     .setBackground(getRenderedSlot(), -1, -1)
                     .addIngredient(ForgeTypes.FLUID_STACK, withImprovedVisibility(fluidResult))
-                    .addTooltipCallback(addFluidTooltip(fluidResult.getAmount()));
+                    .addRichTooltipCallback(addFluidTooltip(fluidResult.getAmount()));
             i++;
         }
         
@@ -128,7 +125,7 @@ public class CeramicMixingCategory extends CreateRecipeCategory<CeramicMixingRec
         AllGuiTextures heatBar = noHeat ? AllGuiTextures.JEI_NO_HEAT_BAR : AllGuiTextures.JEI_HEAT_BAR;
         heatBar.render(graphics, 4, 80);
 
-        graphics.drawString(Minecraft.getInstance().font, Lang.translateDirect(requiredHeat.getTranslationKey()), 9,
+        graphics.drawString(Minecraft.getInstance().font, MetalLang.translateDirect(requiredHeat.getTranslationKey()), 9,
                 86, requiredHeat.getColor(), false);
         
         if (requiredHeat != HeatCondition.NONE)

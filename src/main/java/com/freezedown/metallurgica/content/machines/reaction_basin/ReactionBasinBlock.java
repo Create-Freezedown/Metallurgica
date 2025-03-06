@@ -1,8 +1,8 @@
 package com.freezedown.metallurgica.content.machines.reaction_basin;
 
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -125,7 +125,7 @@ public class ReactionBasinBlock extends Block implements IWrenchable {
         }
         
         public String getSerializedName() {
-            return Lang.asId(this.name());
+            return MetalLang.asId(this.name());
         }
     }
     

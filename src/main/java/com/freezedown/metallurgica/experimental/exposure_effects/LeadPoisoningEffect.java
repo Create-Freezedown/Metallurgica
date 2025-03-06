@@ -5,7 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 @BlurryAt(2)
 public class LeadPoisoningEffect extends ExposureEffect {
-    public static final DamageSource LEAD = (new DamageSource("leadPoisoning")).bypassArmor().bypassEnchantments().bypassMagic().setScalesWithDifficulty();
+    //public static final DamageSource LEAD = (new DamageSource("leadPoisoning")).bypassArmor().bypassEnchantments().bypassMagic().setScalesWithDifficulty();
     public LeadPoisoningEffect(int pColor) {
         super(pColor);
     }
@@ -34,7 +34,7 @@ public class LeadPoisoningEffect extends ExposureEffect {
     public void stageFourEffect(LivingEntity entity) {
         if (entity instanceof Player player) {
             if (player.getRandom().nextInt(15) == 0) {
-                player.hurt(LEAD, 0.5f);
+                //player.hurt(LEAD, 0.5f);
             }
         }
     }

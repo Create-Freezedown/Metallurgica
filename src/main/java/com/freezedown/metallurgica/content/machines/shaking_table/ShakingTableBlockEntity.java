@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.machines.shaking_table;
 
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.content.fluids.particle.FluidParticleData;
@@ -7,9 +8,8 @@ import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
-import com.simibubi.create.foundation.utility.VecHelper;
+import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -207,15 +207,15 @@ public class ShakingTableBlockEntity extends KineticBlockEntity {
     
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+        LangBuilder mb = MetalLang.translate("generic.unit.millibuckets");
         
         FluidStack fluidStack = tankInventory.getFluid();
         if (!fluidStack.isEmpty()) {
-            Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-            Lang.builder().add(Lang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+            MetalLang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+            MetalLang.builder().add(MetalLang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(MetalLang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
             return true;
         } else {
-            Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+            MetalLang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(MetalLang.number(tankInventory.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
             return true;
         }
     }

@@ -6,17 +6,18 @@ import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.MultiblockStructure;
 import com.freezedown.metallurgica.foundation.multiblock.PositionUtil.PositionRange;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaDamageSources;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.item.SmartInventory;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,16 +28,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -278,9 +278,9 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
         }
     }
     
-    public CremationDamageSource getDamageSource() {
+    public DamageSource getDamageSource() {
         int messageType = Mth.randomBetweenInclusive(getLevel().random, 1, 4);
-        return new CremationDamageSource("reverbaratory_" + messageType, new Vec3(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()));
+        return MetallurgicaDamageSources.reverbaratory(this.level);
     }
     
     public List<LivingEntity> getEntitiesToCremate() {
@@ -318,18 +318,18 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
     
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (!isValid) {
-            Lang.translate("goggles.reverbaratory.invalid").style(ChatFormatting.RED).forGoggles(tooltip, 1);
+            MetalLang.translate("goggles.reverbaratory.invalid").style(ChatFormatting.RED).forGoggles(tooltip, 1);
         }   else {
             if (!isPlayerSneaking) {
-                Lang.translate("goggles.reverbaratory.stats").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+                MetalLang.translate("goggles.reverbaratory.stats").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
                 if (this.timer > 0) {
-                    Lang.translate("goggles.blast_furnace.status.running").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+                    MetalLang.translate("goggles.blast_furnace.status.running").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
                 } else {
-                    Lang.translate("goggles.blast_furnace.status.off").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
+                    MetalLang.translate("goggles.blast_furnace.status.off").style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
                 }
-                Lang.translate("goggles.misc.storage_info").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
-                Lang.translate("goggles.blast_furnace.item_count", this.inputInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
-                Lang.translate("goggles.blast_furnace.nothing_lol").style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
+                MetalLang.translate("goggles.misc.storage_info").style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                MetalLang.translate("goggles.blast_furnace.item_count", this.inputInventory.getStackInSlot(0).getCount()).style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
+                MetalLang.translate("goggles.blast_furnace.nothing_lol").style(ChatFormatting.AQUA).forGoggles(tooltip, 1);
             }
         }
         LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
@@ -345,14 +345,14 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
             if (tank.getTanks() == 0) {
                 return false;
             } else {
-                LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+                LangBuilder mb = MetalLang.translate("generic.unit.millibuckets");
                 boolean isEmpty = true;
                 
                 for(int i = 0; i < tank.getTanks(); ++i) {
                     FluidStack fluidStack = tank.getFluidInTank(i);
                     if (!fluidStack.isEmpty()) {
-                        Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                        Lang.builder().add(Lang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(Lang.number((double)tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+                        MetalLang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+                        MetalLang.builder().add(MetalLang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.GOLD)).text(ChatFormatting.GRAY, " / ").add(MetalLang.number((double)tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
                         isEmpty = false;
                     }
                 }
@@ -366,7 +366,7 @@ public class ReverbaratoryBlockEntity extends SmartBlockEntity implements IHaveG
                 } else if (!isEmpty) {
                     return true;
                 } else {
-                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number(tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                    MetalLang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(MetalLang.number(tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
                     return true;
                 }
             }

@@ -22,12 +22,12 @@ public class ExposureUtil {
     
     public static boolean searchForExposer(LivingEntity player, ExposureMinerals mineral) {
         AABB aabb = player.getBoundingBox().inflate(getRange(mineral));
-        for (BlockState state : player.level.getBlockStates(aabb).toList()) {
+        for (BlockState state : player.level().getBlockStates(aabb).toList()) {
             if (state.is(mineral.getBlockTag())) {
                 return true;
             }
         }
-        for (ItemEntity itemEntity : player.level.getEntitiesOfClass(ItemEntity.class, aabb)) {
+        for (ItemEntity itemEntity : player.level().getEntitiesOfClass(ItemEntity.class, aabb)) {
             if (itemEntity.getItem().is(mineral.getItemTag())) {
                 return true;
             }

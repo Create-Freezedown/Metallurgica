@@ -6,6 +6,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -48,8 +49,8 @@ public class AdvancedCastingRecipe extends ProcessingRecipe<RecipeWrapper> {
         return this.castingMoldType;
     }
     
-    public ItemStack getRecipeOutput() {
-        return this.getResultItem();
+    public ItemStack getRecipeOutput(RegistryAccess registryAccess) {
+        return this.getResultItem(registryAccess);
     }
     @Override
     public void readAdditional(JsonObject json) {

@@ -1,9 +1,10 @@
 package com.freezedown.metallurgica.content.fluids.channel.channel_depot;
 
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.google.common.collect.ImmutableList;
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.fluids.FluidFX;
 import com.simibubi.create.content.fluids.particle.FluidParticleData;
 import com.simibubi.create.content.processing.basin.BasinOperatingBlockEntity;
@@ -15,6 +16,13 @@ import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringB
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.utility.*;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.data.IntAttached;
+import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -532,21 +540,21 @@ public class ChannelDepotBlockEntity extends SmartBlockEntity implements IHaveGo
     }
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        Lang.translate("gui.goggles.channel_depot_contents")
+        MetalLang.translate("gui.goggles.channel_depot_contents")
                 .forGoggles(tooltip);
         
         IFluidHandler fluids = fluidCapability.orElse(new FluidTank(0));
         boolean isEmpty = true;
-        LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+        LangBuilder mb = MetalLang.translate("generic.unit.millibuckets");
         for (int i = 0; i < fluids.getTanks(); i++) {
             FluidStack fluidStack = fluids.getFluidInTank(i);
             if (fluidStack.isEmpty())
                 continue;
-            Lang.text("")
-                    .add(Lang.fluidName(fluidStack)
-                            .add(Lang.text(" "))
+            MetalLang.text("")
+                    .add(MetalLang.fluidName(fluidStack)
+                            .add(MetalLang.text(" "))
                             .style(ChatFormatting.GRAY)
-                            .add(Lang.number(fluidStack.getAmount())
+                            .add(MetalLang.number(fluidStack.getAmount())
                                     .add(mb)
                                     .style(ChatFormatting.BLUE)))
                     .forGoggles(tooltip, 1);

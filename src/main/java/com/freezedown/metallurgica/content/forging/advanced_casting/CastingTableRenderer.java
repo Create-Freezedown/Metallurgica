@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -43,11 +44,11 @@ public class CastingTableRenderer extends SmartBlockEntityRenderer<CastingTableB
         }
         if (!mold.isEmpty()) {
             ms.scale(0.5F, 0.5F, 0.5F);
-            Minecraft.getInstance().getItemRenderer().renderStatic(mold, ItemTransforms.TransformType.FIXED, light, overlay, ms, buffer, 0);
+            Minecraft.getInstance().getItemRenderer().renderStatic(mold, ItemDisplayContext.FIXED, light, overlay, ms, buffer, castingTable.getLevel(), 0);
         }
         if (!output.isEmpty() && itemOpacity > 0) {
             ms.scale(0.5F, 0.5F, 0.5F);
-            Minecraft.getInstance().getItemRenderer().renderStatic(output, ItemTransforms.TransformType.FIXED, light, itemOpacity, ms, buffer, 0);
+            Minecraft.getInstance().getItemRenderer().renderStatic(output, ItemDisplayContext.FIXED, light, itemOpacity, ms, buffer, castingTable.getLevel(), 0);
         }
         
         
@@ -64,7 +65,7 @@ public class CastingTableRenderer extends SmartBlockEntityRenderer<CastingTableB
             float maxZ = 14f / 16f;
             
             ms.pushPose();
-            FluidRenderer.renderFluidBox(fluidStack, minX, minY, minZ, maxX, maxY, maxZ, buffer, ms, light, false);
+            FluidRenderer.renderFluidBox(fluidStack.getFluid(), fluidStack.getAmount(), minX, minY, minZ, maxX, maxY, maxZ, buffer, ms, light, false, false);
             ms.popPose();
             
         }

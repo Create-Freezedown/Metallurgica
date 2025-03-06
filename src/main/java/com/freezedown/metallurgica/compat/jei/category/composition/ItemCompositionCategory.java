@@ -1,10 +1,8 @@
 package com.freezedown.metallurgica.compat.jei.category.composition;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.Components;
 import mezz.jei.api.gui.builder.IIngredientAcceptor;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -30,7 +28,6 @@ import java.util.Objects;
 
 public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionRecipe> {
     public static final RecipeType<ItemCompositionRecipe> ITEM_COMPOSITION = RecipeType.create("metallurgica", "element_composition", ItemCompositionRecipe.class);
-    private final IDrawable background;
     private final IDrawable icon;
     private final IDrawable slotBackground;
 
@@ -43,7 +40,6 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
     }
 
     public ItemCompositionCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createBlankDrawable(160, 125);;
         this.icon = asDrawable(AllGuiTextures.JEI_QUESTION_MARK);
         this.slotBackground = asDrawable(AllGuiTextures.JEI_SLOT);
     }
@@ -59,11 +55,7 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
 
     @Override
     public Component getTitle() {
-        return Components.translatable("metallurgica.jei.category.element_composition");
-    }
-
-    public IDrawable getBackground() {
-        return background;
+        return Component.translatable("metallurgica.jei.category.element_composition");
     }
 
     @Override
@@ -127,11 +119,11 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
     protected static IDrawable asDrawable(final AllGuiTextures texture) {
         return new IDrawable() {
             public int getWidth() {
-                return texture.width;
+                return texture.getWidth();
             }
 
             public int getHeight() {
-                return texture.height;
+                return texture.getHeight();
             }
 
             @Override

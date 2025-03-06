@@ -1,13 +1,13 @@
 package com.freezedown.metallurgica.content.machines.shaking_table;
 
 import com.freezedown.metallurgica.compat.jei.category.shaking.AssemblyShaking;
+import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemblySubCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
-import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -54,11 +54,11 @@ public class ShakingRecipe extends ProcessingRecipe<RecipeWrapper> implements IA
     
     @Override
     public Component getDescriptionForAssembly() {
-        MutableComponent result = Lang.translateDirect("recipe.assembly.shaking");
+        MutableComponent result = MetalLang.translateDirect("recipe.assembly.shaking");
         if (this.fluidIngredients.isEmpty()) {
             return result;
         } else {
-            result.append(" ").append(Lang.translateDirect("recipe.assembly.with")).append(" ");
+            result.append(" ").append(MetalLang.translateDirect("recipe.assembly.with")).append(" ");
             if (!this.fluidIngredients.isEmpty() && !this.fluidIngredients.get(0).getMatchingFluidStacks().isEmpty()) {
                 result.append(this.fluidIngredients.get(0).getMatchingFluidStacks().get(0).getDisplayName());
             }

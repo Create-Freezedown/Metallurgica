@@ -25,7 +25,7 @@ public class FluidEntityInteractionHandler {
             for(int i2 = minY; i2 < maxY; ++i2)
                 for(int j2 = minZ; j2 < maxZ; ++j2) {
                     blockpos$mutableblockpos.set(l1, i2, j2);
-                    FluidState fluidstate = entity.level.getFluidState(blockpos$mutableblockpos);
+                    FluidState fluidstate = entity.level().getFluidState(blockpos$mutableblockpos);
                     if (fluidstate.getType() instanceof BehaviorableFluid behaviorableFluid)
                         behaviorableFluid.getBehavior(IInteractionBehavior.class).forEach(interactionBehavior -> interactionBehavior.interactWithEntity(blockpos$mutableblockpos, entity));
                 }

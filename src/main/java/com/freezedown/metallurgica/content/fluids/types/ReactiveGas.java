@@ -35,7 +35,7 @@ public class ReactiveGas extends FlowingGas {
     }
     
     private void explode(Level worldIn, BlockPos pos) {
-        worldIn.explode(null, pos.getX(), pos.getY(), pos.getZ(), 1.0F, true, net.minecraft.world.level.Explosion.BlockInteraction.BREAK);
+        worldIn.explode(null, pos.getX(), pos.getY(), pos.getZ(), 1.0F, true, Level.ExplosionInteraction.BLOCK);
         worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
     }
     

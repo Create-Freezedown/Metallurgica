@@ -11,9 +11,17 @@ import java.util.function.Consumer;
 
 public class MoltenMetal extends VirtualFluid {
     public double moltenTemperature = 0;
+
+    public static MoltenMetal createSource(Properties properties) {
+        return new MoltenMetal(properties, true);
+    }
+
+    public static MoltenMetal createFlowing(Properties properties) {
+        return new MoltenMetal(properties, false);
+    }
     
-    public MoltenMetal(Properties properties) {
-        super(properties);
+    public MoltenMetal(Properties properties, boolean source) {
+        super(properties, source);
     }
     
     public MoltenMetal moltenTemperature(double moltenTemperature) {

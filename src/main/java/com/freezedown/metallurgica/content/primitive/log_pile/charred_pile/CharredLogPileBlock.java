@@ -9,6 +9,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,7 +24,7 @@ public class CharredLogPileBlock extends LogPileBlock implements IBE<CharredLogP
     public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, float pFallDistance) {
         int layers = pState.getValue(LAYERS);
         float damageReduction = 0.25F * layers  * 0.75F;
-        pEntity.causeFallDamage(pFallDistance, damageReduction, DamageSource.FALL);
+        pEntity.causeFallDamage(pFallDistance, damageReduction, pLevel.damageSources().fall());
         if (pFallDistance > pEntity.getMaxFallDistance()) {
             if (layers > 1) {
                 pLevel.setBlock(pPos, pState.setValue(LAYERS, layers-1), 3);
