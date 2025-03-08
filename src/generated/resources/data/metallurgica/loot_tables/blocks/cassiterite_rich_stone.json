@@ -52,5 +52,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "metallurgica:blocks/cassiterite_rich_stone"
 }

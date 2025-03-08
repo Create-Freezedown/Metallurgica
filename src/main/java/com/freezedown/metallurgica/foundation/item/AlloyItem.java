@@ -28,7 +28,6 @@ public class AlloyItem extends MetallurgicaItem{
     }
     
     public AlloyItem showElementComposition() {
-        showElementComposition = true;
         return this;
     }
     

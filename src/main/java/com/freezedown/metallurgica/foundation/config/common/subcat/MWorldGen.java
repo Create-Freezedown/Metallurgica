@@ -19,7 +19,6 @@ public class MWorldGen extends ConfigBase {
     @Override
     public void registerAll(ForgeConfigSpec.Builder builder) {
         super.registerAll(builder);
-        MetallurgicaOreFeatureConfigEntries.fillConfig(builder, Metallurgica.ID);
     }
     
     @Override

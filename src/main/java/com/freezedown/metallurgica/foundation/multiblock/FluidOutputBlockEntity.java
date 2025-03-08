@@ -1,11 +1,11 @@
 package com.freezedown.metallurgica.foundation.multiblock;
 
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.freezedown.metallurgica.foundation.util.MetalLang;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -105,14 +105,14 @@ public class FluidOutputBlockEntity extends SmartBlockEntity implements IHaveGog
             if (tank.getTanks() == 0) {
                 return false;
             } else {
-                LangBuilder mb = Lang.translate("generic.unit.millibuckets", new Object[0]);
+                LangBuilder mb = MetalLang.translate("generic.unit.millibuckets", new Object[0]);
                 boolean isEmpty = true;
                 
                 for(int i = 0; i < tank.getTanks(); ++i) {
                     FluidStack fluidStack = tank.getFluidInTank(i);
                     if (!fluidStack.isEmpty()) {
-                        Lang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                        Lang.builder().add(Lang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.DARK_GREEN)).text(ChatFormatting.GRAY, " / ").add(Lang.number((double)tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+                        MetalLang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+                        MetalLang.builder().add(MetalLang.number((double)fluidStack.getAmount()).add(mb).style(ChatFormatting.DARK_GREEN)).text(ChatFormatting.GRAY, " / ").add(MetalLang.number((double)tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
                         isEmpty = false;
                     }
                 }
@@ -126,7 +126,7 @@ public class FluidOutputBlockEntity extends SmartBlockEntity implements IHaveGog
                 } else if (!isEmpty) {
                     return true;
                 } else {
-                    Lang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(Lang.number((double)tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
+                    MetalLang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(MetalLang.number((double)tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
                     return true;
                 }
             }

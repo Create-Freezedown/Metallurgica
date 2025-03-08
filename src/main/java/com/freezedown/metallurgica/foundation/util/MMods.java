@@ -1,7 +1,5 @@
 package com.freezedown.metallurgica.foundation.util;
 
-import com.simibubi.create.compat.Mods;
-import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.ModList;
@@ -18,7 +16,7 @@ public enum MMods {
     private final String id;
     
     MMods() {
-        id = Lang.asId(name());
+        id = MetalLang.asId(name());
     }
     
     /**

@@ -2,6 +2,8 @@
   "values": [
     "metallurgica:titanium_ingot",
     "metallurgica:wrought_iron_ingot",
+    "metallurgica:oxidised_magnesium_ingot",
+    "metallurgica:magnesium_ingot",
     "metallurgica:bronze_ingot",
     "metallurgica:arsenical_bronze_ingot",
     "metallurgica:titanium_aluminide_ingot"

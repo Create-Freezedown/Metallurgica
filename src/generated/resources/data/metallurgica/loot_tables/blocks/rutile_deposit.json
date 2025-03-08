@@ -44,5 +44,6 @@
         "min": 2.0
       }
     }
-  ]
+  ],
+  "random_sequence": "metallurgica:blocks/rutile_deposit"
 }

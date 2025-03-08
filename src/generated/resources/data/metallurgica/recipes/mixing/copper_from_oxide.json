@@ -6,7 +6,7 @@
       "item": "metallurgica:copper_oxide"
     },
     {
-      "item": "createindustry:coal_coke_dust"
+      "item": "tfmg:coal_coke_dust"
     }
   ],
   "results": [
@@ -19,7 +19,7 @@
     },
     {
       "amount": 90,
-      "fluid": "createindustry:carbon_dioxide"
+      "fluid": "tfmg:carbon_dioxide"
     }
   ]
 }

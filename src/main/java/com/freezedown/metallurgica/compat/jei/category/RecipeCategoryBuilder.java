@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.compat.jei.category;
 
+import com.freezedown.metallurgica.compat.jei.MetallurgicaJei;
 import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.simibubi.create.compat.jei.CreateJEI;
 import com.simibubi.create.compat.jei.DoubleItemIcon;
@@ -65,7 +66,7 @@ public class RecipeCategoryBuilder<T extends Recipe<?>> {
     
     @SuppressWarnings("unchecked")
     public RecipeCategoryBuilder<T> addAllRecipesIf(Predicate<Recipe<?>> pred) {
-        return addRecipeListConsumer(recipes -> CreateJEI.consumeAllRecipes(recipe -> {
+        return addRecipeListConsumer(recipes -> MetallurgicaJei.consumeAllRecipes(recipe -> {
             if (pred.test(recipe)) {
                 recipes.add((T) recipe);
             }
@@ -73,7 +74,7 @@ public class RecipeCategoryBuilder<T extends Recipe<?>> {
     }
     
     public RecipeCategoryBuilder<T> addAllRecipesIf(Predicate<Recipe<?>> pred, Function<Recipe<?>, T> converter) {
-        return addRecipeListConsumer(recipes -> CreateJEI.consumeAllRecipes(recipe -> {
+        return addRecipeListConsumer(recipes -> MetallurgicaJei.consumeAllRecipes(recipe -> {
             if (pred.test(recipe)) {
                 recipes.add(converter.apply(recipe));
             }
@@ -81,7 +82,7 @@ public class RecipeCategoryBuilder<T extends Recipe<?>> {
     }
     
     public <O extends Recipe<?>> RecipeCategoryBuilder<T> addTransformedRecipes(Supplier<RecipeType<O>> recipeType, Function<O, T> converter) {
-        return addRecipeListConsumer(recipes -> CreateJEI.<O>consumeTypedRecipes(recipe -> recipes.add(converter.apply(recipe)), recipeType.get()));
+        return addRecipeListConsumer(recipes -> MetallurgicaJei.<O>consumeTypedRecipes(recipe -> recipes.add(converter.apply(recipe)), recipeType.get()));
     }
     
     public RecipeCategoryBuilder<T> addTypedRecipes(IRecipeTypeInfo recipeTypeEntry) {
@@ -89,11 +90,11 @@ public class RecipeCategoryBuilder<T extends Recipe<?>> {
     }
     
     public RecipeCategoryBuilder<T> addTypedRecipes(Supplier<RecipeType<? extends T>> recipeType) {
-        return addRecipeListConsumer(recipes -> CreateJEI.<T>consumeTypedRecipes(recipes::add, recipeType.get()));
+        return addRecipeListConsumer(recipes -> MetallurgicaJei.<T>consumeTypedRecipes(recipes::add, recipeType.get()));
     }
     
     public RecipeCategoryBuilder<T> addTypedRecipesIf(Supplier<RecipeType<? extends T>> recipeType, Predicate<Recipe<?>> pred) {
-        return addRecipeListConsumer(recipes -> CreateJEI.<T>consumeTypedRecipes(recipe -> {
+        return addRecipeListConsumer(recipes -> MetallurgicaJei.<T>consumeTypedRecipes(recipe -> {
             if (pred.test(recipe)) {
                 recipes.add(recipe);
             }
@@ -103,10 +104,10 @@ public class RecipeCategoryBuilder<T extends Recipe<?>> {
     public RecipeCategoryBuilder<T> addTypedRecipesExcluding(Supplier<RecipeType<? extends T>> recipeType,
                                                              Supplier<RecipeType<? extends T>> excluded) {
         return addRecipeListConsumer(recipes -> {
-            List<Recipe<?>> excludedRecipes = CreateJEI.getTypedRecipes(excluded.get());
-            CreateJEI.<T>consumeTypedRecipes(recipe -> {
+            List<Recipe<?>> excludedRecipes = MetallurgicaJei.getTypedRecipes(excluded.get());
+            MetallurgicaJei.<T>consumeTypedRecipes(recipe -> {
                 for (Recipe<?> excludedRecipe : excludedRecipes) {
-                    if (CreateJEI.doInputsMatch(recipe, excludedRecipe)) {
+                    if (MetallurgicaJei.doInputsMatch(recipe, excludedRecipe)) {
                         return;
                     }
                 }
@@ -117,10 +118,10 @@ public class RecipeCategoryBuilder<T extends Recipe<?>> {
     
     public RecipeCategoryBuilder<T> removeRecipes(Supplier<RecipeType<? extends T>> recipeType) {
         return addRecipeListConsumer(recipes -> {
-            List<Recipe<?>> excludedRecipes = CreateJEI.getTypedRecipes(recipeType.get());
+            List<Recipe<?>> excludedRecipes = MetallurgicaJei.getTypedRecipes(recipeType.get());
             recipes.removeIf(recipe -> {
                 for (Recipe<?> excludedRecipe : excludedRecipes) {
-                    if (CreateJEI.doInputsMatch(recipe, excludedRecipe)) {
+                    if (MetallurgicaJei.doInputsMatch(recipe, excludedRecipe)) {
                         return true;
                     }
                 }
@@ -153,12 +154,12 @@ public class RecipeCategoryBuilder<T extends Recipe<?>> {
         icon(new DoubleItemIcon(() -> new ItemStack(item1), () -> new ItemStack(item2)));
         return this;
     }
-    
+
     public RecipeCategoryBuilder<T> background(IDrawable background) {
         this.background = background;
         return this;
     }
-    
+
     public RecipeCategoryBuilder<T> emptyBackground(int width, int height) {
         background(new EmptyBackground(width, height));
         return this;

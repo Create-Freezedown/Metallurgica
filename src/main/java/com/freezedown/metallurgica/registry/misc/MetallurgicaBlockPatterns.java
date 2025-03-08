@@ -1,14 +1,13 @@
 package com.freezedown.metallurgica.registry.misc;
 
-import com.drmangotea.createindustry.registry.TFMGBlocks;
+import com.drmangotea.tfmg.registry.TFMGBlocks;
 import com.freezedown.metallurgica.foundation.UpwardsBlockPattern;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
-import net.minecraft.world.level.block.state.predicate.BlockMaterialPredicate;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.minecraft.world.level.material.Material;
 
 public class MetallurgicaBlockPatterns {
     
@@ -23,6 +22,6 @@ public class MetallurgicaBlockPatterns {
             .where('F', BlockInWorld.hasState(BlockStatePredicate.forBlock(TFMGBlocks.FIREPROOF_BRICKS.get())))
             .where('T', BlockInWorld.hasState(BlockStatePredicate.forBlock(MetallurgicaBlocks.tuyere.get())))
             .where('H', BlockInWorld.hasState(BlockStatePredicate.forBlock(MetallurgicaBlocks.hearth.get())))
-            .where('#', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR)))
+            .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.AIR)))
     );
 }

@@ -2,8 +2,7 @@ package com.freezedown.metallurgica.foundation.util;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
-import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;

@@ -4,9 +4,8 @@ import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.MutableComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +19,11 @@ public record Element(String name, int amount, boolean areNumbersUp, boolean bra
             Codec.BOOL.optionalFieldOf("forceCloseBracket", false).forGetter(Element::forceCloseBracket),
             Codec.BOOL.optionalFieldOf("appendDash", false).forGetter(Element::hasDash),
             Codec.INT.optionalFieldOf("groupedAmount", 1).forGetter(Element::getGroupedAmount),
-            Codec.INT.optionalFieldOf("textColor", TooltipHelper.Palette.BLUE.highlight().getColor().getValue()).forGetter(Element::color)
+            Codec.INT.optionalFieldOf("textColor", FontHelper.Palette.BLUE.highlight().getColor().getValue()).forGetter(Element::color)
     ).apply(instance, Element::new));
     
     public static Element create(String name) {
-        return new Element(name, 1, false, false, false, false, 1, TooltipHelper.Palette.BLUE.highlight().getColor().getValue());
+        return new Element(name, 1, false, false, false, false, 1, FontHelper.Palette.BLUE.highlight().getColor().getValue());
     }
     
     public Element withAmount(int amount) {

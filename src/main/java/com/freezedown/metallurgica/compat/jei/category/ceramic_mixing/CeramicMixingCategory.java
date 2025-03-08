@@ -60,11 +60,7 @@ public class CeramicMixingCategory extends CreateRecipeCategory<CeramicMixingRec
             i++;
         }
         for (FluidIngredient fluidIngredient : recipe.getFluidIngredients()) {
-            builder
-                    .addSlot(RecipeIngredientRole.INPUT, 17 + xOffset + (i % 3) * 19, 51 - (i / 3) * 19)
-                    .setBackground(getRenderedSlot(), -1, -1)
-                    .addIngredients(ForgeTypes.FLUID_STACK, withImprovedVisibility(fluidIngredient.getMatchingFluidStacks()))
-                    .addRichTooltipCallback(addFluidTooltip(fluidIngredient.getRequiredAmount()));
+            addFluidSlot(builder, 17 + xOffset + (i % 3) * 19, 51 - (i / 3) * 19, fluidIngredient);
             i++;
         }
         
@@ -86,12 +82,7 @@ public class CeramicMixingCategory extends CreateRecipeCategory<CeramicMixingRec
         for (FluidStack fluidResult : recipe.getFluidResults()) {
             int xPosition = 142 - (size % 2 != 0 && i == size - 1 ? 0 : i % 2 == 0 ? 10 : -9);
             int yPosition = -19 * (i / 2) + 51;
-            
-            builder
-                    .addSlot(RecipeIngredientRole.OUTPUT, xPosition, yPosition)
-                    .setBackground(getRenderedSlot(), -1, -1)
-                    .addIngredient(ForgeTypes.FLUID_STACK, withImprovedVisibility(fluidResult))
-                    .addRichTooltipCallback(addFluidTooltip(fluidResult.getAmount()));
+            addFluidSlot(builder, xPosition, yPosition, fluidResult);
             i++;
         }
         

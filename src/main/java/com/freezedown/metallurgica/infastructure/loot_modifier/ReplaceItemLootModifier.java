@@ -36,7 +36,7 @@ public class ReplaceItemLootModifier extends LootModifier {
             for (int i = 0; i < toCheck.size(); i++) {
                 ItemStack stack = toCheck.get(i);
                 int count = stack.getCount();
-                if (ItemStack.isSame(stack, pair.getInput())) {
+                if (ItemStack.isSameItem(stack, pair.getInput())) {
                     ItemStack output = pair.getOutput().copy();
                     output.setCount(count);
                     loot.set(i, output);

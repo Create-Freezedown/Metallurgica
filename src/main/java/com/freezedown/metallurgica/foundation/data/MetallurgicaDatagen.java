@@ -5,17 +5,21 @@ import com.freezedown.metallurgica.foundation.data.advancement.MetallurgicaAdvan
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.freezedown.metallurgica.foundation.data.recipe.create.MSequencedAssemblyGen;
 import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
+import com.freezedown.metallurgica.foundation.ponder.MetallurgicaPonderPlugin;
+import com.freezedown.metallurgica.foundation.ponder.scenes.MetallurgicaPonderScenes;
 import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
 import com.freezedown.metallurgica.registry.MetallurgicaBiomeTemperatures;
 import com.freezedown.metallurgica.registry.MetallurgicaCompositions;
 import com.freezedown.metallurgica.registry.MetallurgicaElements;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.ponder.CreatePonderPlugin;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.simibubi.create.infrastructure.data.CreateDatagen;
-import com.simibubi.create.infrastructure.data.GeneratedEntriesProvider;
 import com.tterrag.registrate.providers.ProviderType;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -37,7 +41,7 @@ public class MetallurgicaDatagen {
         
         boolean client = event.includeClient();
         boolean server = event.includeServer();
-        GeneratedEntriesProvider generatedEntriesProvider = new GeneratedEntriesProvider(output, lookupProvider);
+        MetallurgicaGeneratedEntriesProvider generatedEntriesProvider = new MetallurgicaGeneratedEntriesProvider(output, lookupProvider);
         lookupProvider = generatedEntriesProvider.getRegistryProvider();
         generator.addProvider(event.includeServer(), generatedEntriesProvider);
 
@@ -62,6 +66,7 @@ public class MetallurgicaDatagen {
             MetallurgicaAdvancements.provideLang(langConsumer);
             MetallurgicaElements.provideElementLang(langConsumer);
             MetallurgicaUnits.provideUnitLang(langConsumer);
+            providePonderLang(langConsumer);
         });
     }
     
@@ -77,5 +82,12 @@ public class MetallurgicaDatagen {
             String value = entry.getValue().getAsString();
             consumer.accept(key, value);
         }
+    }
+
+    private static void providePonderLang(BiConsumer<String, String> consumer) {
+        // Register this since FMLClientSetupEvent does not run during datagen
+        PonderIndex.addPlugin(new MetallurgicaPonderPlugin());
+
+        PonderIndex.getLangAccess().provideLang(Metallurgica.ID, consumer);
     }
 }

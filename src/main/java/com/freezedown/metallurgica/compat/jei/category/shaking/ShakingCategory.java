@@ -30,7 +30,7 @@ public class ShakingCategory extends CreateRecipeCategory<ShakingRecipe> {
         int i = 0;
         
         if (!recipe.getFluidIngredients().isEmpty()) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 15, 29).setBackground(getRenderedSlot(), -1, -1).addIngredients(ForgeTypes.FLUID_STACK, withImprovedVisibility(recipe.getFluidIngredients().get(0).getMatchingFluidStacks()));
+            addFluidSlot(builder, 15, 29, recipe.getFluidIngredients().get(0)).setBackground(getRenderedSlot(), -1, -1);
         }
         
         for(Iterator<ProcessingOutput> var7 = results.iterator(); var7.hasNext(); ++i) {

@@ -3,7 +3,7 @@
     "minecraft:iron_ingot",
     "minecraft:gold_ingot",
     "minecraft:copper_ingot",
-    "createindustry:aluminum_ingot",
+    "tfmg:aluminum_ingot",
     "create:zinc_ingot",
     "create:brass_ingot",
     "minecraft:iron_nugget",
@@ -11,9 +11,9 @@
     "create:copper_nugget",
     "create:zinc_nugget",
     "create:brass_nugget",
-    "createindustry:sulfur_dust",
-    "createindustry:sulfur",
-    "createindustry:nitrate_dust",
-    "createindustry:limesand"
+    "tfmg:sulfur_dust",
+    "tfmg:sulfur",
+    "tfmg:nitrate_dust",
+    "tfmg:limesand"
   ]
 }

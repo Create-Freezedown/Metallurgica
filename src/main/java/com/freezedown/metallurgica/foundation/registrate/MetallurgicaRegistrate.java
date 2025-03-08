@@ -12,8 +12,6 @@ import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
-import com.freezedown.metallurgica.foundation.worldgen.config.MDepositFeatureConfigEntry;
-import com.freezedown.metallurgica.foundation.worldgen.config.MTypedDepositFeatureConfigEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
@@ -67,8 +65,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.createDeposit;
-import static com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries.createTypedDeposit;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class MetallurgicaRegistrate extends CreateRegistrate {
@@ -201,32 +197,6 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
             builder.tag(AllTags.forgeItemTag(tag));
         }
         return builder.register();
-    }
-    
-    public MDepositFeatureConfigEntry surfaceDeposit(String name, float frequency, int chance, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones, NonNullSupplier<? extends Block> mineralStone, NonNullSupplier<? extends Block> deposit) {
-        return createDeposit(name + "_surface_deposit", frequency, chance, 100, 320)
-                .standardDatagenExt()
-                .withBlocks(surfaceDepositStones, mineralStone, deposit)
-                .biomeTag(BiomeTags.IS_OVERWORLD)
-                .parent();
-    }
-    
-    public MDepositFeatureConfigEntry surfaceDeposit(String name, float frequency, int chance, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones, NonNullSupplier<? extends Block> mineralStone, NonNullSupplier<? extends Block> deposit, TagKey<Biome> biomes, Dimension dimension) {
-        return createDeposit(name + "_surface_deposit", frequency, chance, 100, 320)
-                .standardDatagenExt()
-                .withBlocks(surfaceDepositStones, mineralStone, deposit)
-                .biomeTag(dimension.biomeTag())
-                .biomeTag(biomes)
-                .parent();
-    }
-    
-    public MTypedDepositFeatureConfigEntry typedDeposit(String name, int maxHeight, int minHeight, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositBlockChance, DepositCapacity capacity, float frequency, int chance, Couple<NonNullSupplier<? extends Block>> surfaceDepositStones, NonNullSupplier<? extends Block> mineralStone, NonNullSupplier<? extends Block> deposit, TagKey<Biome> biomes, Dimension dimension) {
-        return createTypedDeposit("large_" + name + "_deposit", maxWidth, minWidth, maxDepth, minDepth, depositBlockChance, capacity, frequency, chance, minHeight, maxHeight)
-                .standardDatagenExt()
-                .withBlocks(surfaceDepositStones, mineralStone, deposit)
-                .biomeTag(dimension.biomeTag())
-                .biomeTag(biomes)
-                .parent();
     }
     
     public enum Dimension {

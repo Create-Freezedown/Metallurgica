@@ -1,8 +1,6 @@
 package com.freezedown.metallurgica.foundation.item;
 
-import com.simibubi.create.content.legacy.ChromaticCompoundItem;
-import com.simibubi.create.foundation.utility.Color;
-import com.simibubi.create.infrastructure.config.AllConfigs;
+import net.createmod.catnip.theme.Color;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.Entity;

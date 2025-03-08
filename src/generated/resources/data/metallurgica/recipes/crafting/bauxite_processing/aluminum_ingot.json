@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "metallurgica:aluminum_nugget"
@@ -11,6 +12,7 @@
     "###"
   ],
   "result": {
-    "item": "createindustry:aluminum_ingot"
-  }
+    "item": "tfmg:aluminum_ingot"
+  },
+  "show_notification": true
 }

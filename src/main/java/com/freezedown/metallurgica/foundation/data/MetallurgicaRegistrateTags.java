@@ -39,7 +39,7 @@ public class MetallurgicaRegistrateTags {
     }
 
     private static void genBlockTags(RegistrateTagsProvider<Block> provIn) {
-        TagGen.CreateTagsProvider<Block> prov = new TagGen.CreateTagsProvider(provIn, Block::builtInRegistryHolder);
+        TagGen.CreateTagsProvider<Block> prov = new TagGen.CreateTagsProvider<>(provIn, Block::builtInRegistryHolder);
         prov.tag(MetallurgicaTags.AllBlockTags.BAUXITE_ORE_REPLACEABLE.tag)
                 .add(TFMGPaletteStoneTypes.BAUXITE.getBaseBlock().get())
                 ;
@@ -101,7 +101,7 @@ public class MetallurgicaRegistrateTags {
     }
 
     private static void genItemTags(RegistrateTagsProvider<Item> provIn) {
-        TagGen.CreateTagsProvider<Item> prov = new TagGen.CreateTagsProvider(provIn, Item::builtInRegistryHolder);
+        TagGen.CreateTagsProvider<Item> prov = new TagGen.CreateTagsProvider<>(provIn, Item::builtInRegistryHolder);
         
         for (MetallurgicaTags.AllItemTags tag : MetallurgicaTags.AllItemTags.values()) {
             if (tag.alwaysDatagen) {
@@ -139,7 +139,7 @@ public class MetallurgicaRegistrateTags {
     }
     
     private static void genFluidTags(RegistrateTagsProvider<Fluid> provIn) {
-        TagGen.CreateTagsProvider<Fluid> prov = new TagGen.CreateTagsProvider(provIn, Fluid::builtInRegistryHolder);
+        TagGen.CreateTagsProvider<Fluid> prov = new TagGen.CreateTagsProvider<>(provIn, Fluid::builtInRegistryHolder);
         prov.tag(MetallurgicaTags.modFluidTag("fluid_reactive/chlorine")).add(TFMGFluids.GASOLINE.get().getFlowing(), TFMGFluids.GASOLINE.get().getSource());
         
         prov.tag(MetallurgicaTags.AllFluidTags.REVERBARATORY_FUELS.tag)

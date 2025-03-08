@@ -3,10 +3,13 @@ package com.freezedown.metallurgica.infastructure;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
-import com.simibubi.create.foundation.gui.ScreenOpener;
-import com.simibubi.create.foundation.utility.Components;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.infrastructure.gui.CreateMainMenuScreen;
+import net.createmod.catnip.config.ui.BaseConfigScreen;
+import net.createmod.catnip.gui.ScreenOpener;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -14,6 +17,9 @@ import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -29,19 +35,26 @@ public class OpenMetallurgicaMenuButton extends Button {
     public static final ItemStack ICON;
     
     public OpenMetallurgicaMenuButton(int x, int y) {
-        super(x, y, 20, 20, Components.immutableEmpty(), OpenMetallurgicaMenuButton::click);
-    }
-    
-    public void renderBg(PoseStack mstack, Minecraft mc, int mouseX, int mouseY) {
-        Minecraft.getInstance().getItemRenderer().renderGuiItem(ICON, this.x + 2, this.y + 2);
+        super(x, y, 20, 20, CommonComponents.EMPTY, OpenMetallurgicaMenuButton::click, DEFAULT_NARRATION);
     }
     
     public static void click(Button b) {
         ScreenOpener.open(new BaseConfigScreen(Minecraft.getInstance().screen, "metallurgica"));
     }
-    
+
     static {
         ICON = MetallurgicaOre.CASSITERITE.MATERIAL.raw().asStack();
+    }
+
+    @Override
+    public void renderString(GuiGraphics graphics, Font pFont, int pColor) {
+        BakedModel bakedmodel = Minecraft.getInstance()
+                .getItemRenderer()
+                .getModel(ICON, Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
+        if (bakedmodel == null)
+            return;
+
+        graphics.renderItem(ICON, getX() + 2, getY() + 2);
     }
     
     @Mod.EventBusSubscriber({Dist.CLIENT})
@@ -77,7 +90,7 @@ public class OpenMetallurgicaMenuButton extends Button {
                 }).filter((w) -> {
                     return w.getMessage().getString().equals(target);
                 }).findFirst().ifPresent((w) -> {
-                    toAdd.setValue(new OpenMetallurgicaMenuButton(w.x + offsetX_ + (onLeft ? -20 : w.getWidth()), w.y));
+                    toAdd.setValue(new OpenMetallurgicaMenuButton(w.getX() + offsetX_ + (onLeft ? -20 : w.getWidth()), w.getY()));
                 });
                 if (toAdd.getValue() != null) {
                     event.addListener((GuiEventListener)toAdd.getValue());

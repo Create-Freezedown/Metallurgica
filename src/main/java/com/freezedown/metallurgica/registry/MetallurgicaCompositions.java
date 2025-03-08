@@ -63,6 +63,7 @@ public class MetallurgicaCompositions implements DataProvider {
     @Override
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
         Set<ResourceLocation> set = Sets.newHashSet();
+        Set<ResourceLocation> fluidSet = Sets.newHashSet();
         List<CompletableFuture<?>> list = new ArrayList();
         this.buildCompositions((pFinishedComposition) -> {
             if (!set.add(pFinishedComposition.getId())) {
@@ -72,7 +73,7 @@ public class MetallurgicaCompositions implements DataProvider {
             }
         });
         this.buildFluidCompositions((pFinishedComposition) -> {
-            if (!set.add(pFinishedComposition.getId())) {
+            if (!fluidSet.add(pFinishedComposition.getId())) {
                 throw new IllegalStateException("Duplicate composition " + pFinishedComposition.getId());
             } else {
                 list.add(DataProvider.saveStable(cachedOutput, pFinishedComposition.serializeComposition(), this.fluidCompositionPathProvider.json(pFinishedComposition.getId())));

@@ -33,7 +33,7 @@ public enum MetallurgicaMetals {
     public final MetalEntry METAL;
 
     MetallurgicaMetals(Double meltingPoint, String element) {
-        MetallurgicaRegistrate registrate = Metallurgica.registrate();
+        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);;
         METAL = registrate.metal(this.name().toLowerCase(), meltingPoint, element);
         Map<String, String> composition = new HashMap<>();
         composition.put(this.name().toLowerCase(), element);

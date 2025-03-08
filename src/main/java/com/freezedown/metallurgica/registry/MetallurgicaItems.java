@@ -12,7 +12,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 
 public class MetallurgicaItems {
-    private static final MetallurgicaRegistrate registrate = Metallurgica.registrate();
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);;
     
     private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(String name) {
         return registrate.item(name, SequencedAssemblyItem::new)

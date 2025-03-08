@@ -1,16 +1,16 @@
 {
   "values": [
-    "createindustry:butane",
-    "createindustry:propane",
-    "createindustry:lpg",
-    "createindustry:kerosene",
-    "createindustry:naphtha",
-    "createindustry:ethylene",
-    "createindustry:propylene",
-    "createindustry:diesel",
-    "createindustry:lubrication_oil",
-    "createindustry:heavy_oil",
-    "createindustry:creosote",
-    "createindustry:gasoline"
+    "tfmg:butane",
+    "tfmg:propane",
+    "tfmg:lpg",
+    "tfmg:kerosene",
+    "tfmg:naphtha",
+    "tfmg:ethylene",
+    "tfmg:propylene",
+    "tfmg:diesel",
+    "tfmg:lubrication_oil",
+    "tfmg:heavy_oil",
+    "tfmg:creosote",
+    "tfmg:gasoline"
   ]
 }

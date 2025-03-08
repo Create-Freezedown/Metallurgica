@@ -1,6 +1,6 @@
 {
   "values": [
-    "createindustry:flowing_gasoline",
-    "createindustry:gasoline"
+    "tfmg:flowing_gasoline",
+    "tfmg:gasoline"
   ]
 }

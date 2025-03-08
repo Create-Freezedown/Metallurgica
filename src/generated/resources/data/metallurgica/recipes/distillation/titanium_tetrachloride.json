@@ -1,5 +1,5 @@
 {
-  "type": "createindustry:distillation",
+  "type": "tfmg:distillation",
   "ingredients": [
     {
       "amount": 420,

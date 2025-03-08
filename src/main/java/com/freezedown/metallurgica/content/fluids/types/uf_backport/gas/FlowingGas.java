@@ -77,7 +77,6 @@ public abstract class FlowingGas extends BehaviorableFluid {
         return getMovementHandler(level).getGraph();
     }
     
-    @Override
     protected void spread(LevelAccessor pLevel, BlockPos pPos, @NotNull FluidState pState) {
         if (pState.isEmpty()) return;
         
