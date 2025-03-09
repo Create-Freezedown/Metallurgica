@@ -3,5 +3,6 @@
   "metallurgica.tooltips.impurities": "Impurities:",
   "metallurgica.impurity.tin": "Tin",
   "metallurgica.impurity.unknown": "Missing Translation for %s",
-  "metallurgica.impurity.debug": "Debug Impurity"
+  "metallurgica.impurity.debug": "Debug Impurity",
+  "metallurgica.tooltip.selected_mode": "Selected Mode"
 }

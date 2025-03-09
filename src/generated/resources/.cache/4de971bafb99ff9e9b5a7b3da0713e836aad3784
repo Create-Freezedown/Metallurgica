@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-08T19:28:56.9361353	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-03-09T12:50:29.4173944	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 d667b207526a952e617d5f2324582909e8a168b9 assets/metallurgica/blockstates/arsenical_bronze_block.json
 10811cfe0f93f3f9b8edaa6bdeccc627c164f73e assets/metallurgica/blockstates/ashed_charcoal_pile.json
 0d8cba54b05b67bef018f8c21b730acee2e0dcae assets/metallurgica/blockstates/bauxite_deposit.json
@@ -62,8 +62,8 @@ b224634f6857a88716e362c0fbbe5066a45dbb9e assets/metallurgica/blockstates/smithso
 380932457c72e4938dae0375845c8763457e2646 assets/metallurgica/blockstates/unfired_ceramic_pot.json
 c6842eb42172f6deace17075963dd2133a607c52 assets/metallurgica/blockstates/unfired_crucible.json
 1eeaa4d44a724f9fe8cfd326ace835f58cd91e00 assets/metallurgica/blockstates/wrought_iron_block.json
-2cfff29c7a84b8a50e7e3c6093a5942242d025ff assets/metallurgica/lang/en_ud.json
-921dd214d11cefe4a110d1b1c16b8f1ae6144652 assets/metallurgica/lang/en_us.json
+6e59ee1e8565f0f245cc87287d1b47e6d74c4191 assets/metallurgica/lang/en_ud.json
+f5317f9814f75603aa87c71ee77bdeb5b54929e7 assets/metallurgica/lang/en_us.json
 68642dfd6bc315345ab64faebcbfd1addffea569 assets/metallurgica/models/block/arsenical_bronze_block.json
 0581a8cd954972a66911cbdfd289c634384eca1e assets/metallurgica/models/block/ashed_charcoal_pile_1.json
 23fbbe5d43ff05d8ad7e81dcf007051c4280de41 assets/metallurgica/models/block/ashed_charcoal_pile_2.json
@@ -200,6 +200,7 @@ ddb7fbbd37dbfe950dbc4dd0d3d6c9ee86130b23 assets/metallurgica/models/item/carbon_
 ab6c54c13933b69dfc6483da210cdecb2825f856 assets/metallurgica/models/item/chlorine_bucket.json
 3eaa33d148715b46286a6185fe691b88ec549927 assets/metallurgica/models/item/clay_slip_bucket.json
 0853cf3e5adefa2a8456d47f9911e39d4f7853cd assets/metallurgica/models/item/clinopyroxene_shard.json
+26685aeeb172b88d1940c431271bf01beaef9e9a assets/metallurgica/models/item/copper_forge_hammer.json
 b6a4f4d5aa072ea318ee2b726f01e3ec50c1adf9 assets/metallurgica/models/item/copper_oxide.json
 d9b0b1c496ce7fd34d7d9f135092f63f469f2f08 assets/metallurgica/models/item/copper_rubble.json
 9fd50359933368ca9fbc57f47737ec6d6fd6d0e5 assets/metallurgica/models/item/crucible.json

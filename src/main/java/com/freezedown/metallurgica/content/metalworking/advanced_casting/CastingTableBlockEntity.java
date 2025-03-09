@@ -4,6 +4,7 @@ import com.drmangotea.tfmg.blocks.machines.TFMGMachineBlockEntity;
 import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.fluids.drain.ItemDrainBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.item.SmartInventory;
@@ -159,41 +160,7 @@ public class CastingTableBlockEntity extends TFMGMachineBlockEntity implements I
         //ForgeEventFactory.getMobGriefingEvent();
     }
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        LazyOptional<IFluidHandler> handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER);
-        Optional<IFluidHandler> resolve = handler.resolve();
-        if (!resolve.isPresent()) {
-            return false;
-        } else {
-            IFluidHandler tank = resolve.get();
-            if (tank.getTanks() == 0) {
-                return false;
-            } else {
-                LangBuilder mb = MetalLang.translate("generic.unit.millibuckets", new Object[0]);
-                boolean isEmpty = true;
-                
-                for(int i = 0; i < tank.getTanks(); ++i) {
-                    FluidStack fluidStack = tank.getFluidInTank(i);
-                    if (!fluidStack.isEmpty()) {
-                        MetalLang.fluidName(fluidStack).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                        MetalLang.builder().add(MetalLang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.DARK_GREEN)).text(ChatFormatting.GRAY, " / ").add(MetalLang.number(tank.getTankCapacity(i)).add(mb).style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
-                        isEmpty = false;
-                    }
-                }
-                
-                if (tank.getTanks() > 1) {
-                    if (isEmpty) {
-                        tooltip.remove(tooltip.size() - 1);
-                    }
-                    
-                    return true;
-                } else if (!isEmpty) {
-                    return true;
-                } else {
-                    MetalLang.translate("gui.goggles.fluid_container.capacity", new Object[0]).add(MetalLang.number((double)tank.getTankCapacity(0)).add(mb).style(ChatFormatting.DARK_GREEN)).style(ChatFormatting.DARK_GRAY).forGoggles(tooltip, 1);
-                    return true;
-                }
-            }
-        }
+        return containedFluidTooltip(tooltip, isPlayerSneaking, getCapability(ForgeCapabilities.FLUID_HANDLER));
     }
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);

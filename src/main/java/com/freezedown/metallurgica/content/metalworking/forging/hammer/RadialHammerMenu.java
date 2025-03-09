@@ -1,12 +1,12 @@
 package com.freezedown.metallurgica.content.metalworking.forging.hammer;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaPackets;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.simibubi.create.AllKeys;
-import com.simibubi.create.Create;
 import com.simibubi.create.foundation.gui.AllIcons;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.animation.AnimationTickHolder;
@@ -96,6 +96,7 @@ public class RadialHammerMenu extends AbstractSimiScreen {
 
         safety = 100;
 
+
         offset = Mth.clamp(offset, 0, VALID_MODES.size() - 1);
         selectedModeIndex = (offset == 0) ? 0 : (VALID_MODES.size() - offset);
     }
@@ -149,21 +150,21 @@ public class RadialHammerMenu extends AbstractSimiScreen {
         UIRenderHelper.streak(graphics, 0, 0, 0, 32, 65, Color.BLACK.setAlpha(0.8f));
         UIRenderHelper.streak(graphics, 180, 0, 0, 32, 65, Color.BLACK.setAlpha(0.8f));
 
-        if (selectedPropertyIndex > 0) {
-            iconScroll.at(-14, -46).render(graphics);
-            iconUp.at(-1, -46).render(graphics);
-            graphics.drawCenteredString(font, hammerModes.get(selectedPropertyIndex - 1).getValue(), 0, -30, UIRenderHelper.COLOR_TEXT.getFirst().getRGB());
-        }
+        //if (selectedPropertyIndex > 0) {
+        //    iconScroll.at(-14, -46).render(graphics);
+        //    iconUp.at(-1, -46).render(graphics);
+        //    graphics.drawCenteredString(font, hammerModes.get(selectedPropertyIndex - 1).getValue(), 0, -30, UIRenderHelper.COLOR_TEXT.getFirst().getRGB());
+        //}
 
-        if (selectedPropertyIndex < hammerModes.size() - 1) {
-            iconScroll.at(-14, 30).render(graphics);
-            iconDown.at(-1, 30).render(graphics);
-            graphics.drawCenteredString(font, hammerModes.get(selectedPropertyIndex + 1).getValue(), 0, 22, UIRenderHelper.COLOR_TEXT.getFirst().getRGB());
-        }
+        //if (selectedPropertyIndex < hammerModes.size() - 1) {
+        //    iconScroll.at(-14, 30).render(graphics);
+        //    iconDown.at(-1, 30).render(graphics);
+        //    graphics.drawCenteredString(font, hammerModes.get(selectedPropertyIndex + 1).getValue(), 0, 22, UIRenderHelper.COLOR_TEXT.getFirst().getRGB());
+        //}
 
         graphics.drawCenteredString(font, "Currently", 0, -13, UIRenderHelper.COLOR_TEXT.getFirst().getRGB());
         graphics.drawCenteredString(font, "Changing:", 0, -3, UIRenderHelper.COLOR_TEXT.getFirst().getRGB());
-        graphics.drawCenteredString(font, propertyLabel, 0, 7, UIRenderHelper.COLOR_TEXT.getFirst().getRGB());
+        graphics.drawCenteredString(font, "Hammer Mode", 0, 7, UIRenderHelper.COLOR_TEXT.getFirst().getRGB());
 
         ms.popPose();
     }
@@ -186,7 +187,7 @@ public class RadialHammerMenu extends AbstractSimiScreen {
         for (int i = 0; i < sectors; i++) {
             Color innerColor = Color.WHITE.setAlpha(0.05f);
             Color outerColor = Color.WHITE.setAlpha(0.3f);
-            HammerMode hammerMode = hammerModes.get(selectedPropertyIndex).getKey();
+            HammerMode hammerMode = hammerModes.get(i).getKey();
 
             poseStack.pushPose();
 
@@ -208,14 +209,14 @@ public class RadialHammerMenu extends AbstractSimiScreen {
             poseStack.translate(0, 0, 100);
 
             try {
-                AllIcons.I_CART_ROTATE.render(graphics, -12, 12);
+                hammerMode.getIcon().render(graphics, -12, -4);
                 //GuiGameElement.of(blockState, blockEntity)
                 //        .rotateBlock(player.getXRot(), player.getYRot() + 180, 0f)
                 //        .scale(24)
                 //        .at(-12, 12)
                 //        .render(graphics);
             } catch (Exception e) {
-                Create.LOGGER.warn("Failed to render blockstate in RadialWrenchMenu", e);
+                Metallurgica.LOGGER.warn("Failed to render blockstate in RadialWrenchMenu", e);
                 selectedModeIndex = 0;
                 return;
             }
@@ -350,13 +351,23 @@ public class RadialHammerMenu extends AbstractSimiScreen {
 
 
     public enum HammerMode implements StringRepresentable {
-        HEAVY_HIT,
-        UPSET_UP,
-        UPSET_RIGHT,
-        UPSET_DOWN,
-        UPSET_LEFT,
-        SPLIT
+        HEAVY_HIT(AllIcons.I_TARGET),
+        UPSET_UP(AllIcons.I_PRIORITY_HIGH),
+        UPSET_RIGHT(AllIcons.I_CONFIG_NEXT),
+        UPSET_DOWN(AllIcons.I_PRIORITY_LOW),
+        UPSET_LEFT(AllIcons.I_CONFIG_PREV),
+        SPLIT(AllIcons.I_CLEAR)
         ;
+
+        private final AllIcons icon;
+
+        HammerMode(AllIcons pIcon) {
+            this.icon = pIcon;
+        }
+
+        public AllIcons getIcon() {
+            return  icon;
+        }
 
         @Override
         public String getSerializedName() {
@@ -365,6 +376,20 @@ public class RadialHammerMenu extends AbstractSimiScreen {
 
         public Component getTranslatedName() {
             return MetalLang.translate(getSerializedName()).component();
+        }
+
+        public static boolean isValid(String string) {
+            return get(string) != null;
+        }
+
+        public static HammerMode get(String name) {
+            for (HammerMode mode : HammerMode.values()) {
+                if (mode.getSerializedName().equals(name))
+                    return mode;
+                if (mode.name().equals(name))
+                    return mode;
+            }
+            return UPSET_DOWN;
         }
     }
 }

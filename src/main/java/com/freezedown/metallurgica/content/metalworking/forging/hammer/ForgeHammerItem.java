@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.content.metalworking.forging.hammer;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.util.MetalLang;
 import net.createmod.catnip.lang.LangBuilder;
@@ -24,8 +25,10 @@ public class ForgeHammerItem extends Item {
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(itemstack, world, entity, slot, selected);
         CompoundTag tag = itemstack.getOrCreateTag();
-        if (!tag.contains("HammerMode"))
+        if (!tag.contains("HammerMode")) {
+            Metallurgica.LOGGER.error("HammerMode is missing from hammer");
             tag.putString("HammerMode", RadialHammerMenu.HammerMode.UPSET_DOWN.getSerializedName());
+        }
     }
 
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
@@ -35,7 +38,7 @@ public class ForgeHammerItem extends Item {
             pTooltipComponents.add(MetalLang.translate("tooltip.selected_mode").component());
             pTooltipComponents.add(
                     ClientUtil.lang().space()
-                    .add(RadialHammerMenu.HammerMode.valueOf(pStack.getOrCreateTag().getString("HammerMode").toUpperCase()).getTranslatedName())
+                    .add(RadialHammerMenu.HammerMode.get(pStack.getOrCreateTag().getString("HammerMode")).getTranslatedName())
                             .component()
             );
         }

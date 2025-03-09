@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -52,5 +54,22 @@ public class CommonUtil {
     public static MobEffectInstance noHeal(MobEffectInstance ei) {
         ei.setCurativeItems(ImmutableList.of());
         return ei;
+    }
+
+    public static float triangle(RandomSource random)
+    {
+        return random.nextFloat() - random.nextFloat() * 0.5f;
+    }
+    public static int triangle(RandomSource random, int range)
+    {
+        return random.nextInt(range) - random.nextInt(range);
+    }
+    public static float triangle(RandomSource random, float delta)
+    {
+        return (random.nextFloat() - random.nextFloat()) * delta;
+    }
+    public static double triangle(RandomSource random, double delta)
+    {
+        return (random.nextDouble() - random.nextDouble()) * delta;
     }
 }

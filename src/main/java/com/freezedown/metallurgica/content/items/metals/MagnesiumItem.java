@@ -16,7 +16,7 @@ public class MagnesiumItem extends ReactiveItem {
     }
 
     public static MagnesiumItem createIngot(Properties pProperties) {
-        return (MagnesiumItem) new MagnesiumItem(pProperties).sensitiveToAir().withResult(MetallurgicaItems.oxidisedMagnesiumIngot.asStack());
+        return (MagnesiumItem) new MagnesiumItem(pProperties).sensitiveToAir(50).withResult(MetallurgicaItems.oxidisedMagnesiumIngot.asStack());
     }
 
     @Override

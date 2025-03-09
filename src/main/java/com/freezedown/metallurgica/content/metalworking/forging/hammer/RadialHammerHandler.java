@@ -45,7 +45,7 @@ public class RadialHammerHandler {
         HitResult objectMouseOver = mc.hitResult;
 
         CompoundTag hammerData = heldItem.getOrCreateTag();
-        RadialHammerMenu.HammerMode currentMode = RadialHammerMenu.HammerMode.valueOf(hammerData.getString("HammerMode").toUpperCase());
+        RadialHammerMenu.HammerMode currentMode = RadialHammerMenu.HammerMode.get(hammerData.getString("HammerMode"));
 
         RadialHammerMenu.tryCreateFor(heldItem, currentMode, level).ifPresent(ScreenOpener::open);
     }

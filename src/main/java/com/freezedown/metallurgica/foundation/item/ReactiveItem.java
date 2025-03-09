@@ -20,6 +20,7 @@ public abstract class ReactiveItem extends MetallurgicaItem {
 
     private final NonNullList<Fluid> reactants;
     private boolean sensitiveToAir = false;
+    private int maxAirExposure = 10;
     private boolean sensitiveToRain = false;
     private boolean sensitiveToHeat = false;
     private Optional<ItemStack> result = Optional.empty();
@@ -40,8 +41,9 @@ public abstract class ReactiveItem extends MetallurgicaItem {
         return this;
     }
 
-    public ReactiveItem sensitiveToAir() {
+    public ReactiveItem sensitiveToAir(int maxAirExposure) {
         this.sensitiveToAir = true;
+        this.maxAirExposure = maxAirExposure;
         return this;
     }
 
@@ -86,11 +88,11 @@ public abstract class ReactiveItem extends MetallurgicaItem {
 
 
     public int getBarColor(ItemStack stack) {
-        return Color.mixColors(0xf5f6f9, 0xb6bec7, (float)this.airExposureCounter(stack) / 10);
+        return Color.mixColors(0xf5f6f9, 0xb6bec7, (float)this.airExposureCounter(stack) / maxAirExposure);
     }
 
     public int getBarWidth(ItemStack stack) {
-        return Math.round(13.0F * (float)this.airExposureCounter(stack) / 10);
+        return Math.round(13.0F * (float)this.airExposureCounter(stack) / maxAirExposure);
     }
 
     public boolean isBarVisible(ItemStack stack) {
@@ -109,13 +111,13 @@ public abstract class ReactiveItem extends MetallurgicaItem {
             }
             if (this.sensitiveToAir) {
                 int airExposure = this.airExposureCounter(stack);
-                if (airExposure < 10) {
+                if (airExposure < maxAirExposure) {
                     stack.getOrCreateTag().putInt("AirExposure", airExposure + 1);
                 }
             }
         }
 
-        if (this.sensitiveToAir && this.airExposureCounter(stack) >= 10) {
+        if (this.sensitiveToAir && this.airExposureCounter(stack) >= maxAirExposure) {
             if (this.result.isPresent()) {
                 replaceStack(true, entity, stack, this.result.get());
             } else {

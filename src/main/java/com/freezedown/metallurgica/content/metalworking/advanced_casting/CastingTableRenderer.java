@@ -51,20 +51,17 @@ public class CastingTableRenderer extends SmartBlockEntityRenderer<CastingTableB
         }
         
         
-        
+
         float level = primaryTank.getFluidLevel()
                 .getValue(partialTicks);
         if (!fluidStack.isEmpty() && level != 0) {
-            level = Math.max(level, 0.175f);
-            float minX = 2f / 16f;
-            float maxX = 14f / 16f;
-            float minY = 12f / 16f;
-            float maxY = (15 / 16f) * level;
-            float minZ = 2f / 16f;
-            float maxZ = 14f / 16f;
+            float yMin = 12f / 16f;
+            float min = 2f / 16f;
+            float max = min + (12f / 16f);
+            float yOffset = (3f / 16f) * level;
             
             ms.pushPose();
-            FluidRenderer.renderFluidBox(fluidStack.getFluid(), fluidStack.getAmount(), minX, minY, minZ, maxX, maxY, maxZ, buffer, ms, light, false, false);
+            FluidRenderer.renderFluidBox(fluidStack.getFluid(), fluidStack.getAmount(), min, yMin + yOffset, min, max, yMin, max, buffer, ms, light, false, false, fluidStack.getTag());
             ms.popPose();
             
         }
