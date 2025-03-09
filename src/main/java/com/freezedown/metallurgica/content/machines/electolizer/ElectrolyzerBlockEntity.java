@@ -1,12 +1,17 @@
 package com.freezedown.metallurgica.content.machines.electolizer;
 
 import com.drmangotea.tfmg.CreateTFMG;
+import com.drmangotea.tfmg.base.MaxBlockVoltage;
 import com.drmangotea.tfmg.base.TFMGTools;
+import com.drmangotea.tfmg.base.TFMGUtils;
 import com.drmangotea.tfmg.blocks.electricity.base.TFMGForgeEnergyStorage;
+import com.drmangotea.tfmg.blocks.electricity.base.VoltageAlteringBlockEntity;
 import com.drmangotea.tfmg.blocks.electricity.base.cables.*;
 import com.drmangotea.tfmg.blocks.electricity.cable_blocks.CableHubBlockEntity;
 import com.drmangotea.tfmg.blocks.electricity.energy_components.resistors.ResistorBlockEntity;
+import com.drmangotea.tfmg.registry.TFMGBlockEntities;
 import com.drmangotea.tfmg.registry.TFMGPackets;
+import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.fluids.FluidFX;
@@ -29,6 +34,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -50,6 +56,7 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
     public int voltage = 0;
     boolean destroyed = false;
     public boolean networkUpdate = false;
+    public boolean breakNextTick = false;
     public boolean needsVoltageUpdate = false;
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
     public final TFMGForgeEnergyStorage energy = this.createEnergyStorage();
@@ -61,6 +68,12 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
     
     public ElectrolyzerBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
+        this.setLazyTickRate(1);
+    }
+
+    public void lazyTick() {
+        super.lazyTick();
+        this.getOrCreateElectricNetwork().requestEnergy(this);
     }
     
     @Override
@@ -72,7 +85,7 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
         if (!this.wireConnections.isEmpty()) {
             this.wireConnections = new ArrayList();
 
-            for (int i = 0; i < compound.getInt("WireCount"); ++i) {
+            for(int i = 0; i < compound.getInt("WireCount"); ++i) {
                 BlockPos pos = new BlockPos(compound.getInt("X1" + i), compound.getInt("Y1" + i), compound.getInt("Z1" + i));
                 if (pos == this.getBlockPos()) {
                     pos = new BlockPos(compound.getInt("X2" + i), compound.getInt("Y2" + i), compound.getInt("Z2" + i));
@@ -93,27 +106,28 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
     
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
+        super.write(compound, clientPacket);
         compound.putBoolean("Running", running);
         compound.putInt("Ticks", runningTicks);
         compound.putInt("Voltage", this.getVoltage());
         compound.putLong("Network", this.network);
         int value = 0;
-        Iterator var4 = this.wireConnections.iterator();
 
-        while(var4.hasNext()) {
-            WireConnection connection = (WireConnection)var4.next();
+        for(WireConnection connection : this.wireConnections) {
             ++value;
             connection.saveConnection(compound, value - 1);
         }
 
         compound.putInt("WireCount", this.wireConnections.toArray().length);
         compound.putInt("ForgeEnergy", this.getForgeEnergy().getEnergyStored());
-        super.write(compound, clientPacket);
     }
     
     @Override
     public void tick() {
         super.tick();
+        if (this.breakNextTick) {
+            this.explode();
+        }
         
         if (runningTicks >= 40) {
             running = false;
@@ -266,6 +280,11 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
             AllSoundEvents.MIXING.playAt(level, worldPosition, .75f, 1, true);
     }
 
+    public void onLoad() {
+        super.onLoad();
+        this.lazyEnergyHandler = LazyOptional.of(() -> this.energy);
+    }
+
     @Override
     public long getNetwork() {
         return this.network;
@@ -280,20 +299,17 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
     public void setNetwork(long newNetwork, boolean removeNetwork) {
         if (this.network != newNetwork) {
             if (removeNetwork) {
-                ((Map) ElectricNetworkManager.networks.get(this.getLevel())).remove(this.network);
+                ((Map)ElectricNetworkManager.networks.get(this.getLevel())).remove(this.network);
             } else {
                 this.getOrCreateElectricNetwork().remove(this);
             }
 
             long oldNetwork = this.network;
             this.network = newNetwork;
-            this.setChanged();
-            this.network = newNetwork;
-            ElectricalNetwork network1 = this.getOrCreateElectricNetwork();
+            ElectricalNetwork network1 = CreateTFMG.NETWORK_MANAGER.getOrCreateNetworkFor((IElectric)this.level.getBlockEntity(BlockPos.of(this.network)));
             if (network1.members.contains(this)) {
                 this.network = oldNetwork;
             } else {
-                TFMGPackets.getChannel().send(PacketDistributor.ALL.noArg(), new EnergyNetworkUpdatePacket(this.getBlockPos(), this.network));
                 network1.add(this);
             }
         }
@@ -301,7 +317,7 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
 
     @Override
     public ElectricalNetwork getOrCreateElectricNetwork() {
-        return this.level.getBlockEntity(BlockPos.of(this.network)) != null ? CreateTFMG.NETWORK_MANAGER.getOrCreateNetworkFor((IElectric)this.level.getBlockEntity(BlockPos.of(this.network))) : CreateTFMG.NETWORK_MANAGER.getOrCreateNetworkFor(this);
+        return this.level.getBlockEntity(BlockPos.of(this.network)) instanceof IElectric ? CreateTFMG.NETWORK_MANAGER.getOrCreateNetworkFor((IElectric)this.level.getBlockEntity(BlockPos.of(this.network))) : CreateTFMG.NETWORK_MANAGER.getOrCreateNetworkFor(this);
     }
 
     @Override
@@ -361,6 +377,14 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
         return 10000;
     }
 
+    public int maxVoltage() {
+        return 3500;
+    }
+
+    public boolean outputAllowed() {
+        return false;
+    }
+
     @Override
     public int FEProduction() {
         return 0;
@@ -377,30 +401,22 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
     }
 
     @Override
-    public int maxVoltage() {
-        return 6000;
-    }
-
-    @Override
     public int voltageGeneration() {
-        int maxResistorVoltage = 0;
-        Direction[] var2 = Direction.values();
-        int var3 = var2.length;
+        int voltageGeneration = 0;
 
-        for(int var4 = 0; var4 < var3; ++var4) {
-            Direction direction = var2[var4];
+        for(Direction direction : Direction.values()) {
             if (this.hasElectricitySlot(direction)) {
                 BlockEntity var7 = this.level.getBlockEntity(this.getBlockPos().relative(direction));
-                if (var7 instanceof ResistorBlockEntity) {
-                    ResistorBlockEntity be = (ResistorBlockEntity)var7;
-                    if (be.hasElectricitySlot(direction)) {
-                        maxResistorVoltage = Math.max(maxResistorVoltage, be.voltageOutput());
+                if (var7 instanceof VoltageAlteringBlockEntity) {
+                    VoltageAlteringBlockEntity be = (VoltageAlteringBlockEntity)var7;
+                    if (be.voltage != 0 && be.hasElectricitySlot(direction)) {
+                        voltageGeneration = Math.max(voltageGeneration, be.getOutputVoltage());
                     }
                 }
             }
         }
 
-        return maxResistorVoltage;
+        return voltageGeneration;
     }
 
     public void setVoltage(int value) {
@@ -416,38 +432,43 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
     }
 
     public void voltageFailure() {
+        if (!this.getOrCreateElectricNetwork().blowFuse()) {
+            this.voltage = 0;
+            this.wireConnections = new ArrayList();
+            this.breakNextTick = true;
+        }
     }
 
     @Override
     public void connectNeighbors() {
-        Direction[] var1 = Direction.values();
-        int var2 = var1.length;
-
-        for(int var3 = 0; var3 < var2; ++var3) {
-            Direction direction = var1[var3];
+        for(Direction direction : Direction.values()) {
             if (this.hasElectricitySlot(direction)) {
                 BlockPos pos = this.getBlockPos().relative(direction);
-                BlockEntity var7 = this.level.getBlockEntity(pos);
-                if (var7 instanceof IElectric) {
-                    IElectric be = (IElectric)var7;
-                    if (be instanceof CableHubBlockEntity) {
-                        CableHubBlockEntity be1 = (CableHubBlockEntity)be;
-                        if (be1.hasSignal) {
-                            continue;
-                        }
-                    }
+                BlockEntity be1 = this.level.getBlockEntity(pos);
+                if (be1 instanceof IElectric) {
+                    IElectric be = (IElectric)be1;
 
                     if (be.hasElectricitySlot(direction.getOpposite())) {
-                        be.addConnection(WireManager.Conductor.COPPER, this.getBlockPos(), true, true);
+                        be.addConnection(WireManager.Conductor.COPPER, this.getBlockPos(), false, true);
                         be.sendStuff();
                         this.addConnection(WireManager.Conductor.COPPER, pos, false, true);
                         this.sendData();
                         this.setChanged();
+                        if (this.level.isClientSide) {
+                            TFMGPackets.getChannel().send(PacketDistributor.ALL.noArg(), new EnergyNetworkUpdatePacket(this.getBlockPos(), this.network));
+                            TFMGPackets.getChannel().send(PacketDistributor.ALL.noArg(), new VoltagePacket(this.getBlockPos()));
+                        }
+
                         be.makeControllerAndSpread();
                     }
                 }
             }
         }
+    }
+
+    public void explode() {
+        TFMGUtils.createFireExplosion(this.level, (Entity)null, this.getBlockPos(), 10, 0.1F);
+        this.level.destroyBlock(this.getBlockPos(), false);
     }
 
     @Override

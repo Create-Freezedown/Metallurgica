@@ -383,40 +383,39 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         public ResourceLocation still;
         public ResourceLocation flow;
         public int color;
-        
+
         public TintedFluid(Properties properties, ResourceLocation still, ResourceLocation flow) {
             super(properties, still, flow);
         }
-        
+
         public TintedFluid color(int color) {
             this.color = color;
             return this;
         }
-        
+
         public TintedFluid still(ResourceLocation still) {
             this.still = still;
             return this;
         }
-        
+
         public TintedFluid flow(ResourceLocation flow) {
             this.flow = flow;
             return this;
         }
-        
+
         public static FluidBuilder.FluidTypeFactory create(int color) {
             return (properties, still, flow) -> new TintedFluid(properties, still, flow).color(color);
         }
-        
+
         public static FluidBuilder.FluidTypeFactory create(int color, ResourceLocation still, ResourceLocation flow) {
             return (properties, still1, flow1) -> new TintedFluid(properties, still, flow).color(color).still(still).flow(flow);
         }
-        
+
         @Override
         protected int getTintColor(FluidStack stack) {
-            int c = color | 0xFF000000;
-            return c;
+            return color | 0xFF000000;
         }
-        
+
         @Override
         protected int getTintColor(FluidState state, BlockAndTintGetter getter, BlockPos pos) {
             return NO_TINT;

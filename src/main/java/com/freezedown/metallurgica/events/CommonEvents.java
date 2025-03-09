@@ -5,18 +5,22 @@ import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasMovem
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureEffect;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureMinerals;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureUtil;
+import com.freezedown.metallurgica.foundation.command.MetallurgicaCommands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EventBusSubscriber
 public class CommonEvents {
     
     @SubscribeEvent
@@ -90,6 +94,9 @@ public class CommonEvents {
         //if (player instanceof ServerPlayer serverPlayer)
         //    MetallurgicaPackets.sendToPlayer(serverPlayer, /*new BlurShaderPacket(player.getPersistentData().getBoolean("metallurgica:exposureEffect_showBlur"))*/true);
     }
-    
-    
+
+    @SubscribeEvent
+    public static void registerCommands(RegisterCommandsEvent event) {
+        MetallurgicaCommands.register(event.getDispatcher(), event.getBuildContext());
+    }
 }

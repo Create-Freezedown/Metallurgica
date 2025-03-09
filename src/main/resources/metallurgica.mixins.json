@@ -16,7 +16,8 @@
     "PlayerListMixin",
     "TFMGBlastFurnaceBGone",
     "WorldGenRegionMixin",
-    "emi.FluidHelperMixin"
+    "emi.FluidEmiStackMixin",
+    "jei.FluidHelperMixin"
   ],
   "client": [
     "MixinLiquidBlockRenderer",

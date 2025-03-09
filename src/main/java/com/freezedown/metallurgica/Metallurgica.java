@@ -9,6 +9,7 @@ import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
 import com.freezedown.metallurgica.world.biome_modifier.SurfaceDepositsModifier;
 import com.google.gson.Gson;
@@ -35,8 +36,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.NewRegistryEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -71,11 +74,9 @@ public class Metallurgica
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
         IEventBus modEventBus = FMLJavaModLoadingContext.get()
                 .getModEventBus();
-        
-        
+
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
-        
-        
+
         registrate.registerEventListeners(modEventBus);
         
         //BIOME_MODIFIERS.register(modEventBus);
@@ -84,6 +85,9 @@ public class Metallurgica
         MetallurgicaBlockEntities.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
+
+        MetallurgicaConductors.register();
+
         MetallurgicaFluids.register();
         MetallurgicaEffects.register(modEventBus);
         MetallurgicaRecipeTypes.register(modEventBus);
@@ -133,6 +137,14 @@ public class Metallurgica
         LOGGER.info("Double checking our cool little ore frequency thingy :3");
         //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
         //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
+    }
+
+    public static boolean isClientThread() {
+        return isClientSide() && Minecraft.getInstance().isSameThread();
+    }
+
+    public static boolean isClientSide() {
+        return FMLEnvironment.dist.isClient();
     }
 
     @Mod.EventBusSubscriber(modid = ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
