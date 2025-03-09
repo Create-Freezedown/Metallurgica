@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.forging.casting.ingot;
+package com.freezedown.metallurgica.content.metalworking.casting.ingot;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;

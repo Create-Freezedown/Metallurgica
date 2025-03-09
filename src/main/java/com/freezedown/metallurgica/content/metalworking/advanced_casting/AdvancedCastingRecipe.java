@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.forging.advanced_casting;
+package com.freezedown.metallurgica.content.metalworking.advanced_casting;
 
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.google.gson.JsonObject;

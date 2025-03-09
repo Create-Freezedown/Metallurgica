@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.forging.casting.ingot;
+package com.freezedown.metallurgica.content.metalworking.casting.ingot;
 
 import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
 import com.freezedown.metallurgica.registry.MetallurgicaShapes;

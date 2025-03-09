@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.forging.advanced_casting;
+package com.freezedown.metallurgica.content.metalworking.advanced_casting;
 
 import com.freezedown.metallurgica.registry.MetallurgicaBlockEntities;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;

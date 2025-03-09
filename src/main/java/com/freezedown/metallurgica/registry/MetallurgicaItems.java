@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.items.metals.MagnesiumItem;
 import com.freezedown.metallurgica.content.items.metals.MagnesiumOxideItem;
 import com.freezedown.metallurgica.content.items.sealed_storage.SealedBundleItem;
+import com.freezedown.metallurgica.content.metalworking.forging.hammer.ForgeHammerItem;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
@@ -25,6 +26,9 @@ public class MetallurgicaItems {
     public static final ItemEntry<SealedBundleItem>
             sealedBundle = registrate.item("sealed_bundle", SealedBundleItem::new, p->p.stacksTo(1))
                     ;
+
+    public static final ItemEntry<ForgeHammerItem>
+            copperForgeHammer = registrate.item("copper_forge_hammer", ForgeHammerItem::new, p->p.stacksTo(1));
     //MISC ITEMS
     public static final ItemEntry<MetallurgicaItem>
             salt =                registrate.metallurgicaItem("salt", "salt"),

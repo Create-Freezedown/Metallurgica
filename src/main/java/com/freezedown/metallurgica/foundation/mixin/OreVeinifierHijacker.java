@@ -21,7 +21,8 @@ public class OreVeinifierHijacker {
         return (pos) -> {
             double d0 = densityFunction.compute(pos);
             int i = pos.blockY();
-            VeinifierHijackerTypes oreveinifier$veintype = getVeinType(d0);
+            RandomSource randomsource = positionalRandomFactory.at(pos.blockX(), i, pos.blockZ());
+            VeinifierHijackerTypes oreveinifier$veintype = getVeinType(randomsource.nextDouble());
             double d1 = Math.abs(d0);
             int j = oreveinifier$veintype.maxY - i;
             int k = i - oreveinifier$veintype.minY;
@@ -31,7 +32,6 @@ public class OreVeinifierHijacker {
                 if (d1 + d2 < (double)0.4F) {
                     return blockstate;
                 } else {
-                    RandomSource randomsource = positionalRandomFactory.at(pos.blockX(), i, pos.blockZ());
                     if (randomsource.nextFloat() > 0.7F) {
                         return blockstate;
                     } else if (densityFunction1.compute(pos) >= 0.0D) {

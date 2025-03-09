@@ -6,6 +6,7 @@ public enum MetallurgicaTools {
     SHOVEL,
     SWORD,
     HOE,
+    FORGE_HAMMER,
     WRENCH;
 
     MetallurgicaTools() {

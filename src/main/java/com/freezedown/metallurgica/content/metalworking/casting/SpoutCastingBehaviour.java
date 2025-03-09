@@ -1,6 +1,6 @@
-package com.freezedown.metallurgica.content.forging.casting;
+package com.freezedown.metallurgica.content.metalworking.casting;
 
-import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldBlockEntity;
+import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlockEntity;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;

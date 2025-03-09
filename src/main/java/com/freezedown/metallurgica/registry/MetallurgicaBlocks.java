@@ -1,8 +1,8 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldBlock;
-import com.freezedown.metallurgica.content.forging.casting.ingot.IngotCastingMoldGenerator;
+import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
+import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
 import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
 import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlock;
@@ -11,7 +11,7 @@ import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelD
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotGenerator;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
-import com.freezedown.metallurgica.content.forging.advanced_casting.CastingTable;
+import com.freezedown.metallurgica.content.metalworking.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinGenerator;

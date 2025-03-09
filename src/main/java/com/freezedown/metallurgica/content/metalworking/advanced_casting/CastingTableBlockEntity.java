@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.forging.advanced_casting;
+package com.freezedown.metallurgica.content.metalworking.advanced_casting;
 
 import com.drmangotea.tfmg.blocks.machines.TFMGMachineBlockEntity;
 import com.freezedown.metallurgica.foundation.util.MetalLang;
@@ -25,7 +25,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;

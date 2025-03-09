@@ -9,7 +9,6 @@
     "AllBiomeModifiersMixin",
     "ChemicalInfoTooltipMixin",
     "DefaultOreFeaturesMixin",
-    "FillCommandMixin",
     "MixinOpenEndedPipe",
     "MixinOpenEndFluidHandler",
     "MixinVanillaFluidTargets",

@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.forging;
+package com.freezedown.metallurgica.content.metalworking;
 
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
 import net.minecraft.world.item.Item;

@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.content.forging.advanced_casting;
+package com.freezedown.metallurgica.content.metalworking.advanced_casting;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
@@ -6,7 +6,6 @@ import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRende
 import com.simibubi.create.foundation.fluid.FluidRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;

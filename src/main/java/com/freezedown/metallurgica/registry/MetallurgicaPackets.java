@@ -2,8 +2,10 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetActivationPacket;
+import com.freezedown.metallurgica.content.metalworking.forging.hammer.RadialHammerMenuSubmitPacket;
 import com.freezedown.metallurgica.content.temperature.TemperatureUpdatePacket;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionPacket;
+import com.simibubi.create.content.contraptions.wrench.RadialWrenchMenuSubmitPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -24,9 +26,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static net.minecraftforge.network.NetworkDirection.PLAY_TO_CLIENT;
+import static net.minecraftforge.network.NetworkDirection.PLAY_TO_SERVER;
 
 public enum MetallurgicaPackets {
     // Client to Server
+    radialHammerMenuSubmit(RadialHammerMenuSubmitPacket.class, RadialHammerMenuSubmitPacket::new, PLAY_TO_SERVER),
     
     // Server to Client
     faucetActivation(FaucetActivationPacket.class, FaucetActivationPacket::new, PLAY_TO_CLIENT),
