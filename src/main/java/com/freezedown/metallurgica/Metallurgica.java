@@ -8,6 +8,7 @@ import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
+import com.freezedown.metallurgica.infastructure.conductor.ConductorStats;
 import com.freezedown.metallurgica.registry.*;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
@@ -66,7 +67,7 @@ public class Metallurgica
     public static final RegistryObject<Codec<? extends SurfaceDepositsModifier>> surfaceDeposits_CODEC = BIOME_MODIFIERS.register("generation_surface_deposits", () -> Codec.unit(SurfaceDepositsModifier.INSTANCE));
     public static final FontHelper.Palette METALLURGICA_PALETTE = new FontHelper.Palette(styleFromColor(0x383d59), styleFromColor(0x717388));
     static {
-        registrate.setTooltipModifierFactory((item) -> (new ItemDescription.Modifier(item, METALLURGICA_PALETTE)).andThen(TooltipModifier.mapNull(KineticStats.create(item))));
+        registrate.setTooltipModifierFactory((item) -> (new ItemDescription.Modifier(item, METALLURGICA_PALETTE)).andThen(TooltipModifier.mapNull(KineticStats.create(item))).andThen(TooltipModifier.mapNull(ConductorStats.create(item))));
     }
     
     public Metallurgica()
@@ -78,15 +79,15 @@ public class Metallurgica
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         registrate.registerEventListeners(modEventBus);
+        MetallurgicaRegistries.register();
         
         //BIOME_MODIFIERS.register(modEventBus);
         MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
         MetallurgicaCreativeTab.register(modEventBus);
         MetallurgicaBlockEntities.register();
+        MetallurgicaConductors.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
-
-        MetallurgicaConductors.register();
 
         MetallurgicaFluids.register();
         MetallurgicaEffects.register(modEventBus);

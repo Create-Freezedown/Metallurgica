@@ -13,6 +13,8 @@ import com.freezedown.metallurgica.foundation.material.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
+import com.freezedown.metallurgica.infastructure.conductor.Conductor;
+import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
@@ -197,6 +199,22 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
             builder.tag(AllTags.forgeItemTag(tag));
         }
         return builder.register();
+    }
+
+    public <T extends Conductor> ConductorBuilder<T, MetallurgicaRegistrate> conductor(NonNullFunction<Conductor.Properties, T> factory) {
+        return conductor((MetallurgicaRegistrate) self(), factory);
+    }
+
+    public <T extends Conductor> ConductorBuilder<T, MetallurgicaRegistrate> conductor(String name, NonNullFunction<Conductor.Properties, T> factory) {
+        return conductor((MetallurgicaRegistrate) self(), name, factory);
+    }
+
+    public <T extends Conductor, P> ConductorBuilder<T, P> conductor(P parent, NonNullFunction<Conductor.Properties, T> factory) {
+        return conductor(parent, currentName(), factory);
+    }
+
+    public <T extends Conductor, P> ConductorBuilder<T, P> conductor(P parent, String name, NonNullFunction<Conductor.Properties, T> factory) {
+        return entry(name, callback -> ConductorBuilder.create(this, parent, name, callback, factory));
     }
     
     public enum Dimension {

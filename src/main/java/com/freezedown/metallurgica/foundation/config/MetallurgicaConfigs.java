@@ -4,7 +4,9 @@ import com.freezedown.metallurgica.foundation.config.client.MClient;
 import com.freezedown.metallurgica.foundation.config.common.MCommon;
 import com.freezedown.metallurgica.foundation.config.server.MServer;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
+import com.freezedown.metallurgica.infastructure.conductor.WireConductorValues;
 import com.simibubi.create.api.stress.BlockStressValues;
+import com.simibubi.create.infrastructure.config.CStress;
 import net.createmod.catnip.config.ConfigBase;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -68,6 +70,9 @@ public class MetallurgicaConfigs {
         MStress stress = server().kinetics.stressValues;
         BlockStressValues.IMPACTS.registerProvider(stress::getImpact);
         BlockStressValues.CAPACITIES.registerProvider(stress::getCapacity);
+        TFMGConductor conductor = server().conductorValues;
+        WireConductorValues.RESISTIVITIES.registerProvider(conductor::getResistivity);
+        WireConductorValues.MAX_LENGTHS.registerProvider(conductor::getMaxLength);
     }
     
     @SubscribeEvent

@@ -57,16 +57,16 @@ public class MoltenMetal extends VirtualFluid {
             this.still = stillRl;
             this.flow = flowRl;
         }
-        
+
         @Override
         public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
             consumer.accept(new IClientFluidTypeExtensions() {
-                
+
                 @Override
                 public ResourceLocation getStillTexture() {
                     return still;
                 }
-                
+
                 @Override
                 public ResourceLocation getFlowingTexture() {
                     return flow;

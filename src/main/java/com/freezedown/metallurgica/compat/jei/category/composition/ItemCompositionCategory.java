@@ -1,6 +1,8 @@
 package com.freezedown.metallurgica.compat.jei.category.composition;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
+import com.simibubi.create.compat.jei.ConversionRecipe;
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import mezz.jei.api.gui.builder.IIngredientAcceptor;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionRecipe> {
+public class ItemCompositionCategory extends CreateRecipeCategory<ItemCompositionRecipe> {
     public static final RecipeType<ItemCompositionRecipe> ITEM_COMPOSITION = RecipeType.create("metallurgica", "element_composition", ItemCompositionRecipe.class);
     private final IDrawable icon;
     private final IDrawable slotBackground;
@@ -35,11 +37,12 @@ public class ItemCompositionCategory implements IRecipeCategory<ItemCompositionR
 
     static {
         CompositionManager.compositions.forEach((item, composition) -> {
-            COMPOSITIONS.add(new ItemCompositionRecipe(composition.item(), composition.elements()));
+            COMPOSITIONS.add(ItemCompositionRecipe.create(composition.item(), composition.elements()));
         });
     }
 
-    public ItemCompositionCategory(IGuiHelper guiHelper) {
+    public ItemCompositionCategory(Info<ItemCompositionRecipe> info) {
+        super(info);
         this.icon = asDrawable(AllGuiTextures.JEI_QUESTION_MARK);
         this.slotBackground = asDrawable(AllGuiTextures.JEI_SLOT);
     }

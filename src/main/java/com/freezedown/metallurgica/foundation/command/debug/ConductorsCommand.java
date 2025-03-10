@@ -1,18 +1,15 @@
 package com.freezedown.metallurgica.foundation.command.debug;
 
-import com.drmangotea.tfmg.blocks.electricity.base.cables.WireItem;
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-
-import java.util.Map;
 
 public class ConductorsCommand {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
@@ -20,10 +17,10 @@ public class ConductorsCommand {
     }
 
     private static int listConductors(CommandSourceStack source) {
-        for (Map.Entry<ResourceLocation, Conductor> conductorEntry : MetallurgicaRegistries.CONDUCTOR.entries()) {
-            ResourceLocation key = conductorEntry.getKey();
-            Conductor conductor = conductorEntry.getValue();
-            Component conductorMessage = Component.literal("> (").append(conductor.getDisplayName()).append(") {" + conductor.getResistivity() + "}").withStyle(FontHelper.styleFromColor(0x624a95));
+        for (RegistryEntry<Conductor> conductorEntry : Metallurgica.registrate().getAll(MetallurgicaRegistries.CONDUCTOR_KEY)) {
+            ResourceLocation key = conductorEntry.getId();
+            Conductor conductor = conductorEntry.get();
+            Component conductorMessage = Component.literal("> (").append(conductor.getDisplayName()).append(")").withStyle(FontHelper.styleFromColor(0x624a95));
             source.sendSuccess(() -> conductorMessage, false);
         }
         return 0;

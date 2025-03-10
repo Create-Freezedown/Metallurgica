@@ -1,48 +1,74 @@
 package com.freezedown.metallurgica.infastructure.conductor;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.infastructure.IHasDescriptionId;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import lombok.Getter;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 
 @Getter
 public class Conductor implements IHasDescriptionId {
     private String descriptionId;
 
-    private final float resistivity;
-    private int[] color1 = {193, 90, 54, 255};
-    private int[] color2 = {156, 78, 49, 255};
 
-    public Conductor(float resistivity) {
-        this.resistivity = resistivity;
-    }
+    private final int[] color1;
+    private final int[] color2;
 
-    public Conductor(float resistivity, int[] color1, int[] color2) {
-        this.resistivity = resistivity;
-        this.color1 = color1;
-        this.color2 = color2;
+    public Conductor(Properties properties) {
+        this.color1 = properties.color1;
+        this.color2 = properties.color2;
     }
 
     public String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
-            ResourceLocation key = MetallurgicaRegistries.CONDUCTOR.getKey(this);
-            this.descriptionId = Util.makeDescriptionId("conductor", key);
+            this.descriptionId = Util.makeDescriptionId("conductor", this.getKey());
         }
 
         return this.descriptionId;
     }
 
+    public static class Properties {
+        int[] color1 = {193, 90, 54, 255};
+        int[] color2 = {156, 78, 49, 255};
+
+        public Properties() {
+
+        }
+
+        public Properties color1(int r, int g, int b, int a) {
+            this.color1 = new int[]{r,g,b,a};
+            return  this;
+        }
+        public Properties color2(int r, int g, int b, int a) {
+            this.color2 = new int[]{r,g,b,a};
+            return  this;
+        }
+    }
+
+    public ResourceLocation getKey() {
+        Registry<Conductor> conductorRegistry = (Registry<Conductor>) BuiltInRegistries.REGISTRY.get(Metallurgica.asResource("conductor"));
+        if (conductorRegistry == null) {
+            return Metallurgica.asResource("missing_conductor");
+        }
+        return conductorRegistry.getKey(this);
+    }
 
     public static void renderWire(Conductor conductor, PoseStack pMatrixStack, MultiBufferSource pBuffer, BlockPos pos1, BlockPos pos2, float offsetX1, float offsetY1, float offsetZ1, float offsetX2, float offsetY2, float offsetZ2, float curve) {
         pMatrixStack.pushPose();

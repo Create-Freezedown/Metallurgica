@@ -519,7 +519,7 @@ public class ElectrolyzerBlockEntity extends BasinOperatingBlockEntity implement
 
     @Override
     public TFMGForgeEnergyStorage getForgeEnergy() {
-        return null;
+        return this.energy;
     }
 
     public void onVoltageChanged() {
