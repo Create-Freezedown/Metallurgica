@@ -12,9 +12,9 @@ public class MCrushingGen extends MProcessingRecipeGen {
     GeneratedRecipe
     
     rutileRubble = create(Metallurgica.asResource("rutile_rubble"), b -> b
-            .require(MetallurgicaOre.RUTILE.MATERIAL.raw().get())
-            .output(MetallurgicaOre.RUTILE.MATERIAL.rubble().get(), 1)
-            .output(0.05f, MetallurgicaOre.RUTILE.MATERIAL.rubble().get(), 1)
+            .require(MetallurgicaOre.RUTILE.ORE.raw().get())
+            .output(MetallurgicaOre.RUTILE.ORE.rubble().get(), 1)
+            .output(0.05f, MetallurgicaOre.RUTILE.ORE.rubble().get(), 1)
             .duration(600))
     
     ;

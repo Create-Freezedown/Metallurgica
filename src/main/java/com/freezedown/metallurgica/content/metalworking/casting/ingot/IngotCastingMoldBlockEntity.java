@@ -2,10 +2,11 @@ package com.freezedown.metallurgica.content.metalworking.casting.ingot;
 
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.content.temperature.KineticTemperatureBlockEntity;
+import com.freezedown.metallurgica.foundation.item.registry.MaterialEntry;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagItemOutput;
-import com.freezedown.metallurgica.registry.MetallurgicaMetals;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
@@ -101,9 +102,10 @@ public class IngotCastingMoldBlockEntity extends KineticTemperatureBlockEntity i
             }
         }
         
-        for (MetallurgicaMetals metalEntry : MetallurgicaMetals.values()) {
-            if (metalEntry.METAL.getMolten().get().isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
-                metalName = metalEntry.name().toLowerCase();
+        for (MetallurgicaMaterials material : MetallurgicaMaterials.values()) {
+            MaterialEntry materialEntry = material.getMaterialEntry();
+            if (materialEntry.molten().molten.get().isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
+                metalName = materialEntry.getName();
             }
         }
         

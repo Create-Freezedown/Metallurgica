@@ -38,10 +38,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.NewRegistryEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -85,6 +82,7 @@ public class Metallurgica
         MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
         MetallurgicaCreativeTab.register(modEventBus);
         MetallurgicaBlockEntities.register();
+        //modEventBus.addGenericListener(Conductor.class, MetallurgicaConductors::register);
         MetallurgicaConductors.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
@@ -104,8 +102,8 @@ public class Metallurgica
         MinecraftForge.EVENT_BUS.register(commonHandler);
         
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         modEventBus.addListener(Metallurgica::init);
+        modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MetallurgicaClient::new);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(modEventBus, forgeEventBus));
         MinecraftForge.EVENT_BUS.register(this);
@@ -134,7 +132,6 @@ public class Metallurgica
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
-        MetallurgicaRegistrate.printCompositions();
         LOGGER.info("Double checking our cool little ore frequency thingy :3");
         //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
         //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);

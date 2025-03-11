@@ -2,9 +2,6 @@ package com.freezedown.metallurgica.infastructure;
 
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.infrastructure.gui.CreateMainMenuScreen;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.minecraft.client.Minecraft;
@@ -19,7 +16,6 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -43,7 +39,7 @@ public class OpenMetallurgicaMenuButton extends Button {
     }
 
     static {
-        ICON = MetallurgicaOre.CASSITERITE.MATERIAL.raw().asStack();
+        ICON = MetallurgicaOre.CASSITERITE.ORE.raw().asStack();
     }
 
     @Override

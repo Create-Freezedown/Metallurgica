@@ -13,9 +13,9 @@ public class MShakingGen extends MProcessingRecipeGen {
     GeneratedRecipe
     
     cassiteriteShaking = create(Metallurgica.asResource("cassiterite"), b -> b
-            .require(MetallurgicaOre.CASSITERITE.MATERIAL.raw().get())
-            .output(MetallurgicaOre.CASSITERITE.MATERIAL.rubble().get(), 1)
-            .output(0.25f, MetallurgicaOre.CASSITERITE.MATERIAL.rubble().get(), 1)
+            .require(MetallurgicaOre.CASSITERITE.ORE.raw().get())
+            .output(MetallurgicaOre.CASSITERITE.ORE.rubble().get(), 1)
+            .output(0.25f, MetallurgicaOre.CASSITERITE.ORE.rubble().get(), 1)
             .output(0.25f, I.sand(), 1)
             .output(0.5f, Items.GRANITE, 1)
             .duration(600)),

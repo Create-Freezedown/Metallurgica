@@ -8,12 +8,10 @@
     "metallurgica:molten_copper",
     "metallurgica:flowing_molten_netherium",
     "metallurgica:molten_netherium",
-    "metallurgica:flowing_molten_netherite",
-    "metallurgica:molten_netherite",
-    "metallurgica:flowing_molten_brass",
-    "metallurgica:molten_brass",
     "metallurgica:flowing_molten_aluminum",
     "metallurgica:molten_aluminum",
+    "metallurgica:flowing_molten_scandium",
+    "metallurgica:molten_scandium",
     "metallurgica:flowing_molten_lead",
     "metallurgica:molten_lead",
     "metallurgica:flowing_molten_silver",
@@ -39,6 +37,10 @@
     "metallurgica:flowing_molten_osmium",
     "metallurgica:molten_osmium",
     "metallurgica:flowing_molten_thorium",
-    "metallurgica:molten_thorium"
+    "metallurgica:molten_thorium",
+    "metallurgica:flowing_molten_netherite",
+    "metallurgica:molten_netherite",
+    "metallurgica:flowing_molten_brass",
+    "metallurgica:molten_brass"
   ]
 }

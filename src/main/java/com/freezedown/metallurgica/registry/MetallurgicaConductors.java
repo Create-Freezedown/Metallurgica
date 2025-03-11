@@ -1,11 +1,8 @@
 package com.freezedown.metallurgica.registry;
 
-import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.TFMGConductor;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorEntry;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
-import net.minecraft.resources.ResourceLocation;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 
@@ -29,24 +26,28 @@ public class MetallurgicaConductors {
     //    return conductor;
     //}
 
-    public static final ConductorEntry<Conductor> copper = registrate.conductor("copper", Conductor::new)
-            .properties((p) -> p)
-            .transform(TFMGConductor.setResistivity(0.0178))
-            .register();
+    //public static final ConductorEntry<Conductor> copper = registrate.conductor("copper", Conductor::new)
+    //        .properties((p) -> p)
+    //        .transform(TFMGConductor.setResistivity(0.0178))
+    //        .register();
+//
+    //public static final ConductorEntry<Conductor> aluminum = registrate.conductor("aluminum", Conductor::new)
+    //        .properties((p) -> p.color1(211, 215, 215, 255).color2(176, 182, 186, 255))
+    //        .transform(TFMGConductor.setResistivity(0.0276))
+    //        .register();
+//
+    //public static final ConductorEntry<Conductor> scandium = registrate.conductor("scandium", Conductor::new)
+    //        .properties((p) -> p.color1(237, 235, 216, 255).color2(218, 209, 198, 255))
+    //        .transform(TFMGConductor.setResistivity(0.0124))
+    //        .register();
 
-    public static final ConductorEntry<Conductor> aluminum = registrate.conductor("aluminum", Conductor::new)
-            .properties((p) -> p.color1(211, 215, 215, 255).color2(176, 182, 186, 255))
-            .transform(TFMGConductor.setResistivity(0.0276))
-            .register();
+    //public static void register(TFMGConductorRegisterEvent event) {
+    //    event.register(copper);
+    //    event.register(aluminum);
+    //    event.register(scandium);
+    //}
 
-    public static final ConductorEntry<Conductor> scandium = registrate.conductor("scandium", Conductor::new)
-            .properties((p) -> p.color1(237, 235, 216, 255).color2(218, 209, 198, 255))
-            .transform(TFMGConductor.setResistivity(0.0124))
-            .register();
-
-    public static void register() {
-        //MetallurgicaRegistries.CONDUCTOR.freeze();
-    }
+    public static void register() {}
 
     //public static Conductor get(ResourceLocation key) {
     //    return MetallurgicaRegistries.CONDUCTOR.get(key);

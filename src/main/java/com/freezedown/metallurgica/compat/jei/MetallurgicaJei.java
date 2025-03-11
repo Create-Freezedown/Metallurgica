@@ -85,7 +85,7 @@ public class MetallurgicaJei implements IModPlugin {
         allCategories.add(
                 builder(ItemCompositionRecipe.class)
                         .addRecipes(() -> ItemCompositionCategory.COMPOSITIONS)
-                        .itemIcon(MetallurgicaOre.RUTILE.MATERIAL.raw())
+                        .itemIcon(MetallurgicaOre.RUTILE.ORE.raw())
                         .build("item_compositions", ItemCompositionCategory::new)
         );
         allCategories.add(

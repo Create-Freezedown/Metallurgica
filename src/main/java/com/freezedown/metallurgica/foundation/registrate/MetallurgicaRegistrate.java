@@ -9,10 +9,9 @@ import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
-import com.freezedown.metallurgica.foundation.material.MaterialEntry;
+import com.freezedown.metallurgica.foundation.material.OreEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
-import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
@@ -36,9 +35,7 @@ import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.*;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import net.createmod.catnip.data.Couple;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -77,17 +74,8 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
      * * <p>
      * The key is the name of the material, the value is the element composition.
      */
-    public static final List<Map<String, String>> COMPOSITIONS = new ArrayList<>();
     public static final List<String> COMP_MOD_BLACKLIST = new ArrayList<>();
-    
-    public static void printCompositions() {
-        for (Map<String, String> composition : COMPOSITIONS) {
-            for (Map.Entry<String, String> entry : composition.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());
-            }
-        }
-    }
-    
+
     /**
      * Construct a new Registrate for the given mod ID.
      *
@@ -233,8 +221,8 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         }
     }
     
-    public MaterialEntry material(String name, boolean richb) {
-        return new MaterialEntry(this, name, richb);
+    public OreEntry material(String name, boolean richb) {
+        return new OreEntry(this, name, richb);
     }
     
     public MetalEntry metal(String name, double meltingPoint, String element) {
@@ -328,7 +316,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     public <T extends BlockEntity> BlockEntityBuilder<T, CreateRegistrate> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaOre[] blocks) {
         BlockEntityBuilder<T, CreateRegistrate> builder = blockEntity(self(), name, factory);
         for (MetallurgicaOre ore : blocks) {
-            builder.validBlock(ore.MATERIAL.depositBlock());
+            builder.validBlock(ore.ORE.depositBlock());
         }
         return builder;
     }

@@ -9,14 +9,20 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.createmod.catnip.config.ConfigBase;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.RegistryManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoubleSupplier;
 
+import static com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries.CONDUCTOR_KEY;
+
+@SuppressWarnings("UnstableApiUsage")
 public class TFMGConductor extends ConfigBase {
     // bump this version to reset configured values.
     private static final int VERSION = 2;
@@ -47,15 +53,14 @@ public class TFMGConductor extends ConfigBase {
 
     @Nullable
     public DoubleSupplier getResistivity(Conductor conductor) {
-        Metallurgica.registrate().get(MetallurgicaRegistries.CONDUCTOR_KEY);
-        ResourceLocation id = Conductor.getConductorRegistry().getKey(conductor);
+        ResourceLocation id = conductor.getKey();
         ForgeConfigSpec.ConfigValue<Double> value = this.resistivities.get(id);
         return value == null ? null : value::get;
     }
 
     @Nullable
     public DoubleSupplier getMaxLength(Conductor conductor) {
-        ResourceLocation id = Conductor.getConductorRegistry().getKey(conductor);
+        ResourceLocation id = conductor.getKey();
         ForgeConfigSpec.ConfigValue<Double> value = this.maxLengths.get(id);
         return value == null ? null : value::get;
     }

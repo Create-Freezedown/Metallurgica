@@ -6,7 +6,6 @@ import com.drmangotea.tfmg.blocks.electricity.base.cables.CableConnectorBlock;
 import com.drmangotea.tfmg.blocks.electricity.base.cables.CableConnectorBlockEntity;
 import com.drmangotea.tfmg.blocks.electricity.base.cables.WireConnection;
 import com.drmangotea.tfmg.blocks.electricity.cable_blocks.copycat_cable_block.CopycatCableBlockEntity;
-import com.drmangotea.tfmg.registry.TFMGItems;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
@@ -18,15 +17,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class WireItem extends Item {
+public class CableItem extends Item {
     public ConductorEntry<?> material;
 
-    public WireItem(Properties properties, ConductorEntry<?> material) {
+    public CableItem(Properties properties, ConductorEntry<?> material) {
         super(properties);
         this.material = material;
     }
@@ -85,10 +83,8 @@ public class WireItem extends Item {
                 stack.getOrCreateTag().putInt("X1", 0);
                 stack.getOrCreateTag().putInt("Y1", 0);
                 stack.getOrCreateTag().putInt("Z1", 0);
-                if (player.isCreative()) {
-                    player.setItemInHand(context.getHand(), new ItemStack((ItemLike) TFMGItems.COPPER_CABLE.get(), stack.getCount()));
-                } else {
-                    player.setItemInHand(context.getHand(), new ItemStack((ItemLike)TFMGItems.COPPER_CABLE.get(), stack.getCount() - 1));
+                if (!player.isCreative()) {
+                    stack.shrink(1);
                 }
 
                 return InteractionResult.SUCCESS;

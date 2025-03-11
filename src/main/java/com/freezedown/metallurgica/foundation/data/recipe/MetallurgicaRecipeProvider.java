@@ -6,6 +6,7 @@ import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -91,7 +92,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike copperRubble() {
             return MetallurgicaItems.copperRubble.get();
         }
-        public static ItemLike malachite() { return MetallurgicaOre.MALACHITE.MATERIAL.raw().get(); }
+        public static ItemLike malachite() { return MetallurgicaOre.MALACHITE.ORE.raw().get(); }
         public static ItemLike copperOxide() {
             return MetallurgicaItems.copperOxide.get();
         }
@@ -128,7 +129,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike magnetiteLumps() {
             return MetallurgicaItems.magnetiteLumps.get();
         }
-        public static ItemLike richMagnetite() { return MetallurgicaOre.MALACHITE.MATERIAL.rich().get(); }
+        public static ItemLike richMagnetite() { return MetallurgicaOre.MALACHITE.ORE.rich().get(); }
         public static ItemLike goldNugget() {
             return Items.GOLD_NUGGET;
         }
@@ -186,10 +187,10 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         }
         
         public static Fluid moltenIron() {
-            return MetallurgicaMetals.IRON.METAL.getMolten().get();
+            return MetallurgicaMaterials.IRON.getMaterialEntry().molten().molten.get();
         }
         public static Fluid moltenCopper() {
-            return MetallurgicaMetals.COPPER.METAL.getMolten().get();
+            return MetallurgicaMaterials.COPPER.getMaterialEntry().molten().molten.get();
         }
         
         public static FluidStack riverSandStack(String mineral, int amount) {

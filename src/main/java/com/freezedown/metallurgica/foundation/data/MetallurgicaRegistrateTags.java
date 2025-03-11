@@ -15,17 +15,13 @@ import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class MetallurgicaRegistrateTags {
     public MetallurgicaRegistrateTags() {
@@ -62,7 +58,7 @@ public class MetallurgicaRegistrateTags {
                 );
         prov.tag(MetallurgicaTags.AllBlockTags.DEPOSITS.tag)
                 .add(
-                        MetallurgicaOre.FLUORITE.MATERIAL.depositBlock().get()
+                        MetallurgicaOre.FLUORITE.ORE.depositBlock().get()
                 );
         prov.tag(MetallurgicaTags.AllBlockTags.AIR_BLOCKING.tag)
                 .add(

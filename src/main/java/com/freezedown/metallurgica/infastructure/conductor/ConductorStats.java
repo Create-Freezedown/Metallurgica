@@ -23,23 +23,23 @@ import java.util.List;
 import static net.minecraft.ChatFormatting.GRAY;
 
 public class ConductorStats implements TooltipModifier {
-    protected final WireItem wireItem;
+    protected final CableItem cableItem;
 
-    public ConductorStats(WireItem wireItem) {
-        this.wireItem = wireItem;
+    public ConductorStats(CableItem cableItem) {
+        this.cableItem = cableItem;
     }
 
     @Nullable
     public static ConductorStats create(Item item) {
-        if (item instanceof WireItem wireItem) {
-            return new ConductorStats(wireItem);
+        if (item instanceof CableItem cableItem) {
+            return new ConductorStats(cableItem);
         }
         return null;
     }
 
     @Override
     public void modify(ItemTooltipEvent context) {
-        List<Component> conductorStats = getConductorStats(wireItem, context.getEntity());
+        List<Component> conductorStats = getConductorStats(cableItem, context.getEntity());
         if (!conductorStats.isEmpty()) {
             List<Component> tooltip = context.getToolTip();
             tooltip.add(CommonComponents.EMPTY);
@@ -47,7 +47,7 @@ public class ConductorStats implements TooltipModifier {
         }
     }
 
-    public static List<Component> getConductorStats(WireItem wireItem, Player player) {
+    public static List<Component> getConductorStats(CableItem cableItem, Player player) {
         List<Component> list = new ArrayList<>();
 
         MServer config = MetallurgicaConfigs.server();
@@ -57,7 +57,7 @@ public class ConductorStats implements TooltipModifier {
         MetalLang.translate("tooltip.resistivity")
                 .style(GRAY)
                 .addTo(list);
-        double resistivity = WireConductorValues.getResistivity(wireItem.material.get());
+        double resistivity = WireConductorValues.getResistivity(cableItem.material.get());
         Resistivity resistivityId = resistivity >= config.highResistivity.get() ? Resistivity.HIGH
                 : (resistivity >= config.mediumResistivity.get() ? Resistivity.MEDIUM : Resistivity.LOW);
 

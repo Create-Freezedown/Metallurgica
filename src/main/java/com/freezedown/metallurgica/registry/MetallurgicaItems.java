@@ -8,7 +8,7 @@ import com.freezedown.metallurgica.content.metalworking.forging.hammer.ForgeHamm
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
-import com.freezedown.metallurgica.infastructure.conductor.WireItem;
+import com.freezedown.metallurgica.infastructure.conductor.CableItem;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
@@ -21,8 +21,8 @@ public class MetallurgicaItems {
                 .register();
     }
 
-    public static final ItemEntry<WireItem>
-            aluminumWire = registrate.item("aluminum_wire", (p) -> new WireItem(p, MetallurgicaConductors.aluminum)).register();
+    //public static final ItemEntry<CableItem>
+    //        aluminumWire = registrate.item("aluminum_wire", (p) -> new CableItem(p, Meta.aluminum)).register();
 
     public static final ItemEntry<Item>
             armorPlatingMold =    registrate.item("armor_plating_mold", Item::new, p->p.stacksTo(1).fireResistant(), "advanced_casting_molds/armor_plating", "advanced_casting_molds");

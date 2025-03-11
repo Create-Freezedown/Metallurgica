@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import static com.freezedown.metallurgica.registry.MetallurgicaTags.NameSpace.MOD;
 import static com.freezedown.metallurgica.registry.MetallurgicaTags.optionalTag;
 
-public class MaterialEntry {
+public class OreEntry {
     private final BlockEntry<MineralDepositBlock> deposit;
     private final BlockEntry<Block> stone;
     private final TagKey<Block> tag;
@@ -27,7 +27,7 @@ public class MaterialEntry {
     @Nullable
     private final ItemEntry<MetallurgicaItem> rich;
 
-    public MaterialEntry(MetallurgicaRegistrate reg, String pName, boolean richb) {
+    public OreEntry(MetallurgicaRegistrate reg, String pName, boolean richb) {
         raw = reg.raw(pName);
         rubble = reg.simpleItem(pName + "_rubble", "material_rubble/" + pName, "material_rubble");
         deposit = reg.depositBlock(pName + "_deposit", raw);

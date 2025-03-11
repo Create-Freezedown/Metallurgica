@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-09T12:50:29.4173944	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-03-11T21:51:21.9082608	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 d667b207526a952e617d5f2324582909e8a168b9 assets/metallurgica/blockstates/arsenical_bronze_block.json
 10811cfe0f93f3f9b8edaa6bdeccc627c164f73e assets/metallurgica/blockstates/ashed_charcoal_pile.json
 0d8cba54b05b67bef018f8c21b730acee2e0dcae assets/metallurgica/blockstates/bauxite_deposit.json
@@ -62,8 +62,8 @@ b224634f6857a88716e362c0fbbe5066a45dbb9e assets/metallurgica/blockstates/smithso
 380932457c72e4938dae0375845c8763457e2646 assets/metallurgica/blockstates/unfired_ceramic_pot.json
 c6842eb42172f6deace17075963dd2133a607c52 assets/metallurgica/blockstates/unfired_crucible.json
 1eeaa4d44a724f9fe8cfd326ace835f58cd91e00 assets/metallurgica/blockstates/wrought_iron_block.json
-6e59ee1e8565f0f245cc87287d1b47e6d74c4191 assets/metallurgica/lang/en_ud.json
-f5317f9814f75603aa87c71ee77bdeb5b54929e7 assets/metallurgica/lang/en_us.json
+48319f05206af48db7dd8d591546a68793852ff8 assets/metallurgica/lang/en_ud.json
+7e2885d7c7ffeccc9cf2dcc78a206e609c13016e assets/metallurgica/lang/en_us.json
 68642dfd6bc315345ab64faebcbfd1addffea569 assets/metallurgica/models/block/arsenical_bronze_block.json
 0581a8cd954972a66911cbdfd289c634384eca1e assets/metallurgica/models/block/ashed_charcoal_pile_1.json
 23fbbe5d43ff05d8ad7e81dcf007051c4280de41 assets/metallurgica/models/block/ashed_charcoal_pile_2.json
@@ -163,6 +163,7 @@ b0f3ed801c173bc374835678576ad01650d623c1 assets/metallurgica/models/block/wrough
 825c8763f42ace1c29b4f428ab5d82aa2882805a assets/metallurgica/models/block/wrought_iron_block_horizontal.json
 8fc9625759b725d0882761c3ec9ba1eb49e25bd5 assets/metallurgica/models/item/alluvial_cassiterite.json
 cb6a7d5f233a0a5c3c665bf7103c0f342a10f1a2 assets/metallurgica/models/item/alumina.json
+258b3455117cc7bb3a72ee8e8b26bf05f6bb355b assets/metallurgica/models/item/aluminum_cable.json
 801e3f5e017bedd69134b5546a8f75f0dd820be7 assets/metallurgica/models/item/aluminum_dust.json
 78af959c4eb96bde7ae4fa5e8f48c2fbf02561d4 assets/metallurgica/models/item/aluminum_nugget.json
 ef05e5360789aaa7dbfdf25b1535879ce72869f3 assets/metallurgica/models/item/aluminum_sheet.json
@@ -200,6 +201,7 @@ ddb7fbbd37dbfe950dbc4dd0d3d6c9ee86130b23 assets/metallurgica/models/item/carbon_
 ab6c54c13933b69dfc6483da210cdecb2825f856 assets/metallurgica/models/item/chlorine_bucket.json
 3eaa33d148715b46286a6185fe691b88ec549927 assets/metallurgica/models/item/clay_slip_bucket.json
 0853cf3e5adefa2a8456d47f9911e39d4f7853cd assets/metallurgica/models/item/clinopyroxene_shard.json
+35dbf46482ef922e4a265bf70a6738f09b94bb00 assets/metallurgica/models/item/copper_cable.json
 26685aeeb172b88d1940c431271bf01beaef9e9a assets/metallurgica/models/item/copper_forge_hammer.json
 b6a4f4d5aa072ea318ee2b726f01e3ec50c1adf9 assets/metallurgica/models/item/copper_oxide.json
 d9b0b1c496ce7fd34d7d9f135092f63f469f2f08 assets/metallurgica/models/item/copper_rubble.json
@@ -262,6 +264,7 @@ c1bbd2e33b9f2d5f3c2060627e5ac3028d0a9b81 assets/metallurgica/models/item/molten_
 c1bbd2e33b9f2d5f3c2060627e5ac3028d0a9b81 assets/metallurgica/models/item/molten_nickel_bucket.json
 c1bbd2e33b9f2d5f3c2060627e5ac3028d0a9b81 assets/metallurgica/models/item/molten_osmium_bucket.json
 c1bbd2e33b9f2d5f3c2060627e5ac3028d0a9b81 assets/metallurgica/models/item/molten_platinum_bucket.json
+c1bbd2e33b9f2d5f3c2060627e5ac3028d0a9b81 assets/metallurgica/models/item/molten_scandium_bucket.json
 c1bbd2e33b9f2d5f3c2060627e5ac3028d0a9b81 assets/metallurgica/models/item/molten_silver_bucket.json
 c1bbd2e33b9f2d5f3c2060627e5ac3028d0a9b81 assets/metallurgica/models/item/molten_thorium_bucket.json
 c1bbd2e33b9f2d5f3c2060627e5ac3028d0a9b81 assets/metallurgica/models/item/molten_tin_bucket.json
@@ -293,6 +296,8 @@ a10efe09cfdaae738a62f0bec0a829bea3711d64 assets/metallurgica/models/item/rich_ma
 1157ea5f33e760883b0c7499a9b7f5b662519c40 assets/metallurgica/models/item/rutile_rich_stone.json
 6f801ecd4511f3176e492500ab109a59eae99010 assets/metallurgica/models/item/rutile_rubble.json
 fd71fe7bd796101edd5819534f897a7a0d391c55 assets/metallurgica/models/item/salt.json
+81baac63fc4636c77474525c2485ccbd9330b8a2 assets/metallurgica/models/item/scandium_cable.json
+9aa3eb3286559d277a1d535d4275ad7d58f4fa3c assets/metallurgica/models/item/scandium_wire.json
 7ced5bb0db52f1e95fa7cd06938f0c9b0b53f5cc assets/metallurgica/models/item/sealed_bundle.json
 ce138f8975ab060f58b84abeb4b7f7c657b93c94 assets/metallurgica/models/item/semi_pressed_titanium_aluminide_sheet.json
 54947e5ccaeb1c15ba393f7c74c3a2058ed4beee assets/metallurgica/models/item/semi_pressed_titanium_sheet.json
@@ -371,6 +376,7 @@ b8d29e739eef554c4d62d5d935104290e6ff358b data/forge/tags/items/buckets/netherite
 f5e59df635f53415a09d760468afd329c77cd3bb data/forge/tags/items/buckets/nickel.json
 518886301fb9b43b754ce8d5a04d6c05cbbcb8f8 data/forge/tags/items/buckets/osmium.json
 fc82c778c0d9a1322a473b3601ec954fb5d52926 data/forge/tags/items/buckets/platinum.json
+cfcad817674670e39df813b6d4a33ed52ade80c0 data/forge/tags/items/buckets/scandium.json
 ecd772dd10e22d7008cd463fec4df1a342e98bee data/forge/tags/items/buckets/silicon_tetrachloride.json
 43ac38ae66efbb3e0acec08478b0d5e0f972a07e data/forge/tags/items/buckets/silver.json
 096c0882dae251acc9fa9a015d15e936d200d308 data/forge/tags/items/buckets/sodium_hydroxide.json
@@ -465,6 +471,11 @@ e19231b9d5d325de5dc3c75059d5e9fc2582f43f data/forge/tags/items/shards/orthopyrox
 17fdd74a3c2b5a0b59eb038f91aef211c69d4c76 data/forge/tags/items/shards/quartz.json
 35d3cc28c740ddf8b11af0fc010a8acd6ab6f566 data/forge/tags/items/washed_materials.json
 35d3cc28c740ddf8b11af0fc010a8acd6ab6f566 data/forge/tags/items/washed_materials/alumina.json
+f17d89d300dafc0cc627d44a788781f1e87392d8 data/forge/tags/items/wires/scandium.json
+c120a382dd0197724c6dffaf2d4e6753afd759a0 data/metallurgica/advancements/recipes/misc/crafting/cable/aluminum.json
+84630b40b3baf3aff4dc04d99dc776bb77fba6aa data/metallurgica/advancements/recipes/misc/crafting/cable/copper.json
+fc34a24dda02b21ad341ba9caf14999dac81b743 data/metallurgica/advancements/recipes/misc/crafting/cable/scandium.json
+91ece743fee6a6272c196cbbb46bcd7165ca3160 data/metallurgica/advancements/recipes/misc/scandium_wire_from_ingots_scandium_stonecutting.json
 b47706a6f4e1a544bcccc0026107c7ec322055c6 data/metallurgica/loot_tables/blocks/arsenical_bronze_block.json
 1449c7b099c5af554372e42f46fa6ff39cfee014 data/metallurgica/loot_tables/blocks/ashed_charcoal_pile.json
 4fb7c130d4b6cab87fd852062334fcfd5956fd98 data/metallurgica/loot_tables/blocks/bauxite_deposit.json
@@ -527,6 +538,10 @@ b86ab6fb8a908515eb6c27662e2795f161381a16 data/metallurgica/loot_tables/blocks/sp
 b58c413765e22507f23dbcf2719bf8cbe6dac0ac data/metallurgica/loot_tables/blocks/unfired_ceramic_pot.json
 d59dcfe55b14fcd31af761b2ef629b8c03961ad8 data/metallurgica/loot_tables/blocks/unfired_crucible.json
 5c19e76664cb59559d55be3b3c8cc84c0e54b478 data/metallurgica/loot_tables/blocks/wrought_iron_block.json
+3f5b4766cb8bc95ed9e86f2d8c643ff4cf54ec2f data/metallurgica/recipes/crafting/cable/aluminum.json
+4c9ee5e4ef8b36df8019d06b799ea20bb3c6b1cb data/metallurgica/recipes/crafting/cable/copper.json
+f7fa8e9fbd2905aa265fa354a47a8f286814b2ce data/metallurgica/recipes/crafting/cable/scandium.json
+cd23c8b06e59e6052e6c61af19c39f280198e6c1 data/metallurgica/recipes/scandium_wire_from_ingots_scandium_stonecutting.json
 a8b843c73f571f30a3d31927b77e3a4b6aaacf09 data/metallurgica/tags/blocks/air_blocking.json
 63c4a8d8e713db70730e766f1a10f8dd9072f98f data/metallurgica/tags/blocks/bauxite_ore_replaceable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/metallurgica/tags/blocks/budding_amethyst_replaceable.json
@@ -553,7 +568,7 @@ f60c098b323f11ad7d84ffdffd3a9556f73910f8 data/metallurgica/tags/blocks/reverbara
 fad39da1f8405a75745ad975740daca0780e4662 data/metallurgica/tags/fluids/acid.json
 69007e9b6937c0c4fc6e466b985180d14b71a53a data/metallurgica/tags/fluids/chloride.json
 01926303c50719ac274cd63eb7297bd59271a056 data/metallurgica/tags/fluids/fluid_reactive/chlorine.json
-3aeca1abb79d11a8ddbf7e242bf7a087c8ea9bc7 data/metallurgica/tags/fluids/molten_metals.json
+e4aad31d2e702b843483721e80ccd1035f64466c data/metallurgica/tags/fluids/molten_metals.json
 6568ea8d1142419e05373cd618166698c31d1701 data/metallurgica/tags/fluids/molten_metals/aluminum.json
 ddf2ffa9bafe335fa697d75172cb3ed358ccfc1f data/metallurgica/tags/fluids/molten_metals/brass.json
 4bd0a0b901f7cf88273a5ab37fd0ec036d5247f3 data/metallurgica/tags/fluids/molten_metals/copper.json
@@ -567,6 +582,7 @@ e8572e58a08aeb38b4d31c40329d923a61f58998 data/metallurgica/tags/fluids/molten_me
 53a0118f437bfca34c76bddc95b72896e8c43747 data/metallurgica/tags/fluids/molten_metals/nickel.json
 06b962eb237261d63eb86691c4c2da7f513c33c6 data/metallurgica/tags/fluids/molten_metals/osmium.json
 ced0ac1d7e7835ce65289c3be2f58f7872617736 data/metallurgica/tags/fluids/molten_metals/platinum.json
+178a71790c230fabb2040086c9cd19e176193f8c data/metallurgica/tags/fluids/molten_metals/scandium.json
 4e9435e71a7edb299bf05a175759fca6a9fadbde data/metallurgica/tags/fluids/molten_metals/silver.json
 bd6516de58a40a0b0a3466ced3f2f8d12b4f9baa data/metallurgica/tags/fluids/molten_metals/thorium.json
 a3f8b1d3fa908fdea2ea36dc035d3280d75137a5 data/metallurgica/tags/fluids/molten_metals/tin.json

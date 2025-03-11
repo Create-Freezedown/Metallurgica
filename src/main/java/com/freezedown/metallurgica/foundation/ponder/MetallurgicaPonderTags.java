@@ -31,7 +31,7 @@ public class MetallurgicaPonderTags {
 
         helper.registerTag(MINERALS)
                 .addToIndex()
-                .item(MetallurgicaOre.CASSITERITE.MATERIAL.raw().get(), true, false)
+                .item(MetallurgicaOre.CASSITERITE.ORE.raw().get(), true, false)
                 .title("Minerals")
                 .description("Ores, Minerals and how to use them")
                 .register();

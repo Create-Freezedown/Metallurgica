@@ -2,12 +2,9 @@ package com.freezedown.metallurgica.foundation.data.recipe.create;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MetallurgicaRecipeProvider;
-import com.freezedown.metallurgica.registry.MetallurgicaMetals;
-import com.freezedown.metallurgica.registry.MetallurgicaTools;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.item.Items;
 
 import java.util.function.UnaryOperator;
 

@@ -13,7 +13,7 @@ public class MMillingGen extends MProcessingRecipeGen {
     GeneratedRecipe
     
     rutilePowder = create(Metallurgica.asResource("rutile_powder"), b -> b
-            .require(MetallurgicaOre.RUTILE.MATERIAL.rubble().get())
+            .require(MetallurgicaOre.RUTILE.ORE.rubble().get())
             .output(MetallurgicaItems.rutilePowder.get(), 1)
             .output(0.25f, MetallurgicaItems.rutilePowder.get(), 1)
             .duration(600))

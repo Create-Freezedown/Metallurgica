@@ -4,7 +4,7 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
-import com.freezedown.metallurgica.foundation.material.MaterialEntry;
+import com.freezedown.metallurgica.foundation.material.OreEntry;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
 import com.freezedown.metallurgica.registry.MetallurgicaElements;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
@@ -26,7 +26,7 @@ public enum MetallurgicaSand {
     public MOreFeatureConfigEntry DEPOSIT;
     public MOreFeatureConfigEntry CLUSTER;
     public MTypedDepositFeatureConfigEntry LARGE_DEPOSIT;
-    public final MaterialEntry MATERIAL;
+    public final OreEntry ORE;
 
 
     private static Block getBlock(ResourceLocation id) {
@@ -35,7 +35,7 @@ public enum MetallurgicaSand {
 
     MetallurgicaSand() {
         MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().creativeModeTab(() -> Metallurgica.materialItemGroup);
-        MATERIAL = registrate.material(this.name().toLowerCase(), false),
+        ORE = registrate.material(this.name().toLowerCase(), false),
     }
     }
 }*/

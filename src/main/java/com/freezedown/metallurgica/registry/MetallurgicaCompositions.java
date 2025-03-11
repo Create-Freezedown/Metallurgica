@@ -247,32 +247,32 @@ public class MetallurgicaCompositions implements DataProvider {
     }
     
     protected void materialCompositions(Consumer<FinishedComposition> pFinishedCompositionConsumer) {
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.MAGNETITE.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.IRON.ELEMENT.withAmount(3), MetallurgicaElements.OXYGEN.ELEMENT.withAmount(4)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.MAGNETITE.ORE.raw().get(), Element.createComposition(MetallurgicaElements.IRON.ELEMENT.withAmount(3), MetallurgicaElements.OXYGEN.ELEMENT.withAmount(4)));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.BAUXITE.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.ALUMINUM.ELEMENT.withAmount(2), MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3), MetallurgicaElements.HYDROGEN.ELEMENT.withAmount(2).withNumbersUp(), MetallurgicaElements.OXYGEN.ELEMENT.withAmount(2).withNumbersUp()));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.BAUXITE.ORE.raw().get(), Element.createComposition(MetallurgicaElements.ALUMINUM.ELEMENT.withAmount(2), MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3), MetallurgicaElements.HYDROGEN.ELEMENT.withAmount(2).withNumbersUp(), MetallurgicaElements.OXYGEN.ELEMENT.withAmount(2).withNumbersUp()));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.washedAlumina.get(), Element.createComposition(MetallurgicaElements.ALUMINUM.ELEMENT.withAmount(2), MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.alumina.get(), Element.createComposition(MetallurgicaElements.ALUMINUM.ELEMENT.withAmount(2), MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.aluminumDust.get(), Element.createComposition(MetallurgicaElements.ALUMINUM.ELEMENT));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.CASSITERITE.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.TIN.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(2)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.CASSITERITE.ORE.raw().get(), Element.createComposition(MetallurgicaElements.TIN.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(2)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.alluvialCassiterite.get(), Element.createComposition(MetallurgicaElements.TIN.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(2)));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.NATIVE_COPPER.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.MALACHITE.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT.withAmount(2), MetallurgicaElements.CARBON.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3), MetallurgicaElements.HYDROGEN.ELEMENT.withAmount(2)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.NATIVE_COPPER.ORE.raw().get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.MALACHITE.ORE.raw().get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT.withAmount(2), MetallurgicaElements.CARBON.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3), MetallurgicaElements.HYDROGEN.ELEMENT.withAmount(2)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.copperOxide.get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.copperRubble.get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.FLUORITE.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.CALCIUM.ELEMENT, MetallurgicaElements.FLUORINE.ELEMENT.withAmount(2)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.FLUORITE.ORE.raw().get(), Element.createComposition(MetallurgicaElements.CALCIUM.ELEMENT, MetallurgicaElements.FLUORINE.ELEMENT.withAmount(2)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.fluoriteCluster.get(), Element.createComposition(MetallurgicaElements.CALCIUM.ELEMENT, MetallurgicaElements.FLUORINE.ELEMENT.withAmount(2)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.fluoritePowder.get(), Element.createComposition(MetallurgicaElements.CALCIUM.ELEMENT, MetallurgicaElements.FLUORINE.ELEMENT.withAmount(2)));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.RUTILE.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(2)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.RUTILE.ORE.raw().get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(2)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.rutilePowder.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(2)));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.NATIVE_GOLD.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.GOLD.ELEMENT));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.NATIVE_GOLD.ORE.raw().get(), Element.createComposition(MetallurgicaElements.GOLD.ELEMENT));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.SMITHSONITE.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.ZINC.ELEMENT, MetallurgicaElements.CARBON.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3)));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.SPHALERITE.MATERIAL.raw().get(), Element.createComposition(MetallurgicaElements.ZINC.ELEMENT.withBrackets(), MetallurgicaElements.IRON.ELEMENT.withBrackets(), MetallurgicaElements.SULFUR.ELEMENT));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.SMITHSONITE.ORE.raw().get(), Element.createComposition(MetallurgicaElements.ZINC.ELEMENT, MetallurgicaElements.CARBON.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaOre.SPHALERITE.ORE.raw().get(), Element.createComposition(MetallurgicaElements.ZINC.ELEMENT.withBrackets(), MetallurgicaElements.IRON.ELEMENT.withBrackets(), MetallurgicaElements.SULFUR.ELEMENT));
     }
     
     protected void compatCompositions(Consumer<FinishedComposition> pFinishedCompositionConsumer) {
