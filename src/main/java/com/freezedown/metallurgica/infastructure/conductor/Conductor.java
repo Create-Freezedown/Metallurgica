@@ -38,7 +38,7 @@ public class Conductor implements IHasDescriptionId {
 
     public String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
-            this.descriptionId = Util.makeDescriptionId("conductor", this.getKey());
+            this.descriptionId = Util.makeDescriptionId("conductor", getConductorRegistry().getKey(this));
         }
 
         return this.descriptionId;
@@ -62,12 +62,8 @@ public class Conductor implements IHasDescriptionId {
         }
     }
 
-    public ResourceLocation getKey() {
-        Registry<Conductor> conductorRegistry = (Registry<Conductor>) BuiltInRegistries.REGISTRY.get(Metallurgica.asResource("conductor"));
-        if (conductorRegistry == null) {
-            return Metallurgica.asResource("missing_conductor");
-        }
-        return conductorRegistry.getKey(this);
+    public static Registry<Conductor> getConductorRegistry() {
+        return ((Registry<Registry<Conductor>>) BuiltInRegistries.REGISTRY).get(MetallurgicaRegistries.CONDUCTOR_KEY);
     }
 
     public static void renderWire(Conductor conductor, PoseStack pMatrixStack, MultiBufferSource pBuffer, BlockPos pos1, BlockPos pos2, float offsetX1, float offsetY1, float offsetZ1, float offsetX2, float offsetY2, float offsetZ2, float curve) {

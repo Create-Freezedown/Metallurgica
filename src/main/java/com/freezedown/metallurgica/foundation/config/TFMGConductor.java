@@ -48,14 +48,14 @@ public class TFMGConductor extends ConfigBase {
     @Nullable
     public DoubleSupplier getResistivity(Conductor conductor) {
         Metallurgica.registrate().get(MetallurgicaRegistries.CONDUCTOR_KEY);
-        ResourceLocation id = conductor.getKey();
+        ResourceLocation id = Conductor.getConductorRegistry().getKey(conductor);
         ForgeConfigSpec.ConfigValue<Double> value = this.resistivities.get(id);
         return value == null ? null : value::get;
     }
 
     @Nullable
     public DoubleSupplier getMaxLength(Conductor conductor) {
-        ResourceLocation id = conductor.getKey();
+        ResourceLocation id = Conductor.getConductorRegistry().getKey(conductor);
         ForgeConfigSpec.ConfigValue<Double> value = this.maxLengths.get(id);
         return value == null ? null : value::get;
     }
