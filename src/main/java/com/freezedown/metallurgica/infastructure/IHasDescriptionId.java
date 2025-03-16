@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.infastructure;
 
-import net.createmod.catnip.lang.LangNumberFormat;
 import net.minecraft.network.chat.Component;
 
 public interface IHasDescriptionId {
