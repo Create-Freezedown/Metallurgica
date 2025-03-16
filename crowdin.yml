@@ -1,0 +1,3 @@
+files:
+  - source: src/generated/resources/assets/metallurgica/lang/en_us.json
+    translation: /src/main/resources/assets/metallurgica/lang/%two_letters_code%.json
