@@ -61,7 +61,6 @@ public class MetallurgicaDatagen {
         Metallurgica.registrate.addDataGenerator(ProviderType.LANG, provider -> {
             BiConsumer<String, String> langConsumer = provider::add;
             provideDefaultLang("interface", langConsumer);
-            provideDefaultLang("compositions", langConsumer);
             provideDefaultLang("tooltips", langConsumer);
             MetallurgicaAdvancements.provideLang(langConsumer);
             MetallurgicaElements.provideElementLang(langConsumer);
