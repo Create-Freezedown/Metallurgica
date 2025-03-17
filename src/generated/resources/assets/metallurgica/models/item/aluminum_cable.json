@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "metallurgica:item/aluminum_cable"
+    "layer0": "metallurgica:item/materials/aluminum/cable"
   }
 }

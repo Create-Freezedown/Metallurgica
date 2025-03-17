@@ -150,7 +150,7 @@ public class MetallurgicaCompositions implements DataProvider {
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.magnesiumChloride.get(), Element.createComposition(MetallurgicaElements.MAGNESIUM.ELEMENT, MetallurgicaElements.CHLORINE.ELEMENT));
         
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.aluminumNugget.get(), Element.createComposition(MetallurgicaElements.ALUMINUM.ELEMENT));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.aluminumSheet.get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT));
+        //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.aluminumSheet.get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT));
         
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.bronzeIngot.get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT.withAmount(7), MetallurgicaElements.TIN.ELEMENT.withAmount(2)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.bronzeNugget.get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT.withAmount(7), MetallurgicaElements.TIN.ELEMENT.withAmount(2)));
@@ -161,17 +161,17 @@ public class MetallurgicaCompositions implements DataProvider {
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.arsenicalBronzeNugget.get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT.withAmount(4), MetallurgicaElements.TIN.ELEMENT.withAmount(1), MetallurgicaElements.ARSENIC.ELEMENT.withAmount(3)));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.arsenicalbronzeSheet.get(), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT.withAmount(4), MetallurgicaElements.TIN.ELEMENT.withAmount(1), MetallurgicaElements.ARSENIC.ELEMENT.withAmount(3)));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumAluminideIngot.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT.withAmount(2), MetallurgicaElements.ALUMINUM.ELEMENT));
+        //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumAluminideIngot.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT.withAmount(2), MetallurgicaElements.ALUMINUM.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumAluminideNugget.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT.withAmount(2), MetallurgicaElements.ALUMINUM.ELEMENT));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumAluminideSheet.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT.withAmount(2), MetallurgicaElements.ALUMINUM.ELEMENT));
+        //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumAluminideSheet.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT.withAmount(2), MetallurgicaElements.ALUMINUM.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumAluminideDust.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT.withAmount(2), MetallurgicaElements.ALUMINUM.ELEMENT));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.semiPressedTitaniumAluminideSheet.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT.withAmount(2), MetallurgicaElements.ALUMINUM.ELEMENT));
+        //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.semiPressedTitaniumAluminideSheet.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT.withAmount(2), MetallurgicaElements.ALUMINUM.ELEMENT));
         
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumIngot.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT));
+        //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumIngot.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumNugget.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumSheet.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT));
+        //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumSheet.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumDust.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.semiPressedTitaniumSheet.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT));
+        //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.semiPressedTitaniumSheet.get(), Element.createComposition(MetallurgicaElements.TITANIUM.ELEMENT));
         
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.pigIron.get(), Element.createComposition(MetallurgicaElements.IRON.ELEMENT.withAmount(3), MetallurgicaElements.CARBON.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.wroughtIronIngot.get(), Element.createComposition(MetallurgicaElements.IRON.ELEMENT.withAmount(3), MetallurgicaElements.CARBON.ELEMENT));

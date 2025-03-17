@@ -75,12 +75,12 @@ public class MetallurgicaItems {
     public static final ItemEntry<MetallurgicaItem>
             aluminumNugget =      registrate.metallurgicaItem("aluminum_nugget", "nuggets/aluminum", "nuggets"),
             aluminumDust =        registrate.metallurgicaItem("aluminum_dust", "dusts/aluminum", "dusts"),
-            aluminumSheet =       registrate.metallurgicaItem("aluminum_sheet", "plates/aluminum", "plates"),
+            //aluminumSheet =       registrate.metallurgicaItem("aluminum_sheet", "plates/aluminum", "plates"),
     
-            titaniumIngot =       registrate.metallurgicaItem("titanium_ingot", "ingots/titanium", "ingots"),
+            //titaniumIngot =       registrate.metallurgicaItem("titanium_ingot", "ingots/titanium", "ingots"),
             titaniumNugget =      registrate.metallurgicaItem("titanium_nugget", "nuggets/titanium", "nuggets"),
             titaniumDust =        registrate.metallurgicaItem("titanium_dust", "dusts/titanium", "dusts"),
-            titaniumSheet =       registrate.metallurgicaItem("titanium_sheet", "plates/titanium", "plates"),
+            //titaniumSheet =       registrate.metallurgicaItem("titanium_sheet", "plates/titanium", "plates"),
 
             //Isn't this technically an alloy? where would we put steel?
             wroughtIronIngot =       registrate.metallurgicaItem("wrought_iron_ingot", "ingots/wrought_iron", "ingots")
@@ -90,14 +90,14 @@ public class MetallurgicaItems {
             magnesiumOxide = registrate.item("magnesium_oxide", MagnesiumOxideItem::new, p->p.stacksTo(1), "dusts/magnesium_oxide", "dusts"),
             oxidisedMagnesiumIngot = registrate.item("oxidised_magnesium_ingot", MagnesiumOxideItem::new, p->p.stacksTo(1), "ingots/oxidised_magnesium", "ingots")
                     ;
-    public static final ItemEntry<MagnesiumItem>
-            magnesiumIngot = registrate.item("magnesium_ingot", MagnesiumItem::createIngot, p->p.stacksTo(1), "ingots/magnesium", "ingots")
-                    ;
+    //public static final ItemEntry<MagnesiumItem>
+    //        magnesiumIngot = registrate.item("magnesium_ingot", MagnesiumItem::createIngot, p->p.stacksTo(1), "ingots/magnesium", "ingots")
+    //                ;
     
-    public static final ItemEntry<SequencedAssemblyItem>
-            semiPressedTitaniumSheet = sequencedIngredient("semi_pressed_titanium_sheet"),
-            semiPressedTitaniumAluminideSheet = sequencedIngredient("semi_pressed_titanium_aluminide_sheet")
-                    ;
+    //public static final ItemEntry<SequencedAssemblyItem>
+            //semiPressedTitaniumSheet = sequencedIngredient("semi_pressed_titanium_sheet"),
+            //semiPressedTitaniumAluminideSheet = sequencedIngredient("semi_pressed_titanium_aluminide_sheet")
+                    //;
     
     //ALLOYS
     
@@ -109,10 +109,10 @@ public class MetallurgicaItems {
             arsenicalbronzeSheet =         registrate.alloyItem("arsenical_bronze_sheet", "plates/arsenical_bronze", "plates", "alloy_plates/arsenical_bronze", "alloy_plates"),
             arsenicalBronzeIngot =         registrate.alloyItem("arsenical_bronze_ingot", "ingots/arsenical_bronze", "ingots", "alloy_ingots/arsenical_bronze", "alloy_ingots"),
             arsenicalBronzeNugget =          registrate.alloyItem("arsenical_bronze_nugget", "nuggets/arsenical_bronze", "nuggets", "alloy_nuggets/arsenical_bronze", "alloy_nuggets"),
-            titaniumAluminideIngot = registrate.alloyItem("titanium_aluminide_ingot", "ingots/titanium_aluminide", "ingots", "alloy_ingots/titanium_aluminide", "alloy_ingots"),
+            //titaniumAluminideIngot = registrate.alloyItem("titanium_aluminide_ingot", "ingots/titanium_aluminide", "ingots", "alloy_ingots/titanium_aluminide", "alloy_ingots"),
             titaniumAluminideNugget = registrate.alloyItem("titanium_aluminide_nugget", "nuggets/titanium_aluminide", "nuggets", "alloy_nuggets/titanium_aluminide", "alloy_nuggets"),
-            titaniumAluminideDust = registrate.alloyItem("titanium_aluminide_dust", "dusts/titanium_aluminide", "dusts", "alloy_dusts/titanium_aluminide", "alloy_dusts"),
-            titaniumAluminideSheet = registrate.alloyItem("titanium_aluminide_sheet", "plates/titanium_aluminide", "plates", "alloy_plates/titanium_aluminide", "alloy_plates")
+            titaniumAluminideDust = registrate.alloyItem("titanium_aluminide_dust", "dusts/titanium_aluminide", "dusts", "alloy_dusts/titanium_aluminide", "alloy_dusts")//,
+            //titaniumAluminideSheet = registrate.alloyItem("titanium_aluminide_sheet", "plates/titanium_aluminide", "plates", "alloy_plates/titanium_aluminide", "alloy_plates")
                     ;
     
     public static final ItemEntry<MetallurgicaItem>

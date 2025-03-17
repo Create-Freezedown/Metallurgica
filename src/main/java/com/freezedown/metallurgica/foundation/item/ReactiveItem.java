@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.item;
 
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.createmod.catnip.theme.Color;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -7,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
@@ -23,7 +25,7 @@ public abstract class ReactiveItem extends MetallurgicaItem {
     private int maxAirExposure = 10;
     private boolean sensitiveToRain = false;
     private boolean sensitiveToHeat = false;
-    private Optional<ItemStack> result = Optional.empty();
+    private Optional<ItemEntry<? extends Item>> result = Optional.empty();
 
 
     public ReactiveItem(Properties pProperties) {
@@ -57,7 +59,7 @@ public abstract class ReactiveItem extends MetallurgicaItem {
         return this;
     }
 
-    public ReactiveItem withResult(ItemStack result) {
+    public ReactiveItem withResult(ItemEntry<? extends Item> result) {
         this.result = Optional.of(result);
         return this;
     }
@@ -80,6 +82,10 @@ public abstract class ReactiveItem extends MetallurgicaItem {
 
     public boolean isSensitiveToHeat() {
         return sensitiveToHeat;
+    }
+
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return !oldStack.getItem().equals(newStack.getItem());
     }
 
     public int airExposureCounter(ItemStack stack) {
@@ -119,7 +125,7 @@ public abstract class ReactiveItem extends MetallurgicaItem {
 
         if (this.sensitiveToAir && this.airExposureCounter(stack) >= maxAirExposure) {
             if (this.result.isPresent()) {
-                replaceStack(true, entity, stack, this.result.get());
+                replaceStack(true, entity, stack, this.result.get().asStack());
             } else {
                 entity.remove(Entity.RemovalReason.DISCARDED);
             }
@@ -153,15 +159,15 @@ public abstract class ReactiveItem extends MetallurgicaItem {
                 }
                 if (this.sensitiveToAir) {
                     int airExposure = this.airExposureCounter(stack);
-                    if (airExposure < 10) {
+                    if (airExposure < maxAirExposure) {
                         stack.getOrCreateTag().putInt("AirExposure", airExposure + 1);
                     }
                 }
             }
 
-            if (this.sensitiveToAir && this.airExposureCounter(stack) >= 10) {
+            if (this.sensitiveToAir && this.airExposureCounter(stack) >= maxAirExposure) {
                 if (this.result.isPresent()) {
-                    replaceStack(false, entity, stack, this.result.get());
+                    replaceStack(false, entity, stack, this.result.get().asStack());
                 } else {
                     stack.shrink(stack.getCount());
                 }
@@ -199,9 +205,9 @@ public abstract class ReactiveItem extends MetallurgicaItem {
                 IItemHandler inv = new PlayerMainInvWrapper(player.getInventory());
                 for (int i = 0; i < inv.getSlots(); i++) {
                     if (inv.getStackInSlot(i).getItem() == this) {
-                        replacement.setCount(inv.getStackInSlot(i).getCount());
+                        int count = inv.getStackInSlot(i).getCount();
                         inv.extractItem(i, inv.getStackInSlot(i).getCount(), false);
-                        inv.insertItem(i, replacement, false);
+                        inv.insertItem(i, replacement.copyWithCount(count), false);
                     }
                 }
             }

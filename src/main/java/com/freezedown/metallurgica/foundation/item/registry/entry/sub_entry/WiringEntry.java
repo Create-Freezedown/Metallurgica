@@ -70,6 +70,7 @@ public class WiringEntry extends SubEntry {
 
     private ItemEntry<CableItem> createCable() {
         return this.getRegistrate().item(formatName("%s_cable"), (p) -> new CableItem(p, conductor))
+                .model((ctx, prov) -> prov.generated(ctx, locI("%s/cable")))
                 .recipe((ctx, prov) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
                         .pattern(" W ")
                         .pattern("WSW")
@@ -84,6 +85,7 @@ public class WiringEntry extends SubEntry {
 
     private ItemEntry<Item> createWire() {
         return this.getRegistrate().item(formatName("%s_wire"), Item::new)
+                .model((ctx, prov) -> prov.generated(ctx, locI("%s/wire")))
                 .tag(AllTags.forgeItemTag(formatName("wires/%s")))
                 .recipe((ctx, prov) -> prov.stonecutting(DataIngredient.tag(AllTags.forgeItemTag(formatName("ingots/%s"))), RecipeCategory.MISC, ctx, 2))
                 .register();

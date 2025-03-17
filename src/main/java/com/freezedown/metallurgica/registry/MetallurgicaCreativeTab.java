@@ -4,6 +4,7 @@ import com.drmangotea.tfmg.registry.TFMGCreativeModeTabs;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.simibubi.create.AllCreativeModeTabs;
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
@@ -84,8 +85,6 @@ public class MetallurgicaCreativeTab {
             return items;
         }
         List<Item> exclude = List.of(
-                MetallurgicaItems.semiPressedTitaniumAluminideSheet.get(),
-                MetallurgicaItems.semiPressedTitaniumSheet.get()
         );
         private static void outputAll(CreativeModeTab.Output output, List<Item> items) {
             for (Item item : items) {
@@ -101,7 +100,7 @@ public class MetallurgicaCreativeTab {
             List<Item> items = new LinkedList<>();
             items.addAll(collectBlocks());
 
-            items.addAll(collectItems(tabFilter, (item) -> exclude.contains(item)));
+            items.addAll(collectItems(tabFilter, (item) -> exclude.contains(item) || item instanceof SequencedAssemblyItem));
 
             outputAll(output, items);
         }

@@ -3,7 +3,6 @@ package com.freezedown.metallurgica.foundation.data.custom.composition;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.simibubi.create.foundation.item.TooltipHelper;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.network.FriendlyByteBuf;
 

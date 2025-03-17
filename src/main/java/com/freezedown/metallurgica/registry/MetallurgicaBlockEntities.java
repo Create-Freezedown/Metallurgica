@@ -30,6 +30,8 @@ import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.Ceramic
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotRenderer;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlockEntity;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlockEntity;
+import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlockEntity;
+import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorRenderer;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
@@ -45,6 +47,12 @@ public class MetallurgicaBlockEntities {
             .blockEntity("ingot_casting_mold", IngotCastingMoldBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.ingotCastingMold)
             .renderer(() -> IngotCastingMoldRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TestCableConnectorBlockEntity> testCableConnector = registrate
+            .blockEntity("cable_connector", TestCableConnectorBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.testCableConnector)
+            .renderer(() -> TestCableConnectorRenderer::new)
             .register();
 
      

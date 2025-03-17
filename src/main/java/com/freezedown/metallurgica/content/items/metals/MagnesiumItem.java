@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class MagnesiumItem extends ReactiveItem {
 
@@ -16,8 +17,10 @@ public class MagnesiumItem extends ReactiveItem {
     }
 
     public static MagnesiumItem createIngot(Properties pProperties) {
-        return (MagnesiumItem) new MagnesiumItem(pProperties).sensitiveToAir(50).withResult(MetallurgicaItems.oxidisedMagnesiumIngot.asStack());
+        return (MagnesiumItem) new MagnesiumItem(pProperties).sensitiveToAir(50).withResult(MetallurgicaItems.oxidisedMagnesiumIngot);
     }
+
+
 
     @Override
     public void onReaction(ItemStack stack, Level world, Entity entity, Optional<Fluid> fluid, ReactionType type) {

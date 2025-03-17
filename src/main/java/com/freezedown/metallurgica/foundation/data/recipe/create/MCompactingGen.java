@@ -10,31 +10,31 @@ import net.minecraft.data.DataGenerator;
 
 public class MCompactingGen extends MProcessingRecipeGen {
     
-    GeneratedRecipe
+    //GeneratedRecipe
     
-    TiIngot = create(Metallurgica.asResource("titanium_ingot"), b -> b
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
-            .output(MetallurgicaItems.titaniumIngot.get(), 1)),
+    //TiIngot = create(Metallurgica.asResource("titanium_ingot"), b -> b
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium"))
+    //        .output(MetallurgicaItems.titaniumIngot.get(), 1)),
     
-    TiAlIngot = create(Metallurgica.asResource("titanium_aluminide_ingot"), b -> b
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
-            .output(MetallurgicaItems.titaniumAluminideIngot.get(), 1))
+    //TiAlIngot = create(Metallurgica.asResource("titanium_aluminide_ingot"), b -> b
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .require(MetallurgicaTags.forgeItemTag("nuggets/titanium_aluminide"))
+    //        .output(MetallurgicaItems.titaniumAluminideIngot.get(), 1))
     
     ;
     

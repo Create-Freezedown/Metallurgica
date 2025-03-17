@@ -1,7 +1,19 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags;
 
-public class FlagKey<T extends IMaterialFlag> {
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
 
+public class FlagKey<T extends IMaterialFlag> {
+    public static final FlagKey<EmptyFlag> EMPTY = new FlagKey<>("empty", EmptyFlag.class);
+    public static final FlagKey<IngotFlag> INGOT = new FlagKey<>("ingot", IngotFlag.class);
+    public static final FlagKey<FluidFlag> FLUID = new FlagKey<>("fluid", FluidFlag.class);
+    public static final FlagKey<DustFlag> DUST = new FlagKey<>("dust", DustFlag.class);
+    public static final FlagKey<GemFlag> GEM = new FlagKey<>("gem", GemFlag.class);
+
+
+    public static final FlagKey<SheetFlag> SHEET = new FlagKey<>("sheet", SheetFlag.class);
+
+    public static final FlagKey<WiringFlag> WIRING = new FlagKey<>("wiring", WiringFlag.class);
 
     private final String key;
     private final Class<T> type;
@@ -15,7 +27,7 @@ public class FlagKey<T extends IMaterialFlag> {
         return key;
     }
 
-    protected T constructDefault() {
+    public T constructDefault() {
         try {
             return type.newInstance();
         } catch (Exception e) {
@@ -45,7 +57,7 @@ public class FlagKey<T extends IMaterialFlag> {
         return key;
     }
 
-    private static class EmptyProperty implements IMaterialFlag {
+    public static class EmptyFlag implements IMaterialFlag {
         @Override
         public void verifyFlag(MaterialFlags flags) {
             // no-op

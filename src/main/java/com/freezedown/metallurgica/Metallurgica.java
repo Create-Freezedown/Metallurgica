@@ -10,6 +10,7 @@ import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorStats;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
 import com.freezedown.metallurgica.world.biome_modifier.SurfaceDepositsModifier;
@@ -79,6 +80,7 @@ public class Metallurgica
         MetallurgicaRegistries.register();
         
         //BIOME_MODIFIERS.register(modEventBus);
+        MetallurgicaMaterials.register();
         MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
         MetallurgicaCreativeTab.register(modEventBus);
         MetallurgicaBlockEntities.register();

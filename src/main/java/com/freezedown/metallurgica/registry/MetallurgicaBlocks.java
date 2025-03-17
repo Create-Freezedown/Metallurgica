@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.registry;
 
+import com.drmangotea.tfmg.registry.TFMGBlocks;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
@@ -30,6 +31,8 @@ import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileGenerator;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlock;
+import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlock;
+import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorGenerator;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
@@ -40,6 +43,7 @@ import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
+import com.simibubi.create.foundation.data.ModelGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
@@ -268,7 +272,16 @@ public class MetallurgicaBlocks {
     //        .lang("Rotary Kiln Heater Segment")
     //        .simpleItem()
     //        .register();
-    
+    public static final BlockEntry<TestCableConnectorBlock> testCableConnector = registrate.block("cable_connector", TestCableConnectorBlock::new)
+            .initialProperties(() -> Blocks.IRON_BLOCK)
+            .properties(BlockBehaviour.Properties::requiresCorrectToolForDrops)
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .transform(TagGen.pickaxeOnly())
+            .blockstate((ctx, prov) -> new TestCableConnectorGenerator().generate(ctx, prov))
+            .item()
+            .transform(ModelGen.customItemModel())
+            .lang("Cable Connector")
+            .register();
     //MACHINES
     public static final BlockEntry<ShakingTableBlock> shakingTable = registrate.block("shaking_table", ShakingTableBlock::new)
             .initialProperties(SharedProperties::copperMetal)

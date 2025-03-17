@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.content.metalworking.casting.ingot;
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.content.temperature.KineticTemperatureBlockEntity;
 import com.freezedown.metallurgica.foundation.item.registry.MaterialEntry;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagItemOutput;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
@@ -15,11 +16,13 @@ import com.simibubi.create.foundation.item.SmartInventory;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -104,8 +107,11 @@ public class IngotCastingMoldBlockEntity extends KineticTemperatureBlockEntity i
         
         for (MetallurgicaMaterials material : MetallurgicaMaterials.values()) {
             MaterialEntry materialEntry = material.getMaterialEntry();
-            if (materialEntry.molten().molten.get().isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
-                metalName = materialEntry.getName();
+            if (materialEntry.getMaterial().hasFlag(FlagKey.FLUID) && materialEntry.getMaterial().hasFlag(FlagKey.INGOT)) {
+                Fluid fluid = materialEntry.getRegistrate().get("molten_" + materialEntry.getMaterial().getName(), Registries.FLUID).get();
+                if (fluid.isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
+                    metalName = materialEntry.getMaterial().getName();
+                }
             }
         }
         

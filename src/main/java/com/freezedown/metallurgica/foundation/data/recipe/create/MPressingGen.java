@@ -14,9 +14,9 @@ public class MPressingGen extends MProcessingRecipeGen {
     
     GeneratedRecipe
     
-    aluminiumSheet = create(Metallurgica.asResource("aluminum_sheet"), b -> b
-            .require(MetallurgicaTags.forgeItemTag("ingots/aluminum"))
-            .output(aluminumSheet.get(), 1)),
+    //aluminiumSheet = create(Metallurgica.asResource("aluminum_sheet"), b -> b
+    //        .require(MetallurgicaTags.forgeItemTag("ingots/aluminum"))
+    //        .output(aluminumSheet.get(), 1)),
             
     bronzeSheet = create(Metallurgica.asResource("bronze_sheet"), b -> b
             .require(MetallurgicaTags.forgeItemTag("ingots/bronze"))
