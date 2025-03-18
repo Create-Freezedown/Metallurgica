@@ -36,7 +36,8 @@ public enum MetallurgicaMaterials {
     NETHERIUM(entry(builder("netherium")
             .ingot()
             .sheet()
-            .fluid(3962.0))),
+            .fluid(3962.0)
+            .conductor(0.0237, WireColours.missing))),
     ALUMINUM(entry(builder("aluminum")
             .ingot(true)
             .sheet()
@@ -116,6 +117,10 @@ public enum MetallurgicaMaterials {
             .ingot(true)
             .sheet(true)
             .fluid(920.0))),
+    BRONZE(entry(builder("bronze")
+            .ingot()
+            .sheet()
+            .fluid(950.0))),
     ;
 
     public static final Map<Material, List<FluidEntry<?>>> materialFluids = new HashMap<>();

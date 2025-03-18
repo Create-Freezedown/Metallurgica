@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "metallurgica:item/titanium_aluminide_ingot"
+    "layer0": "metallurgica:item/materials/titanium_aluminide/ingot"
   }
 }

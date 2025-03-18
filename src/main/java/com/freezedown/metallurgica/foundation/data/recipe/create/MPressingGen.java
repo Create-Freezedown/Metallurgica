@@ -12,15 +12,15 @@ import static com.freezedown.metallurgica.registry.MetallurgicaItems.*;
 
 public class MPressingGen extends MProcessingRecipeGen {
     
-    GeneratedRecipe
+    //GeneratedRecipe
     
     //aluminiumSheet = create(Metallurgica.asResource("aluminum_sheet"), b -> b
     //        .require(MetallurgicaTags.forgeItemTag("ingots/aluminum"))
     //        .output(aluminumSheet.get(), 1)),
             
-    bronzeSheet = create(Metallurgica.asResource("bronze_sheet"), b -> b
-            .require(MetallurgicaTags.forgeItemTag("ingots/bronze"))
-            .output(MetallurgicaItems.bronzeSheet.get(), 1))
+    //bronzeSheet = create(Metallurgica.asResource("bronze_sheet"), b -> b
+    //        .require(MetallurgicaTags.forgeItemTag("ingots/bronze"))
+    //        .output(MetallurgicaItems.bronzeSheet.get(), 1))
     
     ;
     

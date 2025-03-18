@@ -102,16 +102,16 @@ public class MetallurgicaItems {
     //ALLOYS
     
     public static final ItemEntry<AlloyItem>
-            bronzeIngot =         registrate.alloyItem("bronze_ingot", "ingots/bronze", "ingots", "alloy_ingots/bronze", "alloy_ingots"),
-            bronzeNugget =          registrate.alloyItem("bronze_nugget", "nuggets/bronze", "nuggets", "alloy_nuggets/bronze", "alloy_nuggets"),
-            bronzeDust =          registrate.alloyItem("bronze_dust", "dusts/bronze", "dusts", "alloy_dusts/bronze", "alloy_dusts"),
-            bronzeSheet =         registrate.alloyItem("bronze_sheet", "plates/bronze", "plates", "alloy_plates/bronze", "alloy_plates"),
+            //bronzeIngot =         registrate.alloyItem("bronze_ingot", "ingots/bronze", "ingots", "alloy_ingots/bronze", "alloy_ingots"),
+            //bronzeNugget =          registrate.alloyItem("bronze_nugget", "nuggets/bronze", "nuggets", "alloy_nuggets/bronze", "alloy_nuggets"),
+            //bronzeDust =          registrate.alloyItem("bronze_dust", "dusts/bronze", "dusts", "alloy_dusts/bronze", "alloy_dusts"),
+            //bronzeSheet =         registrate.alloyItem("bronze_sheet", "plates/bronze", "plates", "alloy_plates/bronze", "alloy_plates"),
             arsenicalbronzeSheet =         registrate.alloyItem("arsenical_bronze_sheet", "plates/arsenical_bronze", "plates", "alloy_plates/arsenical_bronze", "alloy_plates"),
             arsenicalBronzeIngot =         registrate.alloyItem("arsenical_bronze_ingot", "ingots/arsenical_bronze", "ingots", "alloy_ingots/arsenical_bronze", "alloy_ingots"),
-            arsenicalBronzeNugget =          registrate.alloyItem("arsenical_bronze_nugget", "nuggets/arsenical_bronze", "nuggets", "alloy_nuggets/arsenical_bronze", "alloy_nuggets"),
+            arsenicalBronzeNugget =          registrate.alloyItem("arsenical_bronze_nugget", "nuggets/arsenical_bronze", "nuggets", "alloy_nuggets/arsenical_bronze", "alloy_nuggets")
             //titaniumAluminideIngot = registrate.alloyItem("titanium_aluminide_ingot", "ingots/titanium_aluminide", "ingots", "alloy_ingots/titanium_aluminide", "alloy_ingots"),
-            titaniumAluminideNugget = registrate.alloyItem("titanium_aluminide_nugget", "nuggets/titanium_aluminide", "nuggets", "alloy_nuggets/titanium_aluminide", "alloy_nuggets"),
-            titaniumAluminideDust = registrate.alloyItem("titanium_aluminide_dust", "dusts/titanium_aluminide", "dusts", "alloy_dusts/titanium_aluminide", "alloy_dusts")//,
+            //titaniumAluminideNugget = registrate.alloyItem("titanium_aluminide_nugget", "nuggets/titanium_aluminide", "nuggets", "alloy_nuggets/titanium_aluminide", "alloy_nuggets"),
+            //titaniumAluminideDust = registrate.alloyItem("titanium_aluminide_dust", "dusts/titanium_aluminide", "dusts", "alloy_dusts/titanium_aluminide", "alloy_dusts")//,
             //titaniumAluminideSheet = registrate.alloyItem("titanium_aluminide_sheet", "plates/titanium_aluminide", "plates", "alloy_plates/titanium_aluminide", "alloy_plates")
                     ;
     

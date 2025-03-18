@@ -3,8 +3,6 @@
     "metallurgica:copper_oxide",
     "metallurgica:aluminum_dust",
     "metallurgica:titanium_dust",
-    "metallurgica:magnesium_oxide",
-    "metallurgica:bronze_dust",
-    "metallurgica:titanium_aluminide_dust"
+    "metallurgica:magnesium_oxide"
   ]
 }

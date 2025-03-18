@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "metallurgica:item/semi_pressed_titanium_aluminide_sheet"
+    "layer0": "metallurgica:item/materials/titanium_aluminide/semi_pressed_sheet"
   }
 }

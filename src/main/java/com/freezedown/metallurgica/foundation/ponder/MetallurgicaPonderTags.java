@@ -38,7 +38,7 @@ public class MetallurgicaPonderTags {
 
         helper.registerTag(METALS)
                 .addToIndex()
-                .item(MetallurgicaItems.bronzeIngot.get(), true, false)
+                .item(MetallurgicaItems.impureIronBloom.get(), true, false)
                 .title("Metals")
                 .description("Metallurgy and it's many complicated features")
                 .register();
