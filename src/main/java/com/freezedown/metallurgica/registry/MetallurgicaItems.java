@@ -5,6 +5,7 @@ import com.freezedown.metallurgica.content.items.metals.MagnesiumItem;
 import com.freezedown.metallurgica.content.items.metals.MagnesiumOxideItem;
 import com.freezedown.metallurgica.content.items.sealed_storage.SealedBundleItem;
 import com.freezedown.metallurgica.content.metalworking.forging.hammer.ForgeHammerItem;
+import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
@@ -106,8 +107,8 @@ public class MetallurgicaItems {
             //bronzeNugget =          registrate.alloyItem("bronze_nugget", "nuggets/bronze", "nuggets", "alloy_nuggets/bronze", "alloy_nuggets"),
             //bronzeDust =          registrate.alloyItem("bronze_dust", "dusts/bronze", "dusts", "alloy_dusts/bronze", "alloy_dusts"),
             //bronzeSheet =         registrate.alloyItem("bronze_sheet", "plates/bronze", "plates", "alloy_plates/bronze", "alloy_plates"),
-            arsenicalbronzeSheet =         registrate.alloyItem("arsenical_bronze_sheet", "plates/arsenical_bronze", "plates", "alloy_plates/arsenical_bronze", "alloy_plates"),
-            arsenicalBronzeIngot =         registrate.alloyItem("arsenical_bronze_ingot", "ingots/arsenical_bronze", "ingots", "alloy_ingots/arsenical_bronze", "alloy_ingots"),
+            //arsenicalbronzeSheet =         registrate.alloyItem("arsenical_bronze_sheet", "plates/arsenical_bronze", "plates", "alloy_plates/arsenical_bronze", "alloy_plates"),
+            //arsenicalBronzeIngot =         registrate.alloyItem("arsenical_bronze_ingot", "ingots/arsenical_bronze", "ingots", "alloy_ingots/arsenical_bronze", "alloy_ingots"),
             arsenicalBronzeNugget =          registrate.alloyItem("arsenical_bronze_nugget", "nuggets/arsenical_bronze", "nuggets", "alloy_nuggets/arsenical_bronze", "alloy_nuggets")
             //titaniumAluminideIngot = registrate.alloyItem("titanium_aluminide_ingot", "ingots/titanium_aluminide", "ingots", "alloy_ingots/titanium_aluminide", "alloy_ingots"),
             //titaniumAluminideNugget = registrate.alloyItem("titanium_aluminide_nugget", "nuggets/titanium_aluminide", "nuggets", "alloy_nuggets/titanium_aluminide", "alloy_nuggets"),
@@ -132,5 +133,6 @@ public class MetallurgicaItems {
             loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item??? Idk lol
 
     public static void register() {
+        MaterialHelper.registerMaterialItems();
     }
 }

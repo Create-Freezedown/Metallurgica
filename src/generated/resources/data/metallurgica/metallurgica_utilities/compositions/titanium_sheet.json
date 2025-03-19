@@ -1,0 +1,15 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "titanium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "textColor": 5636095
+    }
+  ],
+  "item": "metallurgica:titanium_sheet"
+}

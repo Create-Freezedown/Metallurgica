@@ -5,7 +5,7 @@ import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialF
 import lombok.Getter;
 import net.createmod.catnip.data.Pair;
 
-public class WiringFlag implements IMaterialFlag {
+public class CableFlag implements IMaterialFlag {
 
     @Getter
     private Pair<int[],int[]> colors;
@@ -13,13 +13,17 @@ public class WiringFlag implements IMaterialFlag {
     @Getter
     private double resistivity;
 
-    public WiringFlag(double resistivity, Pair<int[],int[]> colors) {
+    @Getter
+    private final String idPattern;
+
+    public CableFlag(double resistivity, Pair<int[],int[]> colors) {
+        this.idPattern = "%s_cable";
         this.resistivity = resistivity;
         this.colors = colors;
     }
 
     @Override
     public void verifyFlag(MaterialFlags flags) {
-        flags.ensureSet(FlagKey.SHEET, false);
+        flags.ensureSet(FlagKey.WIRE, true);
     }
 }

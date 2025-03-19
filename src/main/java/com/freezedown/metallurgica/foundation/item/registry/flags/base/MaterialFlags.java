@@ -22,6 +22,10 @@ public class MaterialFlags {
     @Getter
     private Material material;
 
+    @Setter
+    @Getter
+    private List<FlagKey<? extends IMaterialFlag>> noRegister = new ArrayList<>();
+
     public MaterialFlags() {
         flagMap = new HashMap<>();
     }
@@ -87,4 +91,5 @@ public class MaterialFlags {
         flagMap.forEach((k, v) -> sb.append(k.toString()).append("\n"));
         return sb.toString();
     }
+
 }

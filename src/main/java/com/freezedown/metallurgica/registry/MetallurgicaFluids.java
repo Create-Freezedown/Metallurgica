@@ -209,7 +209,7 @@ public class MetallurgicaFluids {
 
     public static void register() {
         for (MetallurgicaMaterials materials : MetallurgicaMaterials.values()) {
-            Material material = materials.getMaterialEntry().getMaterial();
+            Material material = materials.getMaterial();
             var fluidFlag = material.getFlag(FlagKey.FLUID);
             if (fluidFlag != null) {
                 fluidFlag.registerFluids(material, registrate);

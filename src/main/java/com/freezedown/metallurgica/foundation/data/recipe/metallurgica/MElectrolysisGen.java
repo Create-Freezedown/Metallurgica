@@ -32,7 +32,7 @@ public class MElectrolysisGen extends MProcessingRecipeGen {
     
     magnesiumChloride = create(Metallurgica.asResource("magnesium_chloride"), b -> b
             .require(MetallurgicaFluids.magnesiumChloride.get(), 500)
-            .output(MetallurgicaMaterials.MAGNESIUM.getMaterialEntry().getMaterial().getFluid(MoltenMetal.class), 300)
+            .output(MetallurgicaMaterials.MAGNESIUM.getMaterial().getFluid(MoltenMetal.class), 300)
             .output(F.chlorine(), 200)
             .requiresHeat(HeatCondition.HEATED)
             .duration(600))

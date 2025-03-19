@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.foundation.item.registry;
 import com.freezedown.metallurgica.foundation.item.registry.flags.*;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
+import com.freezedown.metallurgica.infastructure.conductor.CableItem;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +43,10 @@ public class Material implements Comparable<Material> {
 
     public String getModid() {
         return materialInfo.resourceLocation.getNamespace();
+    }
+
+    public boolean noRegister(FlagKey<? extends IMaterialFlag> flag) {
+        return flags.getNoRegister().contains(flag);
     }
 
     public Fluid getFluid(Class<? extends Fluid> fluidClass) {
@@ -97,6 +103,12 @@ public class Material implements Comparable<Material> {
             flags = new MaterialFlags();
         }
 
+        @SafeVarargs
+        public final Builder noRegister(FlagKey<? extends IMaterialFlag>... matFlags) {
+            flags.getNoRegister().addAll(Arrays.stream(matFlags).toList());
+            return this;
+        }
+
         public Builder withNameAlternative(FlagKey<?> flag, String alternative) {
             materialInfo.getNameAlternatives().put(flag, alternative);
             return this;
@@ -109,51 +121,58 @@ public class Material implements Comparable<Material> {
         }
 
         public Builder ingot() {
-            flags.setFlag(FlagKey.INGOT, new IngotFlag(false));
+            flags.setFlag(FlagKey.INGOT, new IngotFlag());
             return this;
         }
         public Builder ingot(NonNullFunction<Item.Properties, ? extends Item> factory) {
-            flags.setFlag(FlagKey.INGOT, new IngotFlag(false).factory(factory));
-            return this;
-        }
-        public Builder ingot(boolean noRegister) {
-            flags.setFlag(FlagKey.INGOT, new IngotFlag(noRegister));
+            flags.setFlag(FlagKey.INGOT, new IngotFlag(factory));
             return this;
         }
         public Builder sheet() {
             IngotFlag prop = flags.getFlag(FlagKey.INGOT);
             if (prop == null) ingot();
-            flags.setFlag(FlagKey.SHEET, new SheetFlag(1));
+            flags.setFlag(FlagKey.SHEET, new SheetFlag());
             return this;
         }
-
-        public Builder sheet(boolean noRegister) {
-            IngotFlag prop = flags.getFlag(FlagKey.INGOT);
-            if (prop == null) ingot();
-            flags.setFlag(FlagKey.SHEET, new SheetFlag(1, noRegister));
-            return this;
-        }
-
         public Builder sheet(int pressTimes) {
             IngotFlag prop = flags.getFlag(FlagKey.INGOT);
             if (prop == null) ingot();
             if (pressTimes < 1) throw new IllegalArgumentException("Sheet cannot be pressed " + pressTimes + "time(s). Must be >1");
-            flags.setFlag(FlagKey.SHEET, new SheetFlag(pressTimes));
+            flags.setFlag(FlagKey.SHEET, new SheetFlag().pressTimes(pressTimes));
+            if (pressTimes > 1) {
+                flags.ensureSet(FlagKey.SEMI_PRESSED_SHEET);
+            }
             return this;
         }
         public Builder sheet(int pressTimes, NonNullFunction<Item.Properties, ? extends Item> factory) {
             IngotFlag prop = flags.getFlag(FlagKey.INGOT);
             if (prop == null) ingot();
             if (pressTimes < 1) throw new IllegalArgumentException("Sheet cannot be pressed " + pressTimes + "time(s). Must be >1");
-            flags.setFlag(FlagKey.SHEET, new SheetFlag(pressTimes).factory(factory));
+            flags.setFlag(FlagKey.SHEET, new SheetFlag(factory).pressTimes(pressTimes));
+            if (pressTimes > 1) {
+                flags.ensureSet(FlagKey.SEMI_PRESSED_SHEET);
+            }
             return this;
         }
 
-        public Builder conductor(double resistivity, Pair<int[],int[]> colors) {
+        public Builder wire() {
             SheetFlag prop = flags.getFlag(FlagKey.SHEET);
             if (prop == null) sheet();
+            flags.setFlag(FlagKey.WIRE, new WireFlag());
+            return this;
+        }
+        public Builder wire(NonNullFunction<Item.Properties, ? extends Item> factory) {
+            SheetFlag prop = flags.getFlag(FlagKey.SHEET);
+            if (prop == null) sheet();
+            flags.setFlag(FlagKey.WIRE, new WireFlag(factory));
+            return this;
+        }
+
+        public Builder cable(double resistivity, Pair<int[],int[]> colors) {
+            WireFlag prop = flags.getFlag(FlagKey.WIRE);
+            if (prop == null) wire();
             if (resistivity < 0) throw new IllegalArgumentException("Resistivity cannot be below 0");
-            flags.setFlag(FlagKey.WIRING, new WiringFlag(resistivity, colors));
+            flags.setFlag(FlagKey.CABLE, new CableFlag(resistivity, colors));
             return this;
         }
 

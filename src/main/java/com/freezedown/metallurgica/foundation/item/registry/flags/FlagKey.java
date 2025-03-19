@@ -2,21 +2,37 @@ package com.freezedown.metallurgica.foundation.item.registry.flags;
 
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
+import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FlagKey<T extends IMaterialFlag> {
-    public static final FlagKey<EmptyFlag> EMPTY = new FlagKey<>("empty", EmptyFlag.class);
-    public static final FlagKey<IngotFlag> INGOT = new FlagKey<>("ingot", IngotFlag.class);
-    public static final FlagKey<FluidFlag> FLUID = new FlagKey<>("fluid", FluidFlag.class);
-    public static final FlagKey<DustFlag> DUST = new FlagKey<>("dust", DustFlag.class);
-    public static final FlagKey<GemFlag> GEM = new FlagKey<>("gem", GemFlag.class);
+    @Getter
+    private static final List<FlagKey<?>> allFlags = new ArrayList<>();
+
+    public static final FlagKey<EmptyFlag> EMPTY = create("empty", EmptyFlag.class);
+    public static final FlagKey<IngotFlag> INGOT = create("ingot", IngotFlag.class);
+    public static final FlagKey<FluidFlag> FLUID = create("fluid", FluidFlag.class);
+    public static final FlagKey<DustFlag> DUST = create("dust", DustFlag.class);
+    public static final FlagKey<GemFlag> GEM = create("gem", GemFlag.class);
 
 
-    public static final FlagKey<SheetFlag> SHEET = new FlagKey<>("sheet", SheetFlag.class);
-
-    public static final FlagKey<WiringFlag> WIRING = new FlagKey<>("wiring", WiringFlag.class);
+    public static final FlagKey<SheetFlag> SHEET = create("sheet", SheetFlag.class);
+    public static final FlagKey<SemiPressedSheetFlag> SEMI_PRESSED_SHEET = create("semi_pressed_sheet", SemiPressedSheetFlag.class);
+    public static final FlagKey<WireFlag> WIRE = create("wire", WireFlag.class);
+    public static final FlagKey<CableFlag> CABLE = create("cable", CableFlag.class);
 
     private final String key;
     private final Class<T> type;
+
+
+
+    public static <C extends IMaterialFlag> FlagKey<C> create(String key, Class<C> type) {
+        FlagKey<C> flag = new  FlagKey<>(key, type);
+        allFlags.add(flag);
+        return flag;
+    }
 
     public FlagKey(String key, Class<T> type) {
         this.key = key;

@@ -1,0 +1,25 @@
+{
+  "elements": [
+    {
+      "amount": 7,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "copper",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "textColor": 5636095
+    },
+    {
+      "amount": 2,
+      "appendDash": false,
+      "areNumbersUp": false,
+      "bracketed": false,
+      "element": "tin",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "textColor": 5636095
+    }
+  ],
+  "item": "metallurgica:bronze_ingot"
+}

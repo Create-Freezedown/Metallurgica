@@ -1,10 +1,15 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.foundation.config.TFMGConductor;
+import com.freezedown.metallurgica.foundation.item.registry.flags.CableFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.conductor.CableItem;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorEntry;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
+import static com.freezedown.metallurgica.foundation.material.MaterialHelper.matAssetLoc;
 
 public class MetallurgicaConductors {
     //static {
@@ -47,7 +52,21 @@ public class MetallurgicaConductors {
     //    event.register(scandium);
     //}
 
-    public static void register() {}
+    public static void register() {
+        registrate.setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
+        for (MetallurgicaMaterials material : MetallurgicaMaterials.values()) {
+            if (!material.getMaterial().hasFlag(FlagKey.CABLE)) continue;
+            CableFlag cableFlag = material.getMaterial().getFlag(FlagKey.CABLE);
+            ConductorEntry<Conductor> conductor = registrate.conductor(material.getMaterial().getName(), Conductor::new)
+                    .properties(p -> p.color1(cableFlag.getColors().getFirst()).color2(cableFlag.getColors().getSecond()))
+                    .transform(TFMGConductor.setResistivity(cableFlag.getResistivity()))
+                    .register();
+            registrate.item("%s_cable".formatted(material.getMaterial().getName()), (p) -> new CableItem(p, conductor))
+                    .model((ctx, prov) -> prov.generated(ctx, matAssetLoc(material.getMaterial(), "cable")))
+                    .tag(MetallurgicaTags.modItemTag("cables"))
+                    .register();
+        }
+    }
 
     //public static Conductor get(ResourceLocation key) {
     //    return MetallurgicaRegistries.CONDUCTOR.get(key);

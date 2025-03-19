@@ -4,10 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.items.metals.MagnesiumItem;
 import com.freezedown.metallurgica.foundation.item.WireColours;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.registry.MetallurgicaCreativeTab;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import lombok.Getter;
 
@@ -15,124 +12,139 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.*;
+
 @Getter
 public enum MetallurgicaMaterials {
     //Metals
     //(entry(builder("").fluid())),
-    IRON(entry(builder("iron")
-            .ingot(true)
-            .sheet(true)
+    IRON(material(builder("iron")
+            .noRegister(INGOT, SHEET)
+            .ingot()
+            .sheet()
             .fluid(1538.0))),
-    GOLD(entry(builder("gold")
+    GOLD(material(builder("gold")
             .withNameAlternative(FlagKey.SHEET, "golden")
-            .ingot(true)
-            .sheet(true)
+            .noRegister(INGOT, SHEET)
+            .ingot()
+            .sheet()
             .fluid(1064.2))),
-    COPPER(entry(builder("copper")
-            .ingot(true)
-            .sheet(true)
+    COPPER(material(builder("copper")
+            .noRegister(INGOT, SHEET)
+            .ingot()
+            .sheet()
             .fluid(1084.6)
-            .conductor(0.0178, WireColours.copper))),
-    NETHERIUM(entry(builder("netherium")
+            .cable(0.0178, WireColours.copper))),
+    NETHERIUM(material(builder("netherium")
             .ingot()
             .sheet()
             .fluid(3962.0)
-            .conductor(0.0237, WireColours.missing))),
-    ALUMINUM(entry(builder("aluminum")
-            .ingot(true)
+            .cable(0.0237, WireColours.missing))),
+    ALUMINUM(material(builder("aluminum")
+            .noRegister(INGOT)
+            .ingot()
             .sheet()
             .fluid(660.3)
-            .conductor(0.0276, WireColours.aluminum))),
-    SCANDIUM(entry(builder("scandium")
+            .cable(0.0276, WireColours.aluminum))),
+    SCANDIUM(material(builder("scandium")
             .ingot()
             .sheet()
             .fluid(1541.0)
-            .conductor(0.0124, WireColours.scandium))),
-    LEAD(entry(builder("lead")
-            .ingot(true)
+            .cable(0.0124, WireColours.scandium))),
+    LEAD(material(builder("lead")
+            .noRegister(INGOT)
+            .ingot()
             .sheet()
             .fluid(327.5))),
-    SILVER(entry(builder("silver")
+    SILVER(material(builder("silver")
             .ingot()
             .sheet()
             .fluid(961.8))),
-    NICKEL(entry(builder("nickel")
-            .ingot(true)
+    NICKEL(material(builder("nickel")
+            .noRegister(INGOT)
+            .ingot()
             .sheet()
             .fluid(1455.0))),
-    TIN(entry(builder("tin")
+    TIN(material(builder("tin")
             .ingot()
             .sheet()
             .fluid(231.9))),
-    ZINC(entry(builder("zinc")
-            .ingot(true)
+    ZINC(material(builder("zinc")
+            .noRegister(INGOT)
+            .ingot()
             .sheet()
             .fluid(419.5))),
-    PLATINUM(entry(builder("platinum")
+    PLATINUM(material(builder("platinum")
             .ingot()
             .sheet()
             .fluid(1768.3))),
-    TITANIUM(entry(builder("titanium")
+    TITANIUM(material(builder("titanium")
             .ingot()
             .sheet(3)
             .fluid(1668.0))),
-    URANIUM(entry(builder("uranium")
+    URANIUM(material(builder("uranium")
             .ingot()
             .sheet()
             .fluid(1132.3))),
-    LITHIUM(entry(builder("lithium")
-            .ingot(true)
+    LITHIUM(material(builder("lithium")
+            .noRegister(INGOT)
+            .ingot()
             .sheet()
             .fluid(180.5))),
-    MAGNESIUM(entry(builder("magnesium")
+    MAGNESIUM(material(builder("magnesium")
             .ingot(MagnesiumItem::createIngot)
             .sheet()
             .fluid(650.0))),
-    TUNGSTEN(entry(builder("tungsten")
+    TUNGSTEN(material(builder("tungsten")
             .ingot()
             .sheet()
             .fluid(3422.0))),
-    OSMIUM(entry(builder("osmium")
+    OSMIUM(material(builder("osmium")
             .ingot()
             .sheet()
             .fluid(3033.0))),
-    THORIUM(entry(builder("thorium")
+    THORIUM(material(builder("thorium")
             .ingot()
             .sheet()
             .fluid(1750.0))),
-    TANTALUM(entry(builder("tantalum")
+    TANTALUM(material(builder("tantalum")
             .ingot()
             .sheet(2)
             .fluid(3020.0))),
     //Alloys
-    TITANIUM_ALUMINIDE(entry(builder("titanium_aluminide")
+    TITANIUM_ALUMINIDE(material(builder("titanium_aluminide")
             .ingot()
             .sheet(3)
             .fluid(1447.0))),
-    NETHERITE(entry(builder("netherite")
-            .ingot(true)
+    NETHERITE(material(builder("netherite")
+            .noRegister(INGOT)
+            .ingot()
             .sheet()
             .fluid(3562.0))),
-    BRASS(entry(builder("brass")
-            .ingot(true)
-            .sheet(true)
+    BRASS(material(builder("brass")
+            .noRegister(INGOT, SHEET)
+            .ingot()
+            .sheet()
             .fluid(920.0))),
-    BRONZE(entry(builder("bronze")
+    BRONZE(material(builder("bronze")
             .ingot()
             .sheet()
             .fluid(950.0))),
+    ARSENICAL_BRONZE(material(builder("arsenical_bronze")
+            .ingot()
+            .sheet()
+            .fluid(685.0))),
     ;
 
     public static final Map<Material, List<FluidEntry<?>>> materialFluids = new HashMap<>();
-    public final MaterialEntry materialEntry;
+    public final Material material;
 
-    MetallurgicaMaterials(MaterialEntry materialEntry) {
-        this.materialEntry = materialEntry;
+    MetallurgicaMaterials(Material material) {
+        this.material = material;
     }
 
-    private static MaterialEntry entry(Material.Builder builder) {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
-        return new MaterialEntry(registrate, builder.build());
+    private static Material material(Material.Builder builder) {
+        return builder.build();
     }
 
     private static Material.Builder builder(String name) {
@@ -140,8 +152,8 @@ public enum MetallurgicaMaterials {
     }
 
     public static void register() {
-        for (MetallurgicaMaterials metallurgicaMaterials : values()) {
-            metallurgicaMaterials.getMaterialEntry().registerEverything();
-        }
+        //for (MetallurgicaMaterials metallurgicaMaterials : values()) {
+        //    metallurgicaMaterials.getMaterialEntry().registerEverything();
+        //}
     }
 }

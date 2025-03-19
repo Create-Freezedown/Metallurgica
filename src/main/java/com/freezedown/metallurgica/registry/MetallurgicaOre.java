@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.registry;
 
 import com.drmangotea.tfmg.CreateTFMG;
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.MaterialEntry;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.OreEntry;
@@ -83,7 +84,7 @@ public enum MetallurgicaOre {
     ;
 
     public final OreEntry ORE;
-    public final List<MaterialEntry> METALS = new ArrayList<>();
+    public final List<Material> METALS = new ArrayList<>();
     
     private static Block getBlock(ResourceLocation id) {
         return ForgeRegistries.BLOCKS.getValue(id);
@@ -98,7 +99,7 @@ public enum MetallurgicaOre {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
         ORE = registrate.material(this.name().toLowerCase(), false);
         for(MetallurgicaMaterials material : materials) {
-            METALS.add(material.getMaterialEntry());
+            METALS.add(material.getMaterial());
         }
     }
 
@@ -106,7 +107,7 @@ public enum MetallurgicaOre {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
         ORE = registrate.material(this.name().toLowerCase(), richb);
         for(MetallurgicaMaterials material : materials) {
-            METALS.add(material.getMaterialEntry());
+            METALS.add(material.getMaterial());
         }
     }
 
@@ -115,7 +116,7 @@ public enum MetallurgicaOre {
         ORE = registrate.material(this.name().toLowerCase(), false);
         //DEPOSIT = ORE.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         for(MetallurgicaMaterials material : materials) {
-            METALS.add(material.getMaterialEntry());
+            METALS.add(material.getMaterial());
         }
     }
     MetallurgicaOre(boolean richb, int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositChance, DepositCapacity capacity, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, MetallurgicaMaterials... materials) {
@@ -123,7 +124,7 @@ public enum MetallurgicaOre {
         ORE = registrate.material(this.name().toLowerCase(), richb);
         //DEPOSIT = ORE.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
         for(MetallurgicaMaterials material : materials) {
-            METALS.add(material.getMaterialEntry());
+            METALS.add(material.getMaterial());
         }
     }
 
@@ -131,7 +132,7 @@ public enum MetallurgicaOre {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
         ORE = registrate.material(this.name().toLowerCase(), false);
         for(MetallurgicaMaterials material : materials) {
-            METALS.add(material.getMaterialEntry());
+            METALS.add(material.getMaterial());
         }
     }
     
@@ -139,7 +140,7 @@ public enum MetallurgicaOre {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
         ORE = registrate.material(this.name().toLowerCase(), richb);
         for(MetallurgicaMaterials material : materials) {
-            METALS.add(material.getMaterialEntry());
+            METALS.add(material.getMaterial());
         }
     }
 
@@ -147,7 +148,7 @@ public enum MetallurgicaOre {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
         ORE = registrate.material(this.name().toLowerCase(), richb);
         for(MetallurgicaMaterials material : materials) {
-            METALS.add(material.getMaterialEntry());
+            METALS.add(material.getMaterial());
         }
     }
 }
