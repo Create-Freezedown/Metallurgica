@@ -47,6 +47,8 @@
     "metallurgica:flowing_molten_brass",
     "metallurgica:molten_brass",
     "metallurgica:flowing_molten_bronze",
-    "metallurgica:molten_bronze"
+    "metallurgica:molten_bronze",
+    "metallurgica:flowing_molten_arsenical_bronze",
+    "metallurgica:molten_arsenical_bronze"
   ]
 }

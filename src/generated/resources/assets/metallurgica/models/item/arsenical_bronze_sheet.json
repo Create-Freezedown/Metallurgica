@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "metallurgica:item/arsenical_bronze_sheet"
+    "layer0": "metallurgica:item/materials/arsenical_bronze/sheet"
   }
 }
