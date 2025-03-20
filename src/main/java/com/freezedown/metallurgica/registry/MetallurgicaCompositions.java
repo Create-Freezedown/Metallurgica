@@ -153,7 +153,15 @@ public class MetallurgicaCompositions implements DataProvider {
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.salt.get(), Element.createComposition(MetallurgicaElements.SODIUM.ELEMENT, MetallurgicaElements.CHLORINE.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.magnesiumOxide.get(), Element.createComposition(MetallurgicaElements.MAGNESIUM.ELEMENT, MetallurgicaElements.OXYGEN.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.magnesiumChloride.get(), Element.createComposition(MetallurgicaElements.MAGNESIUM.ELEMENT, MetallurgicaElements.CHLORINE.ELEMENT));
-        
+
+        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.calciumPowder.get(), Element.createComposition(MetallurgicaElements.CALCIUM.ELEMENT));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.sodiumCarbonate.get(), Element.createComposition(MetallurgicaElements.SODIUM.ELEMENT.withAmount(2),MetallurgicaElements.CARBON.ELEMENT,MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.ammoniumChloride.get(), Element.createComposition(MetallurgicaElements.NITROGEN.ELEMENT,MetallurgicaElements.HYDROGEN.ELEMENT.withAmount(4),MetallurgicaElements.CHLORINE.ELEMENT));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.vanadiumPentoxide.get(), Element.createComposition(MetallurgicaElements.VANADIUM.ELEMENT.withAmount(2),MetallurgicaElements.OXYGEN.ELEMENT.withAmount(5)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.ammoniumMetavanadate.get(), Element.createComposition(MetallurgicaElements.NITROGEN.ELEMENT,MetallurgicaElements.HYDROGEN.ELEMENT.withAmount(4),MetallurgicaElements.VANADIUM.ELEMENT,MetallurgicaElements.OXYGEN.ELEMENT.withAmount(3)));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.sodiumOrthovanadate.get(), Element.createComposition(MetallurgicaElements.SODIUM.ELEMENT.withAmount(3),MetallurgicaElements.VANADIUM.ELEMENT,MetallurgicaElements.OXYGEN.ELEMENT.withAmount(4)));
+
+
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.aluminumNugget.get(), Element.createComposition(MetallurgicaElements.ALUMINUM.ELEMENT));
         createComposition(pFinishedCompositionConsumer, MaterialHelper.get(ALUMINUM.getMaterial(), SHEET), Element.createComposition(MetallurgicaElements.COPPER.ELEMENT));
         

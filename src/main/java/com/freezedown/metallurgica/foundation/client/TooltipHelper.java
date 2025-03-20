@@ -5,7 +5,6 @@ import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.ClientFluidCompositions;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionManager;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
-import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.material.Fluid;
@@ -42,7 +41,7 @@ public class TooltipHelper {
                     closeBracket = (element.isBracketForceClosed() ? Component.literal(")") : blank);
                 }
                 MutableComponent dash = element.hasDash() ? Component.literal("-") : blank;
-                MutableComponent groupAmount = groupedAmount > 1 ? (element.areNumbersUp() ? Component.literal(ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount))) : Component.literal(ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)))) : blank;
+                MutableComponent groupAmount = groupedAmount > 1 ? (element.numbersUp() ? Component.literal(ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount))) : Component.literal(ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)))) : blank;
                 compositionName.append(openBracket).append(element.getDisplay()).append(closeBracket).append(groupAmount).append(dash);
             }
             if (!compositionName.isEmpty()) {

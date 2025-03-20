@@ -57,6 +57,20 @@ public class MetallurgicaItems {
             washedAlumina =       registrate.metallurgicaItem("washed_alumina", "washed_materials/alumina", "washed_materials"),
             alumina =             registrate.metallurgicaItem("alumina", "alumina")
                     ;
+
+    //Vanadium
+    public static final ItemEntry<MetallurgicaItem>
+            sodiumOrthovanadate=registrate.powder("sodium_orthovanadate"),
+            ammoniumMetavanadate=registrate.powder("ammonium_metavanadate"),
+            vanadiumPentoxide=registrate.powder("vanadium_pentoxide")
+            ;
+    public static final ItemEntry<MetallurgicaItem>
+            sodiumCarbonate=registrate.powder("sodium_carbonate"),
+            ammoniumChloride=registrate.metallurgicaItem("ammonium_chloride")
+                    ;
+
+    public static final ItemEntry<MetallurgicaItem>
+            calciumPowder=registrate.powder("calcium");
     
     //FLUORITE
     public static final ItemEntry<MetallurgicaItem>

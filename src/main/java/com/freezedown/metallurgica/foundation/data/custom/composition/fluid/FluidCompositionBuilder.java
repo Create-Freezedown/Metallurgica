@@ -63,7 +63,7 @@ public class FluidCompositionBuilder {
                 elementObject.addProperty("element", element.getName());
                 elementObject.addProperty("amount", element.getAmount());
                 elementObject.addProperty("groupedAmount", element.getGroupedAmount());
-                elementObject.addProperty("areNumbersUp", element.areNumbersUp());
+                elementObject.addProperty("numbersUp", element.numbersUp());
                 elementObject.addProperty("bracketed", element.bracketed());
                 elementObject.addProperty("forceCloseBracket", element.isBracketForceClosed());
                 elementObject.addProperty("appendDash", element.hasDash());

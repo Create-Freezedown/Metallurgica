@@ -3,12 +3,11 @@
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "copper",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     }
   ],
   "item": "metallurgica:copper_rubble"

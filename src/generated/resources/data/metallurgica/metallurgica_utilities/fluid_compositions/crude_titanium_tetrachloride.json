@@ -3,74 +3,74 @@
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "iron",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
-      "groupedAmount": 6
+      "groupedAmount": 6,
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "titanium",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "numbersUp": false
     },
     {
       "amount": 4,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
-      "groupedAmount": 24
+      "groupedAmount": 24,
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "tin",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "numbersUp": false
     },
     {
       "amount": 4,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
-      "groupedAmount": 9
+      "groupedAmount": 9,
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "silicon",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "numbersUp": false
     },
     {
       "amount": 4,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
-      "groupedAmount": 3
+      "groupedAmount": 3,
+      "numbersUp": false
     }
   ],
   "fluid": {

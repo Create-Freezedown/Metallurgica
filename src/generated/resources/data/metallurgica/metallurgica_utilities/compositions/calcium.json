@@ -1,0 +1,14 @@
+{
+  "elements": [
+    {
+      "amount": 1,
+      "appendDash": false,
+      "bracketed": false,
+      "element": "calcium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "numbersUp": false
+    }
+  ],
+  "item": "metallurgica:calcium"
+}

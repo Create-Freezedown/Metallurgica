@@ -32,7 +32,7 @@ public class TooltipHelpers {
                     closeBracket = (element.isBracketForceClosed() ? Component.literal(")") : blank);
                 }
                 MutableComponent dash = element.hasDash() ? Component.literal("-") : blank;
-                MutableComponent groupAmount = groupedAmount > 1 ? (element.areNumbersUp() ? Component.literal(ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount))) : Component.literal(ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)))) : blank;
+                MutableComponent groupAmount = groupedAmount > 1 ? (element.numbersUp() ? Component.literal(ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount))) : Component.literal(ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)))) : blank;
                 compositionName.add(openBracket).add(Component.literal(element.getDisplay())).add(closeBracket).add(groupAmount).add(dash);
             }
             if (!compositionName.string().isEmpty()) {
@@ -63,7 +63,7 @@ public class TooltipHelpers {
     //                closeBracket = (element.isBracketForceClosed() ? ")" : "");
     //            }
     //            String dash = element.hasDash() ? "-" : "";
-    //            String groupAmount = groupedAmount > 1 ? (element.areNumbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount))) : "";
+    //            String groupAmount = groupedAmount > 1 ? (element.numbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount))) : "";
     //            compositionName.append(openBracket).append(element.getDisplay()).append(closeBracket).append(groupAmount).append(dash);
     //        }
     //        if (!compositionName.isEmpty()) {

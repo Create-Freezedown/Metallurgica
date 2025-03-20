@@ -3,82 +3,74 @@
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "iron",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
       "groupedAmount": 6,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "titanium",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 4,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
       "groupedAmount": 24,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "tin",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 4,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
       "groupedAmount": 9,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "silicon",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 4,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "chlorine",
       "forceCloseBracket": true,
       "groupedAmount": 3,
-      "textColor": 5636095
+      "numbersUp": false
     }
   ],
   "item": "metallurgica:crude_titanium_tetrachloride_bucket"

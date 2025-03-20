@@ -5,7 +5,6 @@ import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedCo
 import com.freezedown.metallurgica.foundation.util.CommonUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -62,11 +61,10 @@ public class CompositionBuilder {
                 elementObject.addProperty("element", element.getName());
                 elementObject.addProperty("amount", element.getAmount());
                 elementObject.addProperty("groupedAmount", element.getGroupedAmount());
-                elementObject.addProperty("areNumbersUp", element.areNumbersUp());
+                elementObject.addProperty("numbersUp", element.numbersUp());
                 elementObject.addProperty("bracketed", element.bracketed());
                 elementObject.addProperty("forceCloseBracket", element.isBracketForceClosed());
                 elementObject.addProperty("appendDash", element.hasDash());
-                elementObject.addProperty("textColor", element.getColor());
                 elementsArray.add(elementObject);
             }
             json.add("elements", elementsArray);

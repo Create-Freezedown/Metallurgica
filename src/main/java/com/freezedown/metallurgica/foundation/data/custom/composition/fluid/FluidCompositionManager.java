@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.custom.composition.fluid;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.data.custom.composition.Composition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,8 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;

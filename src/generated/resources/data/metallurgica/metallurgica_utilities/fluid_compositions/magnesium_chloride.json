@@ -3,20 +3,20 @@
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "magnesium",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "chlorine",
       "forceCloseBracket": false,
-      "groupedAmount": 1
+      "groupedAmount": 1,
+      "numbersUp": false
     }
   ],
   "fluid": {

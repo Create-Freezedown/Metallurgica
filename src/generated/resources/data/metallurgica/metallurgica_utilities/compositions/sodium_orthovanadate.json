@@ -1,0 +1,32 @@
+{
+  "elements": [
+    {
+      "amount": 3,
+      "appendDash": false,
+      "bracketed": false,
+      "element": "sodium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "numbersUp": false
+    },
+    {
+      "amount": 1,
+      "appendDash": false,
+      "bracketed": false,
+      "element": "vanadium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "numbersUp": false
+    },
+    {
+      "amount": 4,
+      "appendDash": false,
+      "bracketed": false,
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "numbersUp": false
+    }
+  ],
+  "item": "metallurgica:sodium_orthovanadate"
+}

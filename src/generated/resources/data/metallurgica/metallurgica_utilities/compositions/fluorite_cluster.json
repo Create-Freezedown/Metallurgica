@@ -3,22 +3,20 @@
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "calcium",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 2,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "fluorine",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     }
   ],
   "item": "metallurgica:fluorite_cluster"

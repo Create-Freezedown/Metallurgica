@@ -3,42 +3,38 @@
     {
       "amount": 2,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "aluminum",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 3,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 2,
       "appendDash": false,
-      "areNumbersUp": true,
       "bracketed": false,
       "element": "hydrogen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": true
     },
     {
       "amount": 2,
       "appendDash": false,
-      "areNumbersUp": true,
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": true
     }
   ],
   "item": "metallurgica:bauxite"

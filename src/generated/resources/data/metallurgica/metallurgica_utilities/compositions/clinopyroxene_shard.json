@@ -3,102 +3,92 @@
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "calcium",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "magnesium",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "iron",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "sodium",
       "forceCloseBracket": true,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "magnesium",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "iron",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "aluminum",
       "forceCloseBracket": true,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "silicon",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "aluminum",
       "forceCloseBracket": true,
       "groupedAmount": 2,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 6,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     }
   ],
   "item": "metallurgica:clinopyroxene_shard"

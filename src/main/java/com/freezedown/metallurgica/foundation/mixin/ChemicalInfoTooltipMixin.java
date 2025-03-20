@@ -40,7 +40,7 @@ public class ChemicalInfoTooltipMixin {
                     closeBracket = (element.isBracketForceClosed() ? ")" : blank);
                 }
                 String dash = element.hasDash() ? "-" : blank;
-                String groupAmount = groupedAmount > 1 ? element.areNumbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)) : blank;
+                String groupAmount = groupedAmount > 1 ? element.numbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)) : blank;
                 compositionName.append(openBracket).append(element.getDisplay()).append(closeBracket).append(groupAmount).append(dash);
             }
             if (!compositionName.isEmpty()) {

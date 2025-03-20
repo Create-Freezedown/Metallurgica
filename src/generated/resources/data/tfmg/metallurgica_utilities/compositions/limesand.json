@@ -3,32 +3,29 @@
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "calcium",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "carbon",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 3,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     }
   ],
   "item": "tfmg:limesand"

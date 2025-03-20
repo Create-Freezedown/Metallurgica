@@ -3,22 +3,20 @@
     {
       "amount": 3,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "copper",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 2,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "zinc",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     }
   ],
   "item": "create:brass_sheet"

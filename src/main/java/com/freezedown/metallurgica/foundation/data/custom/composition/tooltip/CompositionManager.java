@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.data.custom.composition.tooltip;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.data.custom.composition.Composition;
+import com.freezedown.metallurgica.foundation.data.custom.composition.ItemComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class CompositionManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     
-    public static Map<Item, Composition> compositions = new HashMap<>();
+    public static Map<Item, ItemComposition> compositions = new HashMap<>();
     
     public static List<Item> items = new ArrayList<>();
     
@@ -43,10 +43,10 @@ public class CompositionManager extends SimpleJsonResourceReloadListener {
             }
             
             try {
-                Composition composition = Composition.CODEC.parse(JsonOps.INSTANCE, entry.getValue()).getOrThrow(true, Metallurgica.LOGGER::error);
-                if (composition != null) {
-                    compositions.put(composition.item(), composition);
-                    items.add(composition.item());
+                ItemComposition itemComposition = ItemComposition.CODEC.parse(JsonOps.INSTANCE, entry.getValue()).getOrThrow(true, Metallurgica.LOGGER::error);
+                if (itemComposition != null) {
+                    compositions.put(itemComposition.item(), itemComposition);
+                    items.add(itemComposition.item());
                 }
             } catch (IllegalArgumentException | JsonParseException jsonParseException) {
                 Metallurgica.LOGGER.error("Parsing error loading compositions {}", resourceLocation, jsonParseException);
@@ -59,7 +59,7 @@ public class CompositionManager extends SimpleJsonResourceReloadListener {
         return compositions.containsKey(item);
     }
     
-    public static Composition getComposition(Item item) {
+    public static ItemComposition getComposition(Item item) {
         return compositions.get(item);
     }
     
@@ -68,7 +68,7 @@ public class CompositionManager extends SimpleJsonResourceReloadListener {
     }
     
     public static List<Element> getElements(Item item) {
-        Composition composition = getComposition(item);
-        return composition.elements();
+        ItemComposition itemComposition = getComposition(item);
+        return itemComposition.elements();
     }
 }

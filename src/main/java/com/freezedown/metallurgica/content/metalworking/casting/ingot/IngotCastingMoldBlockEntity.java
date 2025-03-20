@@ -2,7 +2,6 @@ package com.freezedown.metallurgica.content.metalworking.casting.ingot;
 
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.content.temperature.KineticTemperatureBlockEntity;
-import com.freezedown.metallurgica.foundation.item.registry.MaterialEntry;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagItemOutput;
@@ -16,7 +15,6 @@ import com.simibubi.create.foundation.item.SmartInventory;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;

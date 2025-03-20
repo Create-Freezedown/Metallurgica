@@ -1,0 +1,23 @@
+{
+  "elements": [
+    {
+      "amount": 2,
+      "appendDash": false,
+      "bracketed": false,
+      "element": "vanadium",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "numbersUp": false
+    },
+    {
+      "amount": 5,
+      "appendDash": false,
+      "bracketed": false,
+      "element": "oxygen",
+      "forceCloseBracket": false,
+      "groupedAmount": 1,
+      "numbersUp": false
+    }
+  ],
+  "item": "metallurgica:vanadium_pentoxide"
+}

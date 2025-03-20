@@ -3,152 +3,137 @@
     {
       "amount": 7,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "magnesium",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 8,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "silicon",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 22,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": true,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "hydrogen",
       "forceCloseBracket": true,
       "groupedAmount": 2,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 7,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "iron",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 8,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "silicon",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 22,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": true,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "hydrogen",
       "forceCloseBracket": true,
       "groupedAmount": 2,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 7,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "calcium",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 8,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "silicon",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 22,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": false,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "oxygen",
       "forceCloseBracket": false,
       "groupedAmount": 1,
-      "textColor": 5636095
+      "numbersUp": false
     },
     {
       "amount": 1,
       "appendDash": false,
-      "areNumbersUp": false,
       "bracketed": true,
       "element": "hydrogen",
       "forceCloseBracket": true,
       "groupedAmount": 2,
-      "textColor": 5636095
+      "numbersUp": false
     }
   ],
   "item": "metallurgica:amphibole_shard"
