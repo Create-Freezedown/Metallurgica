@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.data.custom.composition.fluid;
 
-import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.SubComposition;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.HashMap;
@@ -46,7 +47,7 @@ public class ClientFluidCompositions {
         return compositions.get(fluidStack);
     }
     
-    public List<Element> getElements(FluidStack fluidStack) {
-        return compositions.get(fluidStack).elements();
+    public List<SubComposition> getSubCompositions(FluidStack fluidStack) {
+        return compositions.get(fluidStack).subCompositions();
     }
 }

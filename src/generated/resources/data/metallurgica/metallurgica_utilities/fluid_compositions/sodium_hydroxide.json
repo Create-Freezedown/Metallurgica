@@ -1,31 +1,21 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "sodium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "hydrogen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "sodium"
+        },
+        {
+          "amount": 1,
+          "element": "oxygen"
+        },
+        {
+          "amount": 1,
+          "element": "hydrogen"
+        }
+      ]
     }
   ],
   "fluid": {

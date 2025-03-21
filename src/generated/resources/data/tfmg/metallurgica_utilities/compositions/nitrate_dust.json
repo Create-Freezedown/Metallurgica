@@ -1,31 +1,21 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "potassium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "nitrogen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 3,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "potassium"
+        },
+        {
+          "amount": 1,
+          "element": "nitrogen"
+        },
+        {
+          "amount": 3,
+          "element": "oxygen"
+        }
+      ]
     }
   ],
   "item": "tfmg:nitrate_dust"

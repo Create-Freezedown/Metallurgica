@@ -1,40 +1,25 @@
 {
-  "elements": [
-    {
-      "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "copper",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "carbon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 3,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "hydrogen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 2,
+          "element": "copper"
+        },
+        {
+          "amount": 1,
+          "element": "carbon"
+        },
+        {
+          "amount": 3,
+          "element": "oxygen"
+        },
+        {
+          "amount": 2,
+          "element": "hydrogen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:malachite"

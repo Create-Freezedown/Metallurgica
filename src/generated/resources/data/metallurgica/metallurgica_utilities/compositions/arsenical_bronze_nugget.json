@@ -1,31 +1,21 @@
 {
-  "elements": [
-    {
-      "amount": 4,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "copper",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "tin",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 3,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "arsenic",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 4,
+          "element": "copper"
+        },
+        {
+          "amount": 1,
+          "element": "tin"
+        },
+        {
+          "amount": 3,
+          "element": "arsenic"
+        }
+      ]
     }
   ],
   "item": "metallurgica:arsenical_bronze_nugget"

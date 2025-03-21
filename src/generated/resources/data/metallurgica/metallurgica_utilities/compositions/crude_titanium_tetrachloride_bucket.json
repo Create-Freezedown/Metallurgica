@@ -1,76 +1,56 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "amount": 6,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "iron"
+        },
+        {
+          "amount": 1,
+          "element": "chlorine"
+        }
+      ]
     },
     {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "chlorine",
-      "forceCloseBracket": true,
-      "groupedAmount": 6,
-      "numbersUp": false
+      "amount": 24,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "titanium"
+        },
+        {
+          "amount": 4,
+          "element": "chlorine"
+        }
+      ]
     },
     {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "titanium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "amount": 9,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "tin"
+        },
+        {
+          "amount": 4,
+          "element": "chlorine"
+        }
+      ]
     },
     {
-      "amount": 4,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "chlorine",
-      "forceCloseBracket": true,
-      "groupedAmount": 24,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "tin",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 4,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "chlorine",
-      "forceCloseBracket": true,
-      "groupedAmount": 9,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 4,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "chlorine",
-      "forceCloseBracket": true,
-      "groupedAmount": 3,
-      "numbersUp": false
+      "amount": 3,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "silicon"
+        },
+        {
+          "amount": 4,
+          "element": "chlorine"
+        }
+      ]
     }
   ],
   "item": "metallurgica:crude_titanium_tetrachloride_bucket"

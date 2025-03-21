@@ -1,22 +1,17 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "tin",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 4,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "chlorine",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "tin"
+        },
+        {
+          "amount": 4,
+          "element": "chlorine"
+        }
+      ]
     }
   ],
   "fluid": {

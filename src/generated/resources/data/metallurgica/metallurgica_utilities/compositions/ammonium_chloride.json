@@ -1,31 +1,21 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "nitrogen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 4,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "hydrogen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "chlorine",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "nitrogen"
+        },
+        {
+          "amount": 4,
+          "element": "hydrogen"
+        },
+        {
+          "amount": 1,
+          "element": "chlorine"
+        }
+      ]
     }
   ],
   "item": "metallurgica:ammonium_chloride"

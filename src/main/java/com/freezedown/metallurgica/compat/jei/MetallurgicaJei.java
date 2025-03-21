@@ -86,6 +86,7 @@ public class MetallurgicaJei implements IModPlugin {
                 builder(ItemCompositionRecipe.class)
                         .addRecipes(() -> ItemCompositionCategory.COMPOSITIONS)
                         .itemIcon(MetallurgicaOre.RUTILE.ORE.raw())
+                        .emptyBackground(177, 103)
                         .build("item_compositions", ItemCompositionCategory::new)
         );
         allCategories.add(

@@ -1,22 +1,17 @@
 {
-  "elements": [
-    {
-      "amount": 3,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "carbon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 3,
+          "element": "iron"
+        },
+        {
+          "amount": 1,
+          "element": "carbon"
+        }
+      ]
     }
   ],
   "item": "metallurgica:pig_iron_ingot"

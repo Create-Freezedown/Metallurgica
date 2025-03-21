@@ -1,20 +1,16 @@
 package com.freezedown.metallurgica.compat.jei.category.composition;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
-import com.simibubi.create.compat.jei.ConversionRecipe;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import mezz.jei.api.gui.builder.IIngredientAcceptor;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -37,7 +33,7 @@ public class ItemCompositionCategory extends CreateRecipeCategory<ItemCompositio
 
     static {
         CompositionManager.compositions.forEach((item, composition) -> {
-            COMPOSITIONS.add(ItemCompositionRecipe.create(composition.item(), composition.elements()));
+            COMPOSITIONS.add(ItemCompositionRecipe.create(composition.item(), composition.compositions()));
         });
     }
 

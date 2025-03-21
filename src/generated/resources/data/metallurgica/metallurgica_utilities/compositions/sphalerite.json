@@ -1,31 +1,26 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "zinc",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "zinc"
+        },
+        {
+          "amount": 1,
+          "element": "iron"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "sulfur",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "sulfur"
+        }
+      ]
     }
   ],
   "item": "metallurgica:sphalerite"

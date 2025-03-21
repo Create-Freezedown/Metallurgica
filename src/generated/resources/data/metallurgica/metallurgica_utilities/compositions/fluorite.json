@@ -1,22 +1,17 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "calcium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "fluorine",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "calcium"
+        },
+        {
+          "amount": 2,
+          "element": "fluorine"
+        }
+      ]
     }
   ],
   "item": "metallurgica:fluorite"

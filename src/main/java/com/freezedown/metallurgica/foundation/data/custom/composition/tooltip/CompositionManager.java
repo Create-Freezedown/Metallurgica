@@ -2,12 +2,14 @@ package com.freezedown.metallurgica.foundation.data.custom.composition.tooltip;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.custom.composition.ItemComposition;
-import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.SubComposition;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.mojang.serialization.JsonOps;
+import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -24,6 +26,7 @@ public class CompositionManager extends SimpleJsonResourceReloadListener {
     
     public static Map<Item, ItemComposition> compositions = new HashMap<>();
     
+    @Getter
     public static List<Item> items = new ArrayList<>();
     
     public CompositionManager() {
@@ -62,13 +65,9 @@ public class CompositionManager extends SimpleJsonResourceReloadListener {
     public static ItemComposition getComposition(Item item) {
         return compositions.get(item);
     }
-    
-    public static List<Item> getItems() {
-        return items;
-    }
-    
-    public static List<Element> getElements(Item item) {
+
+    public static List<SubComposition> getSubCompositions(Item item) {
         ItemComposition itemComposition = getComposition(item);
-        return itemComposition.elements();
+        return itemComposition.compositions();
     }
 }

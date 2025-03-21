@@ -2,18 +2,15 @@ package com.freezedown.metallurgica.compat.jei.category.composition;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
-import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.SubComposition;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
-import com.simibubi.create.Create;
-import com.simibubi.create.compat.jei.ConversionRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -24,7 +21,7 @@ import java.util.Map;
 
 public class ItemCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
     public Item item;
-    public List<Element> elements;
+    public List<SubComposition> subCompositions;
 
     static int counter = 0;
 
@@ -32,15 +29,15 @@ public class ItemCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
         super(MetallurgicaRecipeTypes.item_composition, params);
     }
 
-    public static ItemCompositionRecipe create(Item item, List<Element> elements) {
+    public static ItemCompositionRecipe create(Item item, List<SubComposition> subCompositions) {
         ResourceLocation recipeId = Metallurgica.asResource("item_composition_" + counter++);
-        return new ProcessingRecipeBuilder<>((params) -> new ItemCompositionRecipe(params).set(item,elements), recipeId)
+        return new ProcessingRecipeBuilder<>((params) -> new ItemCompositionRecipe(params).set(item,subCompositions), recipeId)
                 .build();
     }
 
-    public ItemCompositionRecipe set(Item item, List<Element> elements) {
+    public ItemCompositionRecipe set(Item item, List<SubComposition> subCompositions) {
         this.item = item;
-        this.elements = elements;
+        this.subCompositions = subCompositions;
         return this;
     }
 
@@ -48,18 +45,20 @@ public class ItemCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
         return item;
     }
 
-    public List<Element> getElements() {
-        return elements;
+    public List<SubComposition> getSubCompositions() {
+        return subCompositions;
     }
 
     public List<MutableComponent> createElementLine() {
         Map<String, Integer> elementCounts = new HashMap<>();
         int totalElementsAmount = 0;
         List<MutableComponent> lines = new ArrayList<>();
-        for (Element element : getElements()) {
-            String elementName = element.name();
-            elementCounts.put(elementName, elementCounts.getOrDefault(elementName, 0) + element.amount());
-            totalElementsAmount += element.amount();
+        for (SubComposition subComposition : getSubCompositions()) {
+            for (Element element : subComposition.getElements()) {
+                String elementName = element.name();
+                elementCounts.put(elementName, elementCounts.getOrDefault(elementName, 0) + element.amount());
+                totalElementsAmount += element.amount();
+            }
         }
 
         for (Map.Entry<String, Integer> entry : elementCounts.entrySet()) {

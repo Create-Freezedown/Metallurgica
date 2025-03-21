@@ -1,22 +1,17 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 3,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 4,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 3,
+          "element": "iron"
+        },
+        {
+          "amount": 4,
+          "element": "oxygen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:magnetite"

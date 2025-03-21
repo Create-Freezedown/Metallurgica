@@ -1,8 +1,9 @@
 package com.freezedown.metallurgica.foundation.mixin;
 
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.SubComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
-import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,31 +22,29 @@ public class ChemicalInfoTooltipMixin {
     
     @Inject(method = "appendHoverText", at = @At("HEAD"))
     private void vanillaItemTooltips(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag isAdvanced, CallbackInfo ci) {
-        String blank = "";
         if (CompositionManager.hasComposition(stack.getItem())) {
-            StringBuilder compositionName = new StringBuilder();
-            int size = CompositionManager.getElements(stack.getItem()).size();
+            LangBuilder compositionName = ClientUtil.lang();
+            int size = CompositionManager.getSubCompositions(stack.getItem()).size();
             for (int i = 0; i < size; i++) {
-                Element element = Objects.requireNonNull(CompositionManager.getElements(stack.getItem()).get(i));
-                Element nextElement = i + 1 < size ? Objects.requireNonNull(CompositionManager.getElements(stack.getItem()).get(i + 1)) : null;
-                Element previousElement = i - 1 >= 0 ? Objects.requireNonNull(CompositionManager.getElements(stack.getItem()).get(i - 1)) : null;
-                String openBracket = element.bracketed() ? "(" : blank;
-                String closeBracket = element.bracketed() ? ")" : blank;
-                int groupedAmount = element.getGroupedAmount();
-                if (previousElement != null && previousElement.bracketed()) {
-                    openBracket = previousElement.isBracketForceClosed() && element.bracketed() ? "(" : blank;
+                if (CompositionManager.getSubCompositions(stack.getItem()).get(i) == null) continue;
+                LangBuilder subComp = ClientUtil.lang();
+                SubComposition subComposition = Objects.requireNonNull(CompositionManager.getSubCompositions(stack.getItem()).get(i));
+                int elementsSize = subComposition.getElements().size();
+                if (elementsSize > 0) {
+                    subComp.add(subComp.text("("));
+                    for (int j = 0; j < elementsSize; j++) {
+                        if (subComposition.getElements().get(j) == null) continue;
+                        subComp.add(Component.literal(subComposition.getElement(j).getDisplay()));
+                    }
+                    subComp.add(subComp.text(")"));
+                } else {
+                    subComp.add(Component.literal(subComposition.getElement(0).getDisplay()));
                 }
-                if (nextElement != null && nextElement.bracketed()) {
-                    groupedAmount = 1;
-                    closeBracket = (element.isBracketForceClosed() ? ")" : blank);
-                }
-                String dash = element.hasDash() ? "-" : blank;
-                String groupAmount = groupedAmount > 1 ? element.numbersUp() ? ClientUtil.toSmallUpNumbers(String.valueOf(groupedAmount)) : ClientUtil.toSmallDownNumbers(String.valueOf(groupedAmount)) : blank;
-                compositionName.append(openBracket).append(element.getDisplay()).append(closeBracket).append(groupAmount).append(dash);
+                compositionName.add(subComp);
             }
-            if (!compositionName.isEmpty()) {
-                tooltip.add(ClientUtil.lang().space().space().space().space()
-                        .text(compositionName.toString())
+            if (!compositionName.string().isEmpty()) {
+                tooltip.add(ClientUtil.lang().space().space().space()
+                        .add(compositionName)
                         .component());
             }
         }

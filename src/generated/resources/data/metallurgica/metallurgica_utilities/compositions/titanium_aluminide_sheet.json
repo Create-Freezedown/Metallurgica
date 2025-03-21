@@ -1,22 +1,17 @@
 {
-  "elements": [
-    {
-      "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "titanium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "aluminum",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 2,
+          "element": "titanium"
+        },
+        {
+          "amount": 1,
+          "element": "aluminum"
+        }
+      ]
     }
   ],
   "item": "metallurgica:titanium_aluminide_sheet"

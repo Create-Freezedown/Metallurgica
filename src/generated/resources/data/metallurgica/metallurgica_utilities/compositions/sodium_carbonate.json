@@ -1,31 +1,21 @@
 {
-  "elements": [
-    {
-      "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "sodium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "carbon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 3,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 2,
+          "element": "sodium"
+        },
+        {
+          "amount": 1,
+          "element": "carbon"
+        },
+        {
+          "amount": 3,
+          "element": "oxygen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:sodium_carbonate"

@@ -1,22 +1,17 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 3,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "copper",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "zinc",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 3,
+          "element": "copper"
+        },
+        {
+          "amount": 2,
+          "element": "zinc"
+        }
+      ]
     }
   ],
   "item": "create:brass_sheet"

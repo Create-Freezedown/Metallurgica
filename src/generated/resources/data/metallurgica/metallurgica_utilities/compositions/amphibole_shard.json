@@ -1,139 +1,34 @@
 {
-  "elements": [
-    {
-      "amount": 7,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "magnesium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 8,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 22,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 7,
+          "element": "magnesium"
+        },
+        {
+          "amount": 8,
+          "element": "silicon"
+        },
+        {
+          "amount": 22,
+          "element": "oxygen"
+        }
+      ]
     },
     {
-      "amount": 1,
-      "appendDash": true,
-      "bracketed": true,
-      "element": "hydrogen",
-      "forceCloseBracket": true,
-      "groupedAmount": 2,
-      "numbersUp": false
-    },
-    {
-      "amount": 7,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 8,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 22,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": true,
-      "bracketed": true,
-      "element": "hydrogen",
-      "forceCloseBracket": true,
-      "groupedAmount": 2,
-      "numbersUp": false
-    },
-    {
-      "amount": 7,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "calcium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 8,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 22,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "hydrogen",
-      "forceCloseBracket": true,
-      "groupedAmount": 2,
-      "numbersUp": false
+      "amount": 2,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "oxygen"
+        },
+        {
+          "amount": 1,
+          "element": "hydrogen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:amphibole_shard"

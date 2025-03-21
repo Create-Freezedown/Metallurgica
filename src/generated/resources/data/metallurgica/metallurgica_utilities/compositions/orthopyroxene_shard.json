@@ -1,40 +1,30 @@
 {
-  "elements": [
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "magnesium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "iron",
-      "forceCloseBracket": true,
-      "groupedAmount": 2,
-      "numbersUp": false
-    },
+  "compositions": [
     {
       "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "magnesium"
+        },
+        {
+          "amount": 1,
+          "element": "iron"
+        }
+      ]
     },
     {
-      "amount": 6,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 2,
+          "element": "silicon"
+        },
+        {
+          "amount": 6,
+          "element": "oxygen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:orthopyroxene_shard"

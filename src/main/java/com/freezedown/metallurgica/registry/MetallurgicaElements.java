@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.registry;
 
-import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.Element;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

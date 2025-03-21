@@ -1,22 +1,17 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "vanadium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 5,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 2,
+          "element": "vanadium"
+        },
+        {
+          "amount": 5,
+          "element": "oxygen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:vanadium_pentoxide"

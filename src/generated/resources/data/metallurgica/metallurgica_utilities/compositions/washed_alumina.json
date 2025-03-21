@@ -1,22 +1,17 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 2,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "aluminum",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 3,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 2,
+          "element": "aluminum"
+        },
+        {
+          "amount": 3,
+          "element": "oxygen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:washed_alumina"

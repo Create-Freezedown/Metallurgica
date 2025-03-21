@@ -3,7 +3,7 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.data.custom.composition.Element;
+import com.freezedown.metallurgica.foundation.data.custom.composition.data.Element;
 import com.freezedown.metallurgica.foundation.material.OreEntry;
 import com.freezedown.metallurgica.foundation.material.MetalEntry;
 import com.freezedown.metallurgica.registry.MetallurgicaElements;

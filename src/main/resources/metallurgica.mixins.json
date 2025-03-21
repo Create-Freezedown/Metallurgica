@@ -7,7 +7,6 @@
   "plugin": "com.freezedown.metallurgica.foundation.mixin.plugin.MetallurgicaMixinsPlugin",
   "mixins": [
     "AllBiomeModifiersMixin",
-    "ChemicalInfoTooltipMixin",
     "DefaultOreFeaturesMixin",
     "MixinOpenEndedPipe",
     "MixinOpenEndFluidHandler",

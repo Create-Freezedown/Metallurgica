@@ -1,94 +1,64 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "calcium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "calcium"
+        },
+        {
+          "amount": 1,
+          "element": "magnesium"
+        },
+        {
+          "amount": 1,
+          "element": "iron"
+        },
+        {
+          "amount": 1,
+          "element": "sodium"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "magnesium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 1,
+          "element": "magnesium"
+        },
+        {
+          "amount": 1,
+          "element": "iron"
+        },
+        {
+          "amount": 1,
+          "element": "aluminum"
+        }
+      ]
+    },
+    {
+      "amount": 2,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "silicon"
+        },
+        {
+          "amount": 1,
+          "element": "aluminum"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "sodium",
-      "forceCloseBracket": true,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "magnesium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "aluminum",
-      "forceCloseBracket": true,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "bracketed": true,
-      "element": "aluminum",
-      "forceCloseBracket": true,
-      "groupedAmount": 2,
-      "numbersUp": false
-    },
-    {
-      "amount": 6,
-      "appendDash": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "numbersUp": false
+      "elements": [
+        {
+          "amount": 6,
+          "element": "oxygen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:clinopyroxene_shard"
