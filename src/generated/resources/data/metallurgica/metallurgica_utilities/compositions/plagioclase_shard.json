@@ -6,15 +6,30 @@
         {
           "amount": 1,
           "element": "sodium"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 1,
           "element": "aluminum"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 3,
           "element": "silicon"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 8,
           "element": "oxygen"

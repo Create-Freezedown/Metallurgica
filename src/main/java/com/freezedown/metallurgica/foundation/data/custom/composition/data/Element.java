@@ -24,10 +24,6 @@ public record Element(@Getter String name, @Getter int amount) {
     public Element withAmount(int amount) {
         return new Element(name, amount);
     }
-    
-    public int getAmount() {
-        return amount;
-    }
 
     public JsonObject toJson() {
         JsonObject json = new JsonObject();

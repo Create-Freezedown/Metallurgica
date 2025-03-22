@@ -28,11 +28,21 @@
         {
           "amount": 1,
           "element": "aluminum"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 3,
           "element": "silicon"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 10,
           "element": "oxygen"

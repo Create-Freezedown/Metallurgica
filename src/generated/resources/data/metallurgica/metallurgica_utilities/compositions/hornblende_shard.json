@@ -1,14 +1,19 @@
 {
   "compositions": [
     {
-      "amount": 2,
+      "amount": 1,
       "elements": [
         {
           "amount": 1,
           "element": "calcium"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
-          "amount": 1,
+          "amount": 2,
           "element": "sodium"
         }
       ]

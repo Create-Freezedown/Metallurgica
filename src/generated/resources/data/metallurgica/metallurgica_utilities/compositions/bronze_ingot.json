@@ -6,7 +6,12 @@
         {
           "amount": 7,
           "element": "copper"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 2,
           "element": "tin"

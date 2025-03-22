@@ -6,11 +6,21 @@
         {
           "amount": 2,
           "element": "hydrogen"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 1,
           "element": "sulfur"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 4,
           "element": "oxygen"

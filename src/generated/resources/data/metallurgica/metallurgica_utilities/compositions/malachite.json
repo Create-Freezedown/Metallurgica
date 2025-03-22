@@ -6,15 +6,30 @@
         {
           "amount": 2,
           "element": "copper"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 1,
           "element": "carbon"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 3,
           "element": "oxygen"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 2,
           "element": "hydrogen"

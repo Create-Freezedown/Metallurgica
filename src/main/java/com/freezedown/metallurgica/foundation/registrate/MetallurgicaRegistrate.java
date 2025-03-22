@@ -1,9 +1,8 @@
 package com.freezedown.metallurgica.foundation.registrate;
 
+import com.drmangotea.tfmg.blocks.electricity.polarizer.PolarizerBlockEntity;
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.fluids.types.Acid;
-import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
-import com.freezedown.metallurgica.content.fluids.types.ReactiveGas;
+import com.freezedown.metallurgica.content.fluids.types.*;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
@@ -17,7 +16,6 @@ import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.simibubi.create.AllFluids;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import com.simibubi.create.content.fluids.VirtualFluid;
@@ -36,19 +34,16 @@ import com.tterrag.registrate.util.entry.*;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -56,13 +51,12 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.LimitCount;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -112,13 +106,13 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     public FluidBuilder<FlowingGas.Flowing, CreateRegistrate> gas(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
-        return fluid(name, still, flow, TintedFluid.create(color), FlowingGas.Flowing::new).source(FlowingGas.Source::new).block(GasBlock::new).build();
+        return fluid(name, still, flow, TintedFluidType.create(color), FlowingGas.Flowing::new).source(FlowingGas.Source::new).block(GasBlock::new).build();
     }
     
     public FluidBuilder<ReactiveGas.Flowing, CreateRegistrate> reactiveGas(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
-        return fluid(name, still, flow, TintedFluid.create(color), ReactiveGas.Flowing::new).source(ReactiveGas.Source::new).block(GasBlock::new).build();
+        return fluid(name, still, flow, TintedFluidType.create(color), ReactiveGas.Flowing::new).source(ReactiveGas.Source::new).block(GasBlock::new).build();
     }
     
     
@@ -134,15 +128,13 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
     
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
-        return virtualFluid(name, still, flow, TintedFluid.create(color, still, flow), VirtualFluid::createSource, VirtualFluid::createFlowing);
+        return virtualFluid(name, still, flow, TintedFluidType.create(color), VirtualFluid::createSource, VirtualFluid::createFlowing);
     }
-    
-    
     
     public FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate> tintedFluid(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
-        return fluid(name, still, flow, TintedFluid.create(color), ForgeFlowingFluid.Flowing::new);
+        return fluid(name, still, flow, TintedFluidType.create(color), ForgeFlowingFluid.Flowing::new);
     }
     
     public FluidBuilder<Acid, CreateRegistrate> acid(String name, int color, float acidity) {
@@ -177,7 +169,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         if (acidity > 14 || acidity < 0) {
             throw new IllegalArgumentException("Acidity must be between 0 and 14 for " + name);
         }
-        return virtualFluid(name, still, flow, TintedFluid.create(color), (p) -> Acid.createSource(p).acidity(acidity), (p) -> Acid.createFlowing(p).acidity(acidity));
+        return virtualFluid(name, still, flow, TintedFluidType.create(color), (p) -> Acid.createSource(p).acidity(acidity), (p) -> Acid.createFlowing(p).acidity(acidity));
     }
 
     //ITEM
@@ -301,14 +293,14 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
 
     //BLOCK ENTITY
     @Override
-    public <T extends BlockEntity> CreateBlockEntityBuilder<T, CreateRegistrate> blockEntity(String name,
-                                                                                             BlockEntityBuilder.BlockEntityFactory<T> factory) {
+    public <T extends BlockEntity> @NotNull CreateBlockEntityBuilder<T, CreateRegistrate> blockEntity(String name,
+                                                                                                      BlockEntityBuilder.BlockEntityFactory<T> factory) {
         return blockEntity(self(), name, factory);
     }
 
     @Override
-    public <T extends BlockEntity, P> CreateBlockEntityBuilder<T, P> blockEntity(P parent, String name,
-                                                                                 BlockEntityBuilder.BlockEntityFactory<T> factory) {
+    public <T extends BlockEntity, P> @NotNull CreateBlockEntityBuilder<T, P> blockEntity(P parent, String name,
+                                                                                          BlockEntityBuilder.BlockEntityFactory<T> factory) {
         return (CreateBlockEntityBuilder<T, P>) entry(name,
                 (callback) -> CreateBlockEntityBuilder.create(this, parent, name, callback, factory));
     }
@@ -382,49 +374,5 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .simpleItem();
         b = b.lang(lang);
         return b.register();
-    }
-
-    //MISC
-    public static class TintedFluid extends AllFluids.TintedFluidType {
-        public ResourceLocation still;
-        public ResourceLocation flow;
-        public int color;
-
-        public TintedFluid(Properties properties, ResourceLocation still, ResourceLocation flow) {
-            super(properties, still, flow);
-        }
-
-        public TintedFluid color(int color) {
-            this.color = color;
-            return this;
-        }
-
-        public TintedFluid still(ResourceLocation still) {
-            this.still = still;
-            return this;
-        }
-
-        public TintedFluid flow(ResourceLocation flow) {
-            this.flow = flow;
-            return this;
-        }
-
-        public static FluidBuilder.FluidTypeFactory create(int color) {
-            return (properties, still, flow) -> new TintedFluid(properties, still, flow).color(color);
-        }
-
-        public static FluidBuilder.FluidTypeFactory create(int color, ResourceLocation still, ResourceLocation flow) {
-            return (properties, still1, flow1) -> new TintedFluid(properties, still, flow).color(color).still(still).flow(flow);
-        }
-
-        @Override
-        protected int getTintColor(FluidStack stack) {
-            return color | 0xFF000000;
-        }
-
-        @Override
-        protected int getTintColor(FluidState state, BlockAndTintGetter getter, BlockPos pos) {
-            return NO_TINT;
-        }
     }
 }

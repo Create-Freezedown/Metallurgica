@@ -1,7 +1,7 @@
 {
   "compositions": [
     {
-      "amount": 2,
+      "amount": 1,
       "elements": [
         {
           "amount": 1,
@@ -10,6 +10,10 @@
         {
           "amount": 1,
           "element": "iron"
+        },
+        {
+          "amount": 1,
+          "element": "calcium"
         }
       ]
     },
@@ -17,9 +21,35 @@
       "amount": 1,
       "elements": [
         {
-          "amount": 2,
+          "amount": 1,
+          "element": "magnesium"
+        },
+        {
+          "amount": 1,
+          "element": "iron"
+        },
+        {
+          "amount": 1,
+          "element": "aluminum"
+        }
+      ]
+    },
+    {
+      "amount": 2,
+      "elements": [
+        {
+          "amount": 1,
           "element": "silicon"
         },
+        {
+          "amount": 1,
+          "element": "aluminum"
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 6,
           "element": "oxygen"

@@ -91,7 +91,20 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .require(MetallurgicaItems.magnesiumOxide.get())
             .require(MetallurgicaFluids.hydrochloricAcid.get(), 100)
             .output(MetallurgicaFluids.magnesiumChloride.get(), 50)
-            .requiresHeat(HeatCondition.HEATED))
+            .requiresHeat(HeatCondition.HEATED)),
+
+    ammoniumMetavanadate = create(Metallurgica.asResource("ammonium_metavanadate"), b -> b
+            .require(MetallurgicaItems.ammoniumChloride.get())
+            .require(MetallurgicaItems.sodiumOrthovanadate.get())
+            .require(F.water(), 500)
+            .output(MetallurgicaItems.ammoniumMetavanadate, 1)),
+
+    ammoniumMetavanadateDecontaminated = create(Metallurgica.asResource("ammonium_metavanadate_from_decontaminated_water"), b -> b
+            .require(MetallurgicaItems.ammoniumChloride)
+            .require(MetallurgicaItems.sodiumOrthovanadate)
+            .require(F.decontaminatedWater(), 500)
+            .output(MetallurgicaItems.ammoniumMetavanadate)
+            .output(0.25f, MetallurgicaItems.ammoniumMetavanadate))
             
     ;
     

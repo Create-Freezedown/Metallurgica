@@ -6,7 +6,12 @@
         {
           "amount": 3,
           "element": "iron"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 4,
           "element": "oxygen"

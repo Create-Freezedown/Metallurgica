@@ -6,11 +6,21 @@
         {
           "amount": 7,
           "element": "magnesium"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 8,
           "element": "silicon"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 22,
           "element": "oxygen"

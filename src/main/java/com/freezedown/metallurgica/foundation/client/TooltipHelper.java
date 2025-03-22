@@ -28,12 +28,12 @@ public class TooltipHelper {
                 SubComposition subComposition = Objects.requireNonNull(ClientFluidCompositions.getInstance().getSubCompositions(fluidStack).get(i));
                 int elementsSize = subComposition.getElements().size();
                 if (elementsSize > 0) {
-                    subComp.add(subComp.text("("));
+                    subComp.add(Component.literal("("));
                     for (int j = 0; j < elementsSize; j++) {
                         if (subComposition.getElements().get(j) == null) continue;
                         subComp.add(Component.literal(subComposition.getElement(j).getDisplay()));
                     }
-                    subComp.add(subComp.text(")"));
+                    subComp.add(Component.literal(")"));
                 } else {
                     subComp.add(Component.literal(subComposition.getElement(0).getDisplay()));
                 }

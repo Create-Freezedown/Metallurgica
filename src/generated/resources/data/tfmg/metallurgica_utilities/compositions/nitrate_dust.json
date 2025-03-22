@@ -6,11 +6,21 @@
         {
           "amount": 1,
           "element": "potassium"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 1,
           "element": "nitrogen"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 3,
           "element": "oxygen"

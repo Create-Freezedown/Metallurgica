@@ -6,11 +6,21 @@
         {
           "amount": 1,
           "element": "calcium"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 1,
           "element": "carbon"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 3,
           "element": "oxygen"

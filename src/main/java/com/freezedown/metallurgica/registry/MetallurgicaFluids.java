@@ -33,7 +33,7 @@ public class MetallurgicaFluids {
     public static final ResourceLocation NITROGEN_RL = Metallurgica.asResource("fluid/nitrogen");
     public static final ResourceLocation BFG_RL = Metallurgica.asResource("fluid/bfg");
     public static final ResourceLocation RIVER_SAND_RL = Metallurgica.asResource("fluid/river_sand");
-    
+
     public static final FluidEntry<VirtualFluid>
             preheatedAir =             registrate.virtualFluid("preheated_air", AIR_RL, AIR_RL).lang("Preheated Air").register(),
             nitrogen =                 registrate.virtualFluid("nitrogen", NITROGEN_RL, NITROGEN_RL).lang("Nitrogen").register(),

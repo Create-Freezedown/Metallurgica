@@ -30,13 +30,13 @@ public class ChemicalInfoTooltipMixin {
                 LangBuilder subComp = ClientUtil.lang();
                 SubComposition subComposition = Objects.requireNonNull(CompositionManager.getSubCompositions(stack.getItem()).get(i));
                 int elementsSize = subComposition.getElements().size();
-                if (elementsSize > 0) {
-                    subComp.add(subComp.text("("));
+                if (elementsSize > 1) {
+                    subComp.add(Component.literal("("));
                     for (int j = 0; j < elementsSize; j++) {
                         if (subComposition.getElements().get(j) == null) continue;
                         subComp.add(Component.literal(subComposition.getElement(j).getDisplay()));
                     }
-                    subComp.add(subComp.text(")"));
+                    subComp.add(Component.literal(")"));
                 } else {
                     subComp.add(Component.literal(subComposition.getElement(0).getDisplay()));
                 }

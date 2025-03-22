@@ -70,7 +70,7 @@ public class ItemCompositionCategory extends CreateRecipeCategory<ItemCompositio
         for(MutableComponent element : recipe.createElementLine()) {
             int yOff = yPos += 10;
             MutableComponent descriptionLine = element.copy();
-            graphics.drawString(Minecraft.getInstance().font, Language.getInstance().getVisualOrder(descriptionLine), xPos, yOff, -16777216);
+            graphics.drawString(Minecraft.getInstance().font, Language.getInstance().getVisualOrder(descriptionLine), xPos, yOff, 0xFFFFFF);
             Objects.requireNonNull(minecraft.font);
         }
     }

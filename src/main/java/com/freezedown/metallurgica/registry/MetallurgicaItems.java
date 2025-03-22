@@ -45,6 +45,9 @@ public class MetallurgicaItems {
 
     //MAGNETITE PROCESSING
             magnetiteLumps =      registrate.metallurgicaItem("magnetite_lumps", "lumps/magnetite", "lumps"),
+            fineMagnetiteTracedSand = registrate.metallurgicaItem("fine_magnetite_traced_sand", "dusts/magnetite_traced_sand", "dusts"),
+            magnetiteDust = registrate.metallurgicaItem("magnetite_dust", "dusts/magnetite", "dusts"),
+            sandPile = registrate.metallurgicaItem("sand_pile", "dusts/sand", "dusts"),
 
     //TIN PROCESSING
             alluvialCassiterite = registrate.metallurgicaItem("alluvial_cassiterite", "alluvial_materials/cassiterite", "alluvial_materials"),

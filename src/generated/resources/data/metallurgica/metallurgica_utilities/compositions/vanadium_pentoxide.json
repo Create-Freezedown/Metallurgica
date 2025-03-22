@@ -6,7 +6,12 @@
         {
           "amount": 2,
           "element": "vanadium"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 5,
           "element": "oxygen"

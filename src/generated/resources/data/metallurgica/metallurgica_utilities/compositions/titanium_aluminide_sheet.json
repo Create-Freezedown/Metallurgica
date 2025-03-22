@@ -6,7 +6,12 @@
         {
           "amount": 2,
           "element": "titanium"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 1,
           "element": "aluminum"

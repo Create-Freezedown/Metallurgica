@@ -6,7 +6,12 @@
         {
           "amount": 1,
           "element": "hydrogen"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 1,
           "element": "chlorine"

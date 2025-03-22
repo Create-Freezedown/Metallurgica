@@ -6,7 +6,12 @@
         {
           "amount": 1,
           "element": "tin"
-        },
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
         {
           "amount": 2,
           "element": "oxygen"
