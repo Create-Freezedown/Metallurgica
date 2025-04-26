@@ -3,6 +3,7 @@ package com.freezedown.metallurgica;
 import com.freezedown.metallurgica.foundation.ponder.MetallurgicaPonderPlugin;
 import com.freezedown.metallurgica.registry.MetallurgicaPartialModels;
 import net.createmod.ponder.foundation.PonderIndex;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,4 +30,6 @@ public class MetallurgicaClient {
 
         PonderIndex.addPlugin(new MetallurgicaPonderPlugin());
     }
+
+
 }

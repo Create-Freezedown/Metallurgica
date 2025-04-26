@@ -109,6 +109,20 @@ repositories {
     maven { url = "https://maven.tterrag.com" } // Registrate
     maven { url = "https://maven.blamejared.com" } // JEI, Vazkii's Mods
     maven {
+        // Shedaniel's maven (Architectury API)
+        url = "https://maven.architectury.dev"
+        content {
+            includeGroup "dev.architectury"
+        }
+    }
+    maven {
+        // saps.dev Maven (KubeJS and Rhino)
+        url = "https://maven.saps.dev/minecraft"
+        content {
+            includeGroup "dev.latvian.mods"
+        }
+    }
+    maven {
         url = 'https://www.cursemaven.com'
         content {
             includeGroup "curse.maven"
@@ -153,6 +167,10 @@ dependencies {
     modCompileOnly("maven.modrinth:emi:${emi_version}")
 
     modImplementation("maven.modrinth:create-tfmg:${tfmg_version}") //1.19
+
+    modImplementation("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    modImplementation("dev.latvian.mods:rhino-forge:${rhino_version}")
+    modImplementation("dev.architectury:architectury-forge:${architectury_version}")
 
     modApi("org.apfloat:apfloat:1.11.0")
     modApi("org.jgrapht:jgrapht:1.5.2")
