@@ -70,6 +70,9 @@ legacyForge {
         }
         client {
             client()
+
+            programArguments.addAll('--username', project.file('username.txt').readLines()[0])
+
             gameDirectory = project.file('run')
         }
 
