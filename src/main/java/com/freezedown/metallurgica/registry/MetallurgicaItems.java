@@ -38,7 +38,7 @@ public class MetallurgicaItems {
     public static final ItemEntry<MetallurgicaItem>
             salt =                registrate.metallurgicaItem("salt", "salt"),
     //IRON PROCESSING
-            pigIron =      registrate.metallurgicaItem("pig_iron_ingot", "ingots/pig_iron_ingot", "ingot"), //I REFUSE TO REGISTER THIS ANYWHERE OTHER THAN IRON PROCESSING
+            pigIron =      registrate.metallurgicaItem("pig_iron_ingot", "ingots/pig_iron_ingot", "ingots"), //I REFUSE TO REGISTER THIS ANYWHERE OTHER THAN IRON PROCESSING
             impureIronBloom =      registrate.metallurgicaItem("impure_iron_bloom"),
             pureIronBloom =      registrate.metallurgicaItem("pure_iron_bloom"),
             ironSinter =      registrate.metallurgicaItem("iron_sinter"),
