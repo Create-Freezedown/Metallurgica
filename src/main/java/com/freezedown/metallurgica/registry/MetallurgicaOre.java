@@ -69,7 +69,8 @@ public enum MetallurgicaOre {
 //    CHLORARGYRITE(SILVER),
 
     //LIMESTONE
-    //POTASH()
+    //POTASSIUM
+    POTASH(),
     //DOLOMITE(),
 
     //MAGNESIUM
@@ -79,6 +80,9 @@ public enum MetallurgicaOre {
 
     //FLUORITE
     FLUORITE(),
+
+    //REDSTONE
+    CUPRITE()
     ;
 
     public final OreEntry ORE;
