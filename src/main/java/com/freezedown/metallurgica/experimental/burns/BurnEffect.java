@@ -13,10 +13,10 @@ import net.minecraft.world.entity.player.Player;
 public class BurnEffect {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
-        LiteralCommandNode<CommandSourceStack> command =
-                dispatcher.register(Commands.literal("test").executes((source) -> {
-                 
-                }));
+        //LiteralCommandNode<CommandSourceStack> command =
+        //        dispatcher.register(Commands.literal("test").executes((source) -> {
+        //
+        //        }));
 
     }
 }

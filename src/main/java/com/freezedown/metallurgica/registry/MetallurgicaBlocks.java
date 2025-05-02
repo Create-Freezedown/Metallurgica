@@ -37,6 +37,7 @@ import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
+import com.freezedown.metallurgica.registry.material.MetMaterialBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
@@ -367,10 +368,10 @@ public class MetallurgicaBlocks {
             .register();
 //METAL BLOCKS
     //CAST
-    public static final BlockEntry<Block>
-            bronzeBlock =              registrate.simpleMachineBlock("bronze_block", "Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
-    public static final BlockEntry<Block>
-            arsenicalBronzeBlock =              registrate.simpleMachineBlock("arsenical_bronze_block", "Arsenical Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
+    //public static final BlockEntry<Block>
+    //        bronzeBlock =              registrate.simpleMachineBlock("bronze_block", "Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
+    //public static final BlockEntry<Block>
+    //        arsenicalBronzeBlock =              registrate.simpleMachineBlock("arsenical_bronze_block", "Arsenical Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
     public static final BlockEntry<Block>
             impureBronzeBlock =              registrate.simpleMachineBlock("impure_bronze_block", "Impure Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
     //SMITHED
@@ -434,5 +435,10 @@ public class MetallurgicaBlocks {
             castingTable =             registrate.simpleMachineBlock("casting_table", null, CastingTable::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.getEntry(), p.models().getExistingFile(p.modLoc("block/casting_table"))));
 
 
-    public static void register() {}
+    public static void register() {
+        MetMaterialBlocks.generateMaterialBlocks(registrate);
+        MetMaterialBlocks.MATERIAL_BLOCKS = MetMaterialBlocks.MATERIAL_BLOCKS_BUILDER.build();
+
+        MetMaterialBlocks.MATERIAL_BLOCKS_BUILDER = null;
+    }
 }

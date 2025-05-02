@@ -1,15 +1,23 @@
 package com.freezedown.metallurgica.events;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.behaviours.interaction.FluidEntityInteractionHandler;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasMovementHandler;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureEffect;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureMinerals;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureUtil;
 import com.freezedown.metallurgica.foundation.command.MetallurgicaCommands;
+import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicDataPack;
+import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
+import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaPackSource;
+import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -98,5 +106,30 @@ public class CommonEvents {
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
         MetallurgicaCommands.register(event.getDispatcher(), event.getBuildContext());
+    }
+
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+    public static class ModBusEvents {
+
+        @SubscribeEvent
+        public static void addPackFinders(AddPackFindersEvent event) {
+            if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+                // Clear old data
+                MetallurgicaDynamicResourcePack.clearClient();
+
+                event.addRepositorySource(new MetallurgicaPackSource("metallurgica:dynamic_assets",
+                        event.getPackType(),
+                        Pack.Position.BOTTOM,
+                        MetallurgicaDynamicResourcePack::new));
+            } else if (event.getPackType() == PackType.SERVER_DATA) {
+                MetallurgicaDynamicDataPack.clearServer();
+
+                long startTime = System.currentTimeMillis();
+                MetallurgicaRecipes.recipeRemoval();
+                MetallurgicaRecipes.recipeAddition(MetallurgicaDynamicDataPack::addRecipe);
+                Metallurgica.LOGGER.info("Metallurgica Data loading took {}ms", System.currentTimeMillis() - startTime);
+                event.addRepositorySource(new MetallurgicaPackSource("metallurgica:dynamic_data", event.getPackType(), Pack.Position.BOTTOM, MetallurgicaDynamicDataPack::new));
+            }
+        }
     }
 }

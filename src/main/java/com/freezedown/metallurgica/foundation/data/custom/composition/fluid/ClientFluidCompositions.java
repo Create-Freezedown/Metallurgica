@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.custom.composition.fluid;
 
-import com.freezedown.metallurgica.foundation.data.custom.composition.data.Element;
-import com.freezedown.metallurgica.foundation.data.custom.composition.data.SubComposition;
+import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.HashMap;

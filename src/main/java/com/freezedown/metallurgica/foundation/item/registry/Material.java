@@ -1,26 +1,32 @@
 package com.freezedown.metallurgica.foundation.item.registry;
 
+import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.item.registry.flags.*;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.infastructure.conductor.CableItem;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
 import com.tterrag.registrate.util.entry.FluidEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+import net.createmod.catnip.config.ConfigBase;
 import net.createmod.catnip.data.Pair;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
+@Accessors(chain = true, fluent = true)
 public class Material implements Comparable<Material> {
 
     @NotNull
@@ -29,6 +35,10 @@ public class Material implements Comparable<Material> {
 
     @NotNull
     private final MaterialFlags flags;
+
+    @Setter
+    @Getter
+    private boolean shouldRegister = true;
 
     private Material(@NotNull MaterialInfo materialInfo, @NotNull MaterialFlags flags) {
         this.materialInfo = materialInfo;
@@ -47,6 +57,10 @@ public class Material implements Comparable<Material> {
 
     public boolean noRegister(FlagKey<? extends IMaterialFlag> flag) {
         return flags.getNoRegister().contains(flag);
+    }
+
+    public void registerWhen(ConfigBase.ConfigBool config) {
+        shouldRegister(config.get());
     }
 
     public Fluid getFluid(Class<? extends Fluid> fluidClass) {
@@ -80,6 +94,10 @@ public class Material implements Comparable<Material> {
         //flags.verify();
     }
 
+    public @NotNull MaterialFlags getFlags() {
+        return flags;
+    }
+
     public void verifyMaterial() {
         //flags.verify();
         //this.chemicalFormula = calculateChemicalFormula();
@@ -89,6 +107,14 @@ public class Material implements Comparable<Material> {
     @Override
     public int compareTo(@NotNull Material material) {
         return toString().compareTo(material.toString());
+    }
+
+    public String getUnlocalizedName() {
+        return materialInfo.resourceLocation.toLanguageKey("material");
+    }
+
+    public MutableComponent getLocalizedName() {
+        return Component.translatable(getUnlocalizedName());
     }
 
     public static class Builder {
@@ -110,7 +136,14 @@ public class Material implements Comparable<Material> {
         }
 
         public Builder withNameAlternative(FlagKey<?> flag, String alternative) {
-            materialInfo.getNameAlternatives().put(flag, alternative);
+            materialInfo.nameAlternatives().put(flag, alternative);
+            return this;
+        }
+
+        public Builder addFlags(FlagKey<? extends IMaterialFlag>... flags) {
+            for (var flag : flags) {
+                this.flags.ensureSet(flag);
+            }
             return this;
         }
 
@@ -124,6 +157,10 @@ public class Material implements Comparable<Material> {
             flags.setFlag(FlagKey.INGOT, new IngotFlag());
             return this;
         }
+        public Builder ingot(String existingNamespace) {
+            flags.setFlag(FlagKey.INGOT, new IngotFlag(existingNamespace));
+            return this;
+        }
         public Builder ingot(NonNullFunction<Item.Properties, ? extends Item> factory) {
             flags.setFlag(FlagKey.INGOT, new IngotFlag(factory));
             return this;
@@ -132,6 +169,12 @@ public class Material implements Comparable<Material> {
             IngotFlag prop = flags.getFlag(FlagKey.INGOT);
             if (prop == null) ingot();
             flags.setFlag(FlagKey.SHEET, new SheetFlag());
+            return this;
+        }
+        public Builder sheet(String existingNamespace) {
+            IngotFlag prop = flags.getFlag(FlagKey.INGOT);
+            if (prop == null) ingot();
+            flags.setFlag(FlagKey.SHEET, new SheetFlag(existingNamespace));
             return this;
         }
         public Builder sheet(int pressTimes) {
@@ -173,6 +216,15 @@ public class Material implements Comparable<Material> {
             if (prop == null) wire();
             if (resistivity < 0) throw new IllegalArgumentException("Resistivity cannot be below 0");
             flags.setFlag(FlagKey.CABLE, new CableFlag(resistivity, colors));
+            return this;
+        }
+
+        public Builder storageBlock() {
+            flags.setFlag(FlagKey.STORAGE_BLOCK, new StorageBlockFlag());
+            return this;
+        }
+        public Builder storageBlock(String existingNamespace) {
+            flags.setFlag(FlagKey.STORAGE_BLOCK, new StorageBlockFlag(existingNamespace));
             return this;
         }
 

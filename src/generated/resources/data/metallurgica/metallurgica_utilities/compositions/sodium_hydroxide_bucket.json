@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "sodium"
+          "element": "metallurgica:sodium"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "oxygen"
+          "element": "metallurgica:oxygen"
         }
       ]
     },
@@ -23,7 +23,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "hydrogen"
+          "element": "metallurgica:hydrogen"
         }
       ]
     }

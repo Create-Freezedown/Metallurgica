@@ -5,10 +5,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.Acid;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid.*;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.util.ClientUtil;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.tterrag.registrate.util.entry.FluidEntry;
@@ -38,37 +35,37 @@ public class MetallurgicaFluids {
             preheatedAir =             registrate.virtualFluid("preheated_air", AIR_RL, AIR_RL).lang("Preheated Air").register(),
             nitrogen =                 registrate.virtualFluid("nitrogen", NITROGEN_RL, NITROGEN_RL).lang("Nitrogen").register(),
             bfg =                      registrate.virtualFluid("bfg", AIR_RL, AIR_RL).lang("Blast Furnace Gas").register(),
-            cryolite =                 registrate.tintedVirtualFluid("cryolite", 0x90EE90).lang("Cryolite").register(),
-            decontaminatedWater =      registrate.tintedVirtualFluid("decontaminated_water", 0x90C6E3).lang("Decontaminated Water").register(),
-            magnetiteFines =           registrate.tintedVirtualDust("magnetite_fines", 0x696A76).lang("Magnetite Fines").register()
+            cryolite =                 registrate.tintedVirtualFluid("cryolite", 0xff90EE90).lang("Cryolite").register(),
+            decontaminatedWater =      registrate.tintedVirtualFluid("decontaminated_water", 0xff90C6E3).lang("Decontaminated Water").register(),
+            magnetiteFines =           registrate.tintedVirtualDust("magnetite_fines", 0xff696A76).lang("Magnetite Fines").register()
             
     ;
     //CHLORIDES
     public static final FluidEntry<VirtualFluid>
             //CRUDE
-            crudeTitaniumTetrachloride = chloride("crude_titanium_tetrachloride", 0x876253),
+            crudeTitaniumTetrachloride = chloride("crude_titanium_tetrachloride", 0xff876253),
             //TETRACHLORIDE
-            titaniumTetrachloride =    chloride("titanium_tetrachloride", 0xA76F6F),
-            siliconTetrachloride =    chloride("silicon_tetrachloride", 0x42495E),
-            tinTetrachloride =        chloride("tin_tetrachloride", 0xC2D4D4),
+            titaniumTetrachloride =    chloride("titanium_tetrachloride", 0xffA76F6F),
+            siliconTetrachloride =    chloride("silicon_tetrachloride", 0xff42495E),
+            tinTetrachloride =        chloride("tin_tetrachloride", 0xffC2D4D4),
             //CHLORIDES
-            ironChloride =             chloride("iron_chloride", 0x48180E),
-            magnesiumChloride =         chloride("magnesium_chloride", 0xEBDCA9)
+            ironChloride =             chloride("iron_chloride", 0xff48180E),
+            magnesiumChloride =         chloride("magnesium_chloride", 0xffEBDCA9)
                     
                     
                     ;
 
     public static final FluidEntry<Acid>
-            hydrochloricAcid =         acid("hydrochloric_acid", 0xAAFFAA, 1.1f),
-            sulfuricAcid =             acid("sulfuric_acid", 0xAAAAFF, 0.1f),
-            sodiumHydroxide =          acid("sodium_hydroxide", 0xC3D2D5, 14),
-            sodiumHypochlorite =       acid("sodium_hypochlorite", 0xE8f1C7, 1.1f);
+            hydrochloricAcid =         acid("hydrochloric_acid", 0xffAAFFAA, 1.1f),
+            sulfuricAcid =             acid("sulfuric_acid", 0xffAAAAFF, 0.1f),
+            sodiumHydroxide =          acid("sodium_hydroxide", 0xffC3D2D5, 14),
+            sodiumHypochlorite =       acid("sodium_hypochlorite", 0xffE8f1C7, 1.1f);
 
     public static final FluidEntry<RiverSandFluid> riverSand =
             registrate.virtualFluid("river_sand", RiverSandFluidType::new, RiverSandFluid::createSource, RiverSandFluid::createFlowing).lang("River Sand").register();
 
     public static final FluidEntry<VirtualFluid>
-            chlorine = gas("chlorine", 0xDBD971, AllTags.forgeFluidTag("chlorine"));
+            chlorine = gas("chlorine", 0xffDBD971, AllTags.forgeFluidTag("chlorine"));
     
     //public static final FluidEntry<MoltenMetal.Flowing>
     //        moltenIron = registrate.moltenMetal("iron"),
@@ -90,7 +87,7 @@ public class MetallurgicaFluids {
     //        moltenThorium = registrate.moltenMetal("thorium")
     //;
     
-    public static final FluidEntry<ForgeFlowingFluid.Flowing> claySlip = flowing("clay_slip", 0x725537);
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> claySlip = flowing("clay_slip", 0xff725537);
 
     public static Collection<RegistryEntry<Fluid>> ALL = registrate.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
 
@@ -121,7 +118,6 @@ public class MetallurgicaFluids {
         
         
         return  registrate.tintedFluid(name, color)
-                .lang(ClientUtil.fromId(name))
                 .tag(tags)
                 //.bucket()
                 //.lang(ClientUtil.fromId(name)+" Bucket")
@@ -143,11 +139,10 @@ public class MetallurgicaFluids {
         }
         
         return  registrate.acid(name, color, ph)
-                .lang(ClientUtil.fromId(name))
                 .tag(tags)
                 .tag(MetallurgicaTags.AllFluidTags.ACID.tag)
                 .bucket()
-                .lang(ClientUtil.fromId(name)+" Barrel")
+                .lang(TextUtil.fromId(name)+" Barrel")
                 .tag(AllTags.forgeItemTag("buckets/"+name))
                 .build()
                 .register();
@@ -166,13 +161,12 @@ public class MetallurgicaFluids {
         }
         
         return  registrate().tintedVirtualFluid(name, color)
-                .lang(ClientUtil.fromId(name))
                 .tag(tags)
                 .tag(MetallurgicaTags.AllFluidTags.CHLORIDE.tag)
                 //  .source(GasFluid.Source::new)
                 
                 .bucket()
-                .lang(ClientUtil.fromId(name)+" Barrel")
+                .lang(TextUtil.fromId(name)+" Barrel")
                 .tag(AllTags.forgeItemTag("buckets/"+name))
                 .build()
                 .register();
@@ -191,13 +185,12 @@ public class MetallurgicaFluids {
         }
         
         return  registrate().tintedVirtualFluid(name, color)
-                .lang(ClientUtil.fromId(name))
                 .tag(tags)
                 .tag(MetallurgicaTags.AllFluidTags.GAS.tag)
                 //  .source(GasFluid.Source::new)
                 
                 .bucket()
-                .lang(ClientUtil.fromId(name)+" Tank")
+                .lang(TextUtil.fromId(name)+" Tank")
                 .tag(AllTags.forgeItemTag("buckets/"+name))
                 .build()
                 .register();
@@ -208,12 +201,5 @@ public class MetallurgicaFluids {
     }
 
     public static void register() {
-        for (MetallurgicaMaterials materials : MetallurgicaMaterials.values()) {
-            Material material = materials.getMaterial();
-            var fluidFlag = material.getFlag(FlagKey.FLUID);
-            if (fluidFlag != null) {
-                fluidFlag.registerFluids(material, registrate);
-            }
-        }
     }
 }

@@ -19,6 +19,10 @@ public class IngotFlag extends ItemFlag {
         super(factory, "%s_ingot");
     }
 
+    public IngotFlag(String existingNamespace) {
+        super("%s_ingot", existingNamespace);
+    }
+
     public IngotFlag requiresCompressing(boolean requiresCompressing) {
         this.requiresCompressing = requiresCompressing;
         return  this;

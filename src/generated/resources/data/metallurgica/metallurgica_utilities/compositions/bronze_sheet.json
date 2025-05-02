@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 7,
-          "element": "copper"
+          "element": "metallurgica:copper"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 2,
-          "element": "tin"
+          "element": "metallurgica:tin"
         }
       ]
     }

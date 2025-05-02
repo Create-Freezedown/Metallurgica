@@ -70,28 +70,40 @@ legacyForge {
         }
         client {
             client()
+            ideName = "Client"
 
             programArguments.addAll('--username', project.file('username.txt').readLines()[0])
 
             gameDirectory = project.file('run')
+            systemProperty('forge.enabledGameTestNamespaces', "metallurgica")
         }
 
         server {
             server()
+            //sourceSet = sourceSets.main
+            ideName = "Server"
 
-            gameDirectory = project.file('run/server')
+            gameDirectory.set(file('run/server'))
+            //programArgument '--nogui'
+            //systemProperty('forge.enabledGameTestNamespaces', "metallurgica")
         }
 
         gameTestServer {
             type = "gameTestServer"
+            sourceSet = sourceSets.test
+            ideName = "Game Tests"
 
-            gameDirectory = project.file('run/gametest')
+            gameDirectory.set(file('run/gametest'))
+            systemProperty('forge.enabledGameTestNamespaces', "metallurgica")
         }
 
         data {
             data()
+            sourceSet = sourceSets.main
+            ideName = "Data Generation"
 
-            gameDirectory = project.file('run')
+            gameDirectory.set(file('run/data'))
+
             systemProperty 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             systemProperty 'forge.logging.console.level', 'debug'
             programArguments.addAll("--mod", mod_id as String, "--all", "--output", file("src/generated/resources/").getAbsolutePath(), "--existing", file("src/main/resources").getAbsolutePath())
@@ -157,7 +169,12 @@ dependencies {
 
     modImplementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${flywheel_minecraft_version}:${flywheel_version}")
-    modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
+    modRuntimeOnly(jarJar("dev.engine-room.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}") {
+        version {
+            strictly "[1.0,2.0)"
+            prefer flywheel_version
+        }
+    })
     modImplementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
@@ -171,9 +188,9 @@ dependencies {
 
     modImplementation("maven.modrinth:create-tfmg:${tfmg_version}") //1.19
 
-    modImplementation("dev.latvian.mods:kubejs-forge:${kubejs_version}")
-    modImplementation("dev.latvian.mods:rhino-forge:${rhino_version}")
-    modImplementation("dev.architectury:architectury-forge:${architectury_version}")
+    modCompileOnly("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    modCompileOnly("dev.latvian.mods:rhino-forge:${rhino_version}")
+    modCompileOnly("dev.architectury:architectury-forge:${architectury_version}")
 
     modApi("org.apfloat:apfloat:1.11.0")
     modApi("org.jgrapht:jgrapht:1.5.2")

@@ -10,8 +10,10 @@
     "metallurgica:sphalerite_rubble",
     "metallurgica:smithsonite_rubble",
     "metallurgica:rutile_rubble",
+    "metallurgica:potash_rubble",
     "metallurgica:cassiterite_rubble",
     "metallurgica:fluorite_rubble",
+    "metallurgica:cuprite_rubble",
     "metallurgica:copper_rubble"
   ]
 }

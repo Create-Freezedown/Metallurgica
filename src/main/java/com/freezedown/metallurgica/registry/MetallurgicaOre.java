@@ -70,7 +70,7 @@ public enum MetallurgicaOre {
 
     //LIMESTONE
     //POTASSIUM
-    POTASH(),
+    POTASH(true),
     //DOLOMITE(),
 
     //MAGNESIUM
@@ -93,7 +93,7 @@ public enum MetallurgicaOre {
     }
 
     MetallurgicaOre() {
-        MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);;
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
         ORE = registrate.material(this.name().toLowerCase(), false);
     }
 
@@ -108,6 +108,19 @@ public enum MetallurgicaOre {
     MetallurgicaOre(boolean richb, MetallurgicaMaterials... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
         ORE = registrate.material(this.name().toLowerCase(), richb);
+        for(MetallurgicaMaterials material : materials) {
+            METALS.add(material.getMaterial());
+        }
+    }
+
+    MetallurgicaOre(boolean sideTop) {
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
+        ORE = registrate.material(this.name().toLowerCase(), false, sideTop);
+    }
+
+    MetallurgicaOre(boolean richb, boolean sideTop, MetallurgicaMaterials... materials) {
+        MetallurgicaRegistrate registrate = Metallurgica.registrate();
+        ORE = registrate.material(this.name().toLowerCase(), richb, sideTop);
         for(MetallurgicaMaterials material : materials) {
             METALS.add(material.getMaterial());
         }

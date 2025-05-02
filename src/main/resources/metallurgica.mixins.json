@@ -10,7 +10,6 @@
     "ChemicalInfoTooltipMixin",
     "DefaultOreFeaturesMixin",
     "MixinOpenEndedPipe",
-    "MixinOpenEndFluidHandler",
     "MixinVanillaFluidTargets",
     "OreVeinifierHijacker",
     "PlayerListMixin",
@@ -21,6 +20,7 @@
   ],
   "client": [
     "MixinLiquidBlockRenderer",
+    "ModelManagerMixin",
     "accessor.PostChainAccessor"
   ],
   "injectors": {

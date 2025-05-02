@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.foundation.client;
 
-import com.freezedown.metallurgica.foundation.data.custom.composition.data.SubComposition;
+import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.ClientFluidCompositions;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import net.createmod.catnip.lang.LangBuilder;

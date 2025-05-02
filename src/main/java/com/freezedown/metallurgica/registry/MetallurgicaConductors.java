@@ -7,6 +7,8 @@ import com.freezedown.metallurgica.infastructure.conductor.CableItem;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorEntry;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 import static com.freezedown.metallurgica.foundation.material.MaterialHelper.matAssetLoc;
@@ -62,7 +64,7 @@ public class MetallurgicaConductors {
                     .transform(TFMGConductor.setResistivity(cableFlag.getResistivity()))
                     .register();
             registrate.item("%s_cable".formatted(material.getMaterial().getName()), (p) -> new CableItem(p, conductor))
-                    .model((ctx, prov) -> prov.generated(ctx, matAssetLoc(material.getMaterial(), "cable")))
+                    .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                     .tag(MetallurgicaTags.modItemTag("cables"))
                     .register();
         }

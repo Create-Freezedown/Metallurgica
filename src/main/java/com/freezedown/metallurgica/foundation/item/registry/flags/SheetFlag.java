@@ -22,6 +22,10 @@ public class SheetFlag extends ItemFlag {
         super(factory, "%s_sheet");
     }
 
+    public SheetFlag(String existingNamespace) {
+        super("%s_sheet", existingNamespace);
+    }
+
     public SheetFlag pressTimes(int pressTimes) {
         this.pressTimes = pressTimes;
         this.needsTransitional = pressTimes > 1;

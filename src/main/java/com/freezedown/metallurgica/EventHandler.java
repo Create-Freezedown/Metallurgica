@@ -6,10 +6,12 @@ import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.Flui
 import com.freezedown.metallurgica.foundation.data.custom.temp.biome.BiomeTemperatureManager;
 import com.freezedown.metallurgica.foundation.data.custom.temp.dimension.DimensionTemperatureManager;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagPreferenceManager;
+import net.minecraft.client.server.LanServerPinger;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EventHandler {
+
     @SubscribeEvent
     public void jsonReading(AddReloadListenerEvent event) {
         DepositManager depositManager = new DepositManager();

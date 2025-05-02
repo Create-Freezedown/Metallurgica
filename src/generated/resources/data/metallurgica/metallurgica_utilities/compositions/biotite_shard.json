@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "potassium"
+          "element": "metallurgica:potassium"
         }
       ]
     },
@@ -14,11 +14,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "magnesium"
+          "element": "metallurgica:magnesium"
         },
         {
           "amount": 1,
-          "element": "iron"
+          "element": "metallurgica:iron"
         }
       ]
     },
@@ -27,7 +27,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "aluminum"
+          "element": "metallurgica:aluminum"
         }
       ]
     },
@@ -36,7 +36,7 @@
       "elements": [
         {
           "amount": 3,
-          "element": "silicon"
+          "element": "metallurgica:silicon"
         }
       ]
     },
@@ -45,7 +45,7 @@
       "elements": [
         {
           "amount": 10,
-          "element": "oxygen"
+          "element": "metallurgica:oxygen"
         }
       ]
     },
@@ -54,15 +54,15 @@
       "elements": [
         {
           "amount": 1,
-          "element": "fluorine"
+          "element": "metallurgica:fluorine"
         },
         {
           "amount": 1,
-          "element": "oxygen"
+          "element": "metallurgica:oxygen"
         },
         {
           "amount": 1,
-          "element": "hydrogen"
+          "element": "metallurgica:hydrogen"
         }
       ]
     }

@@ -11,7 +11,9 @@ import com.freezedown.metallurgica.registry.MetallurgicaCreativeTab;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
+import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -52,7 +54,7 @@ public class MaterialHelper {
     public static void registerMaterialItem(Material material, FlagKey<? extends ItemFlag> itemFlag, MetallurgicaRegistrate registrate) {
         MATERIAL_ITEMS_BUILDER.put(itemFlag, material, registrate
                 .item(itemFlag.constructDefault().getIdPattern().formatted(material.getName()), itemFlag.constructDefault().getFactory())
-                .model((ctx, prov) -> prov.generated(ctx, matAssetLoc(material, itemFlag.toString())))
+                .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                 .register()
         );
     }

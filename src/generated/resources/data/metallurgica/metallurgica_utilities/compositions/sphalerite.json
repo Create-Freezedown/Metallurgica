@@ -5,11 +5,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "zinc"
+          "element": "metallurgica:zinc"
         },
         {
           "amount": 1,
-          "element": "iron"
+          "element": "metallurgica:iron"
         }
       ]
     },
@@ -18,7 +18,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "sulfur"
+          "element": "metallurgica:sulfur"
         }
       ]
     }
