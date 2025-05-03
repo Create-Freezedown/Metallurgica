@@ -27,6 +27,11 @@ public class WireFlag extends ItemFlag {
     }
 
     @Override
+    public FlagKey<?> getKey() {
+        return FlagKey.WIRE;
+    }
+
+    @Override
     public void verifyFlag(MaterialFlags flags) {
         flags.ensureSet(FlagKey.SHEET, true);
     }

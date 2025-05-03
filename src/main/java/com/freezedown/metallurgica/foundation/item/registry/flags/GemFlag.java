@@ -28,6 +28,12 @@ public class GemFlag extends ItemFlag {
                 .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                 .register();
     }
+
+    @Override
+    public FlagKey<?> getKey() {
+        return FlagKey.GEM;
+    }
+
     @Override
     public void verifyFlag(MaterialFlags flags) {
 

@@ -8,30 +8,23 @@ import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
 import lombok.Getter;
-import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
-public class SheetFlag extends ItemFlag {
-
+public class NuggetFlag extends ItemFlag {
     @Getter
-    private int pressTimes = 1;
+    private boolean requiresCompressing = false;
 
-    @Getter
-    public boolean needsTransitional = false;
-
-    public SheetFlag() {
-        super("%s_sheet");
+    public NuggetFlag() {
+        super("%s_nugget");
     }
 
-    public SheetFlag(String existingNamespace) {
-        super("%s_sheet", existingNamespace);
+    public NuggetFlag(String existingNamespace) {
+        super("%s_nugget", existingNamespace);
     }
 
-    public SheetFlag pressTimes(int pressTimes) {
-        this.pressTimes = pressTimes;
-        this.needsTransitional = pressTimes > 1;
+    public NuggetFlag requiresCompressing() {
+        this.requiresCompressing = true;
         return this;
     }
 
@@ -46,14 +39,11 @@ public class SheetFlag extends ItemFlag {
 
     @Override
     public FlagKey<?> getKey() {
-        return FlagKey.SHEET;
+        return FlagKey.NUGGET;
     }
 
     @Override
     public void verifyFlag(MaterialFlags flags) {
-        if (needsTransitional) {
-            flags.ensureSet(FlagKey.SEMI_PRESSED_SHEET, true);
-        }
-        flags.ensureSet(FlagKey.INGOT, true);
+
     }
 }

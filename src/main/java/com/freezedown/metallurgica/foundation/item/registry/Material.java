@@ -98,7 +98,7 @@ public class Material implements Comparable<Material> {
 
     public <T extends IMaterialFlag> void setFlag(FlagKey<T> key, IMaterialFlag flag) {
         flags.setFlag(key, flag);
-        //flags.verify();
+        flags.verify();
     }
 
     public @NotNull MaterialFlags getFlags() {
@@ -106,9 +106,7 @@ public class Material implements Comparable<Material> {
     }
 
     public void verifyMaterial() {
-        //flags.verify();
-        //this.chemicalFormula = calculateChemicalFormula();
-        //calculateDecompositionType();
+        flags.verify();
     }
 
     @Override
@@ -168,75 +166,10 @@ public class Material implements Comparable<Material> {
             return this;
         }
 
-        public Builder addFlags(FlagKey<? extends IMaterialFlag>... flags) {
+        public Builder addFlags(IMaterialFlag... flags) {
             for (var flag : flags) {
-                this.flags.ensureSet(flag);
+                this.flags.setFlag(flag.getKey(), flag);
             }
-            return this;
-        }
-
-        public Builder fluid(double meltingPoint) {
-            FluidFlag fluidFlag = new FluidFlag(meltingPoint);
-            flags.setFlag(FlagKey.FLUID, fluidFlag);
-            return this;
-        }
-
-        public Builder ingot() {
-            flags.setFlag(FlagKey.INGOT, new IngotFlag());
-            return this;
-        }
-        public Builder ingot(String existingNamespace) {
-            flags.setFlag(FlagKey.INGOT, new IngotFlag(existingNamespace));
-            return this;
-        }
-        //public Builder ingot(NonNullFunction<Item.Properties, ? extends Item> factory) {
-        //    flags.setFlag(FlagKey.INGOT, new IngotFlag(factory));
-        //    return this;
-        //}
-        public Builder sheet() {
-            IngotFlag prop = flags.getFlag(FlagKey.INGOT);
-            if (prop == null) ingot();
-            flags.setFlag(FlagKey.SHEET, new SheetFlag());
-            return this;
-        }
-        public Builder sheet(String existingNamespace) {
-            IngotFlag prop = flags.getFlag(FlagKey.INGOT);
-            if (prop == null) ingot();
-            flags.setFlag(FlagKey.SHEET, new SheetFlag(existingNamespace));
-            return this;
-        }
-        public Builder sheet(int pressTimes) {
-            IngotFlag prop = flags.getFlag(FlagKey.INGOT);
-            if (prop == null) ingot();
-            if (pressTimes < 1) throw new IllegalArgumentException("Sheet cannot be pressed " + pressTimes + "time(s). Must be >1");
-            flags.setFlag(FlagKey.SHEET, new SheetFlag().pressTimes(pressTimes));
-            if (pressTimes > 1) {
-                flags.ensureSet(FlagKey.SEMI_PRESSED_SHEET);
-            }
-            return this;
-        }
-
-        public Builder wire() {
-            SheetFlag prop = flags.getFlag(FlagKey.SHEET);
-            if (prop == null) sheet();
-            flags.setFlag(FlagKey.WIRE, new WireFlag());
-            return this;
-        }
-
-        public Builder cable(double resistivity, Pair<int[],int[]> colors) {
-            WireFlag prop = flags.getFlag(FlagKey.WIRE);
-            if (prop == null) wire();
-            if (resistivity < 0) throw new IllegalArgumentException("Resistivity cannot be below 0");
-            flags.setFlag(FlagKey.CABLE, new CableFlag(resistivity, colors));
-            return this;
-        }
-
-        public Builder storageBlock() {
-            flags.setFlag(FlagKey.STORAGE_BLOCK, new StorageBlockFlag());
-            return this;
-        }
-        public Builder storageBlock(String existingNamespace) {
-            flags.setFlag(FlagKey.STORAGE_BLOCK, new StorageBlockFlag(existingNamespace));
             return this;
         }
 

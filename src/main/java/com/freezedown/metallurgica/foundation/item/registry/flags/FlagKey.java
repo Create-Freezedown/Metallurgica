@@ -17,7 +17,7 @@ public class FlagKey<T extends IMaterialFlag> {
     public static final FlagKey<DustFlag> DUST = create("dust", DustFlag.class);
     public static final FlagKey<GemFlag> GEM = create("gem", GemFlag.class);
 
-
+    public static final FlagKey<NuggetFlag> NUGGET = create("nugget", NuggetFlag.class);
     public static final FlagKey<SheetFlag> SHEET = create("sheet", SheetFlag.class);
     public static final FlagKey<SemiPressedSheetFlag> SEMI_PRESSED_SHEET = create("semi_pressed_sheet", SemiPressedSheetFlag.class);
     public static final FlagKey<WireFlag> WIRE = create("wire", WireFlag.class);
@@ -78,6 +78,11 @@ public class FlagKey<T extends IMaterialFlag> {
         @Override
         public void verifyFlag(MaterialFlags flags) {
             // no-op
+        }
+
+        @Override
+        public FlagKey<?> getKey() {
+            return FlagKey.EMPTY;
         }
     }
 }

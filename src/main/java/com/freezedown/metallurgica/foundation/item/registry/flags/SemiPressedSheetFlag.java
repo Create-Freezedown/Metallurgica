@@ -29,6 +29,11 @@ public class SemiPressedSheetFlag extends ItemFlag {
     }
 
     @Override
+    public FlagKey<?> getKey() {
+        return FlagKey.SEMI_PRESSED_SHEET;
+    }
+
+    @Override
     public void verifyFlag(MaterialFlags flags) {
         flags.ensureSet(FlagKey.SHEET, true);
     }

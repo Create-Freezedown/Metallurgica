@@ -52,6 +52,11 @@ public class StorageBlockFlag extends BlockFlag {
     }
 
     @Override
+    public FlagKey<?> getKey() {
+        return FlagKey.STORAGE_BLOCK;
+    }
+
+    @Override
     public void verifyFlag(MaterialFlags flags) {
 
     }

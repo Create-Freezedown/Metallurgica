@@ -27,6 +27,12 @@ public class DustFlag extends ItemFlag {
                 .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                 .register();
     }
+
+    @Override
+    public FlagKey<?> getKey() {
+        return FlagKey.DUST;
+    }
+
     @Override
     public void verifyFlag(MaterialFlags flags) {
 

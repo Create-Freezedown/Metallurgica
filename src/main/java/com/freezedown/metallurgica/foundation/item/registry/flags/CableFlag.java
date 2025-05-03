@@ -23,6 +23,11 @@ public class CableFlag implements IMaterialFlag {
     }
 
     @Override
+    public FlagKey<?> getKey() {
+        return FlagKey.CABLE;
+    }
+
+    @Override
     public void verifyFlag(MaterialFlags flags) {
         flags.ensureSet(FlagKey.WIRE, true);
     }

@@ -19,8 +19,10 @@ public class MetMaterialBlocks {
         for (Material material : MetMaterials.registeredMaterials.values()) {
             for (FlagKey<?> flagKey : FlagKey.getAllFlags()) {
                 var flag = material.getFlag(flagKey);
-                if (flag instanceof BlockFlag blockFlag) {
-                    registerMaterialBlock(blockFlag, material, registrate);
+                if (!material.noRegister(flagKey)) {
+                    if (flag instanceof BlockFlag blockFlag) {
+                        registerMaterialBlock(blockFlag, material, registrate);
+                    }
                 }
             }
         }

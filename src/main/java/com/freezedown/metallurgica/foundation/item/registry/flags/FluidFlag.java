@@ -19,6 +19,11 @@ public class FluidFlag implements IMaterialFlag {
         this.meltingPoint = meltingPoint;
     }
 
+    @Override
+    public FlagKey<?> getKey() {
+        return FlagKey.FLUID;
+    }
+
     @ApiStatus.Internal
     public void registerFluids(@NotNull Material material, @NotNull MetallurgicaRegistrate registrate) {
         List<FluidEntry<?>> fluidEntries = new ArrayList<>();
