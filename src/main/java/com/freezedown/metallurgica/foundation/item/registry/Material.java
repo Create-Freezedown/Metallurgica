@@ -1,13 +1,16 @@
 package com.freezedown.metallurgica.foundation.item.registry;
 
-import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.item.registry.flags.*;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
-import com.freezedown.metallurgica.infastructure.conductor.CableItem;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.infastructure.element.Element;
+import com.freezedown.metallurgica.infastructure.element.ElementEntry;
+import com.freezedown.metallurgica.infastructure.element.data.ElementData;
+import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
+import com.google.common.base.Preconditions;
 import com.tterrag.registrate.util.entry.FluidEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,13 +21,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 @Accessors(chain = true, fluent = true)
 public class Material implements Comparable<Material> {
@@ -69,7 +69,7 @@ public class Material implements Comparable<Material> {
             throw new IllegalArgumentException("Material " + getName() + " does not have a Fluid!");
         }
 
-        List<FluidEntry<?>> possibleFluids = MetallurgicaMaterials.materialFluids.get(this);
+        List<FluidEntry<?>> possibleFluids = MetMaterials.materialFluids.get(this);
         FluidEntry<?> toReturn = null;
         for (FluidEntry<?> fluidEntry : possibleFluids) {
             if (!fluidClass.isInstance(fluidEntry.get())) continue;
@@ -79,6 +79,13 @@ public class Material implements Comparable<Material> {
             throw new IllegalArgumentException("Material " + getName() + " does not have a Fluid of type specified: " + fluidClass.getName());
         }
         return toReturn.get();
+    }
+
+    public List<ElementData> getComposition() {
+        if (materialInfo.composition.isEmpty()) {
+            return List.of(new ElementData(MetallurgicaElements.NULL.getId(), 1));
+        }
+        return materialInfo.composition;
     }
 
     public <T extends IMaterialFlag> boolean hasFlag(FlagKey<T> key) {
@@ -120,6 +127,7 @@ public class Material implements Comparable<Material> {
     public static class Builder {
         private final MaterialInfo materialInfo;
         private final MaterialFlags flags;
+        private final List<ElementData> composition = new ArrayList<>();
 
         public Builder(ResourceLocation resourceLocation) {
             String name = resourceLocation.getPath();
@@ -137,6 +145,26 @@ public class Material implements Comparable<Material> {
 
         public Builder withNameAlternative(FlagKey<?> flag, String alternative) {
             materialInfo.nameAlternatives().put(flag, alternative);
+            return this;
+        }
+
+        public Builder element(ElementEntry<?> entry) {
+            materialInfo.composition().add(new ElementData(entry.getId(), 1));
+            return this;
+        }
+
+        public Builder composition(Object... components) {
+            Preconditions.checkArgument(
+                    components.length % 2 == 0,
+                    "Material Composition list malformed!");
+
+            for (int i = 0; i < components.length; i += 2) {
+                if (components[i] == null) {
+                    throw new IllegalArgumentException(
+                            "ElementData in Compositions List is null for Material " + this.materialInfo.resourceLocation);
+                }
+                materialInfo.composition().add(new ElementData(components[i] instanceof ElementEntry<?> entry ? entry.getId() : ((Element) components[i]).getId(), ((Number) components[i + 1]).intValue()));
+            }
             return this;
         }
 
@@ -228,8 +256,10 @@ public class Material implements Comparable<Material> {
             return this;
         }
 
-        public Material build() {
+        public Material buildAndRegister() {
             var mat = new Material(materialInfo, flags);
+            ResourceLocation key = new ResourceLocation(mat.getModid(), mat.getName());
+            MetMaterials.registeredMaterials.put(key, mat);
             return mat;
         }
     }
@@ -239,6 +269,8 @@ public class Material implements Comparable<Material> {
         private final ResourceLocation resourceLocation;
         @Getter
         public Map<FlagKey<?>, String> nameAlternatives = new HashMap<>();
+        @Getter
+        public List<ElementData> composition = new ArrayList<>();
 
         private MaterialInfo(ResourceLocation resourceLocation) {
             this.resourceLocation = resourceLocation;

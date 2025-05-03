@@ -8,15 +8,14 @@ import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FluidFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.StorageBlockFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 
 public class MetallurgicaModels {
 
     public static void registerMaterialAssets() {
-        for (MetallurgicaMaterials materials : MetallurgicaMaterials.values()) {
-            Material material = materials.getMaterial();
+        for (Material material : MetMaterials.registeredMaterials.values()) {
             material.getFlags().getFlagKeys().forEach(flagKey -> {
                 generateItemModels(material, flagKey);
                 generateMoltenBucket(material, flagKey);

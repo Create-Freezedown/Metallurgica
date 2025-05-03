@@ -7,20 +7,14 @@ import com.freezedown.metallurgica.foundation.data.recipe.create.MSequencedAssem
 import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.ponder.MetallurgicaPonderPlugin;
-import com.freezedown.metallurgica.foundation.ponder.scenes.MetallurgicaPonderScenes;
 import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
 import com.freezedown.metallurgica.registry.MetallurgicaBiomeTemperatures;
 import com.freezedown.metallurgica.registry.MetallurgicaCompositions;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.advancement.AllAdvancements;
-import com.simibubi.create.foundation.ponder.CreatePonderPlugin;
 import com.simibubi.create.foundation.utility.FilesHelper;
-import com.simibubi.create.infrastructure.data.CreateDatagen;
 import com.tterrag.registrate.providers.ProviderType;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.core.HolderLookup;
@@ -68,8 +62,7 @@ public class MetallurgicaDatagen {
             provideDefaultLang("interface", langConsumer);
             provideDefaultLang("tooltips", langConsumer);
             provideDefaultLang("materials", langConsumer);
-            for (MetallurgicaMaterials value : MetallurgicaMaterials.values()) {
-                Material material = value.getMaterial();
+            for (Material material : MetMaterials.registeredMaterials.values()) {
                 provider.add(material.getUnlocalizedName(), toEnglishName(material.getName()));
             }
             MetallurgicaRegistries.registeredElements.forEach((rl, e) -> {

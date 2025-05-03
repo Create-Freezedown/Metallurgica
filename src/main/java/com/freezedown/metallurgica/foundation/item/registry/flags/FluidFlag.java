@@ -4,7 +4,7 @@ import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +27,7 @@ public class FluidFlag implements IMaterialFlag {
             fluidEntries.add(fluid);
         }
         if (!fluidEntries.isEmpty())
-            MetallurgicaMaterials.materialFluids.put(material, fluidEntries);
+            MetMaterials.materialFluids.put(material, fluidEntries);
     }
 
     @Override

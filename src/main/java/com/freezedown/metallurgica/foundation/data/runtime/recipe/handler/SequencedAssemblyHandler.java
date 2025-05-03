@@ -37,6 +37,7 @@ public class SequencedAssemblyHandler {
             for (int i = 0; i < sheetFlag.getPressTimes(); i++) {
                 builder.addStep(PressingRecipe::new, rb -> rb);
             }
+            builder.loops(1);
             builder.addOutput(BuiltInRegistries.ITEM.get(outputId), 1);
             builder.build(provider);
         }

@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.registry;
 import com.drmangotea.tfmg.registry.TFMGBlocks;
 import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.infastructure.element.ElementEntry;
 import com.freezedown.metallurgica.infastructure.element.data.ElementData;
 import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
@@ -10,10 +11,11 @@ import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.Co
 import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionBuilder;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.AllItems;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -231,43 +233,43 @@ public class MetallurgicaCompositions implements DataProvider {
 
 
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.aluminumNugget.get(), ElementData.createComposition(builder().element(data(ALUMINUM))));
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.ALUMINUM.getMaterial(), SHEET), ElementData.createComposition(builder().element(data(COPPER))));
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.ALUMINUM, SHEET), ElementData.createComposition(builder().element(data(COPPER))));
         
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.BRONZE.getMaterial(), INGOT), ElementData.createComposition(
-                builder().element(data(COPPER, 7)),
-                builder().element(data(TIN, 2))));
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.BRONZE, INGOT), ElementData.createComposition(
+        //        builder().element(data(COPPER, 7)),
+        //        builder().element(data(TIN, 2))));
         //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.bronzeNugget.get(), ElementData.createComposition(data(COPPER, 7), data(TIN, 2)));
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.BRONZE.getMaterial(), SHEET), ElementData.createComposition(
-                builder().element(data(COPPER, 7)),
-                builder().element(data(TIN, 2))));
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.BRONZE, SHEET), ElementData.createComposition(
+        //        builder().element(data(COPPER, 7)),
+        //        builder().element(data(TIN, 2))));
         //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.bronzeDust.get(), ElementData.createComposition(data(COPPER, 7), data(TIN, 2)));
         
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.ARSENICAL_BRONZE.getMaterial(), INGOT), ElementData.createComposition(
-                builder().element(data(COPPER, 4)),
-                builder().element(data(TIN, 1)),
-                builder().element(data(ARSENIC, 3))));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.arsenicalBronzeNugget.get(), ElementData.createComposition(
-                builder().element(data(COPPER, 4)),
-                builder().element(data(TIN, 1)),
-                builder().element(data(ARSENIC, 3))));
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.ARSENICAL_BRONZE.getMaterial(), SHEET), ElementData.createComposition(
-                builder().element(data(COPPER, 4)),
-                builder().element(data(TIN, 1)),
-                builder().element(data(ARSENIC, 3))));
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.ARSENICAL_BRONZE, INGOT), ElementData.createComposition(
+        //        builder().element(data(COPPER, 4)),
+        //        builder().element(data(TIN, 1)),
+        //        builder().element(data(ARSENIC, 3))));
+        //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.arsenicalBronzeNugget.get(), ElementData.createComposition(
+        //        builder().element(data(COPPER, 4)),
+        //        builder().element(data(TIN, 1)),
+        //        builder().element(data(ARSENIC, 3))));
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.ARSENICAL_BRONZE, SHEET), ElementData.createComposition(
+        //        builder().element(data(COPPER, 4)),
+        //        builder().element(data(TIN, 1)),
+        //        builder().element(data(ARSENIC, 3))));
         
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.TITANIUM_ALUMINIDE.getMaterial(), INGOT), ElementData.createComposition(
-                builder().element(data(TITANIUM, 2)),
-                builder().element(data(ALUMINUM))));
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.TITANIUM_ALUMINIDE, INGOT), ElementData.createComposition(
+        //        builder().element(data(TITANIUM, 2)),
+        //        builder().element(data(ALUMINUM))));
         //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumAluminideNugget.get(), ElementData.createComposition(data(TITANIUM, 2), data(ALUMINUM)));
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.TITANIUM_ALUMINIDE.getMaterial(), SHEET), ElementData.createComposition(
-                builder().element(data(TITANIUM, 2)),
-                builder().element(data(ALUMINUM))));
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.TITANIUM_ALUMINIDE, SHEET), ElementData.createComposition(
+        //        builder().element(data(TITANIUM, 2)),
+        //        builder().element(data(ALUMINUM))));
         //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumAluminideDust.get(), ElementData.createComposition(data(TITANIUM, 2), data(ALUMINUM)));
         //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.semiPressedTitaniumAluminideSheet.get(), ElementData.createComposition(data(TITANIUM, 2), data(ALUMINUM)));
-        
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.TITANIUM.getMaterial(), INGOT), ElementData.createComposition(builder().element(data(TITANIUM))));
+
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.TITANIUM, INGOT), ElementData.createComposition(builder().element(data(TITANIUM))));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumNugget.get(), ElementData.createComposition(builder().element(data(TITANIUM))));
-        createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetallurgicaMaterials.TITANIUM.getMaterial(), SHEET), ElementData.createComposition(builder().element(data(TITANIUM))));
+        //createComposition(pFinishedCompositionConsumer, MaterialHelper.get(MetMaterials.TITANIUM, SHEET), ElementData.createComposition(builder().element(data(TITANIUM))));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.titaniumDust.get(), ElementData.createComposition(builder().element(data(TITANIUM))));
         //createComposition(pFinishedCompositionConsumer, MetallurgicaItems.semiPressedTitaniumSheet.get(), ElementData.createComposition(data(TITANIUM)));
         

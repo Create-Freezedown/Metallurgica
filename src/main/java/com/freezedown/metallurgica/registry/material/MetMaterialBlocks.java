@@ -5,12 +5,9 @@ import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.world.level.GameRules;
-import net.minecraftforge.event.RegisterGameTestsEvent;
 
 public class MetMaterialBlocks {
     public static ImmutableTable.Builder<BlockFlag, Material, BlockEntry<? extends MaterialBlock>> MATERIAL_BLOCKS_BUILDER = ImmutableTable
@@ -19,8 +16,7 @@ public class MetMaterialBlocks {
     public static Table<BlockFlag, Material, BlockEntry<? extends MaterialBlock>> MATERIAL_BLOCKS;
 
     public static void generateMaterialBlocks(MetallurgicaRegistrate registrate) {
-        for (MetallurgicaMaterials value : MetallurgicaMaterials.values()) {
-            Material material = value.getMaterial();
+        for (Material material : MetMaterials.registeredMaterials.values()) {
             for (FlagKey<?> flagKey : FlagKey.getAllFlags()) {
                 var flag = material.getFlag(flagKey);
                 if (flag instanceof BlockFlag blockFlag) {

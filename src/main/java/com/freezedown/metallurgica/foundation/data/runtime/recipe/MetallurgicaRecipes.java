@@ -2,7 +2,8 @@ package com.freezedown.metallurgica.foundation.data.runtime.recipe;
 
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.PressingRecipeHandler;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.SequencedAssemblyHandler;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -20,9 +21,9 @@ public class MetallurgicaRecipes {
             }
         };
 
-        for (MetallurgicaMaterials material : MetallurgicaMaterials.values()) {
-            PressingRecipeHandler.run(consumer, material.getMaterial());
-            SequencedAssemblyHandler.run(consumer, material.getMaterial());
+        for (Material material : MetMaterials.registeredMaterials.values()) {
+            PressingRecipeHandler.run(consumer, material);
+            SequencedAssemblyHandler.run(consumer, material);
         }
 
     }

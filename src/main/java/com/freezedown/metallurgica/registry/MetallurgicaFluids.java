@@ -5,7 +5,10 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.Acid;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid.*;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.util.TextUtil;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.tterrag.registrate.util.entry.FluidEntry;
@@ -122,7 +125,7 @@ public class MetallurgicaFluids {
                 //.bucket()
                 //.lang(ClientUtil.fromId(name)+" Bucket")
                 //.tag(AllTags.forgeItemTag("buckets/"+name))
-                //.build()
+                //.buildAndRegister()
                 .register();
     }
     
@@ -201,5 +204,11 @@ public class MetallurgicaFluids {
     }
 
     public static void register() {
+        for (Material material : MetMaterials.registeredMaterials.values()) {
+            var fluidFlag = material.getFlag(FlagKey.FLUID);
+            if (fluidFlag != null) {
+                fluidFlag.registerFluids(material, registrate);
+            }
+        }
     }
 }

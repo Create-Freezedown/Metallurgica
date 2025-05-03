@@ -47,6 +47,14 @@ public record ElementData(@Getter ResourceLocation element, @Getter int amount) 
         return subCompositions;
     }
 
+    public static List<SubComposition> createFromList(List<ElementData> elementDataList) {
+        List<SubComposition> subCompositions = new ArrayList<>();
+        for (ElementData elementData : elementDataList) {
+            subCompositions.add(new SubComposition(List.of(elementData), 1));
+        }
+        return subCompositions;
+    }
+
     public String getDisplay() {
         StringBuilder display = new StringBuilder(MetallurgicaRegistries.registeredElements.getOrDefault(element, MetallurgicaElements.NULL.get()).getSymbol());
         if (amount > 1)

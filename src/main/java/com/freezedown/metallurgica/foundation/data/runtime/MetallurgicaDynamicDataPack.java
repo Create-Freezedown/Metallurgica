@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.data.runtime;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
@@ -133,6 +134,12 @@ public class MetallurgicaDynamicDataPack implements PackResources {
         }
     }
 
+    public static void addComposition(FinishedComposition composition) {
+        JsonObject compositionJson = composition.serializeComposition();
+        ResourceLocation compositionId = composition.getId();
+        DATA.put(getCompositionLocation(compositionId), compositionJson.toString().getBytes(StandardCharsets.UTF_8));
+    }
+
     public static ResourceLocation getRecipeLocation(ResourceLocation recipeId) {
         return new ResourceLocation(recipeId.getNamespace(), String.join("", "recipes/", recipeId.getPath(), ".json"));
     }
@@ -145,5 +152,9 @@ public class MetallurgicaDynamicDataPack implements PackResources {
     public static ResourceLocation getTagLocation(String identifier, ResourceLocation tagId) {
         return new ResourceLocation(tagId.getNamespace(),
                 String.join("", "tags/", identifier, "/", tagId.getPath(), ".json"));
+    }
+
+    public static ResourceLocation getCompositionLocation(ResourceLocation compId) {
+        return new ResourceLocation(compId.getNamespace(), String.join("", "metallurgica_utilities/compositions/", compId.getPath(), ".json"));
     }
 }

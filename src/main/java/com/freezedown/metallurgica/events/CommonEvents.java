@@ -10,6 +10,7 @@ import com.freezedown.metallurgica.foundation.command.MetallurgicaCommands;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicDataPack;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaPackSource;
+import com.freezedown.metallurgica.foundation.data.runtime.composition.RuntimeCompositions;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.packs.PackType;
@@ -127,6 +128,7 @@ public class CommonEvents {
                 long startTime = System.currentTimeMillis();
                 MetallurgicaRecipes.recipeRemoval();
                 MetallurgicaRecipes.recipeAddition(MetallurgicaDynamicDataPack::addRecipe);
+                RuntimeCompositions.compositionAddition(MetallurgicaDynamicDataPack::addComposition);
                 Metallurgica.LOGGER.info("Metallurgica Data loading took {}ms", System.currentTimeMillis() - startTime);
                 event.addRepositorySource(new MetallurgicaPackSource("metallurgica:dynamic_data", event.getPackType(), Pack.Position.BOTTOM, MetallurgicaDynamicDataPack::new));
             }

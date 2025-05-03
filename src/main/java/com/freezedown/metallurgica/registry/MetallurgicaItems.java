@@ -10,6 +10,8 @@ import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.infastructure.conductor.CableItem;
+import com.freezedown.metallurgica.registry.material.MetMaterialBlocks;
+import com.freezedown.metallurgica.registry.material.MetMaterialItems;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
@@ -150,6 +152,9 @@ public class MetallurgicaItems {
             loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item??? Idk lol
 
     public static void register() {
-        MaterialHelper.registerMaterialItems();
+        MetMaterialItems.generateMaterialItems(registrate);
+        MetMaterialItems.MATERIAL_ITEMS = MetMaterialItems.MATERIAL_ITEMS_BUILDER.build();
+
+        MetMaterialItems.MATERIAL_ITEMS_BUILDER = null;
     }
 }
