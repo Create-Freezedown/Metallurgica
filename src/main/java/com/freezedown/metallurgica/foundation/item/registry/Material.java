@@ -189,10 +189,10 @@ public class Material implements Comparable<Material> {
             flags.setFlag(FlagKey.INGOT, new IngotFlag(existingNamespace));
             return this;
         }
-        public Builder ingot(NonNullFunction<Item.Properties, ? extends Item> factory) {
-            flags.setFlag(FlagKey.INGOT, new IngotFlag(factory));
-            return this;
-        }
+        //public Builder ingot(NonNullFunction<Item.Properties, ? extends Item> factory) {
+        //    flags.setFlag(FlagKey.INGOT, new IngotFlag(factory));
+        //    return this;
+        //}
         public Builder sheet() {
             IngotFlag prop = flags.getFlag(FlagKey.INGOT);
             if (prop == null) ingot();
@@ -215,27 +215,11 @@ public class Material implements Comparable<Material> {
             }
             return this;
         }
-        public Builder sheet(int pressTimes, NonNullFunction<Item.Properties, ? extends Item> factory) {
-            IngotFlag prop = flags.getFlag(FlagKey.INGOT);
-            if (prop == null) ingot();
-            if (pressTimes < 1) throw new IllegalArgumentException("Sheet cannot be pressed " + pressTimes + "time(s). Must be >1");
-            flags.setFlag(FlagKey.SHEET, new SheetFlag(factory).pressTimes(pressTimes));
-            if (pressTimes > 1) {
-                flags.ensureSet(FlagKey.SEMI_PRESSED_SHEET);
-            }
-            return this;
-        }
 
         public Builder wire() {
             SheetFlag prop = flags.getFlag(FlagKey.SHEET);
             if (prop == null) sheet();
             flags.setFlag(FlagKey.WIRE, new WireFlag());
-            return this;
-        }
-        public Builder wire(NonNullFunction<Item.Properties, ? extends Item> factory) {
-            SheetFlag prop = flags.getFlag(FlagKey.SHEET);
-            if (prop == null) sheet();
-            flags.setFlag(FlagKey.WIRE, new WireFlag(factory));
             return this;
         }
 

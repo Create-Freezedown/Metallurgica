@@ -42,9 +42,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import java.nio.file.Path;
 
 import static com.simibubi.create.foundation.item.TooltipHelper.styleFromColor;
 
@@ -154,6 +157,10 @@ public class Metallurgica
 
     public static boolean isClientSide() {
         return FMLEnvironment.dist.isClient();
+    }
+
+    public static Path getGameDir() {
+        return FMLPaths.GAMEDIR.get();
     }
 
     @Mod.EventBusSubscriber(modid = ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

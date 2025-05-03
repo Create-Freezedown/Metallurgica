@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags;
 
 import com.freezedown.metallurgica.foundation.block.MaterialBlock;
+import com.freezedown.metallurgica.foundation.block.MaterialBlockItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
@@ -44,7 +45,7 @@ public class StorageBlockFlag extends BlockFlag {
                     .transform(pickaxeOnly())
                     .setData(ProviderType.BLOCKSTATE, NonNullBiConsumer.noop())
                     .setData(ProviderType.LANG, NonNullBiConsumer.noop())
-                    .item()
+                    .item(MaterialBlockItem::create)
                     .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                     .build()
                     .register();

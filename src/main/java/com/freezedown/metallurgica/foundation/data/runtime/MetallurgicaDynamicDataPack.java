@@ -1,10 +1,12 @@
 package com.freezedown.metallurgica.foundation.data.runtime;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
@@ -17,6 +19,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.resources.IoSupplier;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +27,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -117,9 +123,32 @@ public class MetallurgicaDynamicDataPack implements PackResources {
 
     }
 
+    @ApiStatus.Internal
+    public static void writeJson(ResourceLocation id, @Nullable String subdir, Path parent, JsonElement json) {
+        try {
+            Path file;
+            if (subdir != null) {
+                file = parent.resolve(id.getNamespace()).resolve(subdir).resolve(id.getPath() + ".json"); // assume JSON
+            } else {
+                file = parent.resolve(id.getNamespace()).resolve(id.getPath()); // assume the file type is also appended
+                // if a full path is given.
+            }
+            Files.createDirectories(file.getParent());
+            try (OutputStream output = Files.newOutputStream(file)) {
+                output.write(json.toString().getBytes());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void addRecipe(FinishedRecipe recipe) {
         JsonObject recipeJson = recipe.serializeRecipe();
         ResourceLocation recipeId = recipe.getId();
+        Path parent = Metallurgica.getGameDir().resolve("metallurgica/dumped/data");
+        if (MetallurgicaConfigs.common().dev.dumpRecipes.get()) {
+            writeJson(recipeId, "recipes", parent, recipeJson);
+        }
         DATA.put(getRecipeLocation(recipeId), recipeJson.toString().getBytes(StandardCharsets.UTF_8));
         if (recipe.serializeAdvancement() != null) {
             JsonObject advancement = recipe.serializeAdvancement();
@@ -137,6 +166,10 @@ public class MetallurgicaDynamicDataPack implements PackResources {
     public static void addComposition(FinishedComposition composition) {
         JsonObject compositionJson = composition.serializeComposition();
         ResourceLocation compositionId = composition.getId();
+        Path parent = Metallurgica.getGameDir().resolve("metallurgica/dumped/data");
+        if (MetallurgicaConfigs.common().dev.dumpCompositions.get()) {
+            writeJson(compositionId, "compositions", parent, compositionJson);
+        }
         DATA.put(getCompositionLocation(compositionId), compositionJson.toString().getBytes(StandardCharsets.UTF_8));
     }
 

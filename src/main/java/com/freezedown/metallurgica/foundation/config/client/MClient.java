@@ -8,14 +8,18 @@ public class MClient extends ConfigBase {
     public final ConfigBool renderExcavationParticles = b(true, "renderExcavationParticles", Comments.renderExcavationParticles);
     public final ConfigBool appendTextToItems = b(true, "appendTextToItems", Comments.appendTextToItems);
 
-    public final ConfigBase.ConfigBool imAmerican = this.b(false, "imAmerican", Comments.imAmerican);
-    public final ConfigBase.ConfigBool whatAreTheseElements = this.b(false, "whatAreTheseElements", Comments.whatAreTheseElements);
+
 
     public final ConfigBase.ConfigGroup configButton = this.group(1, "configButton", Comments.configButton);;
     public final ConfigBase.ConfigInt mainMenuConfigButtonRow = this.i(2, 0, 4, "mainMenuConfigButtonRow", Comments.mainMenuConfigButtonRow);;
     public final ConfigBase.ConfigInt mainMenuConfigButtonOffsetX = this.i(4, Integer.MIN_VALUE, Integer.MAX_VALUE, "mainMenuConfigButtonOffsetX", Comments.mainMenuConfigButtonOffsetX);
     public final ConfigBase.ConfigInt ingameMenuConfigButtonRow = this.i(2, 0, 5, "ingameMenuConfigButtonRow", Comments.ingameMenuConfigButtonRow);
     public final ConfigBase.ConfigInt ingameMenuConfigButtonOffsetX = this.i(4, Integer.MIN_VALUE, Integer.MAX_VALUE, "ingameMenuConfigButtonOffsetX", Comments.ingameMenuConfigButtonOffsetX);
+
+    public final ConfigBase.ConfigGroup chemicalCompositions = this.group(1, "chemicalCompositions", "Chemical Compositions");
+    public final ConfigBase.ConfigInt tooltipColor = this.i(0xFFFFFF, "tooltipColor", "Color of the tooltip text for chemical compositions");
+    public final ConfigBase.ConfigBool imAmerican = this.b(false, "imAmerican", Comments.imAmerican);
+    public final ConfigBase.ConfigBool whatAreTheseElements = this.b(false, "whatAreTheseElements", Comments.whatAreTheseElements);
 
     @Override
     public String getName() {

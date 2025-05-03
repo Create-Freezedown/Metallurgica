@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.items.metals.MagnesiumItem;
 import com.freezedown.metallurgica.foundation.item.WireColours;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
@@ -109,7 +108,7 @@ public class MetalMaterials {
                 .fluid(180.5).buildAndRegister();
         MAGNESIUM = new Material.Builder(Metallurgica.asResource("magnesium"))
                 .element(MetallurgicaElements.MAGNESIUM)
-                .ingot(MagnesiumItem::createIngot)
+                .ingot()
                 .storageBlock()
                 .sheet()
                 .fluid(650.0).buildAndRegister();
