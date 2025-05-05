@@ -12,6 +12,7 @@ import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicRe
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaPackSource;
 import com.freezedown.metallurgica.foundation.data.runtime.composition.RuntimeCompositions;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
+import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
@@ -59,9 +60,10 @@ public class CommonEvents {
         );
         
         event.getServer().getAllLevels().forEach(
-                serverLevel -> serverLevel.getEntities().getAll().forEach(
-                        FluidEntityInteractionHandler::handleInteraction
-                )
+                serverLevel -> {
+                    serverLevel.getEntities().getAll().forEach(FluidEntityInteractionHandler::handleInteraction);
+                    TemperatureHandler.tick(serverLevel);
+                }
         );
     }
     
