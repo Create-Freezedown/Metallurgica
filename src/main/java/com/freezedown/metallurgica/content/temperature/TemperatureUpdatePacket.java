@@ -1,14 +1,21 @@
 package com.freezedown.metallurgica.content.temperature;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.networking.BlockEntityDataPacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TemperatureUpdatePacket extends BlockEntityDataPacket<SmartBlockEntity> {
+    @SideOnly(Side.CLIENT)
     private double temperature;
     
     public TemperatureUpdatePacket(BlockPos pos, double temperature) {
@@ -28,17 +35,27 @@ public class TemperatureUpdatePacket extends BlockEntityDataPacket<SmartBlockEnt
     
     @Override
     protected void handlePacket(SmartBlockEntity blockEntity) {
-        HandleClient.handle(this);
+        Level level = blockEntity.getLevel();
+        if(level instanceof ServerLevel) {
+            handleServer(this, (ServerLevel) level);
+        } else {
+            handleClient(this, (ClientLevel) level);
+        }
     }
     
     /** Safely runs client side only code in a method only called on client */
-    private static class HandleClient {
-        private static void handle(TemperatureUpdatePacket packet) {
-            assert Minecraft.getInstance().level != null;
-            BlockEntity te = Minecraft.getInstance().level.getBlockEntity(packet.pos);
-            if (te instanceof ITemperature) {
-                ((ITemperature) te).setTemperatureClient(packet.temperature);
-            }
+    @SideOnly(Side.CLIENT)
+    private static void handleClient(TemperatureUpdatePacket packet, ClientLevel level) {
+        BlockEntity te = Minecraft.getInstance().level.getBlockEntity(packet.pos);
+        if (te instanceof ITemperature) {
+            ((ITemperature) te).setTemperature(packet.temperature);
         }
+    }
+
+    /** Safely runs server side only code in a method only called on server */
+    @SideOnly(Side.SERVER)
+    private static void handleServer(TemperatureUpdatePacket packet, ServerLevel level) {
+        BlockEntity te = level.getBlockEntity(packet.pos);
+        TemperatureHandler.setBlockTemperature(level, packet.pos, packet.temperature);
     }
 }

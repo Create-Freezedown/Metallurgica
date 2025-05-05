@@ -12,8 +12,8 @@ public interface ITemperature {
     LevelAccessor getLevel();
     
     double getTemperature();
-    
-    void setTemperatureClient(double temperature);
+
+    void setTemperature(double temperature);
     
     void sendStuff();
     

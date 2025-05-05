@@ -1,16 +1,23 @@
 package com.freezedown.metallurgica.content.temperature;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.block_entity.IntelligentKineticBlockEntity;
+import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class KineticTemperatureBlockEntity extends IntelligentKineticBlockEntity implements ITemperature {
-    private double temperature;
+    ///ONLY USE ON CLIENT-SIDE
+    @SideOnly(Side.CLIENT)
+    private double temp;
     
     public KineticTemperatureBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
@@ -18,12 +25,32 @@ public class KineticTemperatureBlockEntity extends IntelligentKineticBlockEntity
     
     @Override
     public double getTemperature() {
-        return temperature;
+        if(this.level != null) {
+            if (this.level instanceof ServerLevel) {
+                return TemperatureHandler.TEMPERATURE_MAP
+                        .get(this.level)
+                        .get(this.getBlockPos())
+                        .getTemperature();
+            } else {
+                return temp;
+            }
+        } else {
+            Metallurgica.LOGGER.error("TEMPERATURE SYSTEM: level is null");
+            return 0.0;
+        }
     }
     
     @Override
-    public void setTemperatureClient(double temperature) {
-        this.temperature = temperature;
+    public void setTemperature(double temperature) {
+        if(this.level != null) {
+            if (this.level instanceof ServerLevel) {
+                TemperatureHandler.setBlockTemperature((ServerLevel) this.level, this.getBlockPos(), temperature);
+            } else {
+                temp = temperature;
+            }
+        } else {
+            Metallurgica.LOGGER.error("TEMPERATURE SYSTEM: level is null");
+        }
     }
     
     @Override
@@ -33,27 +60,29 @@ public class KineticTemperatureBlockEntity extends IntelligentKineticBlockEntity
     }
     
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-    
-    }
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
     
     public void decreaseTemperature(double amount) {
-        temperature -= amount;
-    }
-    
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
+        setTemperature(getTemperature() - amount);
     }
     
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
-        compound.putDouble("temperature", temperature);
+        if(clientPacket) {
+            compound.putDouble("temperature", temp);
+        } else {
+            compound.putDouble("temperature", getTemperature());
+        }
     }
     
     @Override
     public void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
-        temperature = compound.getDouble("temperature");
+        if(this.level instanceof ServerLevel) {
+            TemperatureHandler.setBlockTemperature((ServerLevel) this.level, this.getBlockPos(), compound.getDouble("temperature"));
+        } else {
+            temp = compound.getDouble("temperature");
+        }
     }
 }

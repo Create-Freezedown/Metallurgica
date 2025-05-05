@@ -6,12 +6,15 @@ import com.freezedown.metallurgica.foundation.temperature.TempUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import oshi.util.tuples.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+@SideOnly(Side.SERVER)
 public class TemperatureHandler {
     //                   level           pos            data
     public static Map<ServerLevel, Map<BlockPos, BlockTemperatureData>> TEMPERATURE_MAP;
@@ -29,6 +32,17 @@ public class TemperatureHandler {
             //TODO: add table for difusivity based on material
             double temp = TempUtils.getTemperature(pos, level); //TODO: replace with better calcs
             map.put(pos, new BlockTemperatureData(temp, 0.001));
+        }
+    }
+
+    public static void setBlockTemperature(ServerLevel level, BlockPos pos, double temperature) {
+        Map<BlockPos, BlockTemperatureData> map = TEMPERATURE_MAP.get(level);
+        if(map.containsKey(pos)) {
+            map.get(pos).temperature = temperature;
+        } else {
+            // level.getBlockEntity(pos).getBlockState().getBlock(); <- key for table
+            //TODO: add table for difusivity based on material
+            map.put(pos, new BlockTemperatureData(temperature, 0.001));
         }
     }
 
@@ -116,6 +130,8 @@ public class TemperatureHandler {
             this.isLoaded = false;
         }
 
-
+        public double getTemperature() {
+            return temperature;
+        }
     }
 }
