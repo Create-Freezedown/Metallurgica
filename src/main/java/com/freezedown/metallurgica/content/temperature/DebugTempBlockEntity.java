@@ -53,10 +53,7 @@ public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggl
     public double getTemperature() {
         if(this.level != null) {
             if (this.level instanceof ServerLevel) {
-                return TemperatureHandler.TEMPERATURE_MAP
-                        .get(this.level)
-                        .get(this.getBlockPos())
-                        .getTemperature();
+                return TemperatureHandler.getBlockTemperature((ServerLevel) this.level, this.getBlockPos());
             } else {
                 return temp;
             }

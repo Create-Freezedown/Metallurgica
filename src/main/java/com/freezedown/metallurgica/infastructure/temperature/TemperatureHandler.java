@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.temperature.BlockStateTemperature;
 import com.freezedown.metallurgica.foundation.temperature.TempUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,22 +18,21 @@ import java.util.logging.Level;
 @SideOnly(Side.SERVER)
 public class TemperatureHandler {
     //                   level           pos            data
-    public static Map<ServerLevel, Map<BlockPos, BlockTemperatureData>> TEMPERATURE_MAP;
+    public static Map<ServerLevel, Map<BlockPos, BlockTemperatureData>> TEMPERATURE_MAP = new HashMap<>();
 
-    public static void generateMap() {
-
+    public static void generateMap(MinecraftServer server) {
+        server.getAllLevels().forEach(level -> TEMPERATURE_MAP.put(level, new HashMap<>()));
     }
 
-    public static void addBlock(ServerLevel level, BlockPos pos) {
+    public static BlockTemperatureData addBlock(ServerLevel level, BlockPos pos) {
         Map<BlockPos, BlockTemperatureData> map = TEMPERATURE_MAP.get(level);
-        if(map.containsKey(pos)) {
-            Metallurgica.LOGGER.error("TEMPERATURE SYSTEM: why are existing blocks being added???");
-        } else {
-            // level.getBlockEntity(pos).getBlockState().getBlock(); <- key for table
-            //TODO: add table for difusivity based on material
-            double temp = TempUtils.getTemperature(pos, level); //TODO: replace with better calcs
-            map.put(pos, new BlockTemperatureData(temp, 0.001));
-        }
+
+        // level.getBlockEntity(pos).getBlockState().getBlock(); <- key for table
+        //TODO: add table for difusivity based on material
+        double temp = TempUtils.getTemperature(pos, level); //TODO: replace with better calcs
+        BlockTemperatureData data = new BlockTemperatureData(temp, 0.001);
+        map.put(pos, data);
+        return data;
     }
 
     public static void setBlockTemperature(ServerLevel level, BlockPos pos, double temperature) {
@@ -43,6 +43,15 @@ public class TemperatureHandler {
             // level.getBlockEntity(pos).getBlockState().getBlock(); <- key for table
             //TODO: add table for difusivity based on material
             map.put(pos, new BlockTemperatureData(temperature, 0.001));
+        }
+    }
+
+    public static double getBlockTemperature(ServerLevel level, BlockPos pos) {
+        Map<BlockPos, BlockTemperatureData> map = TEMPERATURE_MAP.get(level);
+        if(map.containsKey(pos)) {
+            return map.get(pos).getTemperature();
+        } else {
+            return addBlock(level, pos).getTemperature();
         }
     }
 
@@ -112,9 +121,9 @@ public class TemperatureHandler {
     }
 
     public static class BlockTemperatureData {
-        boolean isLoaded;
-        double temperature;
-        double diffusivity;
+        private boolean isLoaded;
+        private double temperature;
+        private double diffusivity;
 
         public BlockTemperatureData(double v, double d) {
             isLoaded = true;

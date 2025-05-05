@@ -9,6 +9,7 @@ import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorStats;
+import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
 import com.freezedown.metallurgica.registry.*;
 import com.freezedown.metallurgica.registry.material.AlloyMaterials;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
@@ -131,8 +132,7 @@ public class Metallurgica
         MetMaterials.register(modEventBus);
     }
     
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("HELLO FROM COMMON SETUP");
     }
     
@@ -140,6 +140,7 @@ public class Metallurgica
     public void onServerStart(ServerAboutToStartEvent event)
     {
         LOGGER.info("Thanks for using Metallurgica! Expect a severe lack of ores in your world :3");
+//        TemperatureHandler.generateMap();
         //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
         //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }
@@ -147,6 +148,7 @@ public class Metallurgica
     public void onServerStarting(ServerStartingEvent event)
     {
         LOGGER.info("Double checking our cool little ore frequency thingy :3");
+        TemperatureHandler.generateMap(event.getServer());
         //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
         //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }
