@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.content.temperature;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.block_entity.IntelligentKineticBlockEntity;
-import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -27,10 +27,7 @@ public class KineticTemperatureBlockEntity extends IntelligentKineticBlockEntity
     public double getTemperature() {
         if(this.level != null) {
             if (this.level instanceof ServerLevel) {
-                return TemperatureHandler.TEMPERATURE_MAP
-                        .get(this.level)
-                        .get(this.getBlockPos())
-                        .getTemperature();
+                return TemperatureHandler.getHandler((ServerLevel) this.level).getBlockTemperature(this.getBlockPos());
             } else {
                 return temp;
             }
@@ -44,7 +41,7 @@ public class KineticTemperatureBlockEntity extends IntelligentKineticBlockEntity
     public void setTemperature(double temperature) {
         if(this.level != null) {
             if (this.level instanceof ServerLevel) {
-                TemperatureHandler.setBlockTemperature((ServerLevel) this.level, this.getBlockPos(), temperature);
+                TemperatureHandler.getHandler((ServerLevel) this.level).setBlockTemperature(this.getBlockPos(), temperature);
             } else {
                 temp = temperature;
             }
@@ -80,7 +77,7 @@ public class KineticTemperatureBlockEntity extends IntelligentKineticBlockEntity
     public void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         if(this.level instanceof ServerLevel) {
-            TemperatureHandler.setBlockTemperature((ServerLevel) this.level, this.getBlockPos(), compound.getDouble("temperature"));
+            TemperatureHandler.getHandler((ServerLevel) this.level).setBlockTemperature(this.getBlockPos(), compound.getDouble("temperature"));
         } else {
             temp = compound.getDouble("temperature");
         }

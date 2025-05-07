@@ -1,10 +1,9 @@
-package com.freezedown.metallurgica.content.temperature;
+package com.freezedown.metallurgica.foundation.temperature;
 
-import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
+import com.freezedown.metallurgica.content.temperature.ITemperature;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.networking.BlockEntityDataPacket;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -46,7 +45,7 @@ public class TemperatureUpdatePacket extends BlockEntityDataPacket<SmartBlockEnt
     /** Safely runs client side only code in a method only called on client */
     @SideOnly(Side.CLIENT)
     private static void handleClient(TemperatureUpdatePacket packet, ClientLevel level) {
-        BlockEntity te = Minecraft.getInstance().level.getBlockEntity(packet.pos);
+        BlockEntity te = level.getBlockEntity(packet.pos);
         if (te instanceof ITemperature) {
             ((ITemperature) te).setTemperature(packet.temperature);
         }
@@ -56,6 +55,6 @@ public class TemperatureUpdatePacket extends BlockEntityDataPacket<SmartBlockEnt
     @SideOnly(Side.SERVER)
     private static void handleServer(TemperatureUpdatePacket packet, ServerLevel level) {
         BlockEntity te = level.getBlockEntity(packet.pos);
-        TemperatureHandler.setBlockTemperature(level, packet.pos, packet.temperature);
+        TemperatureHandler.getHandler(level).setBlockTemperature(packet.pos, packet.temperature);
     }
 }

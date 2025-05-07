@@ -109,7 +109,10 @@ public class TempUtils {
     }
     
     public static double getTemperature(BlockPos pos, Level level) {
-        return blendBiomeTemperatures(pos, level);
+        Biome biome = level.getBiome(pos).get();
+        double temperature = blendBiomeTemperatures(pos, level);
+        double humidity = biome.getModifiedClimateSettings().downfall();
+        return ((getBiomeTemperature(temperature, humidity)) * getAltitudeModifier(pos, level)) * getPrecipitationModifier(pos, level);
     }
     
     public static double getPrecipitationModifier(BlockPos pos, Level level) {
@@ -124,25 +127,16 @@ public class TempUtils {
         }
     }
     
-    public static double getCurrentTemperature(BlockPos.MutableBlockPos pos, Level level) {
-        Biome biome = level.getBiome(pos).get();
-        ResourceLocation biomeLoc = level.getBiome(pos).unwrapKey().get().location();
-        double temperature = blendBiomeTemperatures(pos, level);
-        double humidity = biome.getModifiedClimateSettings().downfall();
-        Metallurgica.LOGGER.debug("Temperature: {}, Humidity: {}", temperature, humidity);
-        return ((getBiomeTemperature(temperature, humidity)) * getAltitudeModifier(pos, level)) * getPrecipitationModifier(pos, level);
-    }
-    
-    @SubscribeEvent
-    public void updateTemperature(LivingEvent.LivingTickEvent event) {
-        LivingEntity entity = event.getEntity();
-        //if (entity.level.isClientSide)
-        //    entity.getPersistentData()
-        //            .remove("CurrentTemperature");
-        if (entity.level().isClientSide)
-            entity.getPersistentData()
-                    .putDouble("CurrentTemperature",
-                            getCurrentTemperature(entity.blockPosition().mutable(), entity.level()));
-        Metallurgica.LOGGER.debug("Temperature updated t0 {}", entity.getPersistentData().getDouble("CurrentTemperature"));
-    }
+//    @SubscribeEvent
+//    public void updateTemperature(LivingEvent.LivingTickEvent event) {
+//        LivingEntity entity = event.getEntity();
+//        //if (entity.level.isClientSide)
+//        //    entity.getPersistentData()
+//        //            .remove("CurrentTemperature");
+//        if (entity.level().isClientSide)
+//            entity.getPersistentData()
+//                    .putDouble("CurrentTemperature",
+//                            getCurrentTemperature(entity.blockPosition().mutable(), entity.level()));
+//        Metallurgica.LOGGER.debug("Temperature updated t0 {}", entity.getPersistentData().getDouble("CurrentTemperature"));
+//    }
 }

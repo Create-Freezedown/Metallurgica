@@ -12,16 +12,22 @@ import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicRe
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaPackSource;
 import com.freezedown.metallurgica.foundation.data.runtime.composition.RuntimeCompositions;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
-import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -32,41 +38,69 @@ import java.util.List;
 
 @EventBusSubscriber
 public class CommonEvents {
-    
+
+    @SubscribeEvent
+    public static void onChunkLoad(ChunkEvent.Load event) {
+        Level level = (Level) event.getLevel();
+        if (level.isClientSide()) return; // skip client side
+
+        ChunkAccess chunk = event.getChunk();
+
+        Metallurgica.LOGGER.info("TEMP: loaded");
+
+        TemperatureHandler.getHandler((ServerLevel) level).load((LevelChunk) chunk);
+    }
+
+    @SubscribeEvent
+    public static void onChunkUnload(ChunkEvent.Unload event) {
+        Level level = (Level) event.getLevel();
+        if (level.isClientSide()) return; // skip client side
+
+        ChunkAccess chunk = event.getChunk();
+
+        Metallurgica.LOGGER.info("TEMP: unloaded");
+
+        TemperatureHandler.getHandler((ServerLevel) level).unload((LevelChunk) chunk);
+    }
+
     @SubscribeEvent
     public void serverTickEvent(net.minecraftforge.event.TickEvent.ServerTickEvent event) {
-        GasMovementHandler.handlers.forEach(
-                (pair, handler) -> {
-                    SimpleWeightedGraph<BlockPos, DefaultWeightedEdge> graph = handler.getGraph();
-                    List<DefaultWeightedEdge> removingEdges = new ArrayList<>();
-                    graph.edgeSet().forEach(edge -> {
-                        graph.setEdgeWeight(edge, graph.getEdgeWeight(edge) - 1d/(20 * 60));
-                        double weight = graph.getEdgeWeight(edge);
-                        if (weight <= 0)
-                            removingEdges.add(edge);
-                    });
-                    
-                    removingEdges.forEach(graph::removeEdge);
-                    
-                    List<BlockPos> removingVertexes = new ArrayList<>();
-                    
-                    graph.vertexSet().forEach(vertex -> {
-                        if (graph.edgesOf(vertex).isEmpty())
-                            removingVertexes.add(vertex);
-                    });
-                    
-                    removingVertexes.forEach(graph::removeVertex);
-                }
-        );
-        
-        event.getServer().getAllLevels().forEach(
-                serverLevel -> {
-                    serverLevel.getEntities().getAll().forEach(FluidEntityInteractionHandler::handleInteraction);
-                    TemperatureHandler.tick(serverLevel);
-                }
-        );
+//        GasMovementHandler.handlers.forEach(
+//                (pair, handler) -> {
+//                    SimpleWeightedGraph<BlockPos, DefaultWeightedEdge> graph = handler.getGraph();
+//                    List<DefaultWeightedEdge> removingEdges = new ArrayList<>();
+//                    graph.edgeSet().forEach(edge -> {
+//                        graph.setEdgeWeight(edge, graph.getEdgeWeight(edge) - 1d/(20 * 60));
+//                        double weight = graph.getEdgeWeight(edge);
+//                        if (weight <= 0)
+//                            removingEdges.add(edge);
+//                    });
+//
+//                    removingEdges.forEach(graph::removeEdge);
+//
+//                    List<BlockPos> removingVertexes = new ArrayList<>();
+//
+//                    graph.vertexSet().forEach(vertex -> {
+//                        if (graph.edgesOf(vertex).isEmpty())
+//                            removingVertexes.add(vertex);
+//                    });
+//
+//                    removingVertexes.forEach(graph::removeVertex);
+//                }
+//        );
+        if(event.phase == TickEvent.Phase.END) {
+            //                    serverLevel.getEntities().getAll().forEach(FluidEntityInteractionHandler::handleInteraction);
+            event.getServer().getAllLevels().forEach(level -> TemperatureHandler.getHandler(level).tick());
+        }
     }
-    
+
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            // Do something every client tick
+        }
+    }
+
     @SubscribeEvent
     public void playerTickEvent(TickEvent.PlayerTickEvent event) {
         Player player = event.player;

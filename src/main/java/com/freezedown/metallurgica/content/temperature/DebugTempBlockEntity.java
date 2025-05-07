@@ -3,7 +3,7 @@ package com.freezedown.metallurgica.content.temperature;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.temperature.TempUtils;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
-import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -43,7 +43,7 @@ public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggl
             return;
         assert level instanceof ServerLevel;
         syncToClient(worldPosition, level);
-        TemperatureHandler.setBlockTemperature((ServerLevel) level, worldPosition, TempUtils.getCurrentTemperature(worldPosition.mutable(), level));
+//        TemperatureHandler.setBlockTemperature((ServerLevel) level, worldPosition, TempUtils.getCurrentTemperature(worldPosition.mutable(), level));
     }
     
     @Override
@@ -53,7 +53,7 @@ public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggl
     public double getTemperature() {
         if(this.level != null) {
             if (this.level instanceof ServerLevel) {
-                return TemperatureHandler.getBlockTemperature((ServerLevel) this.level, this.getBlockPos());
+                return TemperatureHandler.getHandler((ServerLevel) this.level).getBlockTemperature(this.getBlockPos());
             } else {
                 return temp;
             }
@@ -67,7 +67,7 @@ public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggl
     public void setTemperature(double temperature) {
         if(this.level != null) {
             if (this.level instanceof ServerLevel) {
-                TemperatureHandler.setBlockTemperature((ServerLevel) this.level, this.getBlockPos(), temperature);
+                TemperatureHandler.getHandler((ServerLevel) this.level).setBlockTemperature(this.getBlockPos(), temperature);
             } else {
                 temp = temperature;
             }
@@ -86,7 +86,7 @@ public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggl
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         if(this.level instanceof ServerLevel) {
-            TemperatureHandler.setBlockTemperature((ServerLevel) this.level, this.getBlockPos(), compound.getDouble("temperature"));
+            TemperatureHandler.getHandler((ServerLevel) this.level).setBlockTemperature(this.getBlockPos(), compound.getDouble("temperature"));
         } else {
             temp = compound.getDouble("temperature");
         }

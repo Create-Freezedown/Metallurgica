@@ -2,6 +2,7 @@ package com.freezedown.metallurgica;
 
 import com.freezedown.metallurgica.compat.cbc.BigCannonsCompat;
 import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
+import com.freezedown.metallurgica.events.CommonEvents;
 import com.freezedown.metallurgica.experimental.ExperimentalEvents;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
@@ -9,7 +10,7 @@ import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorStats;
-import com.freezedown.metallurgica.infastructure.temperature.TemperatureHandler;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.freezedown.metallurgica.registry.*;
 import com.freezedown.metallurgica.registry.material.AlloyMaterials;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
@@ -31,6 +32,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -106,9 +108,9 @@ public class Metallurgica
         MetallurgicaEntityTypes.register();
 
         MetallurgicaConfigs.register(modLoadingContext);
-        
-        EventHandler commonHandler = new EventHandler();
-        MinecraftForge.EVENT_BUS.register(commonHandler);
+
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(new CommonEvents());
         
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(Metallurgica::init);
@@ -140,7 +142,7 @@ public class Metallurgica
     public void onServerStart(ServerAboutToStartEvent event)
     {
         LOGGER.info("Thanks for using Metallurgica! Expect a severe lack of ores in your world :3");
-//        TemperatureHandler.generateMap();
+        TemperatureHandler.generateMap(event.getServer());
         //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
         //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }
@@ -148,7 +150,6 @@ public class Metallurgica
     public void onServerStarting(ServerStartingEvent event)
     {
         LOGGER.info("Double checking our cool little ore frequency thingy :3");
-        TemperatureHandler.generateMap(event.getServer());
         //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
         //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }

@@ -1,7 +1,6 @@
-package com.freezedown.metallurgica.foundation.temperature;
+package com.freezedown.metallurgica.foundation.temperature.client;
 
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;

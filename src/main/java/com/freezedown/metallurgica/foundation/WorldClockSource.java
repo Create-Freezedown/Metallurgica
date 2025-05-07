@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.foundation.temperature;
+package com.freezedown.metallurgica.foundation;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
