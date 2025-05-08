@@ -7,6 +7,7 @@ import com.freezedown.metallurgica.experimental.exposure_effects.ExposureEffect;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureMinerals;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureUtil;
 import com.freezedown.metallurgica.foundation.command.MetallurgicaCommands;
+import com.freezedown.metallurgica.foundation.config.common.subcat.MWorldGen;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicDataPack;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaPackSource;
@@ -20,9 +21,12 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -34,21 +38,35 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @EventBusSubscriber
 public class CommonEvents {
+    private static final Set<ChunkPos> LOADED_CHUNKS =
+            Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+    public static Set<ChunkPos> getLoadedChunkPositions() {
+        return Collections.unmodifiableSet(LOADED_CHUNKS);
+    }
 
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load event) {
         Level level = (Level) event.getLevel();
         if (level.isClientSide()) return; // skip client side
 
-        ChunkAccess chunk = event.getChunk();
+        LevelChunk chunk = (LevelChunk) event.getChunk();
 
-        Metallurgica.LOGGER.info("TEMP: loaded");
+        if(chunk.getStatus() == ChunkStatus.FULL) {
+            if(TemperatureHandler.chunkIsntGenerated(chunk)) {
+                Metallurgica.LOGGER.info("generated{}", chunk.getPos());
+                TemperatureHandler.generateChunk(chunk);
+            }
 
-        TemperatureHandler.getHandler((ServerLevel) level).load((LevelChunk) chunk);
+            LOADED_CHUNKS.add(chunk.getPos());
+        }
     }
 
     @SubscribeEvent
@@ -58,9 +76,7 @@ public class CommonEvents {
 
         ChunkAccess chunk = event.getChunk();
 
-        Metallurgica.LOGGER.info("TEMP: unloaded");
-
-        TemperatureHandler.getHandler((ServerLevel) level).unload((LevelChunk) chunk);
+        LOADED_CHUNKS.remove(chunk.getPos());
     }
 
     @SubscribeEvent
