@@ -14,7 +14,9 @@ import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaPackSourc
 import com.freezedown.metallurgica.foundation.data.runtime.composition.RuntimeCompositions;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
 import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.FullChunkStatus;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
@@ -34,6 +36,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.apache.commons.compress.utils.Sets;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
@@ -45,13 +48,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @EventBusSubscriber
 public class CommonEvents {
-    private static final Set<ChunkPos> LOADED_CHUNKS =
-            Collections.newSetFromMap(new ConcurrentHashMap<>());
-
-    public static Set<ChunkPos> getLoadedChunkPositions() {
-        return Collections.unmodifiableSet(LOADED_CHUNKS);
-    }
-
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load event) {
         Level level = (Level) event.getLevel();
@@ -59,13 +55,9 @@ public class CommonEvents {
 
         LevelChunk chunk = (LevelChunk) event.getChunk();
 
-        if(chunk.getStatus() == ChunkStatus.FULL) {
-            if(TemperatureHandler.chunkIsntGenerated(chunk)) {
-                Metallurgica.LOGGER.info("generated{}", chunk.getPos());
-                TemperatureHandler.generateChunk(chunk);
-            }
+        if(chunk.getFullStatus() == FullChunkStatus.BLOCK_TICKING) {
 
-            LOADED_CHUNKS.add(chunk.getPos());
+
         }
     }
 
@@ -76,7 +68,9 @@ public class CommonEvents {
 
         ChunkAccess chunk = event.getChunk();
 
-        LOADED_CHUNKS.remove(chunk.getPos());
+        if(chunk.getStatus() == ChunkStatus.FULL) {
+            LOADED_CHUNKS.remove(chunk.getPos());
+        }
     }
 
     @SubscribeEvent
@@ -106,7 +100,10 @@ public class CommonEvents {
 //        );
         if(event.phase == TickEvent.Phase.END) {
             //                    serverLevel.getEntities().getAll().forEach(FluidEntityInteractionHandler::handleInteraction);
-            event.getServer().getAllLevels().forEach(level -> TemperatureHandler.getHandler(level).tick());
+//            event.getServer().getAllLevels().forEach(level -> TemperatureHandler.getHandler(level).tick());
+            for(ChunkPos pos : getLoadedChunkPositions()) {
+                event.getServer().getAllLevels()
+            }
         }
     }
 

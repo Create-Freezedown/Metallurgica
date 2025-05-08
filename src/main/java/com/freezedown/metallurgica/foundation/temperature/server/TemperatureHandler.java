@@ -10,8 +10,11 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @SideOnly(Side.SERVER)
 public class TemperatureHandler {
@@ -20,6 +23,11 @@ public class TemperatureHandler {
 
     private final TemperatureMap map;
     private final ServerLevel level;
+    private final Set<ChunkPos> loaded = Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+    public Set<ChunkPos> getLoadedChunkPositions() {
+        return Collections.unmodifiableSet(loaded);
+    }
 
     public TemperatureHandler(ServerLevel l) {
         level = l;
@@ -35,8 +43,8 @@ public class TemperatureHandler {
         return TEMPERATURE_MAP.get(level);
     }
 
-    public static boolean chunkIsntGenerated(LevelChunk chunk) {
-        return getHandler((ServerLevel) chunk.getLevel()).map.getChunk(chunk.getPos()) == null;
+    public static boolean chunkIsGenerated(LevelChunk chunk) {
+        return getHandler((ServerLevel) chunk.getLevel()).map.getChunk(chunk.getPos()) != null;
     }
 
     public static void generateMap(MinecraftServer server) {
@@ -46,7 +54,10 @@ public class TemperatureHandler {
     }
 
     public static void generateChunk(LevelChunk chunk) {
-        getHandler((ServerLevel) chunk.getLevel()).map.generateChunk(chunk.getPos());
+        Metallurgica.LOGGER.info("generating{}", chunk.getPos());
+        TemperatureMap temperatureMap = getHandler((ServerLevel) chunk.getLevel()).map;
+        Metallurgica.LOGGER.info("got map");
+        temperatureMap.generateChunk(chunk.getPos());
     }
 
 //    public void addBlock(BlockPos pos) {
@@ -59,7 +70,10 @@ public class TemperatureHandler {
 //    }
 
     public void setBlockTemperature(BlockPos pos, double temperature) {
-        map.getBlock(pos).setTemperature(temperature);
+        BlockTemperatureData data = map.getBlock(pos);
+        if(data != null) {
+            data.setTemperature(temperature);
+        }
     }
 
     public double getBlockTemperature(BlockPos pos) {
@@ -67,7 +81,7 @@ public class TemperatureHandler {
     }
 
     public void tick() {
-        for(ChunkPos chunkPos : CommonEvents.getLoadedChunkPositions()) {
+        for(ChunkPos chunkPos : getLoadedChunkPositions()) {
             TemperatureMap.TemperatureChunk chunk = map.getChunk(chunkPos);
             int y = 0;
             for (BlockTemperatureData[][] temparrarr : chunk.data) {

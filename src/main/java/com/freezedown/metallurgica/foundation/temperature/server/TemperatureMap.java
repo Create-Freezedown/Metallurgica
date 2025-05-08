@@ -49,18 +49,36 @@ public class TemperatureMap {
             x = -x;
             if(z < 0) { // nn
                 z = -z;
-                return nnChunks.get(x).get(z);
+                return getChunkUnsafe(nnChunks, x, z);
             } else {    // np
-                return npChunks.get(x).get(z);
+                return getChunkUnsafe(npChunks, x, z);
             }
         } else {
             if(z < 0) { //pn
                 z = -z;
-                return pnChunks.get(x).get(z);
+                return getChunkUnsafe(pnChunks, x, z);
             } else {    //pp
-                return ppChunks.get(x).get(z);
+                return getChunkUnsafe(ppChunks, x, z);
             }
         }
+    }
+
+    public TemperatureChunk getChunkUnsafe(List<ArrayList<TemperatureChunk>> chunks, int x, int z) {
+        if(chunks.size() < x) {
+            for (int i = 0; i < x - chunks.size(); i++) {
+                chunks.add(new ArrayList<>(100));
+            }
+        }
+
+        ArrayList<TemperatureChunk> arr = chunks.get(x);
+        if(arr.size() < z) {
+            for (int j = 0; j < z - arr.size(); j++) {
+                arr.add(null);
+            }
+            chunks.set(x, arr);
+        }
+
+        return arr.get(z);
     }
 
     public BlockTemperatureData getBlock(int x, int y, int z) {
@@ -68,16 +86,16 @@ public class TemperatureMap {
             x = -x;
             if(z < 0) { // nn
                 z = -z;
-                return nnChunks.get(x).get(z).get(x, y, z);
+                return getChunkUnsafe(nnChunks, x, z).get(x, y, z);
             } else {    // np
-                return npChunks.get(x).get(z).get(x, y, z);
+                return getChunkUnsafe(npChunks, x, z).get(x, y, z);
             }
         } else {
             if(z < 0) { //pn
                 z = -z;
-                return pnChunks.get(x).get(z).get(x, y, z);
+                return getChunkUnsafe(pnChunks, x, z).get(x, y, z);
             } else {    //pp
-                return ppChunks.get(x).get(z).get(x, y, z);
+                return getChunkUnsafe(ppChunks, x, z).get(x, y, z);
             }
         }
     }
@@ -87,26 +105,15 @@ public class TemperatureMap {
         int y = pos.getY();
         int z = pos.getZ();
 
-        if(x < 0) {
-            x = -x;
-            if(z < 0) { // nn
-                z = -z;
-                return nnChunks.get(x).get(z).get(x, y, z);
-            } else {    // np
-                return npChunks.get(x).get(z).get(x, y, z);
-            }
-        } else {
-            if(z < 0) { //pn
-                z = -z;
-                return pnChunks.get(x).get(z).get(x, y, z);
-            } else {    //pp
-                return ppChunks.get(x).get(z).get(x, y, z);
-            }
-        }
+        return getBlock(x, y, z);
     }
 
     public void generateChunk(ChunkPos pos) {
-        getChunk(pos).generate(level.getChunk(pos.x, pos.z));
+        TemperatureChunk tChunk = getChunk(pos);
+        Metallurgica.LOGGER.info("got temp chunk");
+        LevelChunk lChunk = level.getChunk(pos.x, pos.z);
+        Metallurgica.LOGGER.info("got level chunk");
+        tChunk.generate(lChunk);
     }
 
     public static class TemperatureChunk {
@@ -125,7 +132,6 @@ public class TemperatureMap {
 
         public void generate(LevelChunk chunk) {
             for (int x = 0; x < 16; x++) {
-                Metallurgica.LOGGER.info("x");
                 for (int z = 0; z < 16; z++) {
                     for (int y = 0; y < max + min; y++) {
                         int s = (y >> 4) - (chunk.getMinBuildHeight() >> 4);
@@ -143,6 +149,7 @@ public class TemperatureMap {
                     }
                 }
             }
+            Metallurgica.LOGGER.info("generated");
         }
 
         public BlockTemperatureData get(int x, int y, int z) {

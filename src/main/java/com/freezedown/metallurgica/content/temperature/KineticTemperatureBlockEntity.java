@@ -18,36 +18,26 @@ public class KineticTemperatureBlockEntity extends IntelligentKineticBlockEntity
     ///ONLY USE ON CLIENT-SIDE
     @SideOnly(Side.CLIENT)
     private double temp;
+
+    @Override
+    public BlockPos getPos() {
+        return getBlockPos();
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void setTemp(double t) {
+        temp = t;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public double getTemp() {
+        return temp;
+    }
     
     public KineticTemperatureBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
-    }
-    
-    @Override
-    public double getTemperature() {
-        if(this.level != null) {
-            if (this.level instanceof ServerLevel) {
-                return TemperatureHandler.getHandler((ServerLevel) this.level).getBlockTemperature(this.getBlockPos());
-            } else {
-                return temp;
-            }
-        } else {
-            Metallurgica.LOGGER.error("TEMPERATURE SYSTEM: level is null");
-            return 0.0;
-        }
-    }
-    
-    @Override
-    public void setTemperature(double temperature) {
-        if(this.level != null) {
-            if (this.level instanceof ServerLevel) {
-                TemperatureHandler.getHandler((ServerLevel) this.level).setBlockTemperature(this.getBlockPos(), temperature);
-            } else {
-                temp = temperature;
-            }
-        } else {
-            Metallurgica.LOGGER.error("TEMPERATURE SYSTEM: level is null");
-        }
     }
     
     @Override
