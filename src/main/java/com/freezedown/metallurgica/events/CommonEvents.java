@@ -56,8 +56,8 @@ public class CommonEvents {
         LevelChunk chunk = (LevelChunk) event.getChunk();
 
         if(chunk.getFullStatus() == FullChunkStatus.BLOCK_TICKING) {
-
-
+            TemperatureHandler handler = TemperatureHandler.getHandler((ServerLevel) level);
+            handler.addLoadedChunk(chunk.getPos());
         }
     }
 
@@ -68,8 +68,9 @@ public class CommonEvents {
 
         ChunkAccess chunk = event.getChunk();
 
-        if(chunk.getStatus() == ChunkStatus.FULL) {
-            LOADED_CHUNKS.remove(chunk.getPos());
+        TemperatureHandler handler = TemperatureHandler.getHandler((ServerLevel) level);
+        if(handler.getLoadedChunkPositions().contains(chunk.getPos())) {
+            handler.removeLoadedChunk(chunk.getPos());
         }
     }
 
@@ -101,8 +102,14 @@ public class CommonEvents {
         if(event.phase == TickEvent.Phase.END) {
             //                    serverLevel.getEntities().getAll().forEach(FluidEntityInteractionHandler::handleInteraction);
 //            event.getServer().getAllLevels().forEach(level -> TemperatureHandler.getHandler(level).tick());
-            for(ChunkPos pos : getLoadedChunkPositions()) {
-                event.getServer().getAllLevels()
+            for(ServerLevel level : event.getServer().getAllLevels()) {
+                TemperatureHandler handler = TemperatureHandler.getHandler(level);
+                for(ChunkPos pos : handler.getLoadedChunkPositions()) {
+                    if(level.getChunk(pos.x, pos.z).getFullStatus() != FullChunkStatus.BLOCK_TICKING) {
+                        handler.removeLoadedChunk(pos);
+                    }
+                }
+//                handler.tick();
             }
         }
     }

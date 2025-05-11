@@ -29,6 +29,14 @@ public class TemperatureHandler {
         return Collections.unmodifiableSet(loaded);
     }
 
+    public void removeLoadedChunk(ChunkPos pos) {
+        loaded.add(pos);
+    }
+
+    public void addLoadedChunk(ChunkPos pos) {
+        loaded.remove(pos);
+    }
+
     public TemperatureHandler(ServerLevel l) {
         level = l;
         map = new TemperatureMap(l);
@@ -77,7 +85,11 @@ public class TemperatureHandler {
     }
 
     public double getBlockTemperature(BlockPos pos) {
-        return map.getBlock(pos).getTemperature();
+        BlockTemperatureData data = map.getBlock(pos);
+        if(data == null) {
+            return 0.0;
+        }
+        return data.getTemperature();
     }
 
     public void tick() {

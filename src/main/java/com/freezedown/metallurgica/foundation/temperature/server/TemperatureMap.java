@@ -64,40 +64,34 @@ public class TemperatureMap {
     }
 
     public TemperatureChunk getChunkUnsafe(List<ArrayList<TemperatureChunk>> chunks, int x, int z) {
-        if(chunks.size() < x) {
-            for (int i = 0; i < x - chunks.size(); i++) {
-                chunks.add(new ArrayList<>(100));
-            }
+        if(chunks.get(x).get(z) == null) {
+            TemperatureChunk newChunk = new TemperatureChunk(this.level);
+            newChunk.generate(this.level.getChunk(x, z));
+            chunks.get(x).set(z, newChunk);
+            return newChunk;
         }
-
-        ArrayList<TemperatureChunk> arr = chunks.get(x);
-        if(arr.size() < z) {
-            for (int j = 0; j < z - arr.size(); j++) {
-                arr.add(null);
-            }
-            chunks.set(x, arr);
-        }
-
-        return arr.get(z);
+        return chunks.get(x).get(z);
     }
 
     public BlockTemperatureData getBlock(int x, int y, int z) {
+        TemperatureChunk chunk;
         if(x < 0) {
             x = -x;
             if(z < 0) { // nn
                 z = -z;
-                return getChunkUnsafe(nnChunks, x, z).get(x, y, z);
+                chunk = getChunkUnsafe(nnChunks, Math.floorDiv(x, 16), Math.floorDiv(z, 16));
             } else {    // np
-                return getChunkUnsafe(npChunks, x, z).get(x, y, z);
+                chunk = getChunkUnsafe(npChunks, Math.floorDiv(x, 16), Math.floorDiv(z, 16));
             }
         } else {
             if(z < 0) { //pn
                 z = -z;
-                return getChunkUnsafe(pnChunks, x, z).get(x, y, z);
+                chunk = getChunkUnsafe(pnChunks, Math.floorDiv(x, 16), Math.floorDiv(z, 16));
             } else {    //pp
-                return getChunkUnsafe(ppChunks, x, z).get(x, y, z);
+                chunk = getChunkUnsafe(ppChunks, Math.floorDiv(x, 16), Math.floorDiv(z, 16));
             }
         }
+        return chunk.get(x, y, z);
     }
 
     public BlockTemperatureData getBlock(BlockPos pos) {
@@ -138,7 +132,8 @@ public class TemperatureMap {
 
                         LevelChunkSection[] sections = chunk.getSections();
 
-                        if(s <= 0 || s > sections.length) continue;
+                        if(s < 0) continue;
+                        if(s >= sections.length) continue;
 
                         LevelChunkSection levelchunksection = sections[s];
 
