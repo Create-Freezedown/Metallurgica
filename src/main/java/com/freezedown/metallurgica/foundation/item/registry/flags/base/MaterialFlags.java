@@ -92,4 +92,8 @@ public class MaterialFlags {
         return sb.toString();
     }
 
+    public Set<FlagKey<?>> getFlagKeys() {
+        return flagMap.keySet();
+    }
+
 }

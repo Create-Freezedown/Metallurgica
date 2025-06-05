@@ -10,7 +10,9 @@
     "metallurgica:sphalerite",
     "metallurgica:smithsonite",
     "metallurgica:rutile",
+    "metallurgica:potash",
     "metallurgica:cassiterite",
-    "metallurgica:fluorite"
+    "metallurgica:fluorite",
+    "metallurgica:cuprite"
   ]
 }

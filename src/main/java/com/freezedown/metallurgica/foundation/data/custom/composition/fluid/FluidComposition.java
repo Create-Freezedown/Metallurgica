@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.custom.composition.fluid;
 
-import com.freezedown.metallurgica.foundation.data.custom.composition.data.Element;
-import com.freezedown.metallurgica.foundation.data.custom.composition.data.SubComposition;
+import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;

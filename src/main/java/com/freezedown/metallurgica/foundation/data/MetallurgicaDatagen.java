@@ -5,19 +5,16 @@ import com.freezedown.metallurgica.foundation.data.advancement.MetallurgicaAdvan
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.freezedown.metallurgica.foundation.data.recipe.create.MSequencedAssemblyGen;
 import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.ponder.MetallurgicaPonderPlugin;
-import com.freezedown.metallurgica.foundation.ponder.scenes.MetallurgicaPonderScenes;
 import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
 import com.freezedown.metallurgica.registry.MetallurgicaBiomeTemperatures;
 import com.freezedown.metallurgica.registry.MetallurgicaCompositions;
-import com.freezedown.metallurgica.registry.MetallurgicaElements;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.advancement.AllAdvancements;
-import com.simibubi.create.foundation.ponder.CreatePonderPlugin;
 import com.simibubi.create.foundation.utility.FilesHelper;
-import com.simibubi.create.infrastructure.data.CreateDatagen;
 import com.tterrag.registrate.providers.ProviderType;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.core.HolderLookup;
@@ -29,6 +26,8 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
+
+import static com.freezedown.metallurgica.foundation.util.TextUtil.toEnglishName;
 
 public class MetallurgicaDatagen {
     public static void gatherData(GatherDataEvent event) {
@@ -62,8 +61,15 @@ public class MetallurgicaDatagen {
             BiConsumer<String, String> langConsumer = provider::add;
             provideDefaultLang("interface", langConsumer);
             provideDefaultLang("tooltips", langConsumer);
+            provideDefaultLang("materials", langConsumer);
+            for (Material material : MetMaterials.registeredMaterials.values()) {
+                provider.add(material.getUnlocalizedName(), toEnglishName(material.getName()));
+            }
+            MetallurgicaRegistries.registeredElements.forEach((rl, e) -> {
+                provider.add(e.getOrCreateDescriptionId(), toEnglishName(rl.getPath()));
+            });
             MetallurgicaAdvancements.provideLang(langConsumer);
-            MetallurgicaElements.provideElementLang(langConsumer);
+            //MetallurgicaElements.provideElementLang(langConsumer);
             MetallurgicaUnits.provideUnitLang(langConsumer);
             providePonderLang(langConsumer);
         });

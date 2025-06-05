@@ -27,10 +27,10 @@ public class OreEntry {
     @Nullable
     private final ItemEntry<MetallurgicaItem> rich;
 
-    public OreEntry(MetallurgicaRegistrate reg, String pName, boolean richb) {
+    public OreEntry(MetallurgicaRegistrate reg, String pName, boolean richb, boolean sideTop) {
         raw = reg.raw(pName);
         rubble = reg.simpleItem(pName + "_rubble", "material_rubble/" + pName, "material_rubble");
-        deposit = reg.depositBlock(pName + "_deposit", raw);
+        deposit = reg.depositBlock(pName + "_deposit", raw, sideTop);
         ResourceLocation id = new ResourceLocation(MOD.id, "deposit_replaceable/" + pName);
         tag = MOD.optionalDefault ? optionalTag(ForgeRegistries.BLOCKS, id) : BlockTags.create(id);
         stone = reg.mineralBlock(pName, tag, raw);

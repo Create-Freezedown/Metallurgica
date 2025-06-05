@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.events;
 
 
 import com.freezedown.metallurgica.content.metalworking.forging.hammer.RadialHammerHandler;
-import com.freezedown.metallurgica.foundation.temperature.TemperatureOverlay;
+import com.freezedown.metallurgica.foundation.temperature.client.TemperatureOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;

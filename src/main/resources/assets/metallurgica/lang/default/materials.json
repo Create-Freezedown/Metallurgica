@@ -1,0 +1,12 @@
+{
+  "materialflag.block": "Block of %s",
+  "materialflag.ingot": "%s Ingot",
+  "materialflag.nugget": "%s Nugget",
+  "materialflag.dust": "%s Dust",
+  "materialflag.gem": "%s",
+  "materialflag.sheet": "%s Sheet",
+  "materialflag.semi_pressed_sheet": "Semi-Pressed %s Sheet",
+  "materialflag.wire": "%s Wire",
+  "materialflag.cable": "%s Cable"
+
+}

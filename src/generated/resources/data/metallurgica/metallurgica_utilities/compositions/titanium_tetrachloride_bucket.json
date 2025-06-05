@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "titanium"
+          "element": "metallurgica:titanium"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 4,
-          "element": "chlorine"
+          "element": "metallurgica:chlorine"
         }
       ]
     }

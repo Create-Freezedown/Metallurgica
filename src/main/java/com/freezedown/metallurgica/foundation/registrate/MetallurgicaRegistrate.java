@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.foundation.registrate;
 
-import com.drmangotea.tfmg.blocks.electricity.polarizer.PolarizerBlockEntity;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.*;
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
@@ -10,9 +9,10 @@ import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.material.OreEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
-import com.freezedown.metallurgica.foundation.material.MetalEntry;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
+import com.freezedown.metallurgica.infastructure.element.Element;
+import com.freezedown.metallurgica.infastructure.element.ElementBuilder;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
@@ -28,6 +28,7 @@ import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.*;
@@ -106,13 +107,13 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     public FluidBuilder<FlowingGas.Flowing, CreateRegistrate> gas(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
-        return fluid(name, still, flow, TintedFluidType.create(color), FlowingGas.Flowing::new).source(FlowingGas.Source::new).block(GasBlock::new).build();
+        return fluid(name, still, flow, TransparentTintedFluidType.create(color), FlowingGas.Flowing::new).source(FlowingGas.Source::new).block(GasBlock::new).build();
     }
     
     public FluidBuilder<ReactiveGas.Flowing, CreateRegistrate> reactiveGas(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
-        return fluid(name, still, flow, TintedFluidType.create(color), ReactiveGas.Flowing::new).source(ReactiveGas.Source::new).block(GasBlock::new).build();
+        return fluid(name, still, flow, TransparentTintedFluidType.create(color), ReactiveGas.Flowing::new).source(ReactiveGas.Source::new).block(GasBlock::new).build();
     }
     
     
@@ -128,13 +129,13 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
     
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
-        return virtualFluid(name, still, flow, TintedFluidType.create(color), VirtualFluid::createSource, VirtualFluid::createFlowing);
+        return virtualFluid(name, still, flow, TransparentTintedFluidType.create(color), VirtualFluid::createSource, VirtualFluid::createFlowing);
     }
     
     public FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate> tintedFluid(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
-        return fluid(name, still, flow, TintedFluidType.create(color), ForgeFlowingFluid.Flowing::new);
+        return fluid(name, still, flow, TransparentTintedFluidType.create(color), ForgeFlowingFluid.Flowing::new);
     }
     
     public FluidBuilder<Acid, CreateRegistrate> acid(String name, int color, float acidity) {
@@ -155,8 +156,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .tag(MetallurgicaTags.modFluidTag("molten_metals"))
                 .bucket()
                 .tag(AllTags.forgeItemTag("buckets/"+name))
-                .model((p, b) -> b.withExistingParent(p.getName(), "item/generated")
-                        .texture("layer0", itemTexture))
+                .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                 .build()
                 .register();
     }
@@ -169,7 +169,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         if (acidity > 14 || acidity < 0) {
             throw new IllegalArgumentException("Acidity must be between 0 and 14 for " + name);
         }
-        return virtualFluid(name, still, flow, TintedFluidType.create(color), (p) -> Acid.createSource(p).acidity(acidity), (p) -> Acid.createFlowing(p).acidity(acidity));
+        return virtualFluid(name, still, flow, TransparentTintedFluidType.create(color), (p) -> Acid.createSource(p).acidity(acidity), (p) -> Acid.createFlowing(p).acidity(acidity));
     }
 
     //ITEM
@@ -179,6 +179,22 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
             builder.tag(AllTags.forgeItemTag(tag));
         }
         return builder.register();
+    }
+
+    public <T extends Element> ElementBuilder<T, MetallurgicaRegistrate> element(String symbol, NonNullFunction<Element.Properties, T> factory) {
+        return element((MetallurgicaRegistrate) self(), symbol, factory);
+    }
+
+    public <T extends Element> ElementBuilder<T, MetallurgicaRegistrate> element(String name, String symbol, NonNullFunction<Element.Properties, T> factory) {
+        return element((MetallurgicaRegistrate) self(), name, symbol, factory);
+    }
+
+    public <T extends Element, P> ElementBuilder<T, P> element(P parent, String symbol, NonNullFunction<Element.Properties, T> factory) {
+        return element(parent, currentName(), symbol, factory);
+    }
+
+    public <T extends Element, P> ElementBuilder<T, P> element(P parent, String name, String symbol, NonNullFunction<Element.Properties, T> factory) {
+        return entry(name, callback -> ElementBuilder.create(this, parent, name, symbol, callback, factory));
     }
 
     public <T extends Conductor> ConductorBuilder<T, MetallurgicaRegistrate> conductor(NonNullFunction<Conductor.Properties, T> factory) {
@@ -214,11 +230,11 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
     
     public OreEntry material(String name, boolean richb) {
-        return new OreEntry(this, name, richb);
+        return new OreEntry(this, name, richb, false);
     }
-    
-    public MetalEntry metal(String name, double meltingPoint, String element) {
-        return new MetalEntry(this, name, meltingPoint, element);
+
+    public OreEntry material(String name, boolean richb, boolean sideTop) {
+        return new OreEntry(this, name, richb, sideTop);
     }
     
 
@@ -314,10 +330,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
 
     //BLOCKS
-    public BlockEntry<MineralDepositBlock> depositBlock(
-            String name,
-            ItemEntry<MetallurgicaItem> mineral
-    ) {
+    public BlockEntry<MineralDepositBlock> depositBlock(String name, ItemEntry<MetallurgicaItem> mineral) {
         return this.block(name, MineralDepositBlock::new)
                 .transform(MBuilderTransformers.mineralDeposit())
                 .loot((lt, bl) -> lt.add(bl, lt.createSingleItemTable(Items.COBBLESTONE)
@@ -328,15 +341,23 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .register();
     }
 
-    public BlockEntry<Block> mineralBlock(
-            String name,
-            TagKey<Block> tag,
-            ItemEntry<MetallurgicaItem> mineral
-    ) {
+    public BlockEntry<MineralDepositBlock> depositBlock(String name, ItemEntry<MetallurgicaItem> mineral, boolean sideTop) {
+        if (!sideTop)
+            return depositBlock(name, mineral);
+        return this.block(name, MineralDepositBlock::new)
+                .transform(MBuilderTransformers.mineralDepositSideTop())
+                .loot((lt, bl) -> lt.add(bl, lt.createSingleItemTable(Items.COBBLESTONE)
+                        .withPool(lt.applyExplosionCondition(mineral.get(), LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(2.0f, 5.0f))
+                                .add(LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
+                .lang(autoLang(name))
+                .register();
+    }
+
+    public BlockEntry<Block> mineralBlock(String name, TagKey<Block> tag, ItemEntry<MetallurgicaItem> mineral) {
         return this.block(name + "_rich_stone", Block::new)
                 .transform(MBuilderTransformers.mineralStone(name))
-                .loot((lt, bl) -> lt.add(bl,
-                        RegistrateBlockLootTables.createSilkTouchDispatchTable(bl, lt.applyExplosionDecay(bl, LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
+                .loot((lt, bl) -> lt.add(bl, RegistrateBlockLootTables.createSilkTouchDispatchTable(bl, lt.applyExplosionDecay(bl, LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
                 .tag(tag)
                 .lang(autoLang(name + "_rich_stone"))
                 .register();

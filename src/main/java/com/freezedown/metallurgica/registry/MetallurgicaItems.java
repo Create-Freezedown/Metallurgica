@@ -4,18 +4,21 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.items.metals.MagnesiumItem;
 import com.freezedown.metallurgica.content.items.metals.MagnesiumOxideItem;
 import com.freezedown.metallurgica.content.items.sealed_storage.SealedBundleItem;
+import com.freezedown.metallurgica.content.items.temperature.ThermometerItem;
 import com.freezedown.metallurgica.content.metalworking.forging.hammer.ForgeHammerItem;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.infastructure.conductor.CableItem;
+import com.freezedown.metallurgica.registry.material.MetMaterialBlocks;
+import com.freezedown.metallurgica.registry.material.MetMaterialItems;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 
 public class MetallurgicaItems {
-    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);;
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
     
     private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(String name) {
         return registrate.item(name, SequencedAssemblyItem::new)
@@ -26,7 +29,8 @@ public class MetallurgicaItems {
     //        aluminumWire = registrate.item("aluminum_wire", (p) -> new CableItem(p, Meta.aluminum)).register();
 
     public static final ItemEntry<Item>
-            armorPlatingMold =    registrate.item("armor_plating_mold", Item::new, p->p.stacksTo(1).fireResistant(), "advanced_casting_molds/armor_plating", "advanced_casting_molds");
+            thermometer = registrate.item("thermometer", ThermometerItem::new, p->p.stacksTo(1)),
+            armorPlatingMold = registrate.item("armor_plating_mold", Item::new, p->p.stacksTo(1).fireResistant(), "advanced_casting_molds/armor_plating", "advanced_casting_molds");
 
     public static final ItemEntry<SealedBundleItem>
             sealedBundle = registrate.item("sealed_bundle", SealedBundleItem::new, p->p.stacksTo(1))
@@ -150,6 +154,9 @@ public class MetallurgicaItems {
             loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item??? Idk lol
 
     public static void register() {
-        MaterialHelper.registerMaterialItems();
+        MetMaterialItems.generateMaterialItems(registrate);
+        MetMaterialItems.MATERIAL_ITEMS = MetMaterialItems.MATERIAL_ITEMS_BUILDER.build();
+
+        MetMaterialItems.MATERIAL_ITEMS_BUILDER = null;
     }
 }

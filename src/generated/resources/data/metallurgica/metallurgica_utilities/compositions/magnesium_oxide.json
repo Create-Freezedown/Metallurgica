@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "magnesium"
+          "element": "metallurgica:magnesium"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "oxygen"
+          "element": "metallurgica:oxygen"
         }
       ]
     }
