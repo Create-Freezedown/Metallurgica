@@ -276,9 +276,6 @@ public class MetallurgicaCompositions implements DataProvider {
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.pigIron.get(), ElementData.createComposition(
                 builder().element(data(IRON, 3)),
                 builder().element(data(CARBON))));
-        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.wroughtIronIngot.get(), ElementData.createComposition(
-                builder().element(data(IRON, 3)),
-                builder().element(data(CARBON))));
         
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.hornblendeShard.get(), ElementData.createComposition(
                 builder().element(data(CALCIUM)),

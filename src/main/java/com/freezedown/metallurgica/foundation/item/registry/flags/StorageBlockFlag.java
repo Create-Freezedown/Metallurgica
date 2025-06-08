@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags;
 
+import com.freezedown.metallurgica.foundation.block.AxisMaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlockItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
@@ -10,10 +11,8 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import lombok.Getter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +21,9 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class StorageBlockFlag extends BlockFlag {
     @Getter
-    private boolean requiresCompressing;
+    private boolean requiresDecompacting;
+    @Getter
+    private boolean useColumnModel;
 
     public StorageBlockFlag() {
         super("%s_block");
@@ -32,14 +33,21 @@ public class StorageBlockFlag extends BlockFlag {
         super("%s_block", existingNamespace);
     }
 
-    public StorageBlockFlag requiresCompressing(boolean requiresCompressing) {
-        this.requiresCompressing = requiresCompressing;
+    public StorageBlockFlag requiresDecompacting() {
+        this.requiresDecompacting = true;
+        return this;
+    }
+
+    public StorageBlockFlag useColumnModel() {
+        this.useColumnModel = true;
         return this;
     }
 
     @Override
     public BlockEntry<? extends MaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
-            return registrate.block(getIdPattern().formatted(material.getName()), (p) -> new MaterialBlock(p, material, flag))
+        NonNullFunction<BlockBehaviour.Properties, MaterialBlock> factory = useColumnModel ? p -> new AxisMaterialBlock(p, material, flag)
+                : p -> new MaterialBlock(p, material, flag);
+            return registrate.block(getIdPattern().formatted(material.getName()), factory)
                     .initialProperties(SharedProperties::stone)
                     .properties(p -> p.sound(SoundType.METAL))
                     .transform(pickaxeOnly())

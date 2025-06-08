@@ -20,8 +20,8 @@ public class RuntimeCompositions {
     public static void compositionAddition(Consumer<FinishedComposition> originalConsumer) {
         for (Material material : MetMaterials.registeredMaterials.values()) {
             for (FlagKey<?> flagKey : material.getFlags().getFlagKeys()) {
-                if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-                    ItemEntry<? extends MaterialItem> item = MaterialHelper.get(material, itemFlag);
+                if (material.getFlag(flagKey) instanceof ItemFlag) {
+                    ItemEntry<? extends MaterialItem> item = MaterialHelper.getItem(material, flagKey);
                     if (item == null) continue;
                     createComposition(originalConsumer, item.get(), ElementData.createFromList(material.getComposition()));
                 }

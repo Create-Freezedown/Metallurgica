@@ -8,12 +8,14 @@ import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import lombok.Getter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+@Getter
 public abstract class BlockFlag implements IMaterialFlag {
 
     private final String idPattern;
@@ -26,14 +28,6 @@ public abstract class BlockFlag implements IMaterialFlag {
     public BlockFlag(String idPattern, String existingNamespace) {
         this.idPattern = idPattern;
         this.existingNamespace = existingNamespace;
-    }
-
-    public String getIdPattern() {
-        return idPattern;
-    }
-
-    public String getExistingNamespace() {
-        return existingNamespace;
     }
 
     public String getUnlocalizedName() {

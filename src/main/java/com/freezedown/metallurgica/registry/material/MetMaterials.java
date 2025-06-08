@@ -43,6 +43,7 @@ public class MetMaterials {
     public static Material BRASS;
     public static Material BRONZE;
     public static Material ARSENICAL_BRONZE;
+    public static Material WROUGHT_IRON;
 
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
 

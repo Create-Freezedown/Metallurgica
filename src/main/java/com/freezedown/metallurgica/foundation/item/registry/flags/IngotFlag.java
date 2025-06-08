@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class IngotFlag extends ItemFlag {
     @Getter
-    private boolean requiresCompressing = false;
+    private boolean requiresCompacting = false;
 
     public IngotFlag() {
         super("%s_ingot");
@@ -23,8 +23,8 @@ public class IngotFlag extends ItemFlag {
         super("%s_ingot", existingNamespace);
     }
 
-    public IngotFlag requiresCompressing() {
-        this.requiresCompressing = true;
+    public IngotFlag requiresCompacting() {
+        this.requiresCompacting = true;
         return this;
     }
 

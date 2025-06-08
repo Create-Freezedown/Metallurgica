@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class NuggetFlag extends ItemFlag {
     @Getter
-    private boolean requiresCompressing = false;
+    private boolean requiresCompacting = false;
 
     public NuggetFlag() {
         super("%s_nugget");
@@ -23,8 +23,8 @@ public class NuggetFlag extends ItemFlag {
         super("%s_nugget", existingNamespace);
     }
 
-    public NuggetFlag requiresCompressing() {
-        this.requiresCompressing = true;
+    public NuggetFlag requiresCompacting() {
+        this.requiresCompacting = true;
         return this;
     }
 

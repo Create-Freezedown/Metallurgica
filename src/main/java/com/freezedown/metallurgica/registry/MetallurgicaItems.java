@@ -101,11 +101,11 @@ public class MetallurgicaItems {
     
             //titaniumIngot =       registrate.metallurgicaItem("titanium_ingot", "ingots/titanium", "ingots"),
             titaniumNugget =      registrate.metallurgicaItem("titanium_nugget", "nuggets/titanium", "nuggets"),
-            titaniumDust =        registrate.metallurgicaItem("titanium_dust", "dusts/titanium", "dusts"),
+            titaniumDust =        registrate.metallurgicaItem("titanium_dust", "dusts/titanium", "dusts")
             //titaniumSheet =       registrate.metallurgicaItem("titanium_sheet", "plates/titanium", "plates"),
 
             //Isn't this technically an alloy? where would we put steel?
-            wroughtIronIngot =       registrate.metallurgicaItem("wrought_iron_ingot", "ingots/wrought_iron", "ingots")
+            //wroughtIronIngot = registrate.metallurgicaItem("wrought_iron_ingot", "ingots/wrought_iron", "ingots")
                     ;
 
     public static final ItemEntry<MagnesiumOxideItem>

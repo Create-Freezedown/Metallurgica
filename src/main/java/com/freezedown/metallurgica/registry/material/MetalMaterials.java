@@ -133,9 +133,9 @@ public class MetalMaterials {
         TITANIUM = new Material.Builder(Metallurgica.asResource("titanium"))
                 .element(MetallurgicaElements.TITANIUM)
                 .addFlags(
-                        new NuggetFlag(),
-                        new IngotFlag(),
-                        new StorageBlockFlag(),
+                        new NuggetFlag().requiresCompacting(),
+                        new IngotFlag().requiresCompacting(),
+                        new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(3),
                         new FluidFlag(1668.0)
                 ).buildAndRegister();
@@ -170,9 +170,9 @@ public class MetalMaterials {
         TUNGSTEN = new Material.Builder(Metallurgica.asResource("tungsten"))
                 .element(MetallurgicaElements.TUNGSTEN)
                 .addFlags(
-                        new NuggetFlag(),
-                        new IngotFlag(),
-                        new StorageBlockFlag(),
+                        new NuggetFlag().requiresCompacting(),
+                        new IngotFlag().requiresCompacting(),
+                        new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(4),
                         new FluidFlag(3422.0)
                 ).buildAndRegister();
@@ -197,9 +197,9 @@ public class MetalMaterials {
         TANTALUM = new Material.Builder(Metallurgica.asResource("tantalum"))
                 .element(MetallurgicaElements.TANTALUM)
                 .addFlags(
-                        new NuggetFlag(),
-                        new IngotFlag(),
-                        new StorageBlockFlag(),
+                        new NuggetFlag().requiresCompacting(),
+                        new IngotFlag().requiresCompacting(),
+                        new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(2),
                         new FluidFlag(3020.0)
                 ).buildAndRegister();

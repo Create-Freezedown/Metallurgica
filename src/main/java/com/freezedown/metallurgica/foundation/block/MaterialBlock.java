@@ -4,12 +4,17 @@ import com.freezedown.metallurgica.foundation.client.renderer.MaterialBlockRende
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public class MaterialBlock extends Block {
     public final Material material;
     public final BlockFlag blockFlag;
+
+    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
 
     public MaterialBlock(Properties properties, Material material, BlockFlag blockFlag, boolean registerModel) {
         super(properties);

@@ -1,8 +1,6 @@
 package com.freezedown.metallurgica.events;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.fluids.types.uf_backport.behaviours.interaction.FluidEntityInteractionHandler;
-import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasMovementHandler;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureEffect;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureMinerals;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureUtil;
@@ -13,28 +11,19 @@ import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaPackSourc
 import com.freezedown.metallurgica.foundation.data.runtime.composition.RuntimeCompositions;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
 import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleWeightedGraph;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @EventBusSubscriber
 public class CommonEvents {
@@ -48,7 +37,7 @@ public class CommonEvents {
 
         Metallurgica.LOGGER.info("TEMP: loaded");
 
-        TemperatureHandler.getHandler((ServerLevel) level).load((LevelChunk) chunk);
+        //TemperatureHandler.getHandler((ServerLevel) level).load((LevelChunk) chunk);
     }
 
     @SubscribeEvent
@@ -60,7 +49,7 @@ public class CommonEvents {
 
         Metallurgica.LOGGER.info("TEMP: unloaded");
 
-        TemperatureHandler.getHandler((ServerLevel) level).unload((LevelChunk) chunk);
+        //TemperatureHandler.getHandler((ServerLevel) level).unload((LevelChunk) chunk);
     }
 
     @SubscribeEvent

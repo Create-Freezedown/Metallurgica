@@ -13,9 +13,9 @@ public class AlloyMaterials {
         TITANIUM_ALUMINIDE = new Material.Builder(Metallurgica.asResource("titanium_aluminide"))
                 .composition(MetallurgicaElements.TITANIUM, 2, MetallurgicaElements.ALUMINUM, 1)
                 .addFlags(
-                        new NuggetFlag(),
-                        new IngotFlag(),
-                        new StorageBlockFlag(),
+                        new NuggetFlag().requiresCompacting(),
+                        new IngotFlag().requiresCompacting(),
+                        new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(3),
                         new FluidFlag(1447.0)
                 ).buildAndRegister();
@@ -56,6 +56,15 @@ public class AlloyMaterials {
                         new StorageBlockFlag(),
                         new SheetFlag(),
                         new FluidFlag(685.0)
+                ).buildAndRegister();
+        WROUGHT_IRON = new Material.Builder(Metallurgica.asResource("wrought_iron"))
+                .composition(MetallurgicaElements.IRON, 3, MetallurgicaElements.CARBON, 1)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new StorageBlockFlag().useColumnModel(),
+                        new SheetFlag(),
+                        new FluidFlag(1482.0)
                 ).buildAndRegister();
     }
 }

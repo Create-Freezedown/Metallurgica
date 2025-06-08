@@ -40,10 +40,19 @@ public class MetallurgicaModels {
 
     private static void generateCubeBlockModel(Material material, FlagKey<?> flagKey) {
         if (material.getFlag(flagKey) instanceof StorageBlockFlag blockFlag) {
-            boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block.png")).isPresent();
-            String texture = texturePresent ? "metallurgica:block/materials/" + material.getName() + "/block" : "metallurgica:block/materials/null/block";
-            MetallurgicaDynamicResourcePack.addBlockModel(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), simpleCubeAll(texture));
-            MetallurgicaDynamicResourcePack.addBlockState(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), singleVariantBlockstate("metallurgica:block/" + blockFlag.getIdPattern().formatted(material.getName())));
+            if (blockFlag.isUseColumnModel()) {
+                boolean sidePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block_side.png")).isPresent();
+                boolean endPresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block_end.png")).isPresent();
+                String sideTexture = sidePresent ? "metallurgica:block/materials/" + material.getName() + "/block_side" : "metallurgica:block/materials/null/block_side";
+                String endTexture = endPresent ? "metallurgica:block/materials/" + material.getName() + "/block_end" : "metallurgica:block/materials/null/block_end";
+                MetallurgicaDynamicResourcePack.addBlockModel(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), simplePillar(endTexture, sideTexture));
+                MetallurgicaDynamicResourcePack.addBlockState(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), simpleAxisBlockstate("metallurgica:block/" + blockFlag.getIdPattern().formatted(material.getName())));
+            } else {
+                boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block.png")).isPresent();
+                String texture = texturePresent ? "metallurgica:block/materials/" + material.getName() + "/block" : "metallurgica:block/materials/null/block";
+                MetallurgicaDynamicResourcePack.addBlockModel(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), simpleCubeAll(texture));
+                MetallurgicaDynamicResourcePack.addBlockState(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), singleVariantBlockstate("metallurgica:block/" + blockFlag.getIdPattern().formatted(material.getName())));
+            }
             MetallurgicaDynamicResourcePack.addItemModel(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), simpleParentedModel("metallurgica:block/" + blockFlag.getIdPattern().formatted(material.getName())));
         }
     }
@@ -88,12 +97,41 @@ public class MetallurgicaModels {
         return model;
     }
 
+    public static JsonObject simplePillar(String end, String side) {
+        JsonObject model = new JsonObject();
+        model.addProperty("parent", "minecraft:block/cube_column");
+        JsonObject textures = new JsonObject();
+        textures.addProperty("end", end);
+        textures.addProperty("side", side);
+        model.add("textures", textures);
+        return model;
+    }
+
     private static JsonObject singleVariantBlockstate(String model) {
         JsonObject blockstate = new JsonObject();
         JsonObject variants = new JsonObject();
         JsonObject variant = new JsonObject();
         variant.addProperty("model", model);
         variants.add("", variant);
+        blockstate.add("variants", variants);
+        return blockstate;
+    }
+
+    private static JsonObject simpleAxisBlockstate(String model) {
+        JsonObject blockstate = new JsonObject();
+        JsonObject variants = new JsonObject();
+        JsonObject variantX = new JsonObject();
+        JsonObject variantY = new JsonObject();
+        JsonObject variantZ = new JsonObject();
+        variantX.addProperty("model", model);
+        variantX.addProperty("x", 90);
+        variantX.addProperty("y", 90);
+        variantY.addProperty("model", model);
+        variantZ.addProperty("model", model);
+        variantZ.addProperty("x", 90);
+        variants.add("axis=x", variantX);
+        variants.add("axis=y", variantY);
+        variants.add("axis=z", variantZ);
         blockstate.add("variants", variants);
         return blockstate;
     }
