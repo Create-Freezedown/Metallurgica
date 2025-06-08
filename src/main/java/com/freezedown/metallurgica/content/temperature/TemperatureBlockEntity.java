@@ -23,31 +23,21 @@ public class TemperatureBlockEntity extends IntelligentBlockEntity implements IT
     @SideOnly(Side.CLIENT)
     private double temp;
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public double getTemperature() {
-        if(this.level != null) {
-            if (this.level instanceof ServerLevel) {
-                return TemperatureHandler.getHandler((ServerLevel) this.level).getBlockTemperature(this.getBlockPos());
-            } else {
-                return temp;
-            }
-        } else {
-            Metallurgica.LOGGER.error("TEMPERATURE SYSTEM: level is null");
-            return 0.0;
-        }
+    public double getTemp() {
+        return temp;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void setTemp(double temperature) {
+        temp = temperature;
     }
 
     @Override
-    public void setTemperature(double temperature) {
-        if(this.level != null) {
-            if (this.level instanceof ServerLevel) {
-                TemperatureHandler.getHandler((ServerLevel) this.level).setBlockTemperature(this.getBlockPos(), temperature);
-            } else {
-                temp = temperature;
-            }
-        } else {
-            Metallurgica.LOGGER.error("TEMPERATURE SYSTEM: level is null");
-        }
+    public BlockPos getPos() {
+        return getBlockPos();
     }
 
     @Override

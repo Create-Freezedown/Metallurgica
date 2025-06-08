@@ -5,25 +5,43 @@ import com.freezedown.metallurgica.experimental.exposure_effects.ExposureEffect;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureMinerals;
 import com.freezedown.metallurgica.experimental.exposure_effects.ExposureUtil;
 import com.freezedown.metallurgica.foundation.command.MetallurgicaCommands;
+import com.freezedown.metallurgica.foundation.config.common.subcat.MWorldGen;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicDataPack;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaPackSource;
 import com.freezedown.metallurgica.foundation.data.runtime.composition.RuntimeCompositions;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
 import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureMap;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.FullChunkStatus;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.apache.commons.compress.utils.Sets;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @EventBusSubscriber
 public class CommonEvents {
@@ -33,11 +51,12 @@ public class CommonEvents {
         Level level = (Level) event.getLevel();
         if (level.isClientSide()) return; // skip client side
 
-        ChunkAccess chunk = event.getChunk();
+        LevelChunk chunk = (LevelChunk) event.getChunk();
 
-        Metallurgica.LOGGER.info("TEMP: loaded");
-
-        //TemperatureHandler.getHandler((ServerLevel) level).load((LevelChunk) chunk);
+        if(chunk.getFullStatus() == FullChunkStatus.BLOCK_TICKING) {
+            TemperatureHandler handler = TemperatureHandler.getHandler((ServerLevel) level);
+            handler.addLoadedChunk(chunk.getPos());
+        }
     }
 
     @SubscribeEvent
@@ -47,9 +66,10 @@ public class CommonEvents {
 
         ChunkAccess chunk = event.getChunk();
 
-        Metallurgica.LOGGER.info("TEMP: unloaded");
-
-        //TemperatureHandler.getHandler((ServerLevel) level).unload((LevelChunk) chunk);
+        TemperatureHandler handler = TemperatureHandler.getHandler((ServerLevel) level);
+        if(handler.getLoadedChunkPositions().contains(chunk.getPos())) {
+            handler.removeLoadedChunk(chunk.getPos());
+        }
     }
 
     @SubscribeEvent
@@ -79,7 +99,16 @@ public class CommonEvents {
 //        );
         if(event.phase == TickEvent.Phase.END) {
             //                    serverLevel.getEntities().getAll().forEach(FluidEntityInteractionHandler::handleInteraction);
-            event.getServer().getAllLevels().forEach(level -> TemperatureHandler.getHandler(level).tick());
+//            event.getServer().getAllLevels().forEach(level -> TemperatureHandler.getHandler(level).tick());
+            for(ServerLevel level : event.getServer().getAllLevels()) {
+                TemperatureHandler handler = TemperatureHandler.getHandler(level);
+                for(ChunkPos pos : handler.getLoadedChunkPositions()) {
+                    if(level.getChunk(pos.x, pos.z).getFullStatus() != FullChunkStatus.BLOCK_TICKING) {
+                        handler.removeLoadedChunk(pos);
+                    }
+                }
+//                handler.tick();
+            }
         }
     }
 
