@@ -13,6 +13,8 @@
     "MixinVanillaFluidTargets",
     "OreVeinifierHijacker",
     "PlayerListMixin",
+    "TagLoaderMixin",
+    "TagManagerMixin",
     "TFMGBlastFurnaceBGone",
     "WorldGenRegionMixin",
     "emi.FluidEmiStackMixin",

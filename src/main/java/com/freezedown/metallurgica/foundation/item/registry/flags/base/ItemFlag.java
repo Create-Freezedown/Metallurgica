@@ -9,16 +9,23 @@ import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
+@Getter
 public abstract class ItemFlag implements IMaterialFlag {
 
     private final String idPattern;
     private String existingNamespace = "metallurgica";
+    @Setter
+    public List<String> tagPatterns = List.of();
 
     public ItemFlag(String idPattern) {
         this.idPattern = idPattern;
@@ -27,14 +34,6 @@ public abstract class ItemFlag implements IMaterialFlag {
     public ItemFlag(String idPattern, String existingNamespace) {
         this.idPattern = idPattern;
         this.existingNamespace = existingNamespace;
-    }
-
-    public String getIdPattern() {
-        return idPattern;
-    }
-
-    public String getExistingNamespace() {
-        return existingNamespace;
     }
 
     public String getUnlocalizedName() {

@@ -13,12 +13,19 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class GemFlag extends ItemFlag {
 
-    public GemFlag() {
-        super("%s_gem");
+
+    public GemFlag(String existingNamespace) {
+        super("%s_gem", existingNamespace);
+        this.setTagPatterns(List.of("forge:gems", "forge:gems/%s"));
     }
 
+    public GemFlag() {
+        this("metallurgica");
+    }
 
     @Override
     public ItemEntry<? extends MaterialItem> registerItem(@NotNull Material material, ItemFlag flag, @NotNull MetallurgicaRegistrate registrate) {

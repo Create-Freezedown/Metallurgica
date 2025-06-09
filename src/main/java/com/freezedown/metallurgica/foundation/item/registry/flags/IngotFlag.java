@@ -11,16 +11,19 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class IngotFlag extends ItemFlag {
     @Getter
     private boolean requiresCompacting = false;
 
-    public IngotFlag() {
-        super("%s_ingot");
-    }
-
     public IngotFlag(String existingNamespace) {
         super("%s_ingot", existingNamespace);
+        this.setTagPatterns(List.of("forge:ingots", "forge:ingots/%s"));
+    }
+
+    public IngotFlag() {
+        this("metallurgica");
     }
 
     public IngotFlag requiresCompacting() {

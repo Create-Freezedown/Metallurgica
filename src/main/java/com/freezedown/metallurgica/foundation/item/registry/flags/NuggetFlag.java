@@ -11,17 +11,22 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class NuggetFlag extends ItemFlag {
     @Getter
     private boolean requiresCompacting = false;
 
-    public NuggetFlag() {
-        super("%s_nugget");
-    }
-
     public NuggetFlag(String existingNamespace) {
         super("%s_nugget", existingNamespace);
+        this.setTagPatterns(List.of("forge:nuggets", "forge:nuggets/%s"));
     }
+
+
+    public NuggetFlag() {
+        this("metallurgica");
+    }
+
 
     public NuggetFlag requiresCompacting() {
         this.requiresCompacting = true;

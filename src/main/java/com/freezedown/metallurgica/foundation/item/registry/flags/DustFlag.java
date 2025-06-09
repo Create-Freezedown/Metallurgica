@@ -13,10 +13,17 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class DustFlag extends ItemFlag {
 
+    public DustFlag(String existingNamespace) {
+        super("%s_dust", existingNamespace);
+        this.setTagPatterns(List.of("forge:dusts", "forge:dusts/%s"));
+    }
+
     public DustFlag() {
-        super("%s_dust");
+        this("metallurgica");
     }
 
     @Override

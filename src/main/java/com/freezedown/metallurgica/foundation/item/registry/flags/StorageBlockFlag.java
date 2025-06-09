@@ -17,6 +17,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class StorageBlockFlag extends BlockFlag {
@@ -25,12 +27,14 @@ public class StorageBlockFlag extends BlockFlag {
     @Getter
     private boolean useColumnModel;
 
-    public StorageBlockFlag() {
-        super("%s_block");
-    }
-
     public StorageBlockFlag(String existingNamespace) {
         super("%s_block", existingNamespace);
+        this.setTagPatterns(List.of("forge:storage_blocks", "forge:storage_blocks/%s", "minecraft:mineable/pickaxe"));
+        this.setItemTagPatterns(List.of("forge:storage_blocks", "forge:storage_blocks/%s"));
+    }
+
+    public StorageBlockFlag() {
+        this("metallurgica");
     }
 
     public StorageBlockFlag requiresDecompacting() {

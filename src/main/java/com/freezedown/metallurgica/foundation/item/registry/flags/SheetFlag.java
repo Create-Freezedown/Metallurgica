@@ -13,6 +13,8 @@ import lombok.Getter;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class SheetFlag extends ItemFlag {
 
     @Getter
@@ -21,13 +23,16 @@ public class SheetFlag extends ItemFlag {
     @Getter
     public boolean needsTransitional = false;
 
-    public SheetFlag() {
-        super("%s_sheet");
-    }
-
     public SheetFlag(String existingNamespace) {
         super("%s_sheet", existingNamespace);
+        this.setTagPatterns(List.of("forge:plates", "forge:plates/%s"));
     }
+
+    public SheetFlag() {
+        this("metallurgica");
+    }
+
+
 
     public SheetFlag pressTimes(int pressTimes) {
         this.pressTimes = pressTimes;
