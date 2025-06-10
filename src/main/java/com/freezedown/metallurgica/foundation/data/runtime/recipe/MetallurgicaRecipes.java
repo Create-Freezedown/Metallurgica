@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe;
 
+import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.CrushingRecipeHandler;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.PressingRecipeHandler;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.SequencedAssemblyHandler;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.StorageRecipeHandler;
@@ -26,6 +27,7 @@ public class MetallurgicaRecipes {
             PressingRecipeHandler.run(consumer, material);
             SequencedAssemblyHandler.run(consumer, material);
             StorageRecipeHandler.run(consumer, material);
+            CrushingRecipeHandler.run(consumer, material);
         }
 
     }

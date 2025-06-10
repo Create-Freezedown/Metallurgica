@@ -2,8 +2,11 @@ package com.freezedown.metallurgica.foundation.data.recipe.create;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
@@ -61,7 +64,7 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .requiresHeat(HeatCondition.HEATED)),
     
     copperOxide = create(Metallurgica.asResource("copper_oxide"), b -> b
-            .require(I.malachite())
+            .require(MaterialHelper.getItem(MetMaterials.MALACHITE, FlagKey.MINERAL))
             .require(I.cokeDust())
             .require(I.cokeDust())
             .output(F.carbonDioxide(), 90)
@@ -73,13 +76,13 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .require(I.copperOxide())
             .require(I.cokeDust())
             .output(F.carbonDioxide(), 90)
-            .output(I.copperRubble(), 1)
-            .output(0.05f, I.copperRubble(), 1)
+            .output(MaterialHelper.getItem(MetMaterials.COPPER, FlagKey.RUBBLE), 1)
+            .output(0.05f, MaterialHelper.getItem(MetMaterials.COPPER, FlagKey.RUBBLE), 1)
             .requiresHeat(HeatCondition.HEATED)),
     
     titaniumTetrachloride = create(Metallurgica.asResource("titanium_tetrachloride"), b -> b
-            .require(MetallurgicaItems.rutilePowder.get())
-            .require(MetallurgicaItems.rutilePowder.get())
+            .require(MaterialHelper.getItem(MetMaterials.RUTILE, FlagKey.DUST))
+            .require(MaterialHelper.getItem(MetMaterials.RUTILE, FlagKey.DUST))
             .require(F.chlorine(), 500)
             .require(I.cokeDust())
             .require(I.cokeDust())

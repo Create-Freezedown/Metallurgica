@@ -11,7 +11,6 @@
     "DefaultOreFeaturesMixin",
     "MixinOpenEndedPipe",
     "MixinVanillaFluidTargets",
-    "OreVeinifierHijacker",
     "PlayerListMixin",
     "TagLoaderMixin",
     "TagManagerMixin",

@@ -6,6 +6,7 @@ import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.material.OreEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.createmod.catnip.data.Couple;
 import net.minecraft.resources.ResourceLocation;
@@ -17,27 +18,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 
-
+/**
+ * Deprecated. Use and update {@link MetMaterials} instead.
+ */
+@Deprecated(forRemoval = true)
 public enum MetallurgicaOre {
     //COPPER
-    NATIVE_COPPER(26, 7, -3, 97, 64, 25, 63, 34, 0.03f, DepositCapacity.MEDIUM, 180, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.23f, 75, COPPER),
-    MALACHITE(true, COPPER),
+    //NATIVE_COPPER(26, 7, -3, 97, 64, 25, 63, 34, 0.03f, DepositCapacity.MEDIUM, 180, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.GRANITE), 0.23f, 75, COPPER),
+    //MALACHITE(true, COPPER),
     //CHALKOPYRITE(Copper),
 
     //GOLD
-    NATIVE_GOLD(12, 4, -12, 56, 67, 45, 90, 68, 0.32f, DepositCapacity.TINY, 23, 75, Couple.create(() -> Blocks.STONE, () -> Blocks.RED_SANDSTONE), 0.1f, 75, GOLD),
+    //NATIVE_GOLD(12, 4, -12, 56, 67, 45, 90, 68, 0.32f, DepositCapacity.TINY, 23, 75, Couple.create(() -> Blocks.STONE, () -> Blocks.RED_SANDSTONE), 0.1f, 75, GOLD),
 
     //IRON
-    MAGNETITE( false,23, 4, -3, 128, 78, 45, 60, 20, 0.23f, DepositCapacity.MEDIUM, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f, 75, IRON),
-    HEMATITE( false, 23, 4, -3, 128, 78, 45, 60, 20, 0.23f, DepositCapacity.MEDIUM, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f, 75, IRON),
+    //MAGNETITE( false,23, 4, -3, 128, 78, 45, 60, 20, 0.23f, DepositCapacity.MEDIUM, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f, 75, IRON),
+    //HEMATITE( false, 23, 4, -3, 128, 78, 45, 60, 20, 0.23f, DepositCapacity.MEDIUM, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.15f, 75, IRON),
 //    PENTLANDITE(IRON),
 
     //LITHIUM/ALUMINUM
-    BAUXITE(19, 9, -30, 70, 56, 30, 30, 20, 0.23f, DepositCapacity.SMALL, 180, 230, Couple.create(() -> getBlock(CreateTFMG.asResource("bauxite")), () -> Blocks.GRANITE), 0.2f, 75, ALUMINUM),
+    //BAUXITE(19, 9, -30, 70, 56, 30, 30, 20, 0.23f, DepositCapacity.SMALL, 180, 230, Couple.create(() -> getBlock(CreateTFMG.asResource("bauxite")), () -> Blocks.GRANITE), 0.2f, 75, ALUMINUM),
 //    PETALITE(ALUMINUM, LITHIUM),
-    SPODUMENE( false,26, 4, 40, 96, 78, 45, 60, 20, 0.23f, DepositCapacity.SMALL, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.1f, 75, LITHIUM),
+    //SPODUMENE( false,26, 4, 40, 96, 78, 45, 60, 20, 0.23f, DepositCapacity.SMALL, 61, 230, Couple.create(() -> Blocks.STONE, () -> Blocks.TUFF), 0.1f, 75, LITHIUM),
 
     //LEAD
 //    GALENA(LEAD),
@@ -45,14 +49,14 @@ public enum MetallurgicaOre {
 //    PYROMORPHITE(LEAD),
 
     //ZINC
-    SPHALERITE(ZINC),
-    SMITHSONITE(ZINC),
+    //SPHALERITE(ZINC),
+    //SMITHSONITE(ZINC),
 
     //TUNGSTEN
 //    WOLFRAMITE(TUNGSTEN),
 
     //TITANIUM
-    RUTILE(TITANIUM),
+    //RUTILE(TITANIUM),
 
     //URANIUM/THORIUM
 //    URANINITE(URANIUM),
@@ -70,19 +74,19 @@ public enum MetallurgicaOre {
 
     //LIMESTONE
     //POTASSIUM
-    POTASH(true),
+    //POTASH(true),
     //DOLOMITE(),
 
     //MAGNESIUM
 //    MAGNESITE(MAGNESIUM),
     //TIN
-    CASSITERITE(TIN),
+    //CASSITERITE(TIN),
 
     //FLUORITE
-    FLUORITE(),
+    //FLUORITE(),
 
     //REDSTONE
-    CUPRITE()
+    //CUPRITE()
     ;
 
     public final OreEntry ORE;

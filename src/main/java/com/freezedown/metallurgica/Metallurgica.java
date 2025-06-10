@@ -15,6 +15,7 @@ import com.freezedown.metallurgica.registry.*;
 import com.freezedown.metallurgica.registry.material.AlloyMaterials;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.freezedown.metallurgica.registry.material.MetalMaterials;
+import com.freezedown.metallurgica.registry.material.MineralMaterials;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
@@ -130,6 +131,7 @@ public class Metallurgica
     public static void initMaterials(IEventBus modEventBus) {
         MetalMaterials.register();
         AlloyMaterials.register();
+        MineralMaterials.register();
         MetMaterials.register(modEventBus);
     }
     

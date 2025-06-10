@@ -1,12 +1,17 @@
 {
-  "materialflag.block": "Block of %s",
+  "materialflag.storage_block": "Block of %s",
   "materialflag.ingot": "%s Ingot",
   "materialflag.nugget": "%s Nugget",
-  "materialflag.dust": "%s Dust",
   "materialflag.gem": "%s",
   "materialflag.sheet": "%s Sheet",
   "materialflag.semi_pressed_sheet": "Semi-Pressed %s Sheet",
   "materialflag.wire": "%s Wire",
-  "materialflag.cable": "%s Cable"
-
+  "materialflag.cable": "%s Cable",
+  "materialflag.bucket": "%s Bucket",
+  "materialflag.bucket.molten": "Molten %s Bucket",
+  "materialflag.mineral": "%s",
+  "materialflag.native_mineral": "Native %s",
+  "materialflag.rubble": "%s Rubble",
+  "materialflag.dust": "%s Dust",
+  "materialflag.powder": "%s Powder"
 }

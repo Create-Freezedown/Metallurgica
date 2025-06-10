@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.foundation.item.registry.flags;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.ISpecialLangSuffix;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
@@ -10,20 +11,29 @@ import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import lombok.Getter;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class DustFlag extends ItemFlag {
+public class DustFlag extends ItemFlag implements ISpecialLangSuffix {
 
-    public DustFlag(String existingNamespace) {
-        super("%s_dust", existingNamespace);
-        this.setTagPatterns(List.of("forge:dusts", "forge:dusts/%s"));
+    @Getter
+    private boolean powder;
+
+    public DustFlag(String existingNamespace, boolean powder) {
+        super(powder ? "%s_powder" : "%s_dust", existingNamespace);
+        this.powder = powder;
+        List<String> patterns = powder ? List.of("c:powders", "c:powders/%s") : List.of("c:dusts", "c:dusts/%s");
+        this.setTagPatterns(patterns);
     }
 
     public DustFlag() {
-        this("metallurgica");
+        this("metallurgica", false);
+    }
+    public DustFlag(boolean powder) {
+        this("metallurgica", powder);
     }
 
     @Override
@@ -43,5 +53,10 @@ public class DustFlag extends ItemFlag {
     @Override
     public void verifyFlag(MaterialFlags flags) {
 
+    }
+
+    @Override
+    public String getLangSuffix() {
+        return isPowder() ? "powder" : "dust";
     }
 }

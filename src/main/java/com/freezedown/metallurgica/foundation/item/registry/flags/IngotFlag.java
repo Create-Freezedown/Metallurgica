@@ -19,7 +19,7 @@ public class IngotFlag extends ItemFlag {
 
     public IngotFlag(String existingNamespace) {
         super("%s_ingot", existingNamespace);
-        this.setTagPatterns(List.of("forge:ingots", "forge:ingots/%s"));
+        this.setTagPatterns(List.of("c:ingots", "c:ingots/%s"));
     }
 
     public IngotFlag() {

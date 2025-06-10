@@ -28,7 +28,7 @@ public class FluidFlag implements IMaterialFlag {
     public void registerFluids(@NotNull Material material, @NotNull MetallurgicaRegistrate registrate) {
         List<FluidEntry<?>> fluidEntries = new ArrayList<>();
         if (material.hasFlag(FlagKey.INGOT)) {
-            FluidEntry<?> fluid = registrate.moltenMetal(material.getName(), meltingPoint);
+            FluidEntry<?> fluid = registrate.moltenMetal(material, meltingPoint);
             fluidEntries.add(fluid);
         }
         if (!fluidEntries.isEmpty())

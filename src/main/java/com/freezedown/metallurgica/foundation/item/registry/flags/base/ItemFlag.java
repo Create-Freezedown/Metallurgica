@@ -37,7 +37,7 @@ public abstract class ItemFlag implements IMaterialFlag {
     }
 
     public String getUnlocalizedName() {
-        return "materialflag." + MetallurgicaModels.getFlagName(idPattern);
+        return "materialflag." + (this instanceof ISpecialLangSuffix suffix ? suffix.getLangSuffix() : MetallurgicaModels.getFlagName(getKey()));
     }
 
     public MutableComponent getLocalizedName(Material material) {

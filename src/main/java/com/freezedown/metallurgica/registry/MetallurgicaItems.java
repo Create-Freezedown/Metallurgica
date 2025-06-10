@@ -57,7 +57,7 @@ public class MetallurgicaItems {
             alluvialCassiterite = registrate.metallurgicaItem("alluvial_cassiterite", "alluvial_materials/cassiterite", "alluvial_materials"),
 
     //COPPER PROCESSING
-            copperRubble = registrate.metallurgicaItem("copper_rubble", "material_rubble/copper", "material_rubble"),
+            //copperRubble = registrate.metallurgicaItem("copper_rubble", "material_rubble/copper", "material_rubble"),
             copperOxide = registrate.metallurgicaItem("copper_oxide", "dusts/copper_oxide", "dusts"),
 
     //BAUXITE PROCESSING
@@ -81,13 +81,13 @@ public class MetallurgicaItems {
     
     //FLUORITE
     public static final ItemEntry<MetallurgicaItem>
-            fluoriteCluster =     registrate.cluster("fluorite_cluster"),
-            fluoritePowder =      registrate.powder("fluorite_powder")
+            fluoriteCluster =     registrate.cluster("fluorite_cluster")
+            //fluoritePowder =      registrate.powder("fluorite_powder")
                     ;
     //RUTILE
-    public static final ItemEntry<MetallurgicaItem>
-            rutilePowder =        registrate.powder("rutile_powder")
-                    ;
+    //public static final ItemEntry<MetallurgicaItem>
+    //        rutilePowder =        registrate.powder("rutile_powder")
+    //                ;
     
     //MAGNESIUM
     public static final ItemEntry<MetallurgicaItem>
@@ -95,12 +95,12 @@ public class MetallurgicaItems {
                     ;
     //METALS
     public static final ItemEntry<MetallurgicaItem>
-            aluminumNugget =      registrate.metallurgicaItem("aluminum_nugget", "nuggets/aluminum", "nuggets"),
+            //aluminumNugget =      registrate.metallurgicaItem("aluminum_nugget", "nuggets/aluminum", "nuggets"),
             aluminumDust =        registrate.metallurgicaItem("aluminum_dust", "dusts/aluminum", "dusts"),
             //aluminumSheet =       registrate.metallurgicaItem("aluminum_sheet", "plates/aluminum", "plates"),
     
             //titaniumIngot =       registrate.metallurgicaItem("titanium_ingot", "ingots/titanium", "ingots"),
-            titaniumNugget =      registrate.metallurgicaItem("titanium_nugget", "nuggets/titanium", "nuggets"),
+            //titaniumNugget =      registrate.metallurgicaItem("titanium_nugget", "nuggets/titanium", "nuggets"),
             titaniumDust =        registrate.metallurgicaItem("titanium_dust", "dusts/titanium", "dusts")
             //titaniumSheet =       registrate.metallurgicaItem("titanium_sheet", "plates/titanium", "plates"),
 

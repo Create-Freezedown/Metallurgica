@@ -10,12 +10,14 @@ import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterial
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.simibubi.create.content.kinetics.mixer.CompactingRecipe;
+import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
@@ -46,8 +48,10 @@ public class StorageRecipeHandler {
             }
             if (nuggetFlag.isRequiresCompacting()) {
                 compact9(provider, inputId, outputId);
+                decompact9(provider, outputId, inputId);
             } else {
                 craftCompact9(provider, inputId, outputId, MaterialHelper.getItem(material, FlagKey.NUGGET), MaterialHelper.getItem(material, FlagKey.INGOT));
+                craftDecompact9(provider, outputId, inputId, MaterialHelper.getItem(material, FlagKey.INGOT), MaterialHelper.getItem(material, FlagKey.NUGGET));
             }
         }
     }
@@ -64,8 +68,10 @@ public class StorageRecipeHandler {
             }
             if (ingotFlag.isRequiresCompacting()) {
                 compact9(provider, inputId, outputId);
+                decompact9(provider, outputId, inputId);
             } else {
                 craftCompact9(provider, inputId, outputId, MaterialHelper.getItem(material, FlagKey.INGOT), MaterialHelper.getBlock(material, FlagKey.STORAGE_BLOCK));
+                craftDecompact9(provider, outputId, inputId, MaterialHelper.getBlock(material, FlagKey.STORAGE_BLOCK), MaterialHelper.getItem(material, FlagKey.INGOT));
             }
 
         }
@@ -90,13 +96,26 @@ public class StorageRecipeHandler {
         }
         builder.define('#', input)
                .unlockedBy("has_input", has(input))
-               .save(provider, Metallurgica.asResource("runtime_generated/" + inputId.getNamespace() + "/crafting/" + inputId.getPath() + "_to_" + outputId.getPath()));
+               .save(provider, Metallurgica.asResource("runtime_generated/" + inputId.getNamespace() + "/" + outputId.getPath() + "_from_" + inputId.getPath()));
+    }
+
+    private static void decompact9(@NotNull Consumer<FinishedRecipe> provider, ResourceLocation inputId, ResourceLocation outputId) {
+        ProcessingRecipeBuilder<CuttingRecipe> builder = new Builder<>(inputId.getNamespace(), CuttingRecipe::new, outputId.getPath(), inputId.getPath(), provider);
+        builder.require(BuiltInRegistries.ITEM.get(inputId));
+        builder.output(BuiltInRegistries.ITEM.get(outputId), 9).build();
+    }
+
+    private static void craftDecompact9(@NotNull Consumer<FinishedRecipe> provider, ResourceLocation inputId, ResourceLocation outputId, ItemLike input, ItemLike output) {
+        ShapelessRecipeBuilder builder = new ShapelessRecipeBuilder(RecipeCategory.MISC, output, 9);
+        builder.requires(BuiltInRegistries.ITEM.get(inputId))
+               .unlockedBy("has_input", has(input))
+               .save(provider, Metallurgica.asResource("runtime_generated/" + inputId.getNamespace() + "/" + outputId.getPath() + "_from_" + inputId.getPath()));
     }
 
     private static class Builder<T extends ProcessingRecipe<?>> extends ProcessingRecipeBuilder<T> {
         Consumer<FinishedRecipe> consumer;
         public Builder(String modid, ProcessingRecipeBuilder.ProcessingRecipeFactory<T> factory, String from, String to, Consumer<FinishedRecipe> consumer) {
-            super(factory, Metallurgica.asResource("runtime_generated/" + modid + "/compacting/" + from + "_to_" + to));
+            super(factory, Metallurgica.asResource("runtime_generated/" + modid + "/" + to + "_from_" + from));
             this.consumer = consumer;
         }
 

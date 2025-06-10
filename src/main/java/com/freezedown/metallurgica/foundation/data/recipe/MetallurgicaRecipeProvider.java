@@ -90,10 +90,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static TagKey<Item> malachiteStone() {
             return MetallurgicaTags.modItemTag("stone_types/malachite");
         }
-        public static ItemLike copperRubble() {
-            return MetallurgicaItems.copperRubble.get();
-        }
-        public static ItemLike malachite() { return MetallurgicaOre.MALACHITE.ORE.raw().get(); }
+        //public static ItemLike malachite() { return MetallurgicaOre.MALACHITE.ORE.raw().get(); }
         public static ItemLike copperOxide() {
             return MetallurgicaItems.copperOxide.get();
         }
@@ -130,7 +127,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike magnetiteLumps() {
             return MetallurgicaItems.magnetiteLumps.get();
         }
-        public static ItemLike richMagnetite() { return MetallurgicaOre.MALACHITE.ORE.rich().get(); }
+        //public static ItemLike richMagnetite() { return MetallurgicaOre.MALACHITE.ORE.rich().get(); }
         public static ItemLike goldNugget() {
             return Items.GOLD_NUGGET;
         }

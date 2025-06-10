@@ -38,7 +38,7 @@ public abstract class BlockFlag implements IMaterialFlag {
     }
 
     public String getUnlocalizedName() {
-        return "materialflag." + MetallurgicaModels.getFlagName(idPattern);
+        return "materialflag." + (this instanceof ISpecialLangSuffix suffix ? suffix.getLangSuffix() : MetallurgicaModels.getFlagName(getKey()));
     }
 
     public MutableComponent getLocalizedName(Material material) {
@@ -55,6 +55,8 @@ public abstract class BlockFlag implements IMaterialFlag {
     }
 
     public abstract BlockEntry<? extends MaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate);
+
+    public abstract boolean shouldHaveComposition();
 
     @Override
     public void verifyFlag(MaterialFlags flags) {

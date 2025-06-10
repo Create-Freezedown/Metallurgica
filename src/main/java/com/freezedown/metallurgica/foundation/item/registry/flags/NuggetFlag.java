@@ -19,7 +19,7 @@ public class NuggetFlag extends ItemFlag {
 
     public NuggetFlag(String existingNamespace) {
         super("%s_nugget", existingNamespace);
-        this.setTagPatterns(List.of("forge:nuggets", "forge:nuggets/%s"));
+        this.setTagPatterns(List.of("c:nuggets", "c:nuggets/%s"));
     }
 
 

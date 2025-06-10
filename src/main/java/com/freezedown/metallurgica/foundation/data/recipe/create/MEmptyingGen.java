@@ -20,11 +20,11 @@ public class MEmptyingGen extends MProcessingRecipeGen {
             .output(F.magnetiteFines(), 15)
             .duration(200)),
     
-    richMagnetiteLumps = create(Metallurgica.asResource("magnetite_lumps_from_rich"), b -> b
-            .require(I.richMagnetite())
-            .output(1.25f, I.magnetiteLumps(), 1)
-            .output(F.magnetiteFines(), 5)
-            .duration(200)),
+    //richMagnetiteLumps = create(Metallurgica.asResource("magnetite_lumps_from_rich"), b -> b
+    //        .require(I.richMagnetite())
+    //        .output(1.25f, I.magnetiteLumps(), 1)
+    //        .output(F.magnetiteFines(), 5)
+    //        .duration(200)),
     
     chlorineTank = create(Metallurgica.asResource("chlorine_tank"), b -> b
             .output(F.chlorine(), 1000)

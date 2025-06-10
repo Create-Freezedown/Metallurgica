@@ -40,7 +40,9 @@ public class MetalMaterials {
                         new StorageBlockFlag("minecraft"),
                         new SheetFlag("create"),
                         new FluidFlag(1084.6),
-                        new CableFlag(0.0178, WireColours.copper)
+                        new CableFlag(0.0178, WireColours.copper),
+                        new MineralFlag(true),
+                        new RubbleFlag().crushingOnly().bonusChance(0.15f)
                 ).buildAndRegister();
         NETHERIUM = new Material.Builder(Metallurgica.asResource("netherium"))
                 .element(MetallurgicaElements.NETHERIUM)
@@ -202,6 +204,41 @@ public class MetalMaterials {
                         new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(2),
                         new FluidFlag(3020.0)
+                ).buildAndRegister();
+        SODIUM = new Material.Builder(Metallurgica.asResource("sodium"))
+                .element(MetallurgicaElements.SODIUM)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new StorageBlockFlag().useColumnModel(),
+                        new SheetFlag()
+                ).buildAndRegister();
+        CHROMIUM = new Material.Builder(Metallurgica.asResource("chromium"))
+                .element(MetallurgicaElements.CHROMIUM)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new StorageBlockFlag(),
+                        new SheetFlag(),
+                        new FluidFlag(1907.0)
+                ).buildAndRegister();
+        VANADIUM = new Material.Builder(Metallurgica.asResource("vanadium"))
+                .element(MetallurgicaElements.VANADIUM)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new StorageBlockFlag(),
+                        new SheetFlag(),
+                        new FluidFlag(1910.0)
+                ).buildAndRegister();
+        MANGANESE = new Material.Builder(Metallurgica.asResource("manganese"))
+                .element(MetallurgicaElements.MANGANESE)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new StorageBlockFlag(),
+                        new SheetFlag(),
+                        new FluidFlag(1246.0)
                 ).buildAndRegister();
     }
 }

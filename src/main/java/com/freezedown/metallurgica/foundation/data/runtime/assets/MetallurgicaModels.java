@@ -7,6 +7,7 @@ import com.freezedown.metallurgica.foundation.item.registry.flags.CableFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FluidFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.StorageBlockFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.ISpecialAssetLocation;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.gson.JsonObject;
@@ -26,12 +27,15 @@ public class MetallurgicaModels {
 
     private static void generateItemModels(Material material, FlagKey<?> flagKey) {
         if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-            String textureName = getFlagName(itemFlag.getIdPattern());
+            String textureName = getFlagName(flagKey);
+            if (material.getFlag(flagKey) instanceof ISpecialAssetLocation specialAssetLoc) {
+                textureName = specialAssetLoc.getAssetName();
+            }
             boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/item/materials/" + material.getName() + "/" + textureName + ".png")).isPresent();
             String texture = texturePresent ? "metallurgica:item/materials/" + material.getName() + "/" + textureName : "metallurgica:item/materials/null/" + textureName;
             MetallurgicaDynamicResourcePack.addItemModel(Metallurgica.asResource(itemFlag.getIdPattern().formatted(material.getName())), simpleGeneratedModel("minecraft:item/generated", texture));
         } else if (material.getFlag(flagKey) instanceof CableFlag) {
-            String textureName = getFlagName("%s_cable");
+            String textureName = getFlagName(FlagKey.CABLE);
             boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/item/materials/" + material.getName() + "/" + textureName + ".png")).isPresent();
             String texture = texturePresent ? "metallurgica:item/materials/" + material.getName() + "/" + textureName : "metallurgica:item/materials/null/" + textureName;
             MetallurgicaDynamicResourcePack.addItemModel(Metallurgica.asResource("%s_cable".formatted(material.getName())), simpleGeneratedModel("minecraft:item/generated", texture));
@@ -65,12 +69,8 @@ public class MetallurgicaModels {
         }
     }
 
-    public static String getFlagName(String idPattern) {
-        String textureName = idPattern.formatted("");
-        if (textureName.contains("__")) textureName = textureName.replace("__", "_");
-        if (textureName.startsWith("_")) textureName = textureName.substring(1);
-        if (textureName.endsWith("_")) textureName = textureName.substring(0, textureName.length() - 1);
-        return textureName;
+    public static String getFlagName(FlagKey<?> flagKey) {
+        return flagKey.toString();
     }
 
     private static JsonObject simpleGeneratedModel(String parent, String texture) {

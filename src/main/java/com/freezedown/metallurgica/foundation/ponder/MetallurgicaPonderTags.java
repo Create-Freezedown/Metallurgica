@@ -1,9 +1,11 @@
 package com.freezedown.metallurgica.foundation.ponder;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
-import com.freezedown.metallurgica.registry.MetallurgicaOre;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.createmod.catnip.platform.CatnipServices;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
@@ -31,7 +33,7 @@ public class MetallurgicaPonderTags {
 
         helper.registerTag(MINERALS)
                 .addToIndex()
-                .item(MetallurgicaOre.CASSITERITE.ORE.raw().get(), true, false)
+                .item(MaterialHelper.getItem(MetMaterials.CASSITERITE, FlagKey.MINERAL), true, false)
                 .title("Minerals")
                 .description("Ores, Minerals and how to use them")
                 .register();

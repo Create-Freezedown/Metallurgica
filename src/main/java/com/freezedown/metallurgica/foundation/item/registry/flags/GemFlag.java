@@ -20,7 +20,7 @@ public class GemFlag extends ItemFlag {
 
     public GemFlag(String existingNamespace) {
         super("%s_gem", existingNamespace);
-        this.setTagPatterns(List.of("forge:gems", "forge:gems/%s"));
+        this.setTagPatterns(List.of("c:gems", "c:gems/%s"));
     }
 
     public GemFlag() {

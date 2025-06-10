@@ -8,7 +8,7 @@ public class MClient extends ConfigBase {
     public final ConfigBool renderExcavationParticles = b(true, "renderExcavationParticles", Comments.renderExcavationParticles);
     public final ConfigBool appendTextToItems = b(true, "appendTextToItems", Comments.appendTextToItems);
 
-
+    public final ConfigBool debugInfo = b(true, "debugInfo", "Whether or not to display our debug information in the debug menu");
 
     public final ConfigBase.ConfigGroup configButton = this.group(1, "configButton", Comments.configButton);;
     public final ConfigBase.ConfigInt mainMenuConfigButtonRow = this.i(2, 0, 4, "mainMenuConfigButtonRow", Comments.mainMenuConfigButtonRow);;

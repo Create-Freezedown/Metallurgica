@@ -29,8 +29,8 @@ public class StorageBlockFlag extends BlockFlag {
 
     public StorageBlockFlag(String existingNamespace) {
         super("%s_block", existingNamespace);
-        this.setTagPatterns(List.of("forge:storage_blocks", "forge:storage_blocks/%s", "minecraft:mineable/pickaxe"));
-        this.setItemTagPatterns(List.of("forge:storage_blocks", "forge:storage_blocks/%s"));
+        this.setTagPatterns(List.of("c:storage_blocks", "c:storage_blocks/%s", "minecraft:mineable/pickaxe"));
+        this.setItemTagPatterns(List.of("c:storage_blocks", "c:storage_blocks/%s"));
     }
 
     public StorageBlockFlag() {
@@ -61,6 +61,11 @@ public class StorageBlockFlag extends BlockFlag {
                     .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                     .build()
                     .register();
+    }
+
+    @Override
+    public boolean shouldHaveComposition() {
+        return true;
     }
 
     @Override

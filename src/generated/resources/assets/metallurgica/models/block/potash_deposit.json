@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "metallurgica:block/potash_deposit_top",
-    "side": "metallurgica:block/potash_deposit"
-  }
-}

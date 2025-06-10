@@ -25,7 +25,7 @@ public class SheetFlag extends ItemFlag {
 
     public SheetFlag(String existingNamespace) {
         super("%s_sheet", existingNamespace);
-        this.setTagPatterns(List.of("forge:plates", "forge:plates/%s"));
+        this.setTagPatterns(List.of("c:plates", "c:plates/%s"));
     }
 
     public SheetFlag() {
