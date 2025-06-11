@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-10T22:19:17.2508321	Metallurgica's Processing Recipes
+// 1.20.1	2025-06-11T18:36:42.9034323	Metallurgica's Processing Recipes
 afccbcdff9a3598525bd2718cd3deac9a2d6255d data/metallurgica/recipes/ceramic_mixing/leather.json
 0f6c1d876cf3dca82db7bfd6c06d0789899b84b8 data/metallurgica/recipes/distillation/titanium_tetrachloride.json
 8ea513777facf9bd31b50f11e02e22a8aa9a82c3 data/metallurgica/recipes/electrolysis/magnesium_chloride.json
@@ -24,7 +24,7 @@ b0b920addda97a544aea3740293b355a9a213e60 data/metallurgica/recipes/mixing/copper
 fce4b55c360c9ff0bcdbe8ba91c913e858d7be90 data/metallurgica/recipes/mixing/copper_oxide.json
 31311c1dc5413171ba82afaa539c800a5113552d data/metallurgica/recipes/mixing/decontaminated_water.json
 af1525085dbaddd29187e4a947ee69b8d4a109b2 data/metallurgica/recipes/mixing/loosened_bauxite.json
-10eba6ea884059503ed7cc63f992833d3fda54ee data/metallurgica/recipes/mixing/magnesium_chloride.json
+06ac7d8639a09ec77d09ab7e31299eab1c012c97 data/metallurgica/recipes/mixing/magnesium_chloride.json
 ad8b9b1758756cd34d0907b4e45e460a4968b36e data/metallurgica/recipes/mixing/magnetite_lumps.json
 67c18b509459be891d352908cba95f2b52f2cf36 data/metallurgica/recipes/mixing/sodium_hypochlorite.json
 464ef374df06287f3953b394466b23478e08747c data/metallurgica/recipes/mixing/sulfuric_acid.json

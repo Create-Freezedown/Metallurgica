@@ -31,6 +31,9 @@ public class SequencedAssemblyHandler {
             ResourceLocation inputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
             ResourceLocation outputId = new ResourceLocation(sheetFlag.getExistingNamespace(), sheetFlag.getIdPattern().formatted(material.getName()));
             ResourceLocation transitionalId = new ResourceLocation(semiPressedSheetFlag.getExistingNamespace(), semiPressedSheetFlag.getIdPattern().formatted(material.getName()));
+            if (material.noRegister(FlagKey.INGOT)) {
+                inputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
+            }
             SequencedAssemblyRecipeBuilder builder = new SequencedAssemblyRecipeBuilder(Metallurgica.asResource("runtime_generated/" + inputId.getNamespace() + "/" + inputId.getPath() + "_to_" + outputId.getPath()));
             builder.transitionTo(BuiltInRegistries.ITEM.get(transitionalId));
             builder.require(BuiltInRegistries.ITEM.get(inputId));

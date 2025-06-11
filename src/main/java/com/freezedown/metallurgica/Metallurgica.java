@@ -12,12 +12,10 @@ import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModi
 import com.freezedown.metallurgica.infastructure.conductor.ConductorStats;
 import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.freezedown.metallurgica.registry.*;
-import com.freezedown.metallurgica.registry.material.AlloyMaterials;
-import com.freezedown.metallurgica.registry.material.MetMaterials;
-import com.freezedown.metallurgica.registry.material.MetalMaterials;
-import com.freezedown.metallurgica.registry.material.MineralMaterials;
+import com.freezedown.metallurgica.registry.material.*;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
 import com.freezedown.metallurgica.world.biome_modifier.SurfaceDepositsModifier;
 import com.google.gson.Gson;
@@ -97,7 +95,7 @@ public class Metallurgica
         MetallurgicaConductors.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
-
+        MetallurgicaSpecialRecipes.register(modEventBus);
         MetallurgicaFluids.register();
         MetallurgicaEffects.register(modEventBus);
         MetallurgicaRecipeTypes.register(modEventBus);
@@ -132,6 +130,7 @@ public class Metallurgica
         MetalMaterials.register();
         AlloyMaterials.register();
         MineralMaterials.register();
+        CompoundMaterials.register();
         MetMaterials.register(modEventBus);
     }
     

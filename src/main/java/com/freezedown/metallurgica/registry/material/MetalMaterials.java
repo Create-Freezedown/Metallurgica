@@ -12,37 +12,40 @@ public class MetalMaterials {
     public static void register() {
         IRON = new Material.Builder(Metallurgica.asResource("iron"))
                 .element(MetallurgicaElements.IRON)
-                .noRegister(INGOT, SHEET, STORAGE_BLOCK)
+                .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK)
                 .addFlags(
                         new NuggetFlag("minecraft"),
                         new IngotFlag("minecraft"),
                         new StorageBlockFlag("minecraft"),
                         new SheetFlag("create"),
-                        new FluidFlag(1538.0)
+                        new FluidFlag(1538.0),
+                        new DustFlag()
                 ).buildAndRegister();
         GOLD = new Material.Builder(Metallurgica.asResource("gold"))
                 .element(MetallurgicaElements.GOLD)
-                .withNameAlternative(FlagKey.SHEET, "golden")
-                .noRegister(INGOT, SHEET, STORAGE_BLOCK)
+                .nameAlternatives(FlagKey.SHEET, "golden")
+                .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK)
                 .addFlags(
                         new NuggetFlag("minecraft"),
                         new IngotFlag("minecraft"),
                         new StorageBlockFlag("minecraft"),
                         new SheetFlag("create"),
-                        new FluidFlag(1064.2)
+                        new FluidFlag(1064.2),
+                        new DustFlag()
                 ).buildAndRegister();
         COPPER = new Material.Builder(Metallurgica.asResource("copper"))
                 .element(MetallurgicaElements.COPPER)
-                .noRegister(INGOT, SHEET, STORAGE_BLOCK)
+                .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK)
                 .addFlags(
-                        new NuggetFlag("minecraft"),
+                        new NuggetFlag("create"),
                         new IngotFlag("minecraft"),
                         new StorageBlockFlag("minecraft"),
                         new SheetFlag("create"),
                         new FluidFlag(1084.6),
+                        new DustFlag(),
                         new CableFlag(0.0178, WireColours.copper),
                         new MineralFlag(true),
-                        new RubbleFlag().crushingOnly().bonusChance(0.15f)
+                        new RubbleFlag().crushing().bonusChance(0.15f)
                 ).buildAndRegister();
         NETHERIUM = new Material.Builder(Metallurgica.asResource("netherium"))
                 .element(MetallurgicaElements.NETHERIUM)
@@ -52,6 +55,7 @@ public class MetalMaterials {
                         new StorageBlockFlag(),
                         new SheetFlag(),
                         new FluidFlag(3962.0),
+                        new DustFlag(),
                         new CableFlag(0.0237, WireColours.missing)
                 ).buildAndRegister();
         ALUMINUM = new Material.Builder(Metallurgica.asResource("aluminum"))
@@ -63,6 +67,7 @@ public class MetalMaterials {
                         new StorageBlockFlag("tfmg"),
                         new SheetFlag(),
                         new FluidFlag(660.3),
+                        new DustFlag(),
                         new CableFlag(0.0276, WireColours.aluminum)
                 ).buildAndRegister();
         SCANDIUM = new Material.Builder(Metallurgica.asResource("scandium"))
@@ -73,6 +78,7 @@ public class MetalMaterials {
                         new StorageBlockFlag(),
                         new SheetFlag(),
                         new FluidFlag(1541.0),
+                        new DustFlag(),
                         new CableFlag(0.0124, WireColours.scandium)
                 ).buildAndRegister();
         LEAD = new Material.Builder(Metallurgica.asResource("lead"))
@@ -83,7 +89,8 @@ public class MetalMaterials {
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
                         new SheetFlag(),
-                        new FluidFlag(327.5)
+                        new FluidFlag(327.5),
+                        new DustFlag()
                 ).buildAndRegister();
         SILVER = new Material.Builder(Metallurgica.asResource("silver"))
                 .element(MetallurgicaElements.SILVER)
@@ -92,7 +99,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(961.8)
+                        new FluidFlag(961.8),
+                        new DustFlag()
                 ).buildAndRegister();
         NICKEL = new Material.Builder(Metallurgica.asResource("nickel"))
                 .element(MetallurgicaElements.NICKEL)
@@ -102,7 +110,8 @@ public class MetalMaterials {
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
                         new SheetFlag(),
-                        new FluidFlag(1455.0)
+                        new FluidFlag(1455.0),
+                        new DustFlag()
                 ).buildAndRegister();
         TIN = new Material.Builder(Metallurgica.asResource("tin"))
                 .element(MetallurgicaElements.TIN)
@@ -111,17 +120,19 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(231.9)
+                        new FluidFlag(231.9),
+                        new DustFlag()
                 ).buildAndRegister();
         ZINC = new Material.Builder(Metallurgica.asResource("zinc"))
                 .element(MetallurgicaElements.ZINC)
-                .noRegister(INGOT, STORAGE_BLOCK)
+                .noRegister(NUGGET, INGOT, STORAGE_BLOCK)
                 .addFlags(
-                        new NuggetFlag(),
+                        new NuggetFlag("create"),
                         new IngotFlag("create"),
                         new StorageBlockFlag("create"),
                         new SheetFlag(),
-                        new FluidFlag(419.5)
+                        new FluidFlag(419.5),
+                        new DustFlag()
                 ).buildAndRegister();
         PLATINUM = new Material.Builder(Metallurgica.asResource("platinum"))
                 .element(MetallurgicaElements.PLATINUM)
@@ -130,7 +141,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(1768.3)
+                        new FluidFlag(1768.3),
+                        new DustFlag()
                 ).buildAndRegister();
         TITANIUM = new Material.Builder(Metallurgica.asResource("titanium"))
                 .element(MetallurgicaElements.TITANIUM)
@@ -139,7 +151,8 @@ public class MetalMaterials {
                         new IngotFlag().requiresCompacting(),
                         new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(3),
-                        new FluidFlag(1668.0)
+                        new FluidFlag(1668.0),
+                        new DustFlag()
                 ).buildAndRegister();
         URANIUM = new Material.Builder(Metallurgica.asResource("uranium"))
                 .element(MetallurgicaElements.URANIUM)
@@ -148,7 +161,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(1132.3)
+                        new FluidFlag(1132.3),
+                        new DustFlag()
                 ).buildAndRegister();
         LITHIUM = new Material.Builder(Metallurgica.asResource("lithium"))
                 .element(MetallurgicaElements.LITHIUM)
@@ -158,7 +172,8 @@ public class MetalMaterials {
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
                         new SheetFlag(),
-                        new FluidFlag(180.5)
+                        new FluidFlag(180.5),
+                        new DustFlag()
                 ).buildAndRegister();
         MAGNESIUM = new Material.Builder(Metallurgica.asResource("magnesium"))
                 .element(MetallurgicaElements.MAGNESIUM)
@@ -167,7 +182,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(650.0)
+                        new FluidFlag(650.0),
+                        new DustFlag()
                 ).buildAndRegister();
         TUNGSTEN = new Material.Builder(Metallurgica.asResource("tungsten"))
                 .element(MetallurgicaElements.TUNGSTEN)
@@ -176,7 +192,8 @@ public class MetalMaterials {
                         new IngotFlag().requiresCompacting(),
                         new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(4),
-                        new FluidFlag(3422.0)
+                        new FluidFlag(3422.0),
+                        new DustFlag()
                 ).buildAndRegister();
         OSMIUM = new Material.Builder(Metallurgica.asResource("osmium"))
                 .element(MetallurgicaElements.OSMIUM)
@@ -185,7 +202,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(3033.0)
+                        new FluidFlag(3033.0),
+                        new DustFlag()
                 ).buildAndRegister();
         THORIUM = new Material.Builder(Metallurgica.asResource("thorium"))
                 .element(MetallurgicaElements.THORIUM)
@@ -194,7 +212,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(1750.0)
+                        new FluidFlag(1750.0),
+                        new DustFlag()
                 ).buildAndRegister();
         TANTALUM = new Material.Builder(Metallurgica.asResource("tantalum"))
                 .element(MetallurgicaElements.TANTALUM)
@@ -203,7 +222,8 @@ public class MetalMaterials {
                         new IngotFlag().requiresCompacting(),
                         new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(2),
-                        new FluidFlag(3020.0)
+                        new FluidFlag(3020.0),
+                        new DustFlag()
                 ).buildAndRegister();
         SODIUM = new Material.Builder(Metallurgica.asResource("sodium"))
                 .element(MetallurgicaElements.SODIUM)
@@ -211,7 +231,8 @@ public class MetalMaterials {
                         new NuggetFlag(),
                         new IngotFlag(),
                         new StorageBlockFlag().useColumnModel(),
-                        new SheetFlag()
+                        new SheetFlag(),
+                        new DustFlag()
                 ).buildAndRegister();
         CHROMIUM = new Material.Builder(Metallurgica.asResource("chromium"))
                 .element(MetallurgicaElements.CHROMIUM)
@@ -220,7 +241,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(1907.0)
+                        new FluidFlag(1907.0),
+                        new DustFlag()
                 ).buildAndRegister();
         VANADIUM = new Material.Builder(Metallurgica.asResource("vanadium"))
                 .element(MetallurgicaElements.VANADIUM)
@@ -229,7 +251,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(1910.0)
+                        new FluidFlag(1910.0),
+                        new DustFlag()
                 ).buildAndRegister();
         MANGANESE = new Material.Builder(Metallurgica.asResource("manganese"))
                 .element(MetallurgicaElements.MANGANESE)
@@ -238,7 +261,8 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(1246.0)
+                        new FluidFlag(1246.0),
+                        new DustFlag()
                 ).buildAndRegister();
     }
 }

@@ -91,7 +91,7 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .requiresHeat(HeatCondition.SUPERHEATED)),
     
     magnesiumChloride = create(Metallurgica.asResource("magnesium_chloride"), b -> b
-            .require(MetallurgicaItems.magnesiumOxide.get())
+            .require(MaterialHelper.getItem(MetMaterials.MAGNESIUM_OXIDE, FlagKey.DUST))
             .require(MetallurgicaFluids.hydrochloricAcid.get(), 100)
             .output(MetallurgicaFluids.magnesiumChloride.get(), 50)
             .requiresHeat(HeatCondition.HEATED)),

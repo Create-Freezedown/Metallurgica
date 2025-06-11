@@ -17,7 +17,8 @@ public class AlloyMaterials {
                         new IngotFlag().requiresCompacting(),
                         new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(3),
-                        new FluidFlag(1447.0)
+                        new FluidFlag(1447.0),
+                        new DustFlag()
                 ).buildAndRegister();
         NETHERITE = new Material.Builder(Metallurgica.asResource("netherite"))
                 .composition(MetallurgicaElements.NETHERIUM, 1, MetallurgicaElements.GOLD, 1)
@@ -31,13 +32,14 @@ public class AlloyMaterials {
                 ).buildAndRegister();
         BRASS = new Material.Builder(Metallurgica.asResource("brass"))
                 .composition(MetallurgicaElements.COPPER, 3, MetallurgicaElements.ZINC, 1)
-                .noRegister(INGOT, STORAGE_BLOCK, SHEET)
+                .noRegister(NUGGET, INGOT, STORAGE_BLOCK, SHEET)
                 .addFlags(
-                        new NuggetFlag(),
+                        new NuggetFlag("create"),
                         new IngotFlag("create"),
                         new StorageBlockFlag("create"),
                         new SheetFlag("create"),
-                        new FluidFlag(920.0)
+                        new FluidFlag(920.0),
+                        new DustFlag()
                 ).buildAndRegister();
         BRONZE = new Material.Builder(Metallurgica.asResource("bronze"))
                 .composition(MetallurgicaElements.COPPER, 7, MetallurgicaElements.TIN, 2)
@@ -46,7 +48,8 @@ public class AlloyMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(950.0)
+                        new FluidFlag(950.0),
+                        new DustFlag()
                 ).buildAndRegister();
         ARSENICAL_BRONZE = new Material.Builder(Metallurgica.asResource("arsenical_bronze"))
                 .composition(MetallurgicaElements.COPPER, 4, MetallurgicaElements.TIN, 1, MetallurgicaElements.ARSENIC, 3)
@@ -55,7 +58,8 @@ public class AlloyMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
-                        new FluidFlag(685.0)
+                        new FluidFlag(685.0),
+                        new DustFlag()
                 ).buildAndRegister();
         WROUGHT_IRON = new Material.Builder(Metallurgica.asResource("wrought_iron"))
                 .composition(MetallurgicaElements.IRON, 3, MetallurgicaElements.CARBON, 1)

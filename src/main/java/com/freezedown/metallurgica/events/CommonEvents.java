@@ -13,6 +13,7 @@ import com.freezedown.metallurgica.foundation.data.runtime.composition.RuntimeCo
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.MetallurgicaRecipes;
 import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.freezedown.metallurgica.foundation.temperature.server.TemperatureMap;
+import com.freezedown.metallurgica.foundation.util.recipe.helper.PhysicalRecipeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.FullChunkStatus;
 import net.minecraft.server.level.ServerLevel;
@@ -20,6 +21,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
@@ -70,6 +73,21 @@ public class CommonEvents {
         if(handler.getLoadedChunkPositions().contains(chunk.getPos())) {
             handler.removeLoadedChunk(chunk.getPos());
         }
+    }
+
+    @SubscribeEvent
+    public void levelTickEvent(TickEvent.LevelTickEvent event) {
+        if(event.level.isClientSide()) {
+            return;
+        }
+        if(event.phase != TickEvent.Phase.START) {
+            return;
+        }
+        if(event.level.getGameTime() % 5 != 0) {
+            return;
+        }
+        ServerLevel serverLevel = (ServerLevel) event.level;
+        serverLevel.getEntities().get(EntityTypeTest.forClass(ItemEntity.class), PhysicalRecipeHelper::matchFluidReactionRecipe);
     }
 
     @SubscribeEvent

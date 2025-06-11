@@ -7,6 +7,7 @@ import com.freezedown.metallurgica.foundation.item.registry.flags.MineralFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.RubbleFlag;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
+import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.DUST;
 import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
 
 public class MineralMaterials {
@@ -34,7 +35,7 @@ public class MineralMaterials {
                 .addFlags(new MineralFlag()).buildAndRegister();
         RUTILE = new Material.Builder(Metallurgica.asResource("rutile"))
                 .composition(MetallurgicaElements.TITANIUM, 1, MetallurgicaElements.OXYGEN, 2)
-                .addFlags(new MineralFlag(), new DustFlag(true), new RubbleFlag().crushingOnly().bonusChance(0.05f)).buildAndRegister();
+                .addFlags(new MineralFlag(), new DustFlag(true), new RubbleFlag().crushing().bonusChance(0.05f)).buildAndRegister();
         POTASH = new Material.Builder(Metallurgica.asResource("potash"))
                 .composition(MetallurgicaElements.POTASSIUM, 1, MetallurgicaElements.CARBON, 1, MetallurgicaElements.OXYGEN, 3)
                 .addFlags(new MineralFlag()).buildAndRegister();
@@ -46,6 +47,8 @@ public class MineralMaterials {
                 .addFlags(new MineralFlag(), new DustFlag(true)).buildAndRegister();
         CUPRITE = new Material.Builder(Metallurgica.asResource("cuprite"))
                 .composition(MetallurgicaElements.COPPER, 1, MetallurgicaElements.OXYGEN, 2)
-                .addFlags(new MineralFlag()).buildAndRegister();
+                .noRegister(DUST)
+                .existingIds(DUST, "minecraft:redstone")
+                .addFlags(new MineralFlag(), new DustFlag()).buildAndRegister();
     }
 }

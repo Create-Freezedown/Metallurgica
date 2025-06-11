@@ -118,9 +118,6 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike alumina() {
             return MetallurgicaItems.alumina.get();
         }
-        public static ItemLike aluminumDust() {
-            return MetallurgicaItems.aluminumDust.get();
-        }
         public static ItemLike redSand() {
             return Items.RED_SAND;
         }

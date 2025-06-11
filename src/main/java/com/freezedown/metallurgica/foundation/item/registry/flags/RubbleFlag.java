@@ -15,7 +15,7 @@ import java.util.List;
 
 public class RubbleFlag extends ItemFlag {
     @Getter
-    private boolean crushingOnly = false;
+    private boolean crushing = false;
     @Getter
     private float bonusChance = 0;
 
@@ -28,8 +28,8 @@ public class RubbleFlag extends ItemFlag {
         this("metallurgica");
     }
 
-    public RubbleFlag crushingOnly() {
-        this.crushingOnly = true;
+    public RubbleFlag crushing() {
+        this.crushing = true;
         return this;
     }
 

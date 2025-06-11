@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -51,6 +52,13 @@ public abstract class ItemFlag implements IMaterialFlag {
         }
 
         return getUnlocalizedName();
+    }
+
+    public ResourceLocation getExistingId(Material material, @Nullable String nameAlternative) {
+        if (nameAlternative != null) {
+            return new ResourceLocation(existingNamespace, idPattern.formatted(nameAlternative));
+        }
+        return new ResourceLocation(existingNamespace, idPattern.formatted(material.getName()));
     }
 
     public abstract ItemEntry<? extends MaterialItem> registerItem(@NotNull Material material, ItemFlag flag, @NotNull MetallurgicaRegistrate registrate);

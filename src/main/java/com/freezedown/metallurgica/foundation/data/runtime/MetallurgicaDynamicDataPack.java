@@ -181,6 +181,6 @@ public class MetallurgicaDynamicDataPack implements PackResources {
     }
 
     public static ResourceLocation getCompositionLocation(ResourceLocation compId) {
-        return new ResourceLocation(compId.getNamespace(), String.join("", "metallurgica_utilities/compositions/", compId.getPath(), ".json"));
+        return new ResourceLocation(compId.getNamespace(), String.join("", "metallurgica_utilities/material_compositions/", compId.getPath(), ".json"));
     }
 }

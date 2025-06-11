@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.advancement.MetallurgicaAdvancements;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.freezedown.metallurgica.foundation.data.recipe.create.MSequencedAssemblyGen;
+import com.freezedown.metallurgica.foundation.data.recipe.metallurgica.MFluidReactionGen;
 import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.ponder.MetallurgicaPonderPlugin;
@@ -47,6 +48,7 @@ public class MetallurgicaDatagen {
         generator.addProvider(server, new MetallurgicaAdvancements(output));
         if (server) {
             generator.addProvider(true, new MStandardRecipeGen(generator));
+            generator.addProvider(true, new MFluidReactionGen(generator));
             MProcessingRecipeGen.registerAll(generator);
             MetallurgicaCompositions.register(generator);
             MetallurgicaBiomeTemperatures.register(generator);

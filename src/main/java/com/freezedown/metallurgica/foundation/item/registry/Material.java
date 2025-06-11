@@ -6,21 +6,17 @@ import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialF
 import com.freezedown.metallurgica.infastructure.element.Element;
 import com.freezedown.metallurgica.infastructure.element.ElementEntry;
 import com.freezedown.metallurgica.infastructure.element.data.ElementData;
-import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 import com.google.common.base.Preconditions;
 import com.tterrag.registrate.util.entry.FluidEntry;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.createmod.catnip.config.ConfigBase;
-import net.createmod.catnip.data.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,6 +49,10 @@ public class Material implements Comparable<Material> {
 
     public String getModid() {
         return materialInfo.resourceLocation.getNamespace();
+    }
+
+    public ResourceLocation getId() {
+        return materialInfo.resourceLocation;
     }
 
     public boolean noRegister(FlagKey<? extends IMaterialFlag> flag) {
@@ -141,8 +141,33 @@ public class Material implements Comparable<Material> {
             return this;
         }
 
-        public Builder withNameAlternative(FlagKey<?> flag, String alternative) {
-            materialInfo.nameAlternatives().put(flag, alternative);
+        public Builder existingIds(Object... components) {
+            Preconditions.checkArgument(
+                    components.length % 2 == 0,
+                    "Material Existing Ids list malformed!");
+
+            for (int i = 0; i < components.length; i += 2) {
+                if (components[i] == null || components[i + 1] == null) {
+                    throw new IllegalArgumentException(
+                            "Existing Id in Existing Ids List is null for Material " + this.materialInfo.resourceLocation);
+                }
+                materialInfo.withExistingId((FlagKey<?>) components[i], (String) components[i + 1]);
+            }
+            return this;
+        }
+
+        public Builder nameAlternatives(Object... components) {
+            Preconditions.checkArgument(
+                    components.length % 2 == 0,
+                    "Material Name Alternatives list malformed!");
+
+            for (int i = 0; i < components.length; i += 2) {
+                if (components[i] == null || components[i + 1] == null) {
+                    throw new IllegalArgumentException(
+                            "Name Alternative in Name Alternatives List is null for Material " + this.materialInfo.resourceLocation);
+                }
+                materialInfo.nameAlternatives().put((FlagKey<?>) components[i], (String) components[i + 1]);
+            }
             return this;
         }
 
@@ -187,6 +212,8 @@ public class Material implements Comparable<Material> {
         @Getter
         public Map<FlagKey<?>, String> nameAlternatives = new HashMap<>();
         @Getter
+        public Map<FlagKey<?>, ResourceLocation> existingIds = new HashMap<>();
+        @Getter
         public List<ElementData> composition = new ArrayList<>();
 
         private MaterialInfo(ResourceLocation resourceLocation) {
@@ -197,6 +224,15 @@ public class Material implements Comparable<Material> {
             nameAlternatives.put(flag, alternative);
             return this;
         }
+
+        public MaterialInfo withExistingId(FlagKey<?> flag, ResourceLocation id) {
+            existingIds.put(flag, id);
+            return this;
+        }
+        public MaterialInfo withExistingId(FlagKey<?> flag, String id) {
+            return withExistingId(flag, new ResourceLocation(id));
+        }
+
 
         private void verifyInfo(MaterialFlags flags) {
             // no-op

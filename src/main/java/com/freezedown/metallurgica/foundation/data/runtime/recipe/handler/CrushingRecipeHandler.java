@@ -31,7 +31,7 @@ public class CrushingRecipeHandler {
             if (!rubbleId.getNamespace().equals(Metallurgica.ID)) {
                 logRecipeSkip(rubbleId);
             }
-            if (rubbleFlag.isCrushingOnly()) {
+            if (rubbleFlag.isCrushing()) {
                 ProcessingRecipeBuilder<CrushingRecipe> builder = new Builder<>(mineralId.getNamespace(), CrushingRecipe::new, mineralId.getPath(), rubbleId.getPath(), provider);
                 builder.require(BuiltInRegistries.ITEM.get(mineralId));
                 builder.output(BuiltInRegistries.ITEM.get(rubbleId));

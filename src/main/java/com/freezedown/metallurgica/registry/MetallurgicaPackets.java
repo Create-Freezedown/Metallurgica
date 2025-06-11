@@ -35,8 +35,6 @@ public enum MetallurgicaPackets {
     faucetActivation(FaucetActivationPacket.class, FaucetActivationPacket::new, PLAY_TO_CLIENT),
     fluidComposition(FluidCompositionPacket.class, FluidCompositionPacket::new, PLAY_TO_CLIENT),
     temperatureUpdate(TemperatureUpdatePacket.class, TemperatureUpdatePacket::new, PLAY_TO_CLIENT),
-    //climateData(ClimatePacket.class, ClimatePacket::new, PLAY_TO_CLIENT),
-    //bodyDataSync(BodyDataSyncPacket.class, BodyDataSyncPacket::new, PLAY_TO_CLIENT)
     ;
     
     public static final ResourceLocation CHANNEL_NAME = Metallurgica.asResource("main");

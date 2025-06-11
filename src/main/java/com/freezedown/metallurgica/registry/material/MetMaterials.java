@@ -63,6 +63,11 @@ public class MetMaterials {
     public static Material FLUORITE;
     public static Material CUPRITE;
 
+    //Compounds
+    public static Material MAGNESIUM_OXIDE;
+    public static Material POTASSIUM_NITRATE;
+    public static Material CALCIUM_CARBONATE;
+
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
 
     public static final Map<Material, List<FluidEntry<?>>> materialFluids = new HashMap<>();

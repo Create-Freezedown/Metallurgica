@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.tfmg.CreateTFMG;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
@@ -11,14 +10,11 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.createmod.catnip.data.Couple;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.freezedown.metallurgica.registry.material.MetMaterials;
 
 /**
  * Deprecated. Use and update {@link MetMaterials} instead.

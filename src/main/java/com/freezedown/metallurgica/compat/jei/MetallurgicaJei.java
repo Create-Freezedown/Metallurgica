@@ -2,14 +2,17 @@ package com.freezedown.metallurgica.compat.jei;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.category.ceramic_mixing.CeramicMixingCategory;
-import com.freezedown.metallurgica.compat.jei.category.composition.ItemCompositionCategory;
-import com.freezedown.metallurgica.compat.jei.category.composition.ItemCompositionRecipe;
+import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompositionCategory;
+import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompositionRecipe;
 import com.freezedown.metallurgica.compat.jei.category.electrolyzer.ElectrolysisCategory;
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
+import com.freezedown.metallurgica.compat.jei.category.reaction.fluid.FluidReactionCategory;
 import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;
@@ -22,8 +25,12 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 
@@ -50,17 +57,21 @@ public class MetallurgicaJei implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         loadCategories(registration);
         registration.addRecipeCategories(allCategories.toArray(IRecipeCategory[]::new));
+        registration.addRecipeCategories(new FluidReactionCategory(registration.getJeiHelpers().getGuiHelper()));
     }
     
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         ingredientManager = registration.getIngredientManager();
+        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
         allCategories.forEach(c -> c.registerRecipes(registration));
+        registration.addRecipes(MetallurgicaJeiRecipeTypes.FLUID_REACTION, recipeManager.getAllRecipesFor(MetallurgicaSpecialRecipes.FLUID_REACTION.get()));
     }
     
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         allCategories.forEach(c -> c.registerCatalysts(registration));
+        registration.addRecipeCatalysts(MetallurgicaJeiRecipeTypes.FLUID_REACTION, new ItemStack(Items.BUCKET), new ItemStack(AllBlocks.BASIN));
     }
 
     @Override
@@ -83,10 +94,10 @@ public class MetallurgicaJei implements IModPlugin {
     private void loadCategories(IRecipeCategoryRegistration registration) {
         allCategories.clear();
         allCategories.add(
-                builder(ItemCompositionRecipe.class)
-                        .addRecipes(() -> ItemCompositionCategory.COMPOSITIONS)
+                builder(ElementCompositionRecipe.class)
+                        .addRecipes(() -> ElementCompositionCategory.COMPOSITIONS)
                         .emptyBackground(177, 103)
-                        .build("item_compositions", ItemCompositionCategory::new)
+                        .build("item_compositions", ElementCompositionCategory::new)
         );
         allCategories.add(
                 builder(BasinRecipe.class)

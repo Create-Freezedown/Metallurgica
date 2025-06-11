@@ -12,9 +12,11 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -52,6 +54,13 @@ public abstract class BlockFlag implements IMaterialFlag {
         }
 
         return getUnlocalizedName();
+    }
+
+    public ResourceLocation getExistingId(Material material, @Nullable String nameAlternative) {
+        if (nameAlternative != null) {
+            return new ResourceLocation(existingNamespace, idPattern.formatted(nameAlternative));
+        }
+        return new ResourceLocation(existingNamespace, idPattern.formatted(material.getName()));
     }
 
     public abstract BlockEntry<? extends MaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate);

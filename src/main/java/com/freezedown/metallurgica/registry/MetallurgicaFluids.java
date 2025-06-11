@@ -70,26 +70,6 @@ public class MetallurgicaFluids {
     public static final FluidEntry<VirtualFluid>
             chlorine = gas("chlorine", 0xffDBD971, AllTags.forgeFluidTag("chlorine"));
     
-    //public static final FluidEntry<MoltenMetal.Flowing>
-    //        moltenIron = registrate.moltenMetal("iron"),
-    //        moltenGold = registrate.moltenMetal("gold"),
-    //        moltenCopper = registrate.moltenMetal("copper"),
-    //        moltenAluminum = registrate.moltenMetal("aluminum"),
-    //        moltenLead = registrate.moltenMetal("lead"),
-    //        moltenSilver = registrate.moltenMetal("silver"),
-    //        moltenNickel = registrate.moltenMetal("nickel"),
-    //        moltenTin = registrate.moltenMetal("tin"),
-    //        moltenZinc = registrate.moltenMetal("zinc"),
-    //        moltenPlatinum = registrate.moltenMetal("platinum"),
-    //        moltenTitanium = registrate.moltenMetal("titanium"),
-    //        moltenUranium = registrate.moltenMetal("uranium"),
-    //        moltenLithium = registrate.moltenMetal("lithium"),
-    //        moltenMagnesium = registrate.moltenMetal("magnesiumIngot"),
-    //        moltenTungsten = registrate.moltenMetal("tungsten"),
-    //        moltenOsmium = registrate.moltenMetal("osmium"),
-    //        moltenThorium = registrate.moltenMetal("thorium")
-    //;
-    
     public static final FluidEntry<ForgeFlowingFluid.Flowing> claySlip = flowing("clay_slip", 0xff725537);
 
     public static Collection<RegistryEntry<Fluid>> ALL = registrate.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
@@ -122,10 +102,6 @@ public class MetallurgicaFluids {
         
         return  registrate.tintedFluid(name, color)
                 .tag(tags)
-                //.bucket()
-                //.lang(ClientUtil.fromId(name)+" Bucket")
-                //.tag(AllTags.forgeItemTag("buckets/"+name))
-                //.buildAndRegister()
                 .register();
     }
     

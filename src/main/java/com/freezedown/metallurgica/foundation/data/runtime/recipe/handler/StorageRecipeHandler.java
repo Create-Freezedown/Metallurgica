@@ -42,16 +42,19 @@ public class StorageRecipeHandler {
             IngotFlag ingotFlag = material.getFlag(FlagKey.INGOT);
             ResourceLocation inputId = new ResourceLocation(nuggetFlag.getExistingNamespace(), nuggetFlag.getIdPattern().formatted(material.getName()));
             ResourceLocation outputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
-            if (!outputId.getNamespace().equals(Metallurgica.ID)) {
-                logRecipeSkip(outputId);
+            if (material.noRegister(FlagKey.INGOT)) {
+                outputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
+            }
+            if (!inputId.getNamespace().equals(Metallurgica.ID)) {
+                logRecipeSkip(inputId);
                 return;
             }
             if (nuggetFlag.isRequiresCompacting()) {
                 compact9(provider, inputId, outputId);
                 decompact9(provider, outputId, inputId);
             } else {
-                craftCompact9(provider, inputId, outputId, MaterialHelper.getItem(material, FlagKey.NUGGET), MaterialHelper.getItem(material, FlagKey.INGOT));
-                craftDecompact9(provider, outputId, inputId, MaterialHelper.getItem(material, FlagKey.INGOT), MaterialHelper.getItem(material, FlagKey.NUGGET));
+                craftCompact9(provider, inputId, outputId, BuiltInRegistries.ITEM.get(inputId), BuiltInRegistries.ITEM.get(outputId));
+                craftDecompact9(provider, outputId, inputId, BuiltInRegistries.ITEM.get(outputId), BuiltInRegistries.ITEM.get(inputId));
             }
         }
     }
@@ -70,8 +73,8 @@ public class StorageRecipeHandler {
                 compact9(provider, inputId, outputId);
                 decompact9(provider, outputId, inputId);
             } else {
-                craftCompact9(provider, inputId, outputId, MaterialHelper.getItem(material, FlagKey.INGOT), MaterialHelper.getBlock(material, FlagKey.STORAGE_BLOCK));
-                craftDecompact9(provider, outputId, inputId, MaterialHelper.getBlock(material, FlagKey.STORAGE_BLOCK), MaterialHelper.getItem(material, FlagKey.INGOT));
+                craftCompact9(provider, inputId, outputId, BuiltInRegistries.ITEM.get(inputId), BuiltInRegistries.ITEM.get(outputId));
+                craftDecompact9(provider, outputId, inputId, BuiltInRegistries.ITEM.get(outputId), BuiltInRegistries.ITEM.get(inputId));
             }
 
         }
