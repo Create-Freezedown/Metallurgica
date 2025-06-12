@@ -12,11 +12,10 @@ import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModi
 import com.freezedown.metallurgica.infastructure.conductor.ConductorStats;
 import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.freezedown.metallurgica.registry.*;
-import com.freezedown.metallurgica.registry.material.AlloyMaterials;
-import com.freezedown.metallurgica.registry.material.MetMaterials;
-import com.freezedown.metallurgica.registry.material.MetalMaterials;
+import com.freezedown.metallurgica.registry.material.*;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
 import com.freezedown.metallurgica.world.biome_modifier.SurfaceDepositsModifier;
 import com.google.gson.Gson;
@@ -32,7 +31,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -97,7 +95,7 @@ public class Metallurgica
         MetallurgicaConductors.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
-
+        MetallurgicaSpecialRecipes.register(modEventBus);
         MetallurgicaFluids.register();
         MetallurgicaEffects.register(modEventBus);
         MetallurgicaRecipeTypes.register(modEventBus);
@@ -131,6 +129,8 @@ public class Metallurgica
     public static void initMaterials(IEventBus modEventBus) {
         MetalMaterials.register();
         AlloyMaterials.register();
+        MineralMaterials.register();
+        CompoundMaterials.register();
         MetMaterials.register(modEventBus);
     }
     

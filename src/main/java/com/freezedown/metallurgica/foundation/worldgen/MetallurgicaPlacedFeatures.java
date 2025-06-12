@@ -26,9 +26,9 @@ public class MetallurgicaPlacedFeatures {
 
     public static void bootstrap(BootstapContext<PlacedFeature> ctx) {
         HolderGetter<ConfiguredFeature<?, ?>> featureLookup = ctx.lookup(Registries.CONFIGURED_FEATURE);
-        Holder<ConfiguredFeature<?, ?>> magnetiteConduit = featureLookup.getOrThrow(MetallurgicaConfiguredFeatures.MAGNETITE_CONDUIT);
+        //Holder<ConfiguredFeature<?, ?>> magnetiteConduit = featureLookup.getOrThrow(MetallurgicaConfiguredFeatures.MAGNETITE_CONDUIT);
 
-        register(ctx, MAGNETITE_CONDUIT, magnetiteConduit, placement(CountPlacement.of(1), -63, 70));
+        //register(ctx, MAGNETITE_CONDUIT, magnetiteConduit, placement(CountPlacement.of(1), -63, 70));
     }
 
     private static List<PlacementModifier> placement(PlacementModifier frequency, int minHeight, int maxHeight) {

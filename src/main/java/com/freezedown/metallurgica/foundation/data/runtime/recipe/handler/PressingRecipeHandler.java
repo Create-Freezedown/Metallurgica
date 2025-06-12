@@ -30,6 +30,9 @@ public class PressingRecipeHandler {
             SheetFlag sheetFlag = material.getFlag(FlagKey.SHEET);
             ResourceLocation inputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
             ResourceLocation outputId = new ResourceLocation(sheetFlag.getExistingNamespace(), sheetFlag.getIdPattern().formatted(material.getName()));
+            if (material.noRegister(FlagKey.INGOT)) {
+                inputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
+            }
             if (!outputId.getNamespace().equals(Metallurgica.ID)) {
                 Metallurgica.LOGGER.info("Skipping pressing recipe for {} as it is not in the metallurgica namespace and likely already has one", outputId);
                 return;

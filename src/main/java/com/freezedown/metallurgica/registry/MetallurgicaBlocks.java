@@ -375,8 +375,8 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<Block>
             impureBronzeBlock =              registrate.simpleMachineBlock("impure_bronze_block", "Impure Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
     //SMITHED
-    public static final BlockEntry<ConnectedPillarBlock>
-            wroughtIronBlock =              registrate.directionalMetalBlock("wrought_iron_block", "Wrought Iron Block", ConnectedPillarBlock::new, SoundType.METAL, (c, p) -> p.axisBlock(c.get()));
+    //public static final BlockEntry<ConnectedPillarBlock>
+    //        wroughtIronBlock =              registrate.directionalMetalBlock("wrought_iron_block", "Wrought Iron Block", ConnectedPillarBlock::new, SoundType.METAL, (c, p) -> p.axisBlock(c.get()));
 
 
     //PURE

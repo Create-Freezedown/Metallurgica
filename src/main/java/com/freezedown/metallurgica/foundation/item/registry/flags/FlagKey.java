@@ -16,12 +16,16 @@ public class FlagKey<T extends IMaterialFlag> {
     public static final FlagKey<FluidFlag> FLUID = create("fluid", FluidFlag.class);
     public static final FlagKey<DustFlag> DUST = create("dust", DustFlag.class);
     public static final FlagKey<GemFlag> GEM = create("gem", GemFlag.class);
+    public static final FlagKey<MineralFlag> MINERAL = create("mineral", MineralFlag.class);
 
     public static final FlagKey<NuggetFlag> NUGGET = create("nugget", NuggetFlag.class);
     public static final FlagKey<SheetFlag> SHEET = create("sheet", SheetFlag.class);
     public static final FlagKey<SemiPressedSheetFlag> SEMI_PRESSED_SHEET = create("semi_pressed_sheet", SemiPressedSheetFlag.class);
     public static final FlagKey<WireFlag> WIRE = create("wire", WireFlag.class);
     public static final FlagKey<CableFlag> CABLE = create("cable", CableFlag.class);
+    public static final FlagKey<RubbleFlag> RUBBLE = create("rubble", RubbleFlag.class);
+
+    //Blocks
     public static final FlagKey<StorageBlockFlag> STORAGE_BLOCK = create("storage_block", StorageBlockFlag.class);
 
     private final String key;

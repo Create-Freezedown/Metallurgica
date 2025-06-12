@@ -2,6 +2,8 @@ package com.freezedown.metallurgica.foundation.data.custom.composition.tooltip;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.custom.composition.ItemComposition;
+import com.freezedown.metallurgica.foundation.data.custom.composition.MaterialComposition;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,7 +38,7 @@ public class CompositionManager extends SimpleJsonResourceReloadListener {
     protected void apply(Map<ResourceLocation, JsonElement> resourceLocationJsonElementMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         compositions.clear();
         items.clear();
-        
+
         for (Map.Entry<ResourceLocation, JsonElement> entry : resourceLocationJsonElementMap.entrySet()) {
             ResourceLocation resourceLocation = entry.getKey();
             

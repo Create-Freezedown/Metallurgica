@@ -4,8 +4,6 @@
     "metallurgica:ammonium_metavanadate",
     "metallurgica:vanadium_pentoxide",
     "metallurgica:sodium_carbonate",
-    "metallurgica:calcium",
-    "metallurgica:fluorite_powder",
-    "metallurgica:rutile_powder"
+    "metallurgica:calcium"
   ]
 }

@@ -8,16 +8,27 @@ import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
+@Getter
 public abstract class BlockFlag implements IMaterialFlag {
 
     private final String idPattern;
     private String existingNamespace = "metallurgica";
+    @Setter
+    private List<String> tagPatterns = List.of();
+    @Setter
+    private List<String> itemTagPatterns = List.of();
 
     public BlockFlag(String idPattern) {
         this.idPattern = idPattern;
@@ -28,16 +39,8 @@ public abstract class BlockFlag implements IMaterialFlag {
         this.existingNamespace = existingNamespace;
     }
 
-    public String getIdPattern() {
-        return idPattern;
-    }
-
-    public String getExistingNamespace() {
-        return existingNamespace;
-    }
-
     public String getUnlocalizedName() {
-        return "materialflag." + MetallurgicaModels.getFlagName(idPattern);
+        return "materialflag." + (this instanceof ISpecialLangSuffix suffix ? suffix.getLangSuffix() : MetallurgicaModels.getFlagName(getKey()));
     }
 
     public MutableComponent getLocalizedName(Material material) {
@@ -53,7 +56,16 @@ public abstract class BlockFlag implements IMaterialFlag {
         return getUnlocalizedName();
     }
 
+    public ResourceLocation getExistingId(Material material, @Nullable String nameAlternative) {
+        if (nameAlternative != null) {
+            return new ResourceLocation(existingNamespace, idPattern.formatted(nameAlternative));
+        }
+        return new ResourceLocation(existingNamespace, idPattern.formatted(material.getName()));
+    }
+
     public abstract BlockEntry<? extends MaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate);
+
+    public abstract boolean shouldHaveComposition();
 
     @Override
     public void verifyFlag(MaterialFlags flags) {

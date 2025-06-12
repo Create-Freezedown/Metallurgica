@@ -7,6 +7,8 @@ import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
+import com.freezedown.metallurgica.foundation.item.MaterialBucketItem;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.material.OreEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
@@ -144,7 +146,8 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return acid(name, color, still, flow, acidity);
     }
 
-    public FluidEntry<MoltenMetal> moltenMetal(String name, double moltenTemperature) {
+    public FluidEntry<MoltenMetal> moltenMetal(Material material, double moltenTemperature) {
+        String name = material.getName();
         String id = "molten_" + name;
         ResourceLocation modelParent = new ResourceLocation("item/generated");
         ResourceLocation itemTexture = Metallurgica.asResource("item/molten_metal_bucket");
@@ -154,7 +157,8 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 .lang(autoLang(id))
                 .tag(MetallurgicaTags.modFluidTag("molten_metals/" + name))
                 .tag(MetallurgicaTags.modFluidTag("molten_metals"))
-                .bucket()
+                .bucket((sup, p) -> new MaterialBucketItem(sup, p, material, MaterialBucketItem.BucketType.MOLTEN))
+                .setData(ProviderType.LANG, NonNullBiConsumer.noop())
                 .tag(AllTags.forgeItemTag("buckets/"+name))
                 .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                 .build()

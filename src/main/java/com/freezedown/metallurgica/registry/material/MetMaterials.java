@@ -36,6 +36,10 @@ public class MetMaterials {
     public static Material OSMIUM;
     public static Material THORIUM;
     public static Material TANTALUM;
+    public static Material SODIUM;
+    public static Material CHROMIUM;
+    public static Material VANADIUM;
+    public static Material MANGANESE;
 
     //Alloys
     public static Material TITANIUM_ALUMINIDE;
@@ -43,6 +47,26 @@ public class MetMaterials {
     public static Material BRASS;
     public static Material BRONZE;
     public static Material ARSENICAL_BRONZE;
+    public static Material WROUGHT_IRON;
+
+    //Minerals
+    public static Material MALACHITE;
+    public static Material MAGNETITE;
+    public static Material HEMATITE;
+    public static Material BAUXITE;
+    public static Material SPODUMENE;
+    public static Material SPHALERITE;
+    public static Material SMITHSONITE;
+    public static Material RUTILE;
+    public static Material POTASH;
+    public static Material CASSITERITE;
+    public static Material FLUORITE;
+    public static Material CUPRITE;
+
+    //Compounds
+    public static Material MAGNESIUM_OXIDE;
+    public static Material POTASSIUM_NITRATE;
+    public static Material CALCIUM_CARBONATE;
 
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
 

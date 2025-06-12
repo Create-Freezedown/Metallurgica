@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.client.renderer;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.block.AxisMaterialBlock;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
 import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
@@ -20,6 +21,10 @@ public class MaterialBlockRenderer {
     private static final Set<MaterialBlockRenderer> MODELS = new HashSet<>();
 
     public static void create(Block block, Material material) {
+        if (block instanceof AxisMaterialBlock) {
+            PillarMaterialBlockRenderer.create(block, material);
+            return;
+        }
         MODELS.add(new MaterialBlockRenderer(block, material));
     }
 

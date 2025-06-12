@@ -24,15 +24,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -40,7 +37,7 @@ import java.util.Set;
 @ParametersAreNonnullByDefault
 public class MetallurgicaDynamicDataPack implements PackResources {
     protected static final ObjectSet<String> SERVER_DOMAINS = new ObjectOpenHashSet<>();
-    protected static final Map<ResourceLocation, byte[]> DATA = new HashMap<>();
+    protected static final MetallurgicaDynamicPackContents CONTENTS = new MetallurgicaDynamicPackContents();
 
     private final String name;
 
@@ -53,7 +50,11 @@ public class MetallurgicaDynamicDataPack implements PackResources {
     }
 
     public static void clearServer() {
-        DATA.clear();
+        CONTENTS.clearData();
+    }
+
+    private static void addToData(ResourceLocation location, byte[] bytes) {
+        CONTENTS.addToData(location, bytes);
     }
 
     @Override
@@ -64,10 +65,7 @@ public class MetallurgicaDynamicDataPack implements PackResources {
     @Override
     public @Nullable IoSupplier<InputStream> getResource(PackType packType, ResourceLocation resourceLocation) {
         if (packType == PackType.SERVER_DATA) {
-            var byteArray = DATA.get(resourceLocation);
-            if (byteArray != null)
-                return () -> new ByteArrayInputStream(byteArray);
-            else return null;
+            return CONTENTS.getResource(resourceLocation);
         } else {
             return null;
         }
@@ -76,15 +74,7 @@ public class MetallurgicaDynamicDataPack implements PackResources {
     @Override
     public void listResources(PackType packType, String namespace, String path, ResourceOutput resourceOutput) {
         if (packType == PackType.SERVER_DATA) {
-            if (!path.endsWith("/")) path += "/";
-            final String finalPath = path;
-            DATA.keySet().stream().filter(Objects::nonNull).filter(loc -> loc.getPath().startsWith(finalPath))
-                    .forEach((id) -> {
-                        IoSupplier<InputStream> resource = this.getResource(packType, id);
-                        if (resource != null) {
-                            resourceOutput.accept(id, resource);
-                        }
-                    });
+            CONTENTS.listResources(namespace, path, resourceOutput);
         }
     }
 
@@ -149,18 +139,21 @@ public class MetallurgicaDynamicDataPack implements PackResources {
         if (MetallurgicaConfigs.common().dev.dumpRecipes.get()) {
             writeJson(recipeId, "recipes", parent, recipeJson);
         }
-        DATA.put(getRecipeLocation(recipeId), recipeJson.toString().getBytes(StandardCharsets.UTF_8));
+        addToData(getRecipeLocation(recipeId), recipeJson.toString().getBytes(StandardCharsets.UTF_8));
         if (recipe.serializeAdvancement() != null) {
             JsonObject advancement = recipe.serializeAdvancement();
-            DATA.put(getAdvancementLocation(Objects.requireNonNull(recipe.getAdvancementId())), advancement.toString().getBytes(StandardCharsets.UTF_8));
+            addToData(getAdvancementLocation(Objects.requireNonNull(recipe.getAdvancementId())), advancement.toString().getBytes(StandardCharsets.UTF_8));
         }
+    }
+
+    public static void addTag(String identifier, ResourceLocation tagId, JsonObject tagJson) {
+        ResourceLocation l = getTagLocation(identifier, tagId);
+        addToData(l, tagJson.toString().getBytes(StandardCharsets.UTF_8));
     }
 
     public static void addAdvancement(ResourceLocation loc, JsonObject obj) {
         ResourceLocation l = getAdvancementLocation(loc);
-        synchronized (DATA) {
-            DATA.put(l, obj.toString().getBytes(StandardCharsets.UTF_8));
-        }
+        addToData(l, obj.toString().getBytes(StandardCharsets.UTF_8));
     }
 
     public static void addComposition(FinishedComposition composition) {
@@ -170,7 +163,7 @@ public class MetallurgicaDynamicDataPack implements PackResources {
         if (MetallurgicaConfigs.common().dev.dumpCompositions.get()) {
             writeJson(compositionId, "compositions", parent, compositionJson);
         }
-        DATA.put(getCompositionLocation(compositionId), compositionJson.toString().getBytes(StandardCharsets.UTF_8));
+        addToData(getCompositionLocation(compositionId), compositionJson.toString().getBytes(StandardCharsets.UTF_8));
     }
 
     public static ResourceLocation getRecipeLocation(ResourceLocation recipeId) {
@@ -188,6 +181,6 @@ public class MetallurgicaDynamicDataPack implements PackResources {
     }
 
     public static ResourceLocation getCompositionLocation(ResourceLocation compId) {
-        return new ResourceLocation(compId.getNamespace(), String.join("", "metallurgica_utilities/compositions/", compId.getPath(), ".json"));
+        return new ResourceLocation(compId.getNamespace(), String.join("", "metallurgica_utilities/material_compositions/", compId.getPath(), ".json"));
     }
 }

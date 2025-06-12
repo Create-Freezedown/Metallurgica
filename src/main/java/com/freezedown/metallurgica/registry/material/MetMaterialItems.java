@@ -23,9 +23,9 @@ import java.util.function.Supplier;
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public class MetMaterialItems {
-    public static ImmutableTable.Builder<ItemFlag, Material, ItemEntry<? extends MaterialItem>> MATERIAL_ITEMS_BUILDER = ImmutableTable.builder();
+    public static ImmutableTable.Builder<FlagKey<?>, Material, ItemEntry<? extends MaterialItem>> MATERIAL_ITEMS_BUILDER = ImmutableTable.builder();
 
-    public static Table<ItemFlag, Material, ItemEntry<? extends MaterialItem>> MATERIAL_ITEMS;
+    public static Table<FlagKey<?>, Material, ItemEntry<? extends MaterialItem>> MATERIAL_ITEMS;
 
     public static void generateMaterialItems(MetallurgicaRegistrate registrate) {
         for (Material material : MetMaterials.registeredMaterials.values()) {
@@ -33,15 +33,15 @@ public class MetMaterialItems {
                 var flag = material.getFlag(flagKey);
                 if (!material.noRegister(flagKey)) {
                     if (flag instanceof ItemFlag itemFlag) {
-                        registerMaterialItem(material, itemFlag, registrate);
+                        registerMaterialItem(material, itemFlag, flagKey, registrate);
                     }
                 }
             }
         }
     }
 
-    public static void registerMaterialItem(Material material, ItemFlag flag, MetallurgicaRegistrate registrate) {
-        MATERIAL_ITEMS_BUILDER.put(flag, material, flag.registerItem(material, flag, registrate));
+    public static void registerMaterialItem(Material material, ItemFlag flag, FlagKey<?> flagKey, MetallurgicaRegistrate registrate) {
+        MATERIAL_ITEMS_BUILDER.put(flagKey, material, flag.registerItem(material, flag, registrate));
     }
 
 }

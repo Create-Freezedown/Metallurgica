@@ -6,7 +6,6 @@ import com.drmangotea.tfmg.registry.TFMGItems;
 import com.drmangotea.tfmg.registry.TFMGPaletteStoneTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
-import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.freezedown.metallurgica.registry.MetallurgicaTags.AllBlockTags;
 import com.simibubi.create.AllBlocks;
@@ -56,10 +55,10 @@ public class MetallurgicaRegistrateTags {
                 .add(
                         AllBlocks.CHUTE.get()
                 );
-        prov.tag(MetallurgicaTags.AllBlockTags.DEPOSITS.tag)
-                .add(
-                        MetallurgicaOre.FLUORITE.ORE.depositBlock().get()
-                );
+        //prov.tag(MetallurgicaTags.AllBlockTags.DEPOSITS.tag)
+        //        .add(
+        //                MetallurgicaOre.FLUORITE.ORE.depositBlock().get()
+        //        );
         prov.tag(MetallurgicaTags.AllBlockTags.AIR_BLOCKING.tag)
                 .add(
                         MetallurgicaBlocks.logPile.get(),

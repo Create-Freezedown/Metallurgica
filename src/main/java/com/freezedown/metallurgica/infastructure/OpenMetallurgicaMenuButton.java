@@ -1,7 +1,9 @@
 package com.freezedown.metallurgica.infastructure;
 
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
-import com.freezedown.metallurgica.registry.MetallurgicaOre;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.MaterialHelper;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.minecraft.client.Minecraft;
@@ -39,7 +41,7 @@ public class OpenMetallurgicaMenuButton extends Button {
     }
 
     static {
-        ICON = MetallurgicaOre.CASSITERITE.ORE.raw().asStack();
+        ICON = MaterialHelper.getItem(MetMaterials.CASSITERITE, FlagKey.MINERAL).asStack();
     }
 
     @Override

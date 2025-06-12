@@ -30,9 +30,9 @@ public class MBiomeModifiers {
         HolderSet<Biome> isNether = biomeLookup.getOrThrow(BiomeTags.IS_NETHER);
 
         HolderGetter<PlacedFeature> featureLookup = ctx.lookup(Registries.PLACED_FEATURE);
-        Holder<PlacedFeature> magnetiteConduit = featureLookup.getOrThrow(MetallurgicaPlacedFeatures.MAGNETITE_CONDUIT);
+        //Holder<PlacedFeature> magnetiteConduit = featureLookup.getOrThrow(MetallurgicaPlacedFeatures.MAGNETITE_CONDUIT);
 
-        ctx.register(MAGNETITE_CONDUIT, addOre(isOverworld, magnetiteConduit));
+        //ctx.register(MAGNETITE_CONDUIT, addOre(isOverworld, magnetiteConduit));
     }
 
     private static ForgeBiomeModifiers.AddFeaturesBiomeModifier addOre(HolderSet<Biome> biomes, Holder<PlacedFeature> feature) {
