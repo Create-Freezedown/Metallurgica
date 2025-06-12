@@ -9,7 +9,7 @@ import java.util.*;
 
 public class MaterialFlags {
     private static final Set<FlagKey<?>> baseTypes = new HashSet<>(Arrays.asList(
-            FlagKey.FLUID, FlagKey.DUST,
+            FlagKey.LIQUID, FlagKey.DUST,
             FlagKey.INGOT, FlagKey.GEM,
             FlagKey.MINERAL, FlagKey.EMPTY));
 

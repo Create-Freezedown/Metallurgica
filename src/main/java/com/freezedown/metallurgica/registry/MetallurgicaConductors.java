@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.foundation.config.TFMGConductor;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.CableFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.other.CableFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.conductor.CableItem;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;

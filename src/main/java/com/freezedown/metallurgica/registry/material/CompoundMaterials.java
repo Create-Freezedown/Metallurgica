@@ -2,7 +2,11 @@ package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.*;
+import com.freezedown.metallurgica.foundation.item.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.item.DustFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.item.IngotFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.item.NuggetFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.item.SheetFlag;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
 import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.*;

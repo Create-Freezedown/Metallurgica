@@ -8,10 +8,6 @@
   "processingTime": 1200,
   "results": [
     {
-      "amount": 45,
-      "fluid": "metallurgica:molten_iron"
-    },
-    {
       "amount": 25,
       "fluid": "tfmg:molten_slag"
     }

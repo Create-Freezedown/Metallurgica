@@ -3,12 +3,11 @@ package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.item.registry.flags.IngotFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.NuggetFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.StorageBlockFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
+import com.freezedown.metallurgica.foundation.item.registry.flags.block.SheetmetalFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.item.IngotFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.item.NuggetFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.item.SheetFlag;
 import com.simibubi.create.content.kinetics.mixer.CompactingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -34,6 +33,26 @@ public class StorageRecipeHandler {
     public static void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         processNugget(provider, material);
         processIngot(provider, material);
+        processSheet(provider, material);
+    }
+
+    private static void processSheet(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
+        if (material.hasFlag(FlagKey.SHEETMETAL)) {
+            SheetmetalFlag sheetmetalFlag = material.getFlag(FlagKey.SHEETMETAL);
+            SheetFlag sheetFlag = material.getFlag(FlagKey.SHEET);
+            ResourceLocation sheetId = new ResourceLocation(sheetFlag.getExistingNamespace(), sheetFlag.getIdPattern().formatted(material.getName()));
+            if (material.noRegister(FlagKey.SHEET)) {
+                sheetId = new ResourceLocation(sheetFlag.getExistingNamespace(), sheetFlag.getIdPattern().formatted(material.getName()));
+            }
+            ResourceLocation sheetmetalId = new ResourceLocation(sheetmetalFlag.getExistingNamespace(), sheetmetalFlag.getIdPattern().formatted(material.getName()));
+            if (sheetmetalFlag.isRequiresCompacting()) {
+                compact9(provider, sheetId, sheetmetalId);
+                decompact9(provider, sheetmetalId, sheetId);
+            } else {
+                craftCompact9(provider, sheetId, sheetmetalId, BuiltInRegistries.ITEM.get(sheetId), BuiltInRegistries.ITEM.get(sheetmetalId));
+                craftDecompact9(provider, sheetmetalId, sheetId, BuiltInRegistries.ITEM.get(sheetmetalId), BuiltInRegistries.ITEM.get(sheetId));
+            }
+        }
     }
 
     private static void processNugget(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {

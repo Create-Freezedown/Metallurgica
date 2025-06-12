@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -54,7 +55,8 @@ public abstract class ItemFlag implements IMaterialFlag {
         return getUnlocalizedName();
     }
 
-    public ResourceLocation getExistingId(Material material, @Nullable String nameAlternative) {
+    public ResourceLocation getExistingId(Material material, FlagKey<?> flagKey) {
+        String nameAlternative = material.materialInfo().nameAlternatives().get(flagKey);
         if (nameAlternative != null) {
             return new ResourceLocation(existingNamespace, idPattern.formatted(nameAlternative));
         }

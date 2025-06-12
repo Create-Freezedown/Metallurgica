@@ -13,5 +13,7 @@
   "materialflag.native_mineral": "Native %s",
   "materialflag.rubble": "%s Rubble",
   "materialflag.dust": "%s Dust",
-  "materialflag.powder": "%s Powder"
+  "materialflag.powder": "%s Powder",
+  "materialflag.casing": "%s Casing",
+  "materialflag.sheetmetal": "%s Sheetmetal"
 }

@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.item.registry;
 
 import com.freezedown.metallurgica.foundation.item.registry.flags.*;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.FluidFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.infastructure.element.Element;
@@ -63,8 +64,8 @@ public class Material implements Comparable<Material> {
         shouldRegister(config.get());
     }
 
-    public Fluid getFluid(Class<? extends Fluid> fluidClass) {
-        FluidFlag flag = getFlag(FlagKey.FLUID);
+    public Fluid getFluid(Class<? extends Fluid> fluidClass, FlagKey<? extends FluidFlag> flagKey) {
+        FluidFlag flag = getFlag(flagKey);
         if (flag == null) {
             throw new IllegalArgumentException("Material " + getName() + " does not have a Fluid!");
         }

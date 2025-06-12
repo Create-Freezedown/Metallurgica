@@ -1,9 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe;
 
-import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.CrushingRecipeHandler;
-import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.PressingRecipeHandler;
-import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.SequencedAssemblyHandler;
-import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.StorageRecipeHandler;
+import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.*;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -28,6 +25,7 @@ public class MetallurgicaRecipes {
             SequencedAssemblyHandler.run(consumer, material);
             StorageRecipeHandler.run(consumer, material);
             CrushingRecipeHandler.run(consumer, material);
+            ItemApplicationHandler.run(consumer, material);
         }
 
     }

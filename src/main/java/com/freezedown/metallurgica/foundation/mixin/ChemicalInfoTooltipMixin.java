@@ -1,9 +1,7 @@
 package com.freezedown.metallurgica.foundation.mixin;
 
-import com.freezedown.metallurgica.foundation.block.MaterialBlockItem;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.MaterialCompositionManager;
-import com.freezedown.metallurgica.foundation.item.MaterialItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
@@ -34,7 +32,7 @@ public class ChemicalInfoTooltipMixin {
         boolean notAMaterialCheckSingleCompositions = false;
         for (Material material : MetMaterials.registeredMaterials.values()) {
             if (MaterialCompositionManager.hasComposition(material)) {
-                var allMatItem = MaterialHelper.getAllMaterialItems(material);
+                var allMatItem = MaterialHelper.getAllMaterialItemsForTooltips(material);
                 if (allMatItem.contains(item)) {
                     LangBuilder compositionName = ClientUtil.lang();
                     metallurgica$createTooltip(compositionName, MaterialCompositionManager.getSubCompositions(material));

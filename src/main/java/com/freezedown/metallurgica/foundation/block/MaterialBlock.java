@@ -21,7 +21,7 @@ public class MaterialBlock extends Block {
         this.material = material;
         this.blockFlag = blockFlag;
         if (registerModel && ClientUtil.isClientSide()) {
-            MaterialBlockRenderer.create(this, material);
+            MaterialBlockRenderer.create(this, material, blockFlag.getKey());
         }
     }
 

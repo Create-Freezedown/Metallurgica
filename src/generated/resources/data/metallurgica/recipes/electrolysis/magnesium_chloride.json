@@ -11,10 +11,6 @@
   "processingTime": 600,
   "results": [
     {
-      "amount": 300,
-      "fluid": "metallurgica:molten_magnesium"
-    },
-    {
       "amount": 200,
       "fluid": "metallurgica:chlorine"
     }
