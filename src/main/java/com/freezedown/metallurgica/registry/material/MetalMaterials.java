@@ -202,7 +202,8 @@ public class MetalMaterials {
                         new StorageBlockFlag().requiresDecompacting(),
                         new SheetFlag().pressTimes(4),
                         new MoltenFlag(3422.0),
-                        new DustFlag()
+                        new DustFlag(),
+                        new SheetmetalFlag().requiresCompacting()
                 ).buildAndRegister();
         OSMIUM = new Material.Builder(Metallurgica.asResource("osmium"))
                 .element(MetallurgicaElements.OSMIUM)
