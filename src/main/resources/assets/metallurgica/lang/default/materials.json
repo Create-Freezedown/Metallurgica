@@ -15,5 +15,6 @@
   "materialflag.dust": "%s Dust",
   "materialflag.powder": "%s Powder",
   "materialflag.casing": "%s Casing",
-  "materialflag.sheetmetal": "%s Sheetmetal"
+  "materialflag.sheetmetal": "%s Sheetmetal",
+  "materialflag.shard": "%s Shard"
 }
