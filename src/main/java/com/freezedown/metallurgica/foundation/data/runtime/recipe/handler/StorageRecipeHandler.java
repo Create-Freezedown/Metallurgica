@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.block.SheetmetalFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.item.IngotFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.item.NuggetFlag;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static com.tterrag.registrate.providers.RegistrateRecipeProvider.has;
@@ -56,13 +58,24 @@ public class StorageRecipeHandler {
     }
 
     private static void processNugget(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
+        List<FlagKey<? extends ItemFlag>> toCheck = List.of(FlagKey.INGOT, FlagKey.GEM);
         if (material.hasFlag(FlagKey.NUGGET)) {
             NuggetFlag nuggetFlag = material.getFlag(FlagKey.NUGGET);
-            IngotFlag ingotFlag = material.getFlag(FlagKey.INGOT);
             ResourceLocation inputId = new ResourceLocation(nuggetFlag.getExistingNamespace(), nuggetFlag.getIdPattern().formatted(material.getName()));
-            ResourceLocation outputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
-            if (material.noRegister(FlagKey.INGOT)) {
-                outputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
+            ResourceLocation outputId = null;
+            for (FlagKey<? extends ItemFlag> flagKey : toCheck) {
+                if (material.hasFlag(flagKey)) {
+                    ItemFlag flag = material.getFlag(flagKey);
+                    outputId = new ResourceLocation(flag.getExistingNamespace(), flag.getIdPattern().formatted(material.getName()));
+                    if (material.noRegister(flagKey)) {
+                        outputId = new ResourceLocation(flag.getExistingNamespace(), flag.getIdPattern().formatted(material.getName()));
+                    }
+                    break;
+                }
+            }
+            if (outputId == null) {
+                Metallurgica.LOGGER.warn("No ingot or gem flag found for material {}. Skipping nugget recipe generation.", material.getName());
+                return;
             }
             if (!inputId.getNamespace().equals(Metallurgica.ID)) {
                 logRecipeSkip(inputId);
