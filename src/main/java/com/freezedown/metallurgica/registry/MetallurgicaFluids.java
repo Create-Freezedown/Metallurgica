@@ -9,6 +9,7 @@ import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.FluidFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.AllTags;
@@ -28,9 +29,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public class MetallurgicaFluids {
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
+
     public static final ResourceLocation AIR_RL = CreateTFMG.asResource("fluid/air");
     public static final ResourceLocation NITROGEN_RL = Metallurgica.asResource("fluid/nitrogen");
     public static final ResourceLocation BFG_RL = Metallurgica.asResource("fluid/bfg");
@@ -141,7 +143,7 @@ public class MetallurgicaFluids {
             
         }
         
-        return  registrate().tintedVirtualFluid(name, color)
+        return  registrate.tintedVirtualFluid(name, color)
                 .tag(tags)
                 .tag(MetallurgicaTags.AllFluidTags.CHLORIDE.tag)
                 //  .source(GasFluid.Source::new)
@@ -165,7 +167,7 @@ public class MetallurgicaFluids {
             
         }
         
-        return  registrate().tintedVirtualFluid(name, color)
+        return  registrate.tintedVirtualFluid(name, color)
                 .tag(tags)
                 .tag(MetallurgicaTags.AllFluidTags.GAS.tag)
                 //  .source(GasFluid.Source::new)

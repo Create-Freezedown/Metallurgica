@@ -19,7 +19,7 @@ import net.minecraft.world.item.Item;
 
 public class MetallurgicaItems {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
-    
+
     private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(String name) {
         return registrate.item(name, SequencedAssemblyItem::new)
                 .register();
@@ -108,7 +108,8 @@ public class MetallurgicaItems {
             loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item??? Idk lol
 
     public static void register() {
-        MetMaterialItems.generateMaterialItems(registrate);
+        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
+        MetMaterialItems.generateMaterialItems(materialRegistrate);
         MetMaterialItems.MATERIAL_ITEMS = MetMaterialItems.MATERIAL_ITEMS_BUILDER.build();
 
         MetMaterialItems.MATERIAL_ITEMS_BUILDER = null;

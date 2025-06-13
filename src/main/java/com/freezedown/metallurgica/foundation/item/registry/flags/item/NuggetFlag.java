@@ -6,7 +6,6 @@ import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ISpecialAssetLocation;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ISpecialLangSuffix;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -16,15 +15,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class NuggetFlag extends ItemFlag implements ISpecialAssetLocation, ISpecialLangSuffix {
+public class NuggetFlag extends ItemFlag implements ISpecialLangSuffix {
     @Getter
     private boolean requiresCompacting = false;
-    private boolean $shard;
-    public NuggetFlag(String existingNamespace, boolean $shard) {
-        super($shard ? "%s_shard" :"%s_nugget", existingNamespace);
-        this.$shard = $shard;
-        String singularTag = $shard ? "c:shards/%s_shard" : "c:nuggets/%s_nugget";
-        this.setTagPatterns(List.of($shard? "c:/shards" :"c:nuggets",$shard? "c:/shards/%s" : "c:nuggets/%s", singularTag));
+    @Getter
+    private boolean shard;
+
+    @Getter
+    private int amountToCraft = 9; // Default to 9 nuggets per crafting recipe
+
+    public NuggetFlag(String existingNamespace, boolean shard) {
+        super(shard ? "%s_shard" :"%s_nugget", existingNamespace);
+        this.shard = shard;
+        String singularTag = shard ? "c:shards/%s_shard" : "c:nuggets/%s_nugget";
+        this.setTagPatterns(List.of(shard ? "c:/shards" :"c:nuggets", shard ? "c:/shards/%s" : "c:nuggets/%s", singularTag));
     }
 
     public NuggetFlag(boolean $shard) {
@@ -39,9 +43,18 @@ public class NuggetFlag extends ItemFlag implements ISpecialAssetLocation, ISpec
         this("metallurgica", false);
     }
 
-
     public NuggetFlag requiresCompacting() {
         this.requiresCompacting = true;
+        return this;
+    }
+
+    public NuggetFlag amountToCraft(int amount) {
+        if (amount < 2) {
+            throw new IllegalArgumentException("Amount to craft must be at least 2");
+        } else if (amount > 9) {
+            throw new IllegalArgumentException("Amount to craft cannot exceed 9");
+        }
+        this.amountToCraft = amount;
         return this;
     }
 
@@ -60,11 +73,6 @@ public class NuggetFlag extends ItemFlag implements ISpecialAssetLocation, ISpec
     }
 
     @Override
-    public String getAssetName() {
-        return $shard ? "shard" : "nugget";
-    }
-
-    @Override
-    public String getLangSuffix(){return $shard ? "shard" : "nugget";}
+    public String getLangSuffix(){return isShard() ? "shard" : "nugget";}
 
 }

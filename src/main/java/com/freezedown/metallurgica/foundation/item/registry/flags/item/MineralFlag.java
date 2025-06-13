@@ -3,7 +3,6 @@ package com.freezedown.metallurgica.foundation.item.registry.flags.item;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.ISpecialAssetLocation;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ISpecialLangSuffix;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
@@ -15,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MineralFlag extends ItemFlag implements ISpecialAssetLocation, ISpecialLangSuffix {
+public class MineralFlag extends ItemFlag implements ISpecialLangSuffix {
 
     @Getter
     private boolean $native;
@@ -47,11 +46,6 @@ public class MineralFlag extends ItemFlag implements ISpecialAssetLocation, ISpe
     @Override
     public FlagKey<?> getKey() {
         return FlagKey.MINERAL;
-    }
-
-    @Override
-    public String getAssetName() {
-        return "mineral";
     }
 
     @Override

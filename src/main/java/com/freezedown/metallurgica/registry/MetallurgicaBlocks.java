@@ -443,7 +443,8 @@ public class MetallurgicaBlocks {
 
 
     public static void register() {
-        MetMaterialBlocks.generateMaterialBlocks(registrate);
+        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
+        MetMaterialBlocks.generateMaterialBlocks(materialRegistrate);
         MetMaterialBlocks.MATERIAL_BLOCKS = MetMaterialBlocks.MATERIAL_BLOCKS_BUILDER.build();
 
         MetMaterialBlocks.MATERIAL_BLOCKS_BUILDER = null;

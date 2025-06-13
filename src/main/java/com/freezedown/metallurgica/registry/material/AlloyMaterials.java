@@ -34,7 +34,7 @@ public class AlloyMaterials {
                         new NuggetFlag(),
                         new IngotFlag("minecraft"),
                         new StorageBlockFlag("minecraft"),
-                        new SheetFlag(),
+                        new SheetFlag().pressTimes(2),
                         new MoltenFlag(3562.0)
                 ).buildAndRegister();
         BRASS = new Material.Builder(Metallurgica.asResource("brass"))

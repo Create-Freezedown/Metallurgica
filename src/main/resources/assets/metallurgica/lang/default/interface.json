@@ -1,5 +1,6 @@
 {
   "itemGroup.metallurgica.base": "Metallurgica",
+  "itemGroup.metallurgica.materials": "Metallurgica's Materials",
   "metallurgica.goggles.drill_activator.insufficient_efficiency": "Efficiency is too low. Try increasing the size of the drill.",
   "metallurgica.goggles.drill_activator.height": "Height: %s",
   "metallurgica.goggles.drill_activator.efficiency": "Efficiency: %s",

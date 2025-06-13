@@ -25,13 +25,17 @@ public class MetallurgicaModels {
         }
     }
 
+    private static boolean isDeleteMePresent() {
+        return Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/deleteme.png")).isPresent();
+    }
+
     private static void generateItemModels(Material material, FlagKey<?> flagKey) {
         if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
             String textureName = getFlagName(flagKey);
             if (material.getFlag(flagKey) instanceof ISpecialAssetLocation specialAssetLoc) {
                 textureName = specialAssetLoc.getAssetName();
             }
-            boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/item/materials/" + material.getName() + "/" + textureName + ".png")).isPresent();
+            boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/item/materials/" + material.getName() + "/" + textureName + ".png")).isPresent();
             String texture = texturePresent ? "metallurgica:item/materials/" + material.getName() + "/" + textureName : "metallurgica:item/materials/null/" + textureName;
             MetallurgicaDynamicResourcePack.addItemModel(Metallurgica.asResource(itemFlag.getIdPattern().formatted(material.getName())), simpleGeneratedModel("minecraft:item/generated", texture));
         } else if (material.getFlag(flagKey) instanceof CableFlag) {
@@ -45,14 +49,14 @@ public class MetallurgicaModels {
     private static void generateCubeBlockModel(Material material, FlagKey<?> flagKey) {
         if (material.getFlag(flagKey) instanceof StorageBlockFlag blockFlag) {
             if (blockFlag.isUseColumnModel()) {
-                boolean sidePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block_side.png")).isPresent();
-                boolean endPresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block_end.png")).isPresent();
+                boolean sidePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block_side.png")).isPresent();
+                boolean endPresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block_end.png")).isPresent();
                 String sideTexture = sidePresent ? "metallurgica:block/materials/" + material.getName() + "/block_side" : "metallurgica:block/materials/null/block_side";
                 String endTexture = endPresent ? "metallurgica:block/materials/" + material.getName() + "/block_end" : "metallurgica:block/materials/null/block_end";
                 MetallurgicaDynamicResourcePack.addBlockModel(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), simplePillar(endTexture, sideTexture));
                 MetallurgicaDynamicResourcePack.addBlockState(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), simpleAxisBlockstate("metallurgica:block/" + blockFlag.getIdPattern().formatted(material.getName())));
             } else {
-                boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block.png")).isPresent();
+                boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + material.getName() + "/block.png")).isPresent();
                 String texture = texturePresent ? "metallurgica:block/materials/" + material.getName() + "/block" : "metallurgica:block/materials/null/block";
                 MetallurgicaDynamicResourcePack.addBlockModel(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), simpleCubeAll(texture));
                 MetallurgicaDynamicResourcePack.addBlockState(Metallurgica.asResource(blockFlag.getIdPattern().formatted(material.getName())), singleVariantBlockstate("metallurgica:block/" + blockFlag.getIdPattern().formatted(material.getName())));

@@ -29,9 +29,10 @@ public class NonMetalMaterials {
                         new DustFlag()
         ).buildAndRegister();
 
-        COKE_COAL = new Material.Builder(Metallurgica.asResource("coke_coal"))
+        COAL_COKE = new Material.Builder(Metallurgica.asResource("coal_coke"))
                 .element(MetallurgicaElements.CARBON)
                 .noRegister(GEM,DUST,STORAGE_BLOCK)
+                .existingIds(GEM, "tfmg:coal_coke")
                 .addFlags(
                         new StorageBlockFlag("tfmg"),
                         new GemFlag("tfmg"),
@@ -40,16 +41,18 @@ public class NonMetalMaterials {
 
         COAL = new Material.Builder(Metallurgica.asResource("coal"))
                 .element(MetallurgicaElements.CARBON)
-                .noRegister(GEM,DUST,STORAGE_BLOCK)
+                .noRegister(GEM,STORAGE_BLOCK)
+                .existingIds(GEM, "minecraft:coal")
                 .addFlags(
                         new GemFlag("minecraft"),
                         new StorageBlockFlag("minecraft"),
-                        new DustFlag("minecraft", false)
+                        new DustFlag()
         ).buildAndRegister();
 
         DIAMOND = new Material.Builder(Metallurgica.asResource("diamond"))
                 .element(MetallurgicaElements.CARBON)
-                .noRegister(GEM,STORAGE_BLOCK)
+                .noRegister(GEM, STORAGE_BLOCK)
+                .existingIds(GEM, "minecraft:diamond")
                 .addFlags(
                         new GemFlag("minecraft"),
                         new StorageBlockFlag("minecraft"),
@@ -60,6 +63,7 @@ public class NonMetalMaterials {
         CHARCOAL = new Material.Builder(Metallurgica.asResource("charcoal"))
                 .element(MetallurgicaElements.CARBON)
                 .noRegister(GEM)
+                .existingIds(GEM, "minecraft:charcoal")
                 .addFlags(
                         new GemFlag("minecraft"),
                         new DustFlag()

@@ -2,7 +2,10 @@ package com.freezedown.metallurgica.registry;
 
 import com.drmangotea.tfmg.registry.TFMGCreativeModeTabs;
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.AllCreativeModeTabs;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -36,6 +39,14 @@ public class MetallurgicaCreativeTab {
                     .withTabsBefore(AllCreativeModeTabs.PALETTES_CREATIVE_TAB.getId())
                     .icon(MetallurgicaItems.alluvialCassiterite::asStack)
                     .displayItems(new RegistrateDisplayItemsGenerator(MetallurgicaCreativeTab.MAIN_TAB))
+                    .build());
+
+    public static final RegistryObject<CreativeModeTab> MATERIALS_TAB = TAB_REGISTER.register("materials",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.metallurgica.materials"))
+                    .withTabsBefore(MAIN_TAB.getId())
+                    .icon(MaterialHelper.getItem(MetMaterials.URANIUM, FlagKey.INGOT)::asStack)
+                    .displayItems(new RegistrateDisplayItemsGenerator(MetallurgicaCreativeTab.MATERIALS_TAB))
                     .build());
 
     public static void register(IEventBus modEventBus) {
