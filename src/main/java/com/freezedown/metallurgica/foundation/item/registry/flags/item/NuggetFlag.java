@@ -3,6 +3,8 @@ package com.freezedown.metallurgica.foundation.item.registry.flags.item;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.ISpecialAssetLocation;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.ISpecialLangSuffix;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
@@ -14,18 +16,27 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class NuggetFlag extends ItemFlag {
+public class NuggetFlag extends ItemFlag implements ISpecialAssetLocation, ISpecialLangSuffix {
     @Getter
     private boolean requiresCompacting = false;
-
-    public NuggetFlag(String existingNamespace) {
-        super("%s_nugget", existingNamespace);
-        this.setTagPatterns(List.of("c:nuggets", "c:nuggets/%s"));
+    private boolean $shard;
+    public NuggetFlag(String existingNamespace, boolean $shard) {
+        super($shard ? "%s_shard" :"%s_nugget", existingNamespace);
+        this.$shard = $shard;
+        String singularTag = $shard ? "c:shards/%s_shard" : "c:nuggets/%s_nugget";
+        this.setTagPatterns(List.of($shard? "c:/shards" :"c:nuggets",$shard? "c:/shards/%s" : "c:nuggets/%s", singularTag));
     }
 
+    public NuggetFlag(boolean $shard) {
+        this("metallurgica", $shard);
+    }
+
+    public NuggetFlag(String existingNamespace) {
+        this(existingNamespace, false);
+    }
 
     public NuggetFlag() {
-        this("metallurgica");
+        this("metallurgica", false);
     }
 
 
@@ -49,7 +60,11 @@ public class NuggetFlag extends ItemFlag {
     }
 
     @Override
-    public void verifyFlag(MaterialFlags flags) {
-
+    public String getAssetName() {
+        return $shard ? "shard" : "nugget";
     }
+
+    @Override
+    public String getLangSuffix(){return $shard ? "shard" : "nugget";}
+
 }

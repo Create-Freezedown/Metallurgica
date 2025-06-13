@@ -41,6 +41,19 @@ public class MetMaterials {
     public static Material VANADIUM;
     public static Material MANGANESE;
 
+    //Non-metals
+    public static Material SILICON;
+    public static Material SULFUR;
+            //Phosphorus allotropes
+    public static Material WHITE_PHOSPHORUS;
+            //Carbon allotropes
+    public static Material GRAPHITE;
+    public static Material COKE_COAL;
+    public static Material COAL;
+    public static Material CHARCOAL;
+    public static Material DIAMOND;
+
+
     //Alloys
     public static Material TITANIUM_ALUMINIDE;
     public static Material NETHERITE;

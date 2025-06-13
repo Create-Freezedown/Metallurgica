@@ -128,6 +128,7 @@ public class Metallurgica
 
     public static void initMaterials(IEventBus modEventBus) {
         MetalMaterials.register();
+        NonMetalMaterials.register();
         AlloyMaterials.register();
         MineralMaterials.register();
         CompoundMaterials.register();

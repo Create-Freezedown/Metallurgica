@@ -390,10 +390,6 @@ public class MetallurgicaBlocks {
     //        wroughtIronBlock =              registrate.directionalMetalBlock("wrought_iron_block", "Wrought Iron Block", ConnectedPillarBlock::new, SoundType.METAL, (c, p) -> p.axisBlock(c.get()));
 
 
-    //PURE
-    public static final BlockEntry<Block>
-            siliconBlock =              registrate.simpleMachineBlock("silicon_block", "Silicon Block", Block::new, SoundType.STONE, (c, p) -> p.simpleBlock(c.get()));
-
     //SAND
     public static final BlockEntry<SandBlock> quartzSand = registrate.block("quartz_sand", p -> new SandBlock(0x8D8388, p))
             .properties(p -> p.sound(SoundType.SAND))

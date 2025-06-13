@@ -61,9 +61,9 @@ public class MetalMaterials {
                         new IngotFlag(),
                         new StorageBlockFlag(),
                         new SheetFlag(),
+                        new WireFlag(),
                         new MoltenFlag(3962.0),
-                        new DustFlag(),
-                        new CableFlag(0.0237, WireColours.missing)
+                        new DustFlag()
                 ).buildAndRegister();
         ALUMINUM = new Material.Builder(Metallurgica.asResource("aluminum"))
                 .element(MetallurgicaElements.ALUMINUM)
