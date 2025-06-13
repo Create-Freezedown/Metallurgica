@@ -6,6 +6,7 @@ import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.registry.*;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
@@ -182,10 +183,10 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         }
         
         public static Fluid moltenIron() {
-            return MetMaterials.IRON.getFluid(MoltenMetal.class);
+            return MetMaterials.IRON.getFluid(MoltenMetal.class, FlagKey.MOLTEN);
         }
         public static Fluid moltenCopper() {
-            return MetMaterials.COPPER.getFluid(MoltenMetal.class);
+            return MetMaterials.COPPER.getFluid(MoltenMetal.class, FlagKey.MOLTEN);
         }
         
         public static FluidStack riverSandStack(String mineral, int amount) {

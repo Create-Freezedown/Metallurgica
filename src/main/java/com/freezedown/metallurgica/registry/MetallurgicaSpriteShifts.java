@@ -1,12 +1,16 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
 import com.simibubi.create.foundation.block.connected.CTType;
 import net.createmod.catnip.render.SpriteShiftEntry;
 import net.createmod.catnip.render.SpriteShifter;
+import net.minecraft.resources.ResourceLocation;
 
 public class MetallurgicaSpriteShifts {
     
@@ -14,7 +18,7 @@ public class MetallurgicaSpriteShifts {
     public static final CTSpriteShiftEntry blastProofGlass = omni("blast_proof_glass");
     public static final CTSpriteShiftEntry directionalMetalBlock = horizontal("directional_metal_block");
 
-    private static CTSpriteShiftEntry omni(String name) {
+    public static CTSpriteShiftEntry omni(String name) {
         return getCT(AllCTTypes.OMNIDIRECTIONAL, name);
     }
     
@@ -24,6 +28,26 @@ public class MetallurgicaSpriteShifts {
     
     private static CTSpriteShiftEntry vertical(String name) {
         return getCT(AllCTTypes.VERTICAL, name);
+    }
+
+    private static CTSpriteShiftEntry rectangle(String name) {
+        return getCT(AllCTTypes.RECTANGLE, name);
+    }
+
+    public static CTSpriteShiftEntry materialOmni(Material material, FlagKey<?> flagKey) {
+        return getMaterialCT(AllCTTypes.OMNIDIRECTIONAL, material, flagKey);
+    }
+
+    public static CTSpriteShiftEntry materialHorizontal(Material material, FlagKey<?> flagKey) {
+        return getMaterialCT(AllCTTypes.HORIZONTAL, material, flagKey);
+    }
+
+    public static CTSpriteShiftEntry materialVertical(Material material, FlagKey<?> flagKey) {
+        return getMaterialCT(AllCTTypes.VERTICAL, material, flagKey);
+    }
+
+    public static CTSpriteShiftEntry materialRectangle(Material material, FlagKey<?> flagKey) {
+        return getMaterialCT(AllCTTypes.RECTANGLE, material, flagKey);
     }
     
     private static SpriteShiftEntry get(String originalLocation, String targetLocation) {
@@ -37,6 +61,12 @@ public class MetallurgicaSpriteShifts {
     
     private static CTSpriteShiftEntry getCT(CTType type, String blockTextureName) {
         return getCT(type, blockTextureName, blockTextureName);
+    }
+
+    public static CTSpriteShiftEntry getMaterialCT(CTType type, Material material, FlagKey<?> flagKey) {
+        return CTSpriteShifter.getCT(type,
+                new ResourceLocation(material.getModid(), "block/materials/" + material.getName() + "/" + flagKey.toString()),
+                new ResourceLocation(material.getModid(), "block/materials/" + material.getName() + "/" + flagKey + "_connected"));
     }
     
 }

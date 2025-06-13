@@ -43,10 +43,16 @@ public class MaterialHelper {
     }
 
     public static List<BlockEntry<? extends MaterialBlock>> getAllBlocks(Material material) {
+        return getAllBlocks(material, false);
+    }
+
+    public static List<BlockEntry<? extends MaterialBlock>> getAllBlocks(Material material, boolean onlyChemicalTooltippable) {
         List<BlockEntry<? extends MaterialBlock>> allBlocks = new ArrayList<>();
         for (var flagKey : material.getFlags().getFlagKeys()) {
             var flag = material.getFlag(flagKey);
-            if (flag instanceof BlockFlag) {
+            if (flag instanceof BlockFlag blockFlag) {
+                if (onlyChemicalTooltippable)
+                    if (!blockFlag.shouldHaveComposition()) continue;
                 var block = MATERIAL_BLOCKS.get(flagKey, material);
                 if (block == null) continue;
                 allBlocks.add(block);
@@ -98,7 +104,7 @@ public class MaterialHelper {
         }
         for (FlagKey<? extends IMaterialFlag> flagKey : material.getFlags().getNoRegister()) {
             if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material, material.materialInfo().nameAlternatives().get(flagKey));
+                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material, flagKey);
                 Item item = BuiltInRegistries.ITEM.get(itemId);
                 if (item != null) {
                     items.add(item);
@@ -107,7 +113,44 @@ public class MaterialHelper {
                 }
             }
             if (material.getFlag(flagKey) instanceof BlockFlag blockFlag) {
-                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material, material.materialInfo().nameAlternatives().get(flagKey));
+                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material, flagKey);
+                Block block = BuiltInRegistries.BLOCK.get(blockId);
+                if (block != null) {
+                    Item item = block.asItem();
+                    items.add(item);
+                } else {
+                    Metallurgica.LOGGER.warn("Block {} for material {} is not registered. Consider updating or removing the Material Flag's existing namespace", blockId, material.getName());
+                }
+            }
+        }
+        return items;
+    }
+
+    public static List<Item> getAllMaterialItemsForTooltips(Material material) {
+        if (material == null) {
+            Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
+            return new ArrayList<>();
+        }
+        Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
+        List<Item> items = new ArrayList<>();
+        for (ItemEntry<? extends MaterialItem> item : MaterialHelper.getAllItems(material)) {
+            items.add(item.get());
+        }
+        for (BlockEntry<? extends MaterialBlock> block : MaterialHelper.getAllBlocks(material, true)) {
+            items.add(block.get().asItem());
+        }
+        for (FlagKey<? extends IMaterialFlag> flagKey : material.getFlags().getNoRegister()) {
+            if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
+                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material, flagKey);
+                Item item = BuiltInRegistries.ITEM.get(itemId);
+                if (item != null) {
+                    items.add(item);
+                } else {
+                    Metallurgica.LOGGER.warn("Item {} for material {} is not registered. Consider updating or removing the Material Flag's existing namespace", itemId, material.getName());
+                }
+            }
+            if (material.getFlag(flagKey) instanceof BlockFlag blockFlag) {
+                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material, flagKey);
                 Block block = BuiltInRegistries.BLOCK.get(blockId);
                 if (block != null) {
                     Item item = block.asItem();

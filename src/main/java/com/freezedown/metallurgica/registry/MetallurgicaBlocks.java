@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.registry;
 
 import com.drmangotea.tfmg.registry.TFMGBlocks;
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
 import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
@@ -69,7 +70,17 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
-    
+
+    public static final BlockEntry<FluidShowerBlock> fluidShower = registrate.block("fluid_shower", FluidShowerBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/fluid_shower"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/fluid_shower")))
+            .build()
+            .register();
+
     public static final BlockEntry<ReactionBasinBlock> reactionBasin = registrate.block("reaction_basin", ReactionBasinBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.strength(0.5F).sound(SoundType.STONE))

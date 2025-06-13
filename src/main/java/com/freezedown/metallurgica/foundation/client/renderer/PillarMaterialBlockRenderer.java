@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
 import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.models.BlockModelGenerators;
@@ -18,17 +19,18 @@ import java.util.Set;
 public class PillarMaterialBlockRenderer {
     private static final Set<PillarMaterialBlockRenderer> MODELS = new HashSet<>();
 
-    public static void create(Block block, Material material) {
-        MODELS.add(new PillarMaterialBlockRenderer(block, material));
+    public static void create(Block block, Material material, FlagKey<?> flagKey) {
+        MODELS.add(new PillarMaterialBlockRenderer(block, material, flagKey));
     }
 
     public static void reinitModels() {
         for (PillarMaterialBlockRenderer model : MODELS) {
             ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(model.block);
-            boolean sidePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + model.material.getName() + "/block_side.png")).isPresent();
-            boolean endPresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + model.material.getName() + "/block_end.png")).isPresent();
-            String side = sidePresent ? "metallurgica:block/materials/" + model.material.getName() + "/block_side" : "metallurgica:block/materials/null/block_side";
-            String end = endPresent ? "metallurgica:block/materials/" + model.material.getName() + "/block_end" : "metallurgica:block/materials/null/block_end";
+            String blockName = model.flagKey.toString();
+            boolean sidePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + model.material.getName() + "/%s_side.png".formatted(blockName))).isPresent();
+            boolean endPresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + model.material.getName() + "/%s_end.png".formatted(blockName))).isPresent();
+            String side = sidePresent ? "metallurgica:block/materials/" + model.material.getName() + "/" + blockName + "_side" : "metallurgica:block/materials/null/" + blockName + "_side";
+            String end = endPresent ? "metallurgica:block/materials/" + model.material.getName() + "/" + blockName + "_end" : "metallurgica:block/materials/null/" + blockName + "_end";
             ResourceLocation modelId = blockId.withPrefix("block/");
             MetallurgicaDynamicResourcePack.addBlockModel(modelId, MetallurgicaModels.simplePillar(end, side));
             MetallurgicaDynamicResourcePack.addBlockState(blockId, BlockModelGenerators.createSimpleBlock(model.block, modelId));
@@ -38,9 +40,11 @@ public class PillarMaterialBlockRenderer {
 
     private final Block block;
     private final Material material;
+    private final FlagKey<?> flagKey;
 
-    protected PillarMaterialBlockRenderer(Block block, Material material) {
+    protected PillarMaterialBlockRenderer(Block block, Material material, FlagKey<?> flagKey) {
         this.block = block;
         this.material = material;
+        this.flagKey = flagKey;
     }
 }

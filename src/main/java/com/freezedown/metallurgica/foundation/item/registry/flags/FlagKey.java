@@ -2,6 +2,13 @@ package com.freezedown.metallurgica.foundation.item.registry.flags;
 
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
+import com.freezedown.metallurgica.foundation.item.registry.flags.block.CasingFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.block.SheetmetalFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.fluid.LiquidFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.fluid.MoltenFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.item.*;
+import com.freezedown.metallurgica.foundation.item.registry.flags.other.CableFlag;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -13,7 +20,7 @@ public class FlagKey<T extends IMaterialFlag> {
 
     public static final FlagKey<EmptyFlag> EMPTY = create("empty", EmptyFlag.class);
     public static final FlagKey<IngotFlag> INGOT = create("ingot", IngotFlag.class);
-    public static final FlagKey<FluidFlag> FLUID = create("fluid", FluidFlag.class);
+    public static final FlagKey<LiquidFlag> LIQUID = create("liquid", LiquidFlag.class);
     public static final FlagKey<DustFlag> DUST = create("dust", DustFlag.class);
     public static final FlagKey<GemFlag> GEM = create("gem", GemFlag.class);
     public static final FlagKey<MineralFlag> MINERAL = create("mineral", MineralFlag.class);
@@ -24,9 +31,13 @@ public class FlagKey<T extends IMaterialFlag> {
     public static final FlagKey<WireFlag> WIRE = create("wire", WireFlag.class);
     public static final FlagKey<CableFlag> CABLE = create("cable", CableFlag.class);
     public static final FlagKey<RubbleFlag> RUBBLE = create("rubble", RubbleFlag.class);
+    public static final FlagKey<MoltenFlag> MOLTEN = create("molten", MoltenFlag.class);
+
 
     //Blocks
     public static final FlagKey<StorageBlockFlag> STORAGE_BLOCK = create("storage_block", StorageBlockFlag.class);
+    public static final FlagKey<CasingFlag> CASING = create("casing", CasingFlag.class);
+    public static final FlagKey<SheetmetalFlag> SHEETMETAL = create("sheetmetal", SheetmetalFlag.class);
 
     private final String key;
     private final Class<T> type;

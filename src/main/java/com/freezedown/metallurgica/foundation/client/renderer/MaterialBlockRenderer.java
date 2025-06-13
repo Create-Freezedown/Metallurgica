@@ -5,6 +5,8 @@ import com.freezedown.metallurgica.foundation.block.AxisMaterialBlock;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
 import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.models.BlockModelGenerators;
@@ -20,19 +22,20 @@ public class MaterialBlockRenderer {
 
     private static final Set<MaterialBlockRenderer> MODELS = new HashSet<>();
 
-    public static void create(Block block, Material material) {
+    public static void create(Block block, Material material, FlagKey<?> flagKey) {
         if (block instanceof AxisMaterialBlock) {
-            PillarMaterialBlockRenderer.create(block, material);
+            PillarMaterialBlockRenderer.create(block, material, flagKey);
             return;
         }
-        MODELS.add(new MaterialBlockRenderer(block, material));
+        MODELS.add(new MaterialBlockRenderer(block, material, flagKey));
     }
 
     public static void reinitModels() {
         for (MaterialBlockRenderer model : MODELS) {
             ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(model.block);
-            boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + model.material.getName() + "/block.png")).isPresent();
-            String texture = texturePresent ? "metallurgica:block/materials/" + model.material.getName() + "/block" : "metallurgica:block/materials/null/block";
+            String blockName = model.flagKey.toString();
+            boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + model.material.getName() + "/%s.png".formatted(blockName))).isPresent();
+            String texture = texturePresent ? "metallurgica:block/materials/" + model.material.getName() + "/" + blockName : "metallurgica:block/materials/null/" + blockName;
             ResourceLocation modelId = blockId.withPrefix("block/");
             MetallurgicaDynamicResourcePack.addBlockModel(modelId, MetallurgicaModels.simpleCubeAll(texture));
             MetallurgicaDynamicResourcePack.addBlockState(blockId, BlockModelGenerators.createSimpleBlock(model.block, modelId));
@@ -42,9 +45,11 @@ public class MaterialBlockRenderer {
 
     private final Block block;
     private final Material material;
+    private final FlagKey<?> flagKey;
 
-    protected MaterialBlockRenderer(Block block, Material material) {
+    protected MaterialBlockRenderer(Block block, Material material, FlagKey<?> flagKey) {
         this.block = block;
         this.material = material;
+        this.flagKey = flagKey;
     }
 }

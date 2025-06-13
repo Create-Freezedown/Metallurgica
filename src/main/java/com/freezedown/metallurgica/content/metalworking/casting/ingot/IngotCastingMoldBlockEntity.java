@@ -105,12 +105,12 @@ public class IngotCastingMoldBlockEntity extends KineticTemperatureBlockEntity i
         }
         
         for (Material material : MetMaterials.registeredMaterials.values()) {
-            if (material.hasFlag(FlagKey.FLUID) && material.hasFlag(FlagKey.INGOT)) {
-                Fluid fluid = material.getFluid(MoltenMetal.class);
-                if (fluid.isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
-                    metalName = material.getName();
-                }
-            }
+            //if (material.hasFlag(FlagKey.FLUID) && material.hasFlag(FlagKey.INGOT)) {
+            //    Fluid fluid = material.getFluid(MoltenMetal.class);
+            //    if (fluid.isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
+            //        metalName = material.getName();
+            //    }
+            //}
         }
         
         if (getTemperature() <= minTemperature && inventory.getStackInSlot(0).isEmpty()) {

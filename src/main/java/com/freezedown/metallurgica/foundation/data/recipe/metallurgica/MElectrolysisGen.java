@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.foundation.data.recipe.metallurgica;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
+import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
@@ -32,7 +33,7 @@ public class MElectrolysisGen extends MProcessingRecipeGen {
     
     magnesiumChloride = create(Metallurgica.asResource("magnesium_chloride"), b -> b
             .require(MetallurgicaFluids.magnesiumChloride.get(), 500)
-            .output(MetMaterials.MAGNESIUM.getFluid(MoltenMetal.class), 300)
+            //.output(MetMaterials.MAGNESIUM.getFluid(MoltenMetal.class, FlagKey.MOLTEN), 300)
             .output(F.chlorine(), 200)
             .requiresHeat(HeatCondition.HEATED)
             .duration(600))

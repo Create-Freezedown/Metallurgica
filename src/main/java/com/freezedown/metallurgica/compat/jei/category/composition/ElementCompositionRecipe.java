@@ -134,14 +134,14 @@ public class ElementCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
             if (itemStack.isEmpty()) continue;
             items.add(itemStack);
         }
-        for (BlockEntry<? extends MaterialBlock> block : MaterialHelper.getAllBlocks(material)) {
+        for (BlockEntry<? extends MaterialBlock> block : MaterialHelper.getAllBlocks(material, true)) {
             ItemStack itemStack = block.get().asItem().getDefaultInstance();
             if (itemStack.isEmpty()) continue;
             items.add(itemStack);
         }
         for (FlagKey<? extends IMaterialFlag> flagKey : material.getFlags().getNoRegister()) {
             if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material, material.materialInfo().nameAlternatives().get(flagKey));
+                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material, flagKey);
                 Item item = BuiltInRegistries.ITEM.get(itemId);
                 if (item != null) {
                     ItemStack itemStack = new ItemStack(item);
@@ -151,7 +151,7 @@ public class ElementCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
                 }
             }
             if (material.getFlag(flagKey) instanceof BlockFlag blockFlag) {
-                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material, material.materialInfo().nameAlternatives().get(flagKey));
+                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material, flagKey);
                 Block block = BuiltInRegistries.BLOCK.get(blockId);
                 if (block != null) {
                     Item item = block.asItem();
