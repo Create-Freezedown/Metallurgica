@@ -45,7 +45,7 @@ public class Material implements Comparable<Material> {
         return materialInfo.resourceLocation.getPath();
     }
 
-    public String getModid() {
+    public String getNamespace() {
         return materialInfo.resourceLocation.getNamespace();
     }
 
@@ -186,7 +186,7 @@ public class Material implements Comparable<Material> {
         public Material buildAndRegister() {
             if (materialInfo.colour() == 0) materialInfo.withColour(0xFFFFFF);
             var mat = new Material(materialInfo, flags);
-            ResourceLocation key = new ResourceLocation(mat.getModid(), mat.getName());
+            ResourceLocation key = new ResourceLocation(mat.getNamespace(), mat.getName());
             MetMaterials.registeredMaterials.put(key, mat);
             return mat;
         }

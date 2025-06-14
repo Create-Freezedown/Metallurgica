@@ -64,8 +64,8 @@ public class MetallurgicaSpriteShifts {
 
     public static CTSpriteShiftEntry getMaterialCT(CTType type, Material material, FlagKey<?> flagKey) {
         return CTSpriteShifter.getCT(type,
-                new ResourceLocation(material.getModid(), "block/materials/" + material.getName() + "/" + flagKey.toString()),
-                new ResourceLocation(material.getModid(), "block/materials/" + material.getName() + "/" + flagKey + "_connected"));
+                new ResourceLocation(material.getNamespace(), "block/materials/" + material.getName() + "/" + flagKey.toString()),
+                new ResourceLocation(material.getNamespace(), "block/materials/" + material.getName() + "/" + flagKey + "_connected"));
     }
     
 }

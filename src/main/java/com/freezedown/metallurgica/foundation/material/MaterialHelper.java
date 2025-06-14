@@ -20,7 +20,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -116,6 +119,33 @@ public class MaterialHelper {
         }
     }
 
+    public static Item getCompatibleItem(Material material, FlagKey<? extends ItemFlag> flagKey) {
+        if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
+        var flag = material.getFlag(flagKey);
+        ResourceLocation resultId = flag.getExistingId(material);
+        Item item = BuiltInRegistries.ITEM.get(resultId);
+        if (item == null) throw new RuntimeException("No valid item of flag: " + flagKey.toString() + " found for material: " + material.getId());
+        return item;
+    }
+
+    public static Block getCompatibleBlock(Material material, FlagKey<? extends BlockFlag> flagKey) {
+        if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
+        var flag = material.getFlag(flagKey);
+        ResourceLocation resultId = flag.getExistingId(material);
+        Block block = BuiltInRegistries.BLOCK.get(resultId);
+        if (block == null) throw new RuntimeException("No valid block of flag: " + flagKey.toString() + " found for material: " + material.getId());
+        return block;
+    }
+
+    public static Fluid getCompatibleFluid(Material material, FlagKey<? extends FluidFlag> flagKey) {
+        if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
+        var flag = material.getFlag(flagKey);
+        ResourceLocation resultId = flag.getExistingId(material);
+        Fluid fluid = BuiltInRegistries.FLUID.get(resultId);
+        if (fluid == null) throw new RuntimeException("No valid fluid of flag: " + flagKey.toString() + " found for material: " + material.getId());
+        return fluid;
+    }
+
     public static List<Item> getAllMaterialItems(Material material) {
         if (material == null) {
             Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
@@ -131,7 +161,7 @@ public class MaterialHelper {
         }
         for (FlagKey<? extends IMaterialFlag> flagKey : material.getFlags().getNoRegister()) {
             if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material, flagKey);
+                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material);
                 Item item = BuiltInRegistries.ITEM.get(itemId);
                 if (item != null) {
                     items.add(item);
@@ -140,7 +170,7 @@ public class MaterialHelper {
                 }
             }
             if (material.getFlag(flagKey) instanceof BlockFlag blockFlag) {
-                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material, flagKey);
+                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material);
                 Block block = BuiltInRegistries.BLOCK.get(blockId);
                 if (block != null) {
                     Item item = block.asItem();
@@ -168,7 +198,7 @@ public class MaterialHelper {
         }
         for (FlagKey<? extends IMaterialFlag> flagKey : material.getFlags().getNoRegister()) {
             if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material, flagKey);
+                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material);
                 Item item = BuiltInRegistries.ITEM.get(itemId);
                 if (item != null) {
                     items.add(item);
@@ -177,7 +207,7 @@ public class MaterialHelper {
                 }
             }
             if (material.getFlag(flagKey) instanceof BlockFlag blockFlag) {
-                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material, flagKey);
+                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material);
                 Block block = BuiltInRegistries.BLOCK.get(blockId);
                 if (block != null) {
                     Item item = block.asItem();

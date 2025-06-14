@@ -1,8 +1,9 @@
-package com.freezedown.metallurgica.foundation.material.registry.flags.other;
+package com.freezedown.metallurgica.foundation.material.registry.flags.item;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.TFMGConductor;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
+import com.freezedown.metallurgica.foundation.material.recycling.Recyclable;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
@@ -21,15 +22,18 @@ import net.createmod.catnip.data.Pair;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static com.tterrag.registrate.providers.RegistrateRecipeProvider.has;
 
-public class CableFlag extends ItemFlag implements IRecipeHandler {
+public class CableFlag extends ItemFlag implements IRecipeHandler, Recyclable {
 
     @Getter
     private Pair<int[],int[]> colors;
@@ -72,12 +76,27 @@ public class CableFlag extends ItemFlag implements IRecipeHandler {
 
     @Override
     public void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
-        var wire = MaterialHelper.getItem(material, FlagKey.WIRE);
+        var wire = MaterialHelper.getCompatibleItem(material, FlagKey.WIRE);
         var cable = MaterialHelper.getItem(material, getKey());
         ShapedRecipeBuilder builder = new ShapedRecipeBuilder(RecipeCategory.MISC, cable, 4);
         builder.pattern(" W ").pattern("WSW").pattern(" W ")
                 .define('W', wire).define('S', Tags.Items.RODS_WOODEN);
         builder.unlockedBy("has_wire", has(wire));
-        builder.save(provider,  Metallurgica.asResource("runtime_generated/" + material.getModid() + "/" + material.getName() + "_cable_from_wire"));
+        builder.save(provider,  Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + material.getName() + "_cable_from_wire"));
+    }
+
+    @Override
+    public Map<Material, Integer> recyclesInto(Material mainMaterial) {
+        return Map.of(mainMaterial, 3);
+    }
+
+    @Override
+    public Map<Material, Pair<Integer, Float>> discardChance(Material mainMaterial) {
+        return Map.of(mainMaterial, Pair.of(1, 0.5f));
+    }
+
+    @Override
+    public Map<ItemLike, Pair<Integer, Float>> extraItems(Material mainMaterial) {
+        return Map.of(Items.STICK, Pair.of(1, 0.25f), MaterialHelper.getCompatibleItem(mainMaterial, FlagKey.WIRE), Pair.of(1, 0.15f));
     }
 }

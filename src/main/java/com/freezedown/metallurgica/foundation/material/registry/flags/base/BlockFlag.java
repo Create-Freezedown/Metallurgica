@@ -3,7 +3,6 @@ package com.freezedown.metallurgica.foundation.material.registry.flags.base;
 import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -44,7 +43,7 @@ public abstract class BlockFlag implements IMaterialFlag {
     }
 
     public String getUnlocalizedName(Material material) {
-        String matSpecificKey = String.format("item.%s.%s", material.getModid(), this.idPattern.formatted(material.getName()));
+        String matSpecificKey = String.format("item.%s.%s", material.getNamespace(), this.idPattern.formatted(material.getName()));
         if (TextUtil.langExists(matSpecificKey)) {
             return matSpecificKey;
         }
@@ -52,8 +51,8 @@ public abstract class BlockFlag implements IMaterialFlag {
         return getUnlocalizedName();
     }
 
-    public ResourceLocation getExistingId(Material material, FlagKey<?> flagKey) {
-        String nameAlternative = material.materialInfo().nameAlternatives().get(flagKey);
+    public ResourceLocation getExistingId(Material material) {
+        String nameAlternative = material.materialInfo().nameAlternatives().get(getKey());
         if (nameAlternative != null) {
             return new ResourceLocation(existingNamespace, idPattern.formatted(nameAlternative));
         }

@@ -4,7 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.fluid.MoltenFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.other.CableFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.CableFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.registry.flags.block.StorageBlockFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.ISpecialAssetLocation;
@@ -36,33 +36,33 @@ public class MetallurgicaModels {
             if (material.getFlag(flagKey) instanceof ISpecialAssetLocation specialAssetLoc) {
                 textureName = specialAssetLoc.getAssetName();
             }
-            boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getModid() + ":textures/item/materials/" + material.getName() + "/" + textureName + ".png")).isPresent();
+            boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/item/materials/" + material.getName() + "/" + textureName + ".png")).isPresent();
             String texture = texturePresent ? "metallurgica:item/materials/" + material.getName() + "/" + textureName : "metallurgica:item/materials/null/" + textureName;
-            MetallurgicaDynamicResourcePack.addItemModel(new ResourceLocation(material.getModid(), itemFlag.getIdPattern().formatted(material.getName())), simpleGeneratedModel("minecraft:item/generated", texture));
+            MetallurgicaDynamicResourcePack.addItemModel(new ResourceLocation(material.getNamespace(), itemFlag.getIdPattern().formatted(material.getName())), simpleGeneratedModel("minecraft:item/generated", texture));
         } else if (material.getFlag(flagKey) instanceof CableFlag) {
             String textureName = getFlagName(FlagKey.CABLE);
-            boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getModid() + ":textures/item/materials/" + material.getName() + "/" + textureName + ".png")).isPresent();
+            boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/item/materials/" + material.getName() + "/" + textureName + ".png")).isPresent();
             String texture = texturePresent ? "metallurgica:item/materials/" + material.getName() + "/" + textureName : "metallurgica:item/materials/null/" + textureName;
-            MetallurgicaDynamicResourcePack.addItemModel(new ResourceLocation(material.getModid() + ":%s_cable".formatted(material.getName())), simpleGeneratedModel("minecraft:item/generated", texture));
+            MetallurgicaDynamicResourcePack.addItemModel(new ResourceLocation(material.getNamespace() + ":%s_cable".formatted(material.getName())), simpleGeneratedModel("minecraft:item/generated", texture));
         }
     }
 
     private static void generateCubeBlockModel(Material material, FlagKey<?> flagKey) {
         if (material.getFlag(flagKey) instanceof StorageBlockFlag blockFlag) {
             if (blockFlag.isUseColumnModel()) {
-                boolean sidePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getModid() + ":textures/block/materials/" + material.getName() + "/block_side.png")).isPresent();
-                boolean endPresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getModid() + ":textures/block/materials/" + material.getName() + "/block_end.png")).isPresent();
-                String sideTexture = sidePresent ? material.getModid() + ":block/materials/" + material.getName() + "/block_side" : "metallurgica:block/materials/null/block_side";
-                String endTexture = endPresent ? material.getModid() + ":block/materials/" + material.getName() + "/block_end" : "metallurgica:block/materials/null/block_end";
-                MetallurgicaDynamicResourcePack.addBlockModel(new ResourceLocation(material.getModid(), blockFlag.getIdPattern().formatted(material.getName())), simplePillar(endTexture, sideTexture));
-                MetallurgicaDynamicResourcePack.addBlockState(new ResourceLocation(material.getModid(), blockFlag.getIdPattern().formatted(material.getName())), simpleAxisBlockstate("metallurgica:block/" + blockFlag.getIdPattern().formatted(material.getName())));
+                boolean sidePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/block/materials/" + material.getName() + "/block_side.png")).isPresent();
+                boolean endPresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/block/materials/" + material.getName() + "/block_end.png")).isPresent();
+                String sideTexture = sidePresent ? material.getNamespace() + ":block/materials/" + material.getName() + "/block_side" : "metallurgica:block/materials/null/block_side";
+                String endTexture = endPresent ? material.getNamespace() + ":block/materials/" + material.getName() + "/block_end" : "metallurgica:block/materials/null/block_end";
+                MetallurgicaDynamicResourcePack.addBlockModel(new ResourceLocation(material.getNamespace(), blockFlag.getIdPattern().formatted(material.getName())), simplePillar(endTexture, sideTexture));
+                MetallurgicaDynamicResourcePack.addBlockState(new ResourceLocation(material.getNamespace(), blockFlag.getIdPattern().formatted(material.getName())), simpleAxisBlockstate("metallurgica:block/" + blockFlag.getIdPattern().formatted(material.getName())));
             } else {
-                boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getModid() + ":textures/block/materials/" + material.getName() + "/block.png")).isPresent();
-                String texture = texturePresent ? material.getModid() + ":block/materials/" + material.getName() + "/block" : "metallurgica:block/materials/null/block";
-                MetallurgicaDynamicResourcePack.addBlockModel(new ResourceLocation(material.getModid(), blockFlag.getIdPattern().formatted(material.getName())), simpleCubeAll(texture));
-                MetallurgicaDynamicResourcePack.addBlockState(new ResourceLocation(material.getModid(), blockFlag.getIdPattern().formatted(material.getName())), singleVariantBlockstate(material.getModid() + ":block/" + blockFlag.getIdPattern().formatted(material.getName())));
+                boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/block/materials/" + material.getName() + "/block.png")).isPresent();
+                String texture = texturePresent ? material.getNamespace() + ":block/materials/" + material.getName() + "/block" : "metallurgica:block/materials/null/block";
+                MetallurgicaDynamicResourcePack.addBlockModel(new ResourceLocation(material.getNamespace(), blockFlag.getIdPattern().formatted(material.getName())), simpleCubeAll(texture));
+                MetallurgicaDynamicResourcePack.addBlockState(new ResourceLocation(material.getNamespace(), blockFlag.getIdPattern().formatted(material.getName())), singleVariantBlockstate(material.getNamespace() + ":block/" + blockFlag.getIdPattern().formatted(material.getName())));
             }
-            MetallurgicaDynamicResourcePack.addItemModel(new ResourceLocation(material.getModid(), blockFlag.getIdPattern().formatted(material.getName())), simpleParentedModel(material.getModid() + ":block/" + blockFlag.getIdPattern().formatted(material.getName())));
+            MetallurgicaDynamicResourcePack.addItemModel(new ResourceLocation(material.getNamespace(), blockFlag.getIdPattern().formatted(material.getName())), simpleParentedModel(material.getNamespace() + ":block/" + blockFlag.getIdPattern().formatted(material.getName())));
         }
     }
 

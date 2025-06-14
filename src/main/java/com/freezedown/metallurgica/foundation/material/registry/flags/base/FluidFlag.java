@@ -9,6 +9,7 @@ import com.tterrag.registrate.util.entry.FluidEntry;
 import lombok.Getter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class FluidFlag implements IMaterialFlag {
@@ -36,11 +37,19 @@ public abstract class FluidFlag implements IMaterialFlag {
     }
 
     public String getUnlocalizedName(Material material) {
-        String matSpecificKey = String.format("fluid.%s.%s", material.getModid(), this.idPattern.formatted(material.getName()));
+        String matSpecificKey = String.format("fluid.%s.%s", material.getNamespace(), this.idPattern.formatted(material.getName()));
         if (TextUtil.langExists(matSpecificKey)) {
             return matSpecificKey;
         }
 
         return getUnlocalizedName();
+    }
+
+    public ResourceLocation getExistingId(Material material) {
+        String nameAlternative = material.materialInfo().nameAlternatives().get(getKey());
+        if (nameAlternative != null) {
+            return new ResourceLocation(existingNamespace, idPattern.formatted(nameAlternative));
+        }
+        return new ResourceLocation(existingNamespace, idPattern.formatted(material.getName()));
     }
 }

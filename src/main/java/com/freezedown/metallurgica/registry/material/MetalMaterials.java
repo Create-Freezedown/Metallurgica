@@ -9,7 +9,7 @@ import com.freezedown.metallurgica.foundation.material.registry.flags.block.Shee
 import com.freezedown.metallurgica.foundation.material.registry.flags.block.StorageBlockFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.fluid.MoltenFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.item.*;
-import com.freezedown.metallurgica.foundation.material.registry.flags.other.CableFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.CableFlag;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
@@ -39,11 +39,13 @@ public class MetalMaterials {
                         new StorageBlockFlag("minecraft"),
                         new SheetFlag("create"),
                         new MoltenFlag(1064.2),
-                        new DustFlag()
+                        new DustFlag(),
+                        new MineralFlag(true),
+                        new RubbleFlag().crushing().bonusChance(0.15f)
                 ).buildAndRegister();
         COPPER = new Material.Builder(Metallurgica.asResource("copper"))
                 .element(MetallurgicaElements.COPPER)
-                .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK)
+                .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK, WIRE)
                 .addFlags(
                         new NuggetFlag("create"),
                         new IngotFlag("minecraft"),
@@ -51,6 +53,7 @@ public class MetalMaterials {
                         new SheetFlag("create"),
                         new MoltenFlag(1084.6),
                         new DustFlag(),
+                        new WireFlag("tfmg"),
                         new CableFlag(0.0178, WireColours.copper),
                         new MineralFlag(true),
                         new RubbleFlag().crushing().bonusChance(0.15f)
@@ -68,7 +71,7 @@ public class MetalMaterials {
                 ).buildAndRegister();
         ALUMINUM = new Material.Builder(Metallurgica.asResource("aluminum"))
                 .element(MetallurgicaElements.ALUMINUM)
-                .noRegister(INGOT, STORAGE_BLOCK)
+                .noRegister(INGOT, STORAGE_BLOCK, WIRE)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag("tfmg"),
@@ -77,6 +80,7 @@ public class MetalMaterials {
                         new MoltenFlag(660.3),
                         new DustFlag(),
                         new SheetmetalFlag(),
+                        new WireFlag("tfmg"),
                         new CableFlag(0.0276, WireColours.aluminum)
                 ).buildAndRegister();
         SCANDIUM = new Material.Builder(Metallurgica.asResource("scandium"))

@@ -5,6 +5,7 @@ import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.ISpecialLangSuffix;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -68,6 +69,11 @@ public class NuggetFlag extends ItemFlag implements ISpecialLangSuffix {
     @Override
     public FlagKey<?> getKey() {
         return FlagKey.NUGGET;
+    }
+
+    @Override
+    public void verifyFlag(MaterialFlags flags) {
+
     }
 
     @Override

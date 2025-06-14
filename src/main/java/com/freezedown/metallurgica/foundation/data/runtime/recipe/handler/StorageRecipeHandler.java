@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
@@ -19,7 +20,9 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -41,21 +44,14 @@ public class StorageRecipeHandler {
     private static void processSheet(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         if (material.hasFlag(FlagKey.SHEETMETAL)) {
             SheetmetalFlag sheetmetalFlag = material.getFlag(FlagKey.SHEETMETAL);
-            SheetFlag sheetFlag = material.getFlag(FlagKey.SHEET);
-            ResourceLocation sheetId = new ResourceLocation(sheetFlag.getExistingNamespace(), sheetFlag.getIdPattern().formatted(material.getName()));
-            if (material.noRegister(FlagKey.SHEET)) {
-                sheetId = new ResourceLocation(sheetFlag.getExistingNamespace(), sheetFlag.getIdPattern().formatted(material.getName()));
-                if (material.materialInfo().existingIds.containsKey(FlagKey.SHEET)) {
-                    sheetId = material.materialInfo().existingIds().get(FlagKey.SHEET);
-                }
-            }
-            ResourceLocation sheetmetalId = new ResourceLocation(sheetmetalFlag.getExistingNamespace(), sheetmetalFlag.getIdPattern().formatted(material.getName()));
+            Item sheet = MaterialHelper.getCompatibleItem(material, FlagKey.SHEET);
+            Block sheetmetal = MaterialHelper.getCompatibleBlock(material, FlagKey.SHEETMETAL);
             if (sheetmetalFlag.isRequiresCompacting()) {
-                compact9(provider, sheetId, sheetmetalId, 9);
-                decompact9(provider, sheetmetalId, sheetId, 9);
+                compact9(provider, sheet, sheetmetal, 9, material, "%s_sheetmetal_from_sheets");
+                decompact9(provider, sheetmetal, sheet, 9, material, "%s_sheets_from_sheetmetal");
             } else {
-                craftCompact9(provider, sheetId, sheetmetalId, BuiltInRegistries.ITEM.get(sheetId), BuiltInRegistries.ITEM.get(sheetmetalId), 9);
-                craftDecompact9(provider, sheetmetalId, sheetId, BuiltInRegistries.ITEM.get(sheetmetalId), BuiltInRegistries.ITEM.get(sheetId), 9);
+                craftCompact9(provider, sheet, sheetmetal, 9, material, "%s_sheetmetal_from_sheets");
+                craftDecompact9(provider, sheetmetal, sheet, 9, material, "%s_sheets_from_sheetmetal");
             }
         }
     }
@@ -64,22 +60,18 @@ public class StorageRecipeHandler {
         List<FlagKey<? extends ItemFlag>> toCheck = List.of(FlagKey.INGOT, FlagKey.GEM);
         if (material.hasFlag(FlagKey.NUGGET)) {
             NuggetFlag nuggetFlag = material.getFlag(FlagKey.NUGGET);
+            Item nugget = MaterialHelper.getCompatibleItem(material, FlagKey.NUGGET);
             ResourceLocation inputId = new ResourceLocation(nuggetFlag.getExistingNamespace(), nuggetFlag.getIdPattern().formatted(material.getName()));
-            ResourceLocation outputId = null;
+            Item result = null;
+            String resultFlag = "";
             for (FlagKey<? extends ItemFlag> flagKey : toCheck) {
                 if (material.hasFlag(flagKey)) {
-                    ItemFlag flag = material.getFlag(flagKey);
-                    outputId = new ResourceLocation(flag.getExistingNamespace(), flag.getIdPattern().formatted(material.getName()));
-                    if (material.noRegister(flagKey)) {
-                        outputId = new ResourceLocation(flag.getExistingNamespace(), flag.getIdPattern().formatted(material.getName()));
-                        if (material.materialInfo().existingIds.containsKey(flagKey)) {
-                            outputId = material.materialInfo().existingIds().get(flagKey);
-                        }
-                    }
+                    result = MaterialHelper.getCompatibleItem(material, flagKey);
+                    resultFlag = flagKey.toString();
                     break;
                 }
             }
-            if (outputId == null) {
+            if (result == null) {
                 Metallurgica.LOGGER.warn("No ingot or gem flag found for material {}. Skipping nugget recipe generation.", material.getName());
                 return;
             }
@@ -88,11 +80,11 @@ public class StorageRecipeHandler {
                 return;
             }
             if (nuggetFlag.isRequiresCompacting()) {
-                compact9(provider, inputId, outputId, nuggetFlag.getAmountToCraft());
-                decompact9(provider, outputId, inputId, nuggetFlag.getAmountToCraft());
+                compact9(provider, nugget, result, nuggetFlag.getAmountToCraft(), material, "%s_" + resultFlag + "_from_nuggets");
+                decompact9(provider, result, nugget, nuggetFlag.getAmountToCraft(), material, "%s_nuggets_from_" + resultFlag);
             } else {
-                craftCompact9(provider, inputId, outputId, BuiltInRegistries.ITEM.get(inputId), BuiltInRegistries.ITEM.get(outputId), nuggetFlag.getAmountToCraft());
-                craftDecompact9(provider, outputId, inputId, BuiltInRegistries.ITEM.get(outputId), BuiltInRegistries.ITEM.get(inputId), nuggetFlag.getAmountToCraft());
+                craftCompact9(provider, nugget, result, nuggetFlag.getAmountToCraft(), material, "%s_" + resultFlag + "_from_nuggets");
+                craftDecompact9(provider, result, nugget, nuggetFlag.getAmountToCraft(), material, "%s_nuggets_from_" + resultFlag);
             }
         }
     }
@@ -100,19 +92,19 @@ public class StorageRecipeHandler {
     private static void processIngot(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         if (material.hasFlag(FlagKey.INGOT)) {
             IngotFlag ingotFlag = material.getFlag(FlagKey.INGOT);
-            StorageBlockFlag storageBlockFlag = material.getFlag(FlagKey.STORAGE_BLOCK);
             ResourceLocation inputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
-            ResourceLocation outputId = new ResourceLocation(storageBlockFlag.getExistingNamespace(), storageBlockFlag.getIdPattern().formatted(material.getName()));
-            if (!outputId.getNamespace().equals(Metallurgica.ID)) {
-                logRecipeSkip(outputId);
+            Item ingot = MaterialHelper.getCompatibleItem(material, FlagKey.INGOT);
+            Block block = MaterialHelper.getCompatibleBlock(material, FlagKey.STORAGE_BLOCK);
+            if (!inputId.getNamespace().equals(Metallurgica.ID)) {
+                logRecipeSkip(inputId);
                 return;
             }
             if (ingotFlag.isRequiresCompacting()) {
-                compact9(provider, inputId, outputId, 9);
-                decompact9(provider, outputId, inputId, 9);
+                compact9(provider, ingot, block, 9, material, "%s_block_from_ingots");
+                decompact9(provider, block, ingot, 9, material, "%s_ingots_from_block");
             } else {
-                craftCompact9(provider, inputId, outputId, BuiltInRegistries.ITEM.get(inputId), BuiltInRegistries.ITEM.get(outputId), 9);
-                craftDecompact9(provider, outputId, inputId, BuiltInRegistries.ITEM.get(outputId), BuiltInRegistries.ITEM.get(inputId), 9);
+                craftCompact9(provider, ingot, block, 9, material, "%s_block_from_ingots");
+                craftDecompact9(provider, block, ingot, 9, material, "%s_ingots_from_block");
             }
 
         }
@@ -122,15 +114,15 @@ public class StorageRecipeHandler {
         Metallurgica.LOGGER.info("Skipping storage recipe for {} as it is not in the metallurgica namespace and likely already has one", outputId);
     }
 
-    private static void compact9(@NotNull Consumer<FinishedRecipe> provider, ResourceLocation inputId, ResourceLocation outputId, int amountIn) {
-        ProcessingRecipeBuilder<CompactingRecipe> builder = new Builder<>(inputId.getNamespace(), CompactingRecipe::new, inputId.getPath(), outputId.getPath(), provider);
+    private static void compact9(@NotNull Consumer<FinishedRecipe> provider, ItemLike input, ItemLike output, int amountIn, Material material, String recipeId) {
+        ProcessingRecipeBuilder<CompactingRecipe> builder = new Builder<>(material.getNamespace(), CompactingRecipe::new, recipeId.formatted(material.getName()), provider);
         for (int i = 0; i < amountIn; i++) {
-            builder.require(BuiltInRegistries.ITEM.get(inputId));
+            builder.require(input);
         }
-        builder.output(BuiltInRegistries.ITEM.get(outputId)).build();
+        builder.output(output).build();
     }
 
-    private static void craftCompact9(@NotNull Consumer<FinishedRecipe> provider, ResourceLocation inputId, ResourceLocation outputId, ItemLike input, ItemLike output, int amountIn) {
+    private static void craftCompact9(@NotNull Consumer<FinishedRecipe> provider, ItemLike input, ItemLike output, int amountIn, Material material, String recipeId) {
         if (amountIn == 9) {
             ShapedRecipeBuilder builder = new ShapedRecipeBuilder(RecipeCategory.MISC, output, 1);
             for (int i = 0; i < 3; i++) {
@@ -138,34 +130,34 @@ public class StorageRecipeHandler {
             }
             builder.define('#', input)
                     .unlockedBy("has_input", has(input))
-                    .save(provider, Metallurgica.asResource("runtime_generated/" + inputId.getNamespace() + "/" + outputId.getPath() + "_from_" + inputId.getPath()));
+                    .save(provider, Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + recipeId.formatted(material.getName())));
         } else {
             ShapelessRecipeBuilder builder = new ShapelessRecipeBuilder(RecipeCategory.MISC, output, amountIn);
             for (int i = 0; i < amountIn; i++) {
                 builder.requires(input);
             }
             builder.unlockedBy("has_input", has(input))
-                   .save(provider, Metallurgica.asResource("runtime_generated/" + inputId.getNamespace() + "/" + outputId.getPath() + "_from_" + inputId.getPath()));
+                   .save(provider, Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + recipeId.formatted(material.getName())));
         }
     }
 
-    private static void decompact9(@NotNull Consumer<FinishedRecipe> provider, ResourceLocation inputId, ResourceLocation outputId, int amountOut) {
-        ProcessingRecipeBuilder<CuttingRecipe> builder = new Builder<>(inputId.getNamespace(), CuttingRecipe::new, outputId.getPath(), inputId.getPath(), provider);
-        builder.require(BuiltInRegistries.ITEM.get(inputId));
-        builder.output(BuiltInRegistries.ITEM.get(outputId), amountOut).build();
+    private static void decompact9(@NotNull Consumer<FinishedRecipe> provider, ItemLike input, ItemLike output, int amountOut, Material material, String recipeId) {
+        ProcessingRecipeBuilder<CuttingRecipe> builder = new Builder<>(material.getNamespace(), CuttingRecipe::new, recipeId.formatted(material.getName()), provider);
+        builder.require(input);
+        builder.output(output, amountOut).build();
     }
 
-    private static void craftDecompact9(@NotNull Consumer<FinishedRecipe> provider, ResourceLocation inputId, ResourceLocation outputId, ItemLike input, ItemLike output, int amountOut) {
+    private static void craftDecompact9(@NotNull Consumer<FinishedRecipe> provider, ItemLike input, ItemLike output, int amountOut, Material material, String recipeId) {
         ShapelessRecipeBuilder builder = new ShapelessRecipeBuilder(RecipeCategory.MISC, output, amountOut);
-        builder.requires(BuiltInRegistries.ITEM.get(inputId))
+        builder.requires(input)
                .unlockedBy("has_input", has(input))
-               .save(provider, Metallurgica.asResource("runtime_generated/" + inputId.getNamespace() + "/" + outputId.getPath() + "_from_" + inputId.getPath()));
+               .save(provider, Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + recipeId.formatted(material.getName())));
     }
 
     private static class Builder<T extends ProcessingRecipe<?>> extends ProcessingRecipeBuilder<T> {
         Consumer<FinishedRecipe> consumer;
-        public Builder(String modid, ProcessingRecipeBuilder.ProcessingRecipeFactory<T> factory, String from, String to, Consumer<FinishedRecipe> consumer) {
-            super(factory, Metallurgica.asResource("runtime_generated/" + modid + "/" + to + "_from_" + from));
+        public Builder(String modid, ProcessingRecipeBuilder.ProcessingRecipeFactory<T> factory, String id, Consumer<FinishedRecipe> consumer) {
+            super(factory, Metallurgica.asResource("runtime_generated/" + modid + "/" + id));
             this.consumer = consumer;
         }
 

@@ -38,6 +38,7 @@ public class CrushingRecipeHandler {
                 if (rubbleFlag.getBonusChance() > 0) {
                     builder.output(rubbleFlag.getBonusChance(), BuiltInRegistries.ITEM.get(rubbleId));
                 }
+                builder.averageProcessingDuration();
                 builder.build();
             }
         }

@@ -8,7 +8,7 @@ import com.freezedown.metallurgica.foundation.material.registry.flags.block.Stor
 import com.freezedown.metallurgica.foundation.material.registry.flags.fluid.LiquidFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.fluid.MoltenFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.item.*;
-import com.freezedown.metallurgica.foundation.material.registry.flags.other.CableFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.CableFlag;
 import lombok.Getter;
 
 import java.util.ArrayList;

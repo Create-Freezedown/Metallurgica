@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.registry.flags.item.IngotFlag;
@@ -11,6 +12,7 @@ import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeB
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -25,23 +27,22 @@ public class SequencedAssemblyHandler {
 
     private static void processAssembly(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         if (material.hasFlag(FlagKey.SEMI_PRESSED_SHEET)) {
-            SemiPressedSheetFlag semiPressedSheetFlag = material.getFlag(FlagKey.SEMI_PRESSED_SHEET);
-            IngotFlag ingotFlag = material.getFlag(FlagKey.INGOT);
-            SheetFlag sheetFlag = material.getFlag(FlagKey.SHEET);
-            ResourceLocation inputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
-            ResourceLocation outputId = new ResourceLocation(sheetFlag.getExistingNamespace(), sheetFlag.getIdPattern().formatted(material.getName()));
-            ResourceLocation transitionalId = new ResourceLocation(semiPressedSheetFlag.getExistingNamespace(), semiPressedSheetFlag.getIdPattern().formatted(material.getName()));
-            if (material.noRegister(FlagKey.INGOT)) {
-                inputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
+            if (material.noRegister(FlagKey.SHEET)) {
+                Metallurgica.LOGGER.info("Skipping pressing recipe for {} as it is not in the metallurgica namespace and likely already has one", material.getName() + "_sheet");
+                return;
             }
-            SequencedAssemblyRecipeBuilder builder = new SequencedAssemblyRecipeBuilder(Metallurgica.asResource("runtime_generated/" + inputId.getNamespace() + "/" + inputId.getPath() + "_to_" + outputId.getPath()));
-            builder.transitionTo(BuiltInRegistries.ITEM.get(transitionalId));
-            builder.require(BuiltInRegistries.ITEM.get(inputId));
+            SheetFlag sheetFlag = material.getFlag(FlagKey.SHEET);
+            Item ingot = MaterialHelper.getCompatibleItem(material, FlagKey.INGOT);
+            Item sheet = MaterialHelper.getCompatibleItem(material, FlagKey.SHEET);
+            Item transitional = MaterialHelper.getCompatibleItem(material, FlagKey.SEMI_PRESSED_SHEET);
+            SequencedAssemblyRecipeBuilder builder = new SequencedAssemblyRecipeBuilder(Metallurgica.asResource("sequenced_assembly/runtime_generated/" + material.getNamespace() + "/" + material.getName() + "_sheet"));
+            builder.transitionTo(transitional);
+            builder.require(ingot);
             for (int i = 0; i < sheetFlag.getPressTimes(); i++) {
                 builder.addStep(PressingRecipe::new, rb -> rb);
             }
             builder.loops(1);
-            builder.addOutput(BuiltInRegistries.ITEM.get(outputId), 1);
+            builder.addOutput(sheet, 1);
             builder.build(provider);
         }
     }

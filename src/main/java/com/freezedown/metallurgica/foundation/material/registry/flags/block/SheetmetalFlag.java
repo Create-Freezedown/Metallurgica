@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.foundation.material.registry.flags.block;
 import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlockItem;
+import com.freezedown.metallurgica.foundation.material.recycling.Recyclable;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.BlockFlag;
@@ -16,16 +17,20 @@ import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import lombok.Getter;
+import net.createmod.catnip.data.Pair;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.SoundType;
 import org.jetbrains.annotations.NotNull;
+import org.jgrapht.alg.util.Triple;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
-public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures {
+public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures, Recyclable {
 
     @Getter
     private boolean requiresCompacting = false;
@@ -80,5 +85,20 @@ public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures 
     @Override
     public void verifyFlag(MaterialFlags flags) {
         flags.ensureSet(FlagKey.SHEET);
+    }
+
+    @Override
+    public Map<Material, Integer> recyclesInto(Material mainMaterial) {
+        return Map.of(mainMaterial, 9);
+    }
+
+    @Override
+    public Map<Material, Pair<Integer, Float>> discardChance(Material mainMaterial) {
+        return Map.of(mainMaterial, Pair.of(1, 0.25f));
+    }
+
+    @Override
+    public Map<ItemLike, Pair<Integer, Float>> extraItems(Material mainMaterial) {
+        return Map.of();
     }
 }

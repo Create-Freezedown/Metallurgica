@@ -3,15 +3,13 @@ package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.block.CasingFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.item.IngotFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.item.SheetFlag;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -32,20 +30,11 @@ public class ItemApplicationHandler {
     private static void processApplication(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         if (material.hasFlag(FlagKey.CASING)) {
             CasingFlag casingFlag = material.getFlag(FlagKey.CASING);
-            ResourceLocation casingId = casingFlag.getExistingId(material, FlagKey.CASING);
-            IngotFlag ingotFlag = material.getFlag(FlagKey.INGOT);
-            ResourceLocation ingotId = ingotFlag.getExistingId(material, FlagKey.INGOT);
-            SheetFlag sheetFlag = null;
-            ResourceLocation sheetId = null;
-            if (casingFlag.isUseSheet()) {
-                sheetFlag = material.getFlag(FlagKey.SHEET);
-                sheetId = sheetFlag.getExistingId(material, FlagKey.SHEET);
-            }
-            ResourceLocation usedId = casingFlag.isUseSheet() ? sheetId : ingotId;
-            Item usedItem = BuiltInRegistries.ITEM.get(usedId);
+            FlagKey<? extends ItemFlag> used = casingFlag.isUseSheet() ? FlagKey.SHEET : FlagKey.INGOT;
+            Item usedItem = MaterialHelper.getCompatibleItem(material, used);
             for (TagKey<Item> appliesOn : casingFlag.getToApplyOn()) {
                 String appliesOnPath = appliesOn.location().getPath().replace("/", "_");
-                ProcessingRecipeBuilder<ItemApplicationRecipe> builder = new Builder<>(casingId.getNamespace(), (params) -> new ItemApplicationRecipe(AllRecipeTypes.ITEM_APPLICATION, params), casingId.getPath(), appliesOnPath, provider);
+                ProcessingRecipeBuilder<ItemApplicationRecipe> builder = new Builder<>(material.getNamespace(), (params) -> new ItemApplicationRecipe(AllRecipeTypes.ITEM_APPLICATION, params), casingFlag.getIdPattern().formatted(material.getName()), appliesOnPath, provider);
                 builder.require(appliesOn);
                 builder.require(usedItem);
                 builder.output(MaterialHelper.getBlock(material, FlagKey.CASING).asItem());

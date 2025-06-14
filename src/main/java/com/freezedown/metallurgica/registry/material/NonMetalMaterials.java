@@ -7,7 +7,7 @@ import com.freezedown.metallurgica.foundation.material.registry.flags.block.Shee
 import com.freezedown.metallurgica.foundation.material.registry.flags.block.StorageBlockFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.fluid.MoltenFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.item.*;
-import com.freezedown.metallurgica.foundation.material.registry.flags.other.CableFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.CableFlag;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
 import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
@@ -28,7 +28,7 @@ public class NonMetalMaterials {
                         new DustFlag(),
                         new CableFlag(1, WireColours.missing),
                         new MineralFlag(true),
-                        new RubbleFlag().crushing().bonusChance(0.01f)
+                        new RubbleFlag().crushing().bonusChance(0.001f)
                 ).buildAndRegister();
 
         // --- Actual Non-Metal Materials --- //
