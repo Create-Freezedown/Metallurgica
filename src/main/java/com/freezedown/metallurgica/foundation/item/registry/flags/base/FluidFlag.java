@@ -36,7 +36,7 @@ public abstract class FluidFlag implements IMaterialFlag {
     }
 
     public String getUnlocalizedName(Material material) {
-        String matSpecificKey = String.format("item.%s.%s", material.getModid(), this.idPattern.formatted(material.getName()));
+        String matSpecificKey = String.format("fluid.%s.%s", material.getModid(), this.idPattern.formatted(material.getName()));
         if (TextUtil.langExists(matSpecificKey)) {
             return matSpecificKey;
         }

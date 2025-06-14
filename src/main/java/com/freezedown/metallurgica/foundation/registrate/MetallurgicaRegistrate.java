@@ -137,18 +137,18 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
 
     public FluidBuilder<VirtualMaterialFluid, CreateRegistrate> materialVirtualFluid(String name, ResourceLocation still, ResourceLocation flow, Material material, FluidFlag flag) {
-        return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow, MaterialFluidType.create(material), (p) -> VirtualMaterialFluid.createSource(p, material, flag), (p) -> VirtualMaterialFluid.createFlowing(p, material, flag)));
+        return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow, MaterialFluidType.create(material, flag), (p) -> VirtualMaterialFluid.createSource(p, material, flag), (p) -> VirtualMaterialFluid.createFlowing(p, material, flag)));
     }
 
     public FluidBuilder<VirtualMaterialFluid, CreateRegistrate> materialVirtualFluid(String name, ResourceLocation still, ResourceLocation flow, Material material, FluidFlag flag, boolean tint) {
-        return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow, MaterialFluidType.create(material, tint), (p) -> VirtualMaterialFluid.createSource(p, material, flag), (p) -> VirtualMaterialFluid.createFlowing(p, material, flag)));
+        return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow, MaterialFluidType.create(material, flag, tint), (p) -> VirtualMaterialFluid.createSource(p, material, flag), (p) -> VirtualMaterialFluid.createFlowing(p, material, flag)));
     }
 
     public FluidBuilder<MoltenMetalFluid, CreateRegistrate> moltenMetal(String name, Material material, FluidFlag flag, double moltenTemperature) {
         ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
         return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow,
-                MaterialFluidType.create(material, false),
+                MaterialFluidType.create(material, flag, false),
                 (p) -> MoltenMetalFluid.createSource(p, material, flag).meltingPoint(moltenTemperature),
                 (p) -> MoltenMetalFluid.createFlowing(p, material, flag).meltingPoint(moltenTemperature)));
     }
