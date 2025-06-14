@@ -5,6 +5,9 @@ import com.drmangotea.tfmg.blocks.electricity.base.IHaveCables;
 import com.drmangotea.tfmg.blocks.electricity.cable_blocks.copycat_cable_block.CopycatCableBlockEntity;
 import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlock;
 import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlockEntity;
+import com.freezedown.metallurgica.foundation.item.MaterialItem;
+import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
@@ -20,12 +23,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CableItem extends Item {
-    public ConductorEntry<?> material;
+public class CableItem extends MaterialItem {
+    public ConductorEntry<?> conductorEntry;
 
-    public CableItem(Properties properties, ConductorEntry<?> material) {
-        super(properties);
-        this.material = material;
+    public CableItem(Properties properties, ConductorEntry<?> conductorEntry, Material material, ItemFlag itemFlag) {
+        super(properties, material, itemFlag);
+        this.conductorEntry = conductorEntry;
     }
 
     public InteractionResult useOn(UseOnContext context) {
@@ -67,10 +70,10 @@ public class CableItem extends Item {
                                 toClone.getOrCreateTag().remove("Y1");
                                 toClone.getOrCreateTag().remove("Z1");
 
-                                be.addConnection(this.material.get(), toClone, pos2, true, false);
+                                be.addConnection(this.conductorEntry.get(), toClone, pos2, true, false);
                                 be.sendData();
                                 be.setChanged();
-                                be2.addConnection(this.material.get(), toClone, pos, false, false);
+                                be2.addConnection(this.conductorEntry.get(), toClone, pos, false, false);
                                 be2.sendData();
                                 be2.setChanged();
                                 be.makeControllerAndSpread();

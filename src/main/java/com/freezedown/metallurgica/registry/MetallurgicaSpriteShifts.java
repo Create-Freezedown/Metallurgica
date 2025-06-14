@@ -3,7 +3,6 @@ package com.freezedown.metallurgica.registry;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;

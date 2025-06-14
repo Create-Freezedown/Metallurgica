@@ -4,13 +4,12 @@ import com.freezedown.metallurgica.foundation.item.MaterialItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.RegisterElsewhere;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.tterrag.registrate.util.entry.ItemEntry;
-
-import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public class MetMaterialItems {
     public static ImmutableTable.Builder<FlagKey<?>, Material, ItemEntry<? extends MaterialItem>> MATERIAL_ITEMS_BUILDER = ImmutableTable.builder();
@@ -23,6 +22,7 @@ public class MetMaterialItems {
                 var flag = material.getFlag(flagKey);
                 if (!material.noRegister(flagKey)) {
                     if (flag instanceof ItemFlag itemFlag) {
+                        if (itemFlag.getClass().isAnnotationPresent(RegisterElsewhere.class)) continue;
                         registerMaterialItem(material, itemFlag, flagKey, registrate);
                     }
                 }

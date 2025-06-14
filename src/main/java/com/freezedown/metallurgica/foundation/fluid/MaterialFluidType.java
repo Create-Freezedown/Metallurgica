@@ -1,12 +1,8 @@
 package com.freezedown.metallurgica.foundation.fluid;
 
-import com.freezedown.metallurgica.content.fluids.types.TransparentTintedFluidType;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.FluidFlag;
-import com.simibubi.create.AllFluids;
 import com.tterrag.registrate.builders.FluidBuilder;
-import net.createmod.catnip.theme.Color;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -15,8 +11,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.function.Consumer;
 
@@ -44,11 +38,23 @@ public class MaterialFluidType extends FluidType {
         return (p, s, f) -> new MaterialFluidType(p, material, flag, s, f, shouldTint);
     }
 
+    @Override
+    public Component getDescription(FluidStack stack) {
+        return fluidFlag.getLocalizedName(material);
+    }
+
+    @Override
     public Component getDescription() {
         return fluidFlag.getLocalizedName(material);
     }
 
+    @Override
     public String getDescriptionId() {
+        return fluidFlag.getUnlocalizedName(material);
+    }
+
+    @Override
+    public String getDescriptionId(FluidStack stack) {
         return fluidFlag.getUnlocalizedName(material);
     }
 

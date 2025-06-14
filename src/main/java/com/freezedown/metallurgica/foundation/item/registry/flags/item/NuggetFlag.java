@@ -27,8 +27,7 @@ public class NuggetFlag extends ItemFlag implements ISpecialLangSuffix {
     public NuggetFlag(String existingNamespace, boolean shard) {
         super(shard ? "%s_shard" :"%s_nugget", existingNamespace);
         this.shard = shard;
-        String singularTag = shard ? "c:shards/%s_shard" : "c:nuggets/%s_nugget";
-        this.setTagPatterns(List.of(shard ? "c:/shards" :"c:nuggets", shard ? "c:/shards/%s" : "c:nuggets/%s", singularTag));
+        this.setTagPatterns(List.of(shard ? "c:/shards" :"c:nuggets", shard ? "c:/shards/%s" : "c:nuggets/%s"));
     }
 
     public NuggetFlag(boolean $shard) {

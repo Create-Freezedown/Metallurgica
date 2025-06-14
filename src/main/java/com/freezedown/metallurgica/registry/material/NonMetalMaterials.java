@@ -1,17 +1,37 @@
 package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.item.WireColours;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.block.SheetmetalFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.block.StorageBlockFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.fluid.MoltenFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.item.*;
+import com.freezedown.metallurgica.foundation.item.registry.flags.other.CableFlag;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
 import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.*;
 import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
 
 public class NonMetalMaterials {
-    public static void register(){
+    public static void register() {
+        // Null :3
+        NULL = new Material.Builder(Metallurgica.asResource("null"))
+                .element(MetallurgicaElements.NULL)
+                .addFlags(
+                        new NuggetFlag().requiresCompacting(),
+                        new IngotFlag().requiresCompacting(),
+                        new StorageBlockFlag().requiresDecompacting(),
+                        new SheetmetalFlag().requiresCompacting(),
+                        new SheetFlag().pressTimes(5),
+                        new MoltenFlag(9999.0),
+                        new DustFlag(),
+                        new CableFlag(1, WireColours.missing),
+                        new MineralFlag(true),
+                        new RubbleFlag().crushing().bonusChance(0.01f)
+                ).buildAndRegister();
+
+        // --- Actual Non-Metal Materials --- //
         SILICON = new Material.Builder(Metallurgica.asResource("silicon"))
                 .element(MetallurgicaElements.SILICON)
                 .addFlags(

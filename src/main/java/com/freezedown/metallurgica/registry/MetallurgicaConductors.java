@@ -56,18 +56,18 @@ public class MetallurgicaConductors {
 
     public static void register() {
         registrate.setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
-        for (Material material : MetMaterials.registeredMaterials.values()) {
-            if (!material.hasFlag(FlagKey.CABLE)) continue;
-            CableFlag cableFlag = material.getFlag(FlagKey.CABLE);
-            ConductorEntry<Conductor> conductor = registrate.conductor(material.getName(), Conductor::new)
-                    .properties(p -> p.color1(cableFlag.getColors().getFirst()).color2(cableFlag.getColors().getSecond()))
-                    .transform(TFMGConductor.setResistivity(cableFlag.getResistivity()))
-                    .register();
-            registrate.item("%s_cable".formatted(material.getName()), (p) -> new CableItem(p, conductor))
-                    .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
-                    .tag(MetallurgicaTags.modItemTag("cables"))
-                    .register();
-        }
+        //for (Material material : MetMaterials.registeredMaterials.values()) {
+        //    if (!material.hasFlag(FlagKey.CABLE)) continue;
+        //    CableFlag cableFlag = material.getFlag(FlagKey.CABLE);
+        //    ConductorEntry<Conductor> conductor = registrate.conductor(material.getName(), Conductor::new)
+        //            .properties(p -> p.color1(cableFlag.getColors().getFirst()).color2(cableFlag.getColors().getSecond()))
+        //            .transform(TFMGConductor.setResistivity(cableFlag.getResistivity()))
+        //            .register();
+        //    registrate.item("%s_cable".formatted(material.getName()), (p) -> new CableItem(p, conductor))
+        //            .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
+        //            .tag(MetallurgicaTags.modItemTag("cables"))
+        //            .register();
+        //}
     }
 
     //public static Conductor get(ResourceLocation key) {

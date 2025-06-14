@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "metallurgica:null_nullide_sheetmetal"
+          "name": "metallurgica:null_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "metallurgica:blocks/null_nullide_sheetmetal"
+  "random_sequence": "metallurgica:blocks/null_block"
 }
