@@ -12,6 +12,8 @@ import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialFluids;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialItems;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.tterrag.registrate.util.entry.FluidEntry;
@@ -184,15 +186,10 @@ public class MetallurgicaFluids {
     }
 
     public static void register() {
-        for (Material material : MetMaterials.registeredMaterials.values()) {
-            for (FlagKey<?> flagKey : FlagKey.getAllFlags()) {
-                var flag = material.getFlag(flagKey);
-                if (!material.noRegister(flagKey)) {
-                    if (flag instanceof FluidFlag fluidFlag) {
-                        fluidFlag.registerFluid(material, fluidFlag, registrate);
-                    }
-                }
-            }
-        }
+        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
+        MetMaterialFluids.generateMaterialFluids(materialRegistrate);
+        MetMaterialFluids.MATERIAL_FLUIDS = MetMaterialFluids.MATERIAL_FLUIDS_BUILDER.build();
+
+        MetMaterialFluids.MATERIAL_FLUIDS_BUILDER = null;
     }
 }

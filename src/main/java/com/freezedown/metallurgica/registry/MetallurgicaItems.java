@@ -1,18 +1,12 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.items.metals.MagnesiumItem;
-import com.freezedown.metallurgica.content.items.metals.MagnesiumOxideItem;
 import com.freezedown.metallurgica.content.items.sealed_storage.SealedBundleItem;
 import com.freezedown.metallurgica.content.items.temperature.ThermometerItem;
 import com.freezedown.metallurgica.content.metalworking.forging.hammer.ForgeHammerItem;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
-import com.freezedown.metallurgica.infastructure.conductor.CableItem;
-import com.freezedown.metallurgica.registry.material.MetMaterialBlocks;
-import com.freezedown.metallurgica.registry.material.MetMaterialItems;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialItems;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;

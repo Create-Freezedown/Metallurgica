@@ -1,16 +1,18 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags.base;
 
-import com.freezedown.metallurgica.content.fluids.types.MaterialFluid;
+import com.freezedown.metallurgica.foundation.fluid.IMaterialFluid;
 import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.util.TextUtil;
 import com.tterrag.registrate.util.entry.FluidEntry;
+import lombok.Getter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class FluidFlag implements IMaterialFlag {
+    @Getter
     private final String idPattern;
     private String existingNamespace = "metallurgica";
 
@@ -23,7 +25,7 @@ public abstract class FluidFlag implements IMaterialFlag {
         this.existingNamespace = existingNamespace;
     }
 
-    public abstract FluidEntry<? extends MaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate);
+    public abstract FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate);
 
     public String getUnlocalizedName() {
         return "materialflag." + (this instanceof ISpecialLangSuffix suffix ? suffix.getLangSuffix() : MetallurgicaModels.getFlagName(getKey()));

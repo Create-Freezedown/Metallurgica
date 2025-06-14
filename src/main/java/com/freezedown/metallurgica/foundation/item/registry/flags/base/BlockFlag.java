@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags.base;
 
+import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
@@ -65,7 +66,7 @@ public abstract class BlockFlag implements IMaterialFlag {
         return new ResourceLocation(existingNamespace, idPattern.formatted(material.getName()));
     }
 
-    public abstract BlockEntry<? extends MaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate);
+    public abstract BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate);
 
     public abstract boolean shouldHaveComposition();
 

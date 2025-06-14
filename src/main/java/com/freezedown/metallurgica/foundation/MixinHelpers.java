@@ -1,13 +1,13 @@
 package com.freezedown.metallurgica.foundation;
 
-import com.freezedown.metallurgica.foundation.block.MaterialBlock;
+import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
-import com.freezedown.metallurgica.registry.material.MetMaterialBlocks;
-import com.freezedown.metallurgica.registry.material.MetMaterialItems;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialItems;
 import com.google.common.collect.Table;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -45,7 +45,7 @@ public class MixinHelpers {
                     }
                 }
             }
-            for (Table.Cell<FlagKey<?>, Material, BlockEntry<? extends MaterialBlock>> entryCell : MetMaterialBlocks.MATERIAL_BLOCKS.cellSet()) {
+            for (Table.Cell<FlagKey<?>, Material, BlockEntry<? extends IMaterialBlock>> entryCell : MetMaterialBlocks.MATERIAL_BLOCKS.cellSet()) {
                 FlagKey<?> flagKey = entryCell.getRowKey();
                 var material = entryCell.getColumnKey();
                 var itemEntry = entryCell.getValue().asItem();
@@ -67,7 +67,7 @@ public class MixinHelpers {
             }
         }
         if (registry == BuiltInRegistries.BLOCK) {
-            for (Table.Cell<FlagKey<?>, Material, BlockEntry<? extends MaterialBlock>> entryCell : MetMaterialBlocks.MATERIAL_BLOCKS.cellSet()) {
+            for (Table.Cell<FlagKey<?>, Material, BlockEntry<? extends IMaterialBlock>> entryCell : MetMaterialBlocks.MATERIAL_BLOCKS.cellSet()) {
                 FlagKey<?> flagKey = entryCell.getRowKey();
                 var material = entryCell.getColumnKey();
                 var blockEntry = entryCell.getValue();

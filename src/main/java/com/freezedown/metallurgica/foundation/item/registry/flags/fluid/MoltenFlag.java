@@ -1,13 +1,18 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags.fluid;
 
-import com.freezedown.metallurgica.content.fluids.types.MaterialFluid;
+import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.fluid.IMaterialFluid;
+import com.freezedown.metallurgica.foundation.item.MaterialBucketItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.FluidFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
+import com.simibubi.create.AllTags;
+import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.FluidEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,13 +39,13 @@ public class MoltenFlag extends FluidFlag {
 
     @ApiStatus.Internal
     public void registerFluids(@NotNull Material material, @NotNull MetallurgicaRegistrate registrate) {
-        List<FluidEntry<?>> fluidEntries = new ArrayList<>();
-        if (material.hasFlag(FlagKey.INGOT)) {
-            FluidEntry<?> fluid = registrate.moltenMetal(material, meltingPoint);
-            fluidEntries.add(fluid);
-        }
-        if (!fluidEntries.isEmpty())
-            MetMaterials.materialFluids.put(material, fluidEntries);
+        //List<FluidEntry<?>> fluidEntries = new ArrayList<>();
+        //if (material.hasFlag(FlagKey.INGOT)) {
+        //    FluidEntry<?> fluid = registrate.moltenMetal(material, meltingPoint);
+        //    fluidEntries.add(fluid);
+        //}
+        //if (!fluidEntries.isEmpty())
+        //    MetMaterials.materialFluids.put(material, fluidEntries);
     }
 
     @Override
@@ -49,7 +54,12 @@ public class MoltenFlag extends FluidFlag {
     }
 
     @Override
-    public FluidEntry<? extends MaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate) {
-        return null;
+    public FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+        return registrate.moltenMetal(this.getIdPattern().formatted(material.getName()), material, flag, meltingPoint)
+                .bucket((sup, p) -> new MaterialBucketItem(sup, p, material, flag))
+                .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+                .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
+                .build()
+                .register();
     }
 }

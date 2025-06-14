@@ -1,19 +1,19 @@
-package com.freezedown.metallurgica.registry.material;
+package com.freezedown.metallurgica.registry.material.init;
 
-import com.freezedown.metallurgica.foundation.block.MaterialBlock;
+import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.tterrag.registrate.util.entry.BlockEntry;
 
 public class MetMaterialBlocks {
-    public static ImmutableTable.Builder<FlagKey<?>, Material, BlockEntry<? extends MaterialBlock>> MATERIAL_BLOCKS_BUILDER = ImmutableTable
-            .builder();
+    public static ImmutableTable.Builder<FlagKey<?>, Material, BlockEntry<? extends IMaterialBlock>> MATERIAL_BLOCKS_BUILDER = ImmutableTable.builder();
 
-    public static Table<FlagKey<?>, Material, BlockEntry<? extends MaterialBlock>> MATERIAL_BLOCKS;
+    public static Table<FlagKey<?>, Material, BlockEntry<? extends IMaterialBlock>> MATERIAL_BLOCKS;
 
     public static void generateMaterialBlocks(MetallurgicaRegistrate registrate) {
         for (Material material : MetMaterials.registeredMaterials.values()) {

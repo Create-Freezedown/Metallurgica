@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
-public class MaterialBlock extends Block {
+public class MaterialBlock extends Block implements IMaterialBlock {
     public final Material material;
     public final BlockFlag blockFlag;
 
@@ -37,5 +37,15 @@ public class MaterialBlock extends Block {
 
     public MaterialBlock(Properties properties, Material material, BlockFlag blockFlag) {
         this(properties, material, blockFlag, true);
+    }
+
+    @Override
+    public Material getMaterial() {
+        return this.material;
+    }
+
+    @Override
+    public BlockFlag getFlag() {
+        return this.blockFlag;
     }
 }

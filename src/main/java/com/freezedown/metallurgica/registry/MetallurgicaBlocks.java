@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.tfmg.registry.TFMGBlocks;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
@@ -38,10 +37,9 @@ import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
-import com.freezedown.metallurgica.registry.material.MetMaterialBlocks;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
-import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;

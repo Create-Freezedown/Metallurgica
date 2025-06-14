@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags.fluid;
 
-import com.freezedown.metallurgica.content.fluids.types.MaterialFluid;
+import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.fluid.IMaterialFluid;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.FluidFlag;
@@ -22,8 +23,9 @@ public class LiquidFlag extends FluidFlag implements ISpecialAssetLocation, ISpe
     }
 
     @Override
-    public FluidEntry<? extends MaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate) {
-        return null;
+    public FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+        return registrate.materialVirtualFluid(this.getIdPattern().formatted(material.getName()), Metallurgica.asResource("fluid/thin_fluid_still"), Metallurgica.asResource("fluid/thin_fluid_flow"), material, flag)
+                .register();
     }
 
     @Override

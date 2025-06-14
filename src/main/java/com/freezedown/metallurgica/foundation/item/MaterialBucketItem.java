@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.item;
 
 import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.FluidFlag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.BucketItem;
@@ -11,20 +12,16 @@ import java.util.function.Supplier;
 
 public class MaterialBucketItem extends BucketItem {
     public final Material material;
-    private final BucketType bucketType;
+    public final FluidFlag fluidFlag;
 
-    public MaterialBucketItem(Supplier<? extends Fluid> supplier, Properties builder, Material material, BucketType bucketType) {
+    public MaterialBucketItem(Supplier<? extends Fluid> supplier, Properties builder, Material material, FluidFlag flag) {
         super(supplier, builder);
         this.material = material;
-        this.bucketType = bucketType;
-    }
-
-    public MaterialBucketItem(Supplier<? extends Fluid> supplier, Properties builder, Material material) {
-        this(supplier, builder, material, BucketType.FLUID);
+        this.fluidFlag = flag;
     }
 
     public String getUnlocalizedName() {
-        return "materialflag.bucket" + bucketType.getLangSuffix();
+        return "materialflag.bucket." + fluidFlag.getKey();
     }
 
     public MutableComponent getLocalizedName(Material material) {

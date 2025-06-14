@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.compat.jei.category.composition;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
@@ -134,7 +135,7 @@ public class ElementCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
             if (itemStack.isEmpty()) continue;
             items.add(itemStack);
         }
-        for (BlockEntry<? extends MaterialBlock> block : MaterialHelper.getAllBlocks(material, true)) {
+        for (BlockEntry<? extends IMaterialBlock> block : MaterialHelper.getAllBlocks(material, true)) {
             ItemStack itemStack = block.get().asItem().getDefaultInstance();
             if (itemStack.isEmpty()) continue;
             items.add(itemStack);

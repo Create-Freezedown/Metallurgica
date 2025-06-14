@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags.block;
 
+import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlockItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
@@ -45,7 +46,7 @@ public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures 
     }
 
     @Override
-    public BlockEntry<? extends MaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
         CTSpriteShiftEntry spriteShift = getSpriteShiftEntry(material);
         return registrate.block(getIdPattern().formatted(material.getName()), (p) -> new MaterialBlock(p, material, flag))
                 .initialProperties(SharedProperties::copperMetal)

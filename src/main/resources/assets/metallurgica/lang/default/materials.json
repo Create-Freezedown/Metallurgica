@@ -7,8 +7,6 @@
   "materialflag.semi_pressed_sheet": "Semi-Pressed %s Sheet",
   "materialflag.wire": "%s Wire",
   "materialflag.cable": "%s Cable",
-  "materialflag.bucket": "%s Bucket",
-  "materialflag.bucket.molten": "Molten %s Bucket",
   "materialflag.mineral": "%s",
   "materialflag.native_mineral": "Native %s",
   "materialflag.rubble": "%s Rubble",
@@ -16,5 +14,11 @@
   "materialflag.powder": "%s Powder",
   "materialflag.casing": "%s Casing",
   "materialflag.sheetmetal": "%s Sheetmetal",
-  "materialflag.shard": "%s Shard"
+  "materialflag.shard": "%s Shard",
+
+  "materialflag.bucket": "%s Bucket",
+  "materialflag.liquid": "%s",
+  "materialflag.bucket.liquid": "%s Bucket",
+  "materialflag.molten": "Molten %s",
+  "materialflag.bucket.molten": "Molten %s Bucket"
 }

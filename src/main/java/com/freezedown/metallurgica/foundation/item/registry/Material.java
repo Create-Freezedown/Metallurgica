@@ -64,24 +64,6 @@ public class Material implements Comparable<Material> {
         shouldRegister(config.get());
     }
 
-    public Fluid getFluid(Class<? extends Fluid> fluidClass, FlagKey<? extends FluidFlag> flagKey) {
-        FluidFlag flag = getFlag(flagKey);
-        if (flag == null) {
-            throw new IllegalArgumentException("Material " + getName() + " does not have a Fluid!");
-        }
-
-        List<FluidEntry<?>> possibleFluids = MetMaterials.materialFluids.get(this);
-        FluidEntry<?> toReturn = null;
-        for (FluidEntry<?> fluidEntry : possibleFluids) {
-            if (!fluidClass.isInstance(fluidEntry.get())) continue;
-            toReturn = fluidEntry;
-        }
-        if (toReturn == null) {
-            throw new IllegalArgumentException("Material " + getName() + " does not have a Fluid of type specified: " + fluidClass.getName());
-        }
-        return toReturn.get();
-    }
-
     public List<ElementData> getComposition() {
         if (materialInfo.composition.isEmpty()) {
             return List.of(new ElementData(MetallurgicaElements.NULL.getId(), 1));
@@ -134,6 +116,11 @@ public class Material implements Comparable<Material> {
                 throw new IllegalArgumentException("Material name cannot end with a '_'!");
             materialInfo = new MaterialInfo(resourceLocation);
             flags = new MaterialFlags();
+        }
+
+        public Builder colour(int rgb) {
+            materialInfo.withColour(rgb);
+            return this;
         }
 
         @SafeVarargs
@@ -200,6 +187,7 @@ public class Material implements Comparable<Material> {
         }
 
         public Material buildAndRegister() {
+            if (materialInfo.colour() == 0) materialInfo.withColour(0xFFFFFF);
             var mat = new Material(materialInfo, flags);
             ResourceLocation key = new ResourceLocation(mat.getModid(), mat.getName());
             MetMaterials.registeredMaterials.put(key, mat);
@@ -216,6 +204,8 @@ public class Material implements Comparable<Material> {
         public Map<FlagKey<?>, ResourceLocation> existingIds = new HashMap<>();
         @Getter
         public List<ElementData> composition = new ArrayList<>();
+        @Getter
+        private int colour;
 
         private MaterialInfo(ResourceLocation resourceLocation) {
             this.resourceLocation = resourceLocation;
@@ -232,6 +222,11 @@ public class Material implements Comparable<Material> {
         }
         public MaterialInfo withExistingId(FlagKey<?> flag, String id) {
             return withExistingId(flag, new ResourceLocation(id));
+        }
+
+        public MaterialInfo withColour(int rgb) {
+            colour = rgb;
+            return this;
         }
 
 

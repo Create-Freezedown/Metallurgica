@@ -6,9 +6,12 @@ import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingG
 import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
+import com.freezedown.metallurgica.foundation.fluid.MaterialFluidType;
+import com.freezedown.metallurgica.foundation.fluid.MoltenMetalFluid;
+import com.freezedown.metallurgica.foundation.fluid.VirtualMaterialFluid;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
-import com.freezedown.metallurgica.foundation.item.MaterialBucketItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.base.FluidFlag;
 import com.freezedown.metallurgica.foundation.material.OreEntry;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
@@ -17,7 +20,6 @@ import com.freezedown.metallurgica.infastructure.element.Element;
 import com.freezedown.metallurgica.infastructure.element.ElementBuilder;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
-import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import com.simibubi.create.content.fluids.VirtualFluid;
@@ -25,12 +27,12 @@ import com.simibubi.create.foundation.block.connected.RotatedPillarCTBehaviour;
 import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.data.VirtualFluidBuilder;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.*;
@@ -133,6 +135,23 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
         return virtualFluid(name, still, flow, TransparentTintedFluidType.create(color), VirtualFluid::createSource, VirtualFluid::createFlowing);
     }
+
+    public FluidBuilder<VirtualMaterialFluid, CreateRegistrate> materialVirtualFluid(String name, ResourceLocation still, ResourceLocation flow, Material material, FluidFlag flag) {
+        return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow, MaterialFluidType.create(material), (p) -> VirtualMaterialFluid.createSource(p, material, flag), (p) -> VirtualMaterialFluid.createFlowing(p, material, flag)));
+    }
+
+    public FluidBuilder<VirtualMaterialFluid, CreateRegistrate> materialVirtualFluid(String name, ResourceLocation still, ResourceLocation flow, Material material, FluidFlag flag, boolean tint) {
+        return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow, MaterialFluidType.create(material, tint), (p) -> VirtualMaterialFluid.createSource(p, material, flag), (p) -> VirtualMaterialFluid.createFlowing(p, material, flag)));
+    }
+
+    public FluidBuilder<MoltenMetalFluid, CreateRegistrate> moltenMetal(String name, Material material, FluidFlag flag, double moltenTemperature) {
+        ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
+        ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
+        return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow,
+                MaterialFluidType.create(material, false),
+                (p) -> MoltenMetalFluid.createSource(p, material, flag).meltingPoint(moltenTemperature),
+                (p) -> MoltenMetalFluid.createFlowing(p, material, flag).meltingPoint(moltenTemperature)));
+    }
     
     public FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate> tintedFluid(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
@@ -144,25 +163,6 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
         return acid(name, color, still, flow, acidity);
-    }
-
-    public FluidEntry<MoltenMetal> moltenMetal(Material material, double moltenTemperature) {
-        String name = material.getName();
-        String id = "molten_" + name;
-        ResourceLocation modelParent = new ResourceLocation("item/generated");
-        ResourceLocation itemTexture = Metallurgica.asResource("item/molten_metal_bucket");
-        ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
-        ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
-        return virtualFluid("molten_" + name, still, flow, MoltenMetal.MoltenMetalFluidType::new, p -> MoltenMetal.createSource(p).moltenTemperature(moltenTemperature), p -> MoltenMetal.createFlowing(p).moltenTemperature(moltenTemperature))
-                .lang(autoLang(id))
-                .tag(MetallurgicaTags.modFluidTag("molten_metals/" + name))
-                .tag(MetallurgicaTags.modFluidTag("molten_metals"))
-                .bucket((sup, p) -> new MaterialBucketItem(sup, p, material, MaterialBucketItem.BucketType.MOLTEN))
-                .setData(ProviderType.LANG, NonNullBiConsumer.noop())
-                .tag(AllTags.forgeItemTag("buckets/"+name))
-                .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
-                .build()
-                .register();
     }
 
     public FluidEntry<Acid> acid(String name, int color, float acidity, String lang) {

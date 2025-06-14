@@ -1,24 +1,14 @@
-package com.freezedown.metallurgica.registry.material;
+package com.freezedown.metallurgica.registry.material.init;
 
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.registry.MetallurgicaCreativeTab;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
-import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import net.createmod.catnip.data.Pair;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 

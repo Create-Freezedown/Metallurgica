@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.item.registry.flags.block;
 
 import com.freezedown.metallurgica.foundation.block.AxisMaterialBlock;
+import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlockItem;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
@@ -49,7 +50,7 @@ public class StorageBlockFlag extends BlockFlag {
     }
 
     @Override
-    public BlockEntry<? extends MaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
         NonNullFunction<BlockBehaviour.Properties, MaterialBlock> factory = useColumnModel ? p -> new AxisMaterialBlock(p, material, flag)
                 : p -> new MaterialBlock(p, material, flag);
             return registrate.block(getIdPattern().formatted(material.getName()), factory)
