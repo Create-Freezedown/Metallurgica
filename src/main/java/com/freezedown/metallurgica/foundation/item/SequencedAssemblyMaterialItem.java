@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.item;
 
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
 import net.createmod.catnip.theme.Color;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;

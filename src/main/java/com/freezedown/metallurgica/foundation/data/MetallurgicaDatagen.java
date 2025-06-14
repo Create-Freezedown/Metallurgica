@@ -6,7 +6,7 @@ import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.freezedown.metallurgica.foundation.data.recipe.create.MSequencedAssemblyGen;
 import com.freezedown.metallurgica.foundation.data.recipe.metallurgica.MFluidReactionGen;
 import com.freezedown.metallurgica.foundation.data.recipe.vanilla.MStandardRecipeGen;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.ponder.MetallurgicaPonderPlugin;
 import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
 import com.freezedown.metallurgica.registry.MetallurgicaBiomeTemperatures;

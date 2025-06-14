@@ -1,9 +1,9 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe;
 
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.*;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.IRecipeHandler;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.registry.flags.base.IRecipeHandler;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.data.recipes.FinishedRecipe;

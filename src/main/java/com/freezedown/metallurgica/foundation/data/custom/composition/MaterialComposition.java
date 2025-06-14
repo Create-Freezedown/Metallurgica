@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.custom.composition;
 
-import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.mojang.serialization.Codec;

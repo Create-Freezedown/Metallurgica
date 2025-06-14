@@ -1,10 +1,10 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.IngotFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.SheetFlag;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.IngotFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.SheetFlag;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;

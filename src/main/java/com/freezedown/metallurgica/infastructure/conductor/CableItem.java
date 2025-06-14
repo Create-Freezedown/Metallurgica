@@ -6,8 +6,8 @@ import com.drmangotea.tfmg.blocks.electricity.cable_blocks.copycat_cable_block.C
 import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlock;
 import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlockEntity;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
@@ -16,7 +16,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;

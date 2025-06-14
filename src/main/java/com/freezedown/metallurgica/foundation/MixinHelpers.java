@@ -2,10 +2,10 @@ package com.freezedown.metallurgica.foundation;
 
 import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.BlockFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.registry.flags.base.BlockFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialItems;
 import com.google.common.collect.Table;

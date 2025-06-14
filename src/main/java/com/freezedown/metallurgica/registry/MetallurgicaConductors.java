@@ -1,16 +1,5 @@
 package com.freezedown.metallurgica.registry;
 
-import com.freezedown.metallurgica.foundation.config.TFMGConductor;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.other.CableFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
-import com.freezedown.metallurgica.infastructure.conductor.CableItem;
-import com.freezedown.metallurgica.infastructure.conductor.Conductor;
-import com.freezedown.metallurgica.infastructure.conductor.ConductorEntry;
-import com.freezedown.metallurgica.registry.material.MetMaterials;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public class MetallurgicaConductors {

@@ -2,16 +2,16 @@ package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.item.WireColours;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.block.SheetmetalFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.block.StorageBlockFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.fluid.MoltenFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.*;
-import com.freezedown.metallurgica.foundation.item.registry.flags.other.CableFlag;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.block.SheetmetalFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.fluid.MoltenFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.*;
+import com.freezedown.metallurgica.foundation.material.registry.flags.other.CableFlag;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
-import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.*;
 import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
+import static com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey.*;
 
 public class NonMetalMaterials {
     public static void register() {

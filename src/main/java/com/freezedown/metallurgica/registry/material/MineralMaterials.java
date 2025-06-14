@@ -1,13 +1,13 @@
 package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.DustFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.MineralFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.RubbleFlag;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.DustFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.MineralFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.RubbleFlag;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
-import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.DUST;
+import static com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey.*;
 import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
 
 public class MineralMaterials {

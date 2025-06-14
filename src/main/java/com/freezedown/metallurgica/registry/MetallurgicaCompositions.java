@@ -1,21 +1,14 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.tfmg.registry.TFMGBlocks;
-import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
 import com.freezedown.metallurgica.infastructure.element.ElementEntry;
 import com.freezedown.metallurgica.infastructure.element.data.ElementData;
 import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionBuilder;
 import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.fluid.FluidCompositionBuilder;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
-import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
-import com.simibubi.create.AllItems;
-import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -24,7 +17,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -38,8 +30,6 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.INGOT;
-import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.SHEET;
 import static com.freezedown.metallurgica.registry.misc.MetallurgicaElements.*;
 import static com.freezedown.metallurgica.infastructure.element.data.SubComposition.*;
 

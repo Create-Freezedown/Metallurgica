@@ -1,8 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.tfmg.registry.TFMGCreativeModeTabs;
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
+import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.registry.material.MetMaterials;

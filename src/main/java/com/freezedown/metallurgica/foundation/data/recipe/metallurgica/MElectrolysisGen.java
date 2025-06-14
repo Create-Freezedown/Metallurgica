@@ -1,12 +1,9 @@
 package com.freezedown.metallurgica.foundation.data.recipe.metallurgica;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
-import com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
 import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
-import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.data.DataGenerator;

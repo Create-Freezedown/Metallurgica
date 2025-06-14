@@ -1,16 +1,15 @@
 package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.item.registry.Material;
-import com.freezedown.metallurgica.foundation.item.registry.flags.block.SheetmetalFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.block.StorageBlockFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.DustFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.IngotFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.NuggetFlag;
-import com.freezedown.metallurgica.foundation.item.registry.flags.item.SheetFlag;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.DustFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.IngotFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.NuggetFlag;
+import com.freezedown.metallurgica.foundation.material.registry.flags.item.SheetFlag;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
-import static com.freezedown.metallurgica.foundation.item.registry.flags.FlagKey.*;
+import static com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey.*;
 import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
 
 public class CompoundMaterials {
