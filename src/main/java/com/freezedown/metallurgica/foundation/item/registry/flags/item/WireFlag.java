@@ -11,9 +11,17 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class WireFlag extends ItemFlag {
+
+    public WireFlag(String existingNamespace) {
+        super("%s_wire", existingNamespace);
+        this.setTagPatterns(List.of("c:wires", "c:wires/%s"));
+    }
+
     public WireFlag() {
-        super("%s_wire");
+        this("metallurgica");
     }
 
     @Override
