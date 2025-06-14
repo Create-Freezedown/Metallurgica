@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.item.registry.Material;
+import com.freezedown.metallurgica.foundation.item.registry.flags.block.SheetmetalFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.block.StorageBlockFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.item.DustFlag;
 import com.freezedown.metallurgica.foundation.item.registry.flags.item.IngotFlag;
@@ -14,6 +15,12 @@ import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
 
 public class CompoundMaterials {
     public static void register() {
+        NULL_NULLIDE = new Material.Builder(Metallurgica.asResource("null_nullide"))
+                .composition(MetallurgicaElements.NULL,1, MetallurgicaElements.NULL, 1)
+                .addFlags(
+                        new StorageBlockFlag().useColumnModel(),
+                        new SheetmetalFlag()
+                ).buildAndRegister();
         MAGNESIUM_OXIDE = new Material.Builder(Metallurgica.asResource("magnesium_oxide"))
                 .composition(MetallurgicaElements.MAGNESIUM, 1, MetallurgicaElements.OXYGEN, 1)
                 .addFlags(
