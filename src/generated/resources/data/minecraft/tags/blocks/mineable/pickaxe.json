@@ -35,6 +35,8 @@
     "metallurgica:tantalum_block",
     "metallurgica:silicon_block",
     "metallurgica:tin_block",
+    "metallurgica:null_nullide_block",
+    "metallurgica:null_nullide_sheetmetal",
     "metallurgica:chromium_block",
     "metallurgica:osmium_block",
     "metallurgica:aluminum_sheetmetal",

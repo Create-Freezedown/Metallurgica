@@ -79,6 +79,7 @@ public class MetMaterials {
     public static Material CUPRITE;
 
     //Compounds
+    public static Material NULL_NULLIDE; //test material
     public static Material MAGNESIUM_OXIDE;
     public static Material POTASSIUM_NITRATE;
     public static Material CALCIUM_CARBONATE;
