@@ -10,8 +10,6 @@
     "BasinBlockEntityMixin",
     "ChemicalInfoTooltipMixin",
     "DefaultOreFeaturesMixin",
-    "MixinOpenEndedPipe",
-    "MixinVanillaFluidTargets",
     "PlayerListMixin",
     "TagLoaderMixin",
     "TagManagerMixin",
@@ -21,7 +19,6 @@
     "jei.FluidHelperMixin"
   ],
   "client": [
-    "MixinLiquidBlockRenderer",
     "ModelManagerMixin",
     "accessor.PostChainAccessor"
   ],

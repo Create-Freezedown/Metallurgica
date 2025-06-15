@@ -41,7 +41,7 @@ public class OpenMetallurgicaMenuButton extends Button {
     }
 
     static {
-        ICON = MaterialHelper.getItem(MetMaterials.CASSITERITE, FlagKey.MINERAL).asStack();
+        ICON = MaterialHelper.getItem(MetMaterials.CASSITERITE.get(), FlagKey.MINERAL).getDefaultInstance();
     }
 
     @Override

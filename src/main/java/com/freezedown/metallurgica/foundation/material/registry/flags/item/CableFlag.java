@@ -3,7 +3,7 @@ package com.freezedown.metallurgica.foundation.material.registry.flags.item;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.TFMGConductor;
 import com.freezedown.metallurgica.foundation.item.MaterialItem;
-import com.freezedown.metallurgica.foundation.material.recycling.Recyclable;
+import com.freezedown.metallurgica.foundation.material.recycling.Scrappable;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.MaterialHelper;
@@ -33,7 +33,7 @@ import java.util.function.Consumer;
 
 import static com.tterrag.registrate.providers.RegistrateRecipeProvider.has;
 
-public class CableFlag extends ItemFlag implements IRecipeHandler, Recyclable {
+public class CableFlag extends ItemFlag implements IRecipeHandler, Scrappable {
 
     @Getter
     private Pair<int[],int[]> colors;
@@ -76,7 +76,7 @@ public class CableFlag extends ItemFlag implements IRecipeHandler, Recyclable {
 
     @Override
     public void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
-        var wire = MaterialHelper.getCompatibleItem(material, FlagKey.WIRE);
+        var wire = MaterialHelper.getItem(material, FlagKey.WIRE);
         var cable = MaterialHelper.getItem(material, getKey());
         ShapedRecipeBuilder builder = new ShapedRecipeBuilder(RecipeCategory.MISC, cable, 4);
         builder.pattern(" W ").pattern("WSW").pattern(" W ")
@@ -86,7 +86,7 @@ public class CableFlag extends ItemFlag implements IRecipeHandler, Recyclable {
     }
 
     @Override
-    public Map<Material, Integer> recyclesInto(Material mainMaterial) {
+    public Map<Material, Integer> scrapsInto(Material mainMaterial) {
         return Map.of(mainMaterial, 3);
     }
 
@@ -97,6 +97,6 @@ public class CableFlag extends ItemFlag implements IRecipeHandler, Recyclable {
 
     @Override
     public Map<ItemLike, Pair<Integer, Float>> extraItems(Material mainMaterial) {
-        return Map.of(Items.STICK, Pair.of(1, 0.25f), MaterialHelper.getCompatibleItem(mainMaterial, FlagKey.WIRE), Pair.of(1, 0.15f));
+        return Map.of(Items.STICK, Pair.of(1, 0.25f), MaterialHelper.getItem(mainMaterial, FlagKey.WIRE), Pair.of(1, 0.15f));
     }
 }

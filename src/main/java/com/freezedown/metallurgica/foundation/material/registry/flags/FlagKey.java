@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.material.registry.flags;
 
+import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.material.registry.flags.block.CasingFlag;
@@ -10,6 +11,7 @@ import com.freezedown.metallurgica.foundation.material.registry.flags.fluid.Molt
 import com.freezedown.metallurgica.foundation.material.registry.flags.item.*;
 import com.freezedown.metallurgica.foundation.material.registry.flags.item.CableFlag;
 import lombok.Getter;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +95,11 @@ public class FlagKey<T extends IMaterialFlag> {
         @Override
         public void verifyFlag(MaterialFlags flags) {
             // no-op
+        }
+
+        @Override
+        public ResourceLocation getExistingId(Material material) {
+            return new ResourceLocation("metallurgica", "empty");
         }
 
         @Override

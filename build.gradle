@@ -191,9 +191,6 @@ dependencies {
     modCompileOnly("dev.latvian.mods:rhino-forge:${rhino_version}")
     modCompileOnly("dev.architectury:architectury-forge:${architectury_version}")
 
-    modApi("org.apfloat:apfloat:1.11.0")
-    modApi("org.jgrapht:jgrapht:1.5.2")
-    modApi("org.jgrapht:jgrapht-core:1.5.2")
 
     if (System.getProperty('idea.sync.active') != 'true') {
         annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

@@ -3,7 +3,7 @@ package com.freezedown.metallurgica.foundation.material.registry.flags.block;
 import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.block.MaterialBlockItem;
-import com.freezedown.metallurgica.foundation.material.recycling.Recyclable;
+import com.freezedown.metallurgica.foundation.material.recycling.Scrappable;
 import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.BlockFlag;
@@ -21,7 +21,6 @@ import net.createmod.catnip.data.Pair;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.SoundType;
 import org.jetbrains.annotations.NotNull;
-import org.jgrapht.alg.util.Triple;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnect
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
-public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures, Recyclable {
+public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures, Scrappable {
 
     @Getter
     private boolean requiresCompacting = false;
@@ -88,7 +87,7 @@ public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures,
     }
 
     @Override
-    public Map<Material, Integer> recyclesInto(Material mainMaterial) {
+    public Map<Material, Integer> scrapsInto(Material mainMaterial) {
         return Map.of(mainMaterial, 9);
     }
 

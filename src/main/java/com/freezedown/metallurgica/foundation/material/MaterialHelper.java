@@ -35,12 +35,19 @@ import static com.freezedown.metallurgica.registry.material.init.MetMaterialItem
 
 public class MaterialHelper {
 
-    public static List<ItemEntry<? extends MaterialItem>> getAllItems(Material material) {
-        List<ItemEntry<? extends MaterialItem>> allItems = new ArrayList<>();
+    public static List<Item> getAllItems(Material material) {
+        List<Item> allItems = new ArrayList<>();
+        Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
         for (var flagKey : material.getFlags().getFlagKeys()) {
             var flag = material.getFlag(flagKey);
-            if (flag instanceof ItemFlag) {
-                var item = MATERIAL_ITEMS.get(flagKey, material);
+            if (flag instanceof ItemFlag itemFlag) {
+                if (existingIds.containsKey(flagKey)) {
+                    var item = BuiltInRegistries.ITEM.get(existingIds.get(flagKey));
+                    if (item == null) continue;
+                    allItems.add(item);
+                    continue;
+                }
+                var item = getItem(material, itemFlag.getKey());
                 if (item == null) continue;
                 allItems.add(item);
             }
@@ -48,18 +55,25 @@ public class MaterialHelper {
         return allItems;
     }
 
-    public static List<BlockEntry<? extends IMaterialBlock>> getAllBlocks(Material material) {
+    public static List<Block> getAllBlocks(Material material) {
         return getAllBlocks(material, false);
     }
 
-    public static List<BlockEntry<? extends IMaterialBlock>> getAllBlocks(Material material, boolean onlyChemicalTooltippable) {
-        List<BlockEntry<? extends IMaterialBlock>> allBlocks = new ArrayList<>();
+    public static List<Block> getAllBlocks(Material material, boolean onlyChemicalTooltippable) {
+        List<Block> allBlocks = new ArrayList<>();
+        Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
         for (var flagKey : material.getFlags().getFlagKeys()) {
             var flag = material.getFlag(flagKey);
             if (flag instanceof BlockFlag blockFlag) {
                 if (onlyChemicalTooltippable)
                     if (!blockFlag.shouldHaveComposition()) continue;
-                var block = MATERIAL_BLOCKS.get(flagKey, material);
+                if (existingIds.containsKey(flagKey)) {
+                    var block = BuiltInRegistries.BLOCK.get(existingIds.get(flagKey));
+                    if (block == null) continue;
+                    allBlocks.add(block);
+                    continue;
+                }
+                var block = getBlock(material, blockFlag.getKey());
                 if (block == null) continue;
                 allBlocks.add(block);
             }
@@ -67,16 +81,21 @@ public class MaterialHelper {
         return allBlocks;
     }
 
-    public static List<FluidEntry<? extends IMaterialFluid>> getAllFluids(Material material) {
-        List<FluidEntry<? extends IMaterialFluid>> allFluids = new ArrayList<>();
+    public static List<Fluid> getAllFluids(Material material) {
+        List<Fluid> allFluids = new ArrayList<>();
+        Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
         for (var flagKey : material.getFlags().getFlagKeys()) {
             var flag = material.getFlag(flagKey);
             if (flag instanceof FluidFlag fluidFlag) {
-                //if (onlyChemicalTooltippable)
-                //    if (!blockFlag.shouldHaveComposition()) continue;
-                var block = MATERIAL_FLUIDS.get(flagKey, material);
-                if (block == null) continue;
-                allFluids.add(block);
+                if (existingIds.containsKey(flagKey)) {
+                    var fluid = BuiltInRegistries.FLUID.get(existingIds.get(flagKey));
+                    if (fluid == null) continue;
+                    allFluids.add(fluid);
+                    continue;
+                }
+                var fluid = getFluid(material, fluidFlag.getKey());
+                if (fluid == null) continue;
+                allFluids.add(fluid);
             }
         }
         return allFluids;
@@ -92,35 +111,9 @@ public class MaterialHelper {
         });
     }
 
-    public static ItemEntry<? extends MaterialItem> getItem(Material material, FlagKey<?> flagKey) {
-        var flag = material.getFlag(flagKey);
-        if (flag instanceof ItemFlag) {
-            return MATERIAL_ITEMS.get(flagKey, material);
-        } else {
-            throw new IllegalArgumentException("Flag " + flagKey + " is not an ItemFlag for material: " + material.getName());
-        }
-    }
-
-    public static BlockEntry<? extends IMaterialBlock> getBlock(Material material, FlagKey<?> flagKey) {
-        var flag = material.getFlag(flagKey);
-        if (flag instanceof BlockFlag) {
-            return MATERIAL_BLOCKS.get(flagKey, material);
-        } else {
-            throw new IllegalArgumentException("Flag " + flagKey + " is not a BlockFlag for material: " + material.getName());
-        }
-    }
-
-    public static FluidEntry<? extends IMaterialFluid> getFluid(Material material, FlagKey<?> flagKey) {
-        var flag = material.getFlag(flagKey);
-        if (flag instanceof FluidFlag) {
-            return MATERIAL_FLUIDS.get(flagKey, material);
-        } else {
-            throw new IllegalArgumentException("Flag " + flagKey + " is not a FluidFlag for material: " + material.getName());
-        }
-    }
-
-    public static Item getCompatibleItem(Material material, FlagKey<? extends ItemFlag> flagKey) {
+    public static Item getItem(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
+        if (!(material.getFlag(flagKey) instanceof ItemFlag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not an item flag");
         var flag = material.getFlag(flagKey);
         ResourceLocation resultId = flag.getExistingId(material);
         Item item = BuiltInRegistries.ITEM.get(resultId);
@@ -128,8 +121,9 @@ public class MaterialHelper {
         return item;
     }
 
-    public static Block getCompatibleBlock(Material material, FlagKey<? extends BlockFlag> flagKey) {
+    public static Block getBlock(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
+        if (!(material.getFlag(flagKey) instanceof BlockFlag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a block flag");
         var flag = material.getFlag(flagKey);
         ResourceLocation resultId = flag.getExistingId(material);
         Block block = BuiltInRegistries.BLOCK.get(resultId);
@@ -137,8 +131,9 @@ public class MaterialHelper {
         return block;
     }
 
-    public static Fluid getCompatibleFluid(Material material, FlagKey<? extends FluidFlag> flagKey) {
+    public static Fluid getFluid(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
+        if (!(material.getFlag(flagKey) instanceof FluidFlag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a fluid flag");
         var flag = material.getFlag(flagKey);
         ResourceLocation resultId = flag.getExistingId(material);
         Fluid fluid = BuiltInRegistries.FLUID.get(resultId);
@@ -151,34 +146,9 @@ public class MaterialHelper {
             Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
             return new ArrayList<>();
         }
-        Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
-        List<Item> items = new ArrayList<>();
-        for (ItemEntry<? extends MaterialItem> item : MaterialHelper.getAllItems(material)) {
-            items.add(item.get());
-        }
-        for (BlockEntry<? extends IMaterialBlock> block : MaterialHelper.getAllBlocks(material)) {
-            items.add(block.get().asItem());
-        }
-        for (FlagKey<? extends IMaterialFlag> flagKey : material.getFlags().getNoRegister()) {
-            if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material);
-                Item item = BuiltInRegistries.ITEM.get(itemId);
-                if (item != null) {
-                    items.add(item);
-                } else {
-                    Metallurgica.LOGGER.warn("Item {} for material {} is not registered. Consider updating or removing the Material Flag's existing namespace", itemId, material.getName());
-                }
-            }
-            if (material.getFlag(flagKey) instanceof BlockFlag blockFlag) {
-                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material);
-                Block block = BuiltInRegistries.BLOCK.get(blockId);
-                if (block != null) {
-                    Item item = block.asItem();
-                    items.add(item);
-                } else {
-                    Metallurgica.LOGGER.warn("Block {} for material {} is not registered. Consider updating or removing the Material Flag's existing namespace", blockId, material.getName());
-                }
-            }
+        List<Item> items = new ArrayList<>(MaterialHelper.getAllItems(material));
+        for (Block block : MaterialHelper.getAllBlocks(material)) {
+            items.add(block.asItem());
         }
         return items;
     }
@@ -189,33 +159,9 @@ public class MaterialHelper {
             return new ArrayList<>();
         }
         Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
-        List<Item> items = new ArrayList<>();
-        for (ItemEntry<? extends MaterialItem> item : MaterialHelper.getAllItems(material)) {
-            items.add(item.get());
-        }
-        for (BlockEntry<? extends IMaterialBlock> block : MaterialHelper.getAllBlocks(material, true)) {
-            items.add(block.get().asItem());
-        }
-        for (FlagKey<? extends IMaterialFlag> flagKey : material.getFlags().getNoRegister()) {
-            if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material);
-                Item item = BuiltInRegistries.ITEM.get(itemId);
-                if (item != null) {
-                    items.add(item);
-                } else {
-                    Metallurgica.LOGGER.warn("Item {} for material {} is not registered. Consider updating or removing the Material Flag's existing namespace", itemId, material.getName());
-                }
-            }
-            if (material.getFlag(flagKey) instanceof BlockFlag blockFlag) {
-                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material);
-                Block block = BuiltInRegistries.BLOCK.get(blockId);
-                if (block != null) {
-                    Item item = block.asItem();
-                    items.add(item);
-                } else {
-                    Metallurgica.LOGGER.warn("Block {} for material {} is not registered. Consider updating or removing the Material Flag's existing namespace", blockId, material.getName());
-                }
-            }
+        List<Item> items = new ArrayList<>(MaterialHelper.getAllItems(material));
+        for (Block block : MaterialHelper.getAllBlocks(material, true)) {
+            items.add(block.asItem());
         }
         return items;
     }

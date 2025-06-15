@@ -18,7 +18,7 @@ import static com.freezedown.metallurgica.foundation.material.registry.flags.Fla
 
 public class MetalMaterials {
     public static void register() {
-        IRON = new Material.Builder(Metallurgica.asResource("iron"))
+        IRON = createMaterial("iron", (b) -> b
                 .element(MetallurgicaElements.IRON)
                 .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK)
                 .addFlags(
@@ -28,8 +28,8 @@ public class MetalMaterials {
                         new SheetFlag("create"),
                         new MoltenFlag(1538.0),
                         new DustFlag()
-                ).buildAndRegister();
-        GOLD = new Material.Builder(Metallurgica.asResource("gold"))
+                ));
+        GOLD = createMaterial("gold", (b) -> b
                 .element(MetallurgicaElements.GOLD)
                 .nameAlternatives(FlagKey.SHEET, "golden")
                 .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK)
@@ -42,8 +42,8 @@ public class MetalMaterials {
                         new DustFlag(),
                         new MineralFlag(true),
                         new RubbleFlag().crushing().bonusChance(0.15f)
-                ).buildAndRegister();
-        COPPER = new Material.Builder(Metallurgica.asResource("copper"))
+                ));
+        COPPER = createMaterial("copper", (b) -> b
                 .element(MetallurgicaElements.COPPER)
                 .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK, WIRE)
                 .addFlags(
@@ -57,8 +57,8 @@ public class MetalMaterials {
                         new CableFlag(0.0178, WireColours.copper),
                         new MineralFlag(true),
                         new RubbleFlag().crushing().bonusChance(0.15f)
-                ).buildAndRegister();
-        NETHERIUM = new Material.Builder(Metallurgica.asResource("netherium"))
+                ));
+        NETHERIUM = createMaterial("netherium", (b) -> b
                 .element(MetallurgicaElements.NETHERIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -68,8 +68,8 @@ public class MetalMaterials {
                         new WireFlag(),
                         new MoltenFlag(3962.0),
                         new DustFlag()
-                ).buildAndRegister();
-        ALUMINUM = new Material.Builder(Metallurgica.asResource("aluminum"))
+                ));
+        ALUMINUM = createMaterial("aluminum", (b) -> b
                 .element(MetallurgicaElements.ALUMINUM)
                 .noRegister(INGOT, STORAGE_BLOCK, WIRE)
                 .addFlags(
@@ -82,8 +82,8 @@ public class MetalMaterials {
                         new SheetmetalFlag(),
                         new WireFlag("tfmg"),
                         new CableFlag(0.0276, WireColours.aluminum)
-                ).buildAndRegister();
-        SCANDIUM = new Material.Builder(Metallurgica.asResource("scandium"))
+                ));
+        SCANDIUM = createMaterial("scandium", (b) -> b
                 .element(MetallurgicaElements.SCANDIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -93,8 +93,8 @@ public class MetalMaterials {
                         new MoltenFlag(1541.0),
                         new DustFlag(),
                         new CableFlag(0.0124, WireColours.scandium)
-                ).buildAndRegister();
-        LEAD = new Material.Builder(Metallurgica.asResource("lead"))
+                ));
+        LEAD = createMaterial("lead", (b) -> b
                 .element(MetallurgicaElements.LEAD)
                 .noRegister(INGOT, STORAGE_BLOCK)
                 .addFlags(
@@ -104,8 +104,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(327.5),
                         new DustFlag()
-                ).buildAndRegister();
-        SILVER = new Material.Builder(Metallurgica.asResource("silver"))
+                ));
+        SILVER = createMaterial("silver", (b) -> b
                 .element(MetallurgicaElements.SILVER)
                 .addFlags(
                         new NuggetFlag(),
@@ -114,8 +114,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(961.8),
                         new DustFlag()
-                ).buildAndRegister();
-        NICKEL = new Material.Builder(Metallurgica.asResource("nickel"))
+                ));
+        NICKEL = createMaterial("nickel", (b) -> b
                 .element(MetallurgicaElements.NICKEL)
                 .noRegister(INGOT, STORAGE_BLOCK)
                 .addFlags(
@@ -125,8 +125,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1455.0),
                         new DustFlag()
-                ).buildAndRegister();
-        TIN = new Material.Builder(Metallurgica.asResource("tin"))
+                ));
+        TIN = createMaterial("tin", (b) -> b
                 .element(MetallurgicaElements.TIN)
                 .addFlags(
                         new NuggetFlag(),
@@ -135,8 +135,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(231.9),
                         new DustFlag()
-                ).buildAndRegister();
-        ZINC = new Material.Builder(Metallurgica.asResource("zinc"))
+                ));
+        ZINC = createMaterial("zinc", (b) -> b
                 .element(MetallurgicaElements.ZINC)
                 .noRegister(NUGGET, INGOT, STORAGE_BLOCK)
                 .addFlags(
@@ -146,8 +146,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(419.5),
                         new DustFlag()
-                ).buildAndRegister();
-        PLATINUM = new Material.Builder(Metallurgica.asResource("platinum"))
+                ));
+        PLATINUM = createMaterial("platinum", (b) -> b
                 .element(MetallurgicaElements.PLATINUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -156,8 +156,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1768.3),
                         new DustFlag()
-                ).buildAndRegister();
-        TITANIUM = new Material.Builder(Metallurgica.asResource("titanium"))
+                ));
+        TITANIUM = createMaterial("titanium", (b) -> b
                 .element(MetallurgicaElements.TITANIUM)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
@@ -167,8 +167,8 @@ public class MetalMaterials {
                         new MoltenFlag(1668.0),
                         new DustFlag(),
                         new SheetmetalFlag().requiresCompacting()
-                ).buildAndRegister();
-        URANIUM = new Material.Builder(Metallurgica.asResource("uranium"))
+                ));
+        URANIUM = createMaterial("uranium", (b) -> b
                 .element(MetallurgicaElements.URANIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -177,8 +177,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1132.3),
                         new DustFlag()
-                ).buildAndRegister();
-        LITHIUM = new Material.Builder(Metallurgica.asResource("lithium"))
+                ));
+        LITHIUM = createMaterial("lithium", (b) -> b
                 .element(MetallurgicaElements.LITHIUM)
                 .noRegister(INGOT, STORAGE_BLOCK)
                 .addFlags(
@@ -188,8 +188,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(180.5),
                         new DustFlag()
-                ).buildAndRegister();
-        MAGNESIUM = new Material.Builder(Metallurgica.asResource("magnesium"))
+                ));
+        MAGNESIUM = createMaterial("magnesium", (b) -> b
                 .element(MetallurgicaElements.MAGNESIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -198,8 +198,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(650.0),
                         new DustFlag()
-                ).buildAndRegister();
-        TUNGSTEN = new Material.Builder(Metallurgica.asResource("tungsten"))
+                ));
+        TUNGSTEN = createMaterial("tungsten", (b) -> b
                 .element(MetallurgicaElements.TUNGSTEN)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
@@ -209,8 +209,8 @@ public class MetalMaterials {
                         new MoltenFlag(3422.0),
                         new DustFlag(),
                         new SheetmetalFlag().requiresCompacting()
-                ).buildAndRegister();
-        OSMIUM = new Material.Builder(Metallurgica.asResource("osmium"))
+                ));
+        OSMIUM = createMaterial("osmium", (b) -> b
                 .element(MetallurgicaElements.OSMIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -219,8 +219,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(3033.0),
                         new DustFlag()
-                ).buildAndRegister();
-        THORIUM = new Material.Builder(Metallurgica.asResource("thorium"))
+                ));
+        THORIUM = createMaterial("thorium", (b) -> b
                 .element(MetallurgicaElements.THORIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -229,8 +229,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1750.0),
                         new DustFlag()
-                ).buildAndRegister();
-        TANTALUM = new Material.Builder(Metallurgica.asResource("tantalum"))
+                ));
+        TANTALUM = createMaterial("tantalum", (b) -> b
                 .element(MetallurgicaElements.TANTALUM)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
@@ -239,8 +239,8 @@ public class MetalMaterials {
                         new SheetFlag().pressTimes(2),
                         new MoltenFlag(3020.0),
                         new DustFlag()
-                ).buildAndRegister();
-        SODIUM = new Material.Builder(Metallurgica.asResource("sodium"))
+                ));
+        SODIUM = createMaterial("sodium", (b) -> b
                 .element(MetallurgicaElements.SODIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -249,8 +249,8 @@ public class MetalMaterials {
                         new CasingFlag().appliesOn(MetallurgicaTags.forgeItemTag("storage_blocks/plastic")),
                         new SheetFlag(),
                         new DustFlag()
-                ).buildAndRegister();
-        CHROMIUM = new Material.Builder(Metallurgica.asResource("chromium"))
+                ));
+        CHROMIUM = createMaterial("chromium", (b) -> b
                 .element(MetallurgicaElements.CHROMIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -259,8 +259,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1907.0),
                         new DustFlag()
-                ).buildAndRegister();
-        VANADIUM = new Material.Builder(Metallurgica.asResource("vanadium"))
+                ));
+        VANADIUM = createMaterial("vanadium", (b) -> b
                 .element(MetallurgicaElements.VANADIUM)
                 .addFlags(
                         new NuggetFlag(),
@@ -269,8 +269,8 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1910.0),
                         new DustFlag()
-                ).buildAndRegister();
-        MANGANESE = new Material.Builder(Metallurgica.asResource("manganese"))
+                ));
+        MANGANESE = createMaterial("manganese", (b) -> b
                 .element(MetallurgicaElements.MANGANESE)
                 .addFlags(
                         new NuggetFlag(),
@@ -279,6 +279,6 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1246.0),
                         new DustFlag()
-                ).buildAndRegister();
+                ));
     }
 }

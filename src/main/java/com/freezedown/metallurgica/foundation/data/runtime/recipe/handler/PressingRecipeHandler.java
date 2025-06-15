@@ -32,8 +32,8 @@ public class PressingRecipeHandler {
                 Metallurgica.LOGGER.info("Skipping pressing recipe for {} as it is not in the metallurgica namespace and likely already has one", material.getName() + "_sheet");
                 return;
             }
-            Item ingot = MaterialHelper.getCompatibleItem(material, FlagKey.INGOT);
-            Item sheet = MaterialHelper.getCompatibleItem(material, FlagKey.SHEET);
+            Item ingot = MaterialHelper.getItem(material, FlagKey.INGOT);
+            Item sheet = MaterialHelper.getItem(material, FlagKey.SHEET);
             ProcessingRecipeBuilder<PressingRecipe> builder = new Builder<>(material.getNamespace(), PressingRecipe::new, material.getName() + "_sheet", provider);
             builder.require(ingot).output(sheet).build();
         }

@@ -1,13 +1,16 @@
 package com.freezedown.metallurgica.foundation.multiblock;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.item.MaterialItem;
+import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
-import com.simibubi.create.CreateClient;
+import com.google.common.collect.Table;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.createmod.catnip.ghostblock.GhostBlockParams;
 import net.createmod.catnip.ghostblock.GhostBlockRenderer;
 import net.createmod.catnip.lang.LangBuilder;
-import net.createmod.catnip.platform.CatnipClientServices;
 import net.createmod.ponder.PonderClient;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -22,14 +25,13 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import org.jgrapht.alg.util.Triple;
+import org.antlr.v4.runtime.misc.Triple;
+import oshi.util.tuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import static com.freezedown.metallurgica.foundation.util.ClientUtil.createCustomCubeParticles;
 
 public class MultiblockStructure {
     private final BlockEntity master;
@@ -97,20 +99,20 @@ public class MultiblockStructure {
             return this;
         }
         
-        public Triple<Integer, Integer, Integer> getSize() {
-            return Triple.of(width, height, depth);
+        public Triplet<Integer, Integer, Integer> getSize() {
+            return new Triplet<>(width, height, depth);
         }
         
         public int getWidth() {
-            return getSize().getFirst();
+            return getSize().getA();
         }
         
         public int getHeight() {
-            return getSize().getSecond();
+            return getSize().getB();
         }
         
         public int getDepth() {
-            return getSize().getThird();
+            return getSize().getC();
         }
         
         public CuboidBuilder withFluidOutputAt(int x, int y, int z, String identifier) {
@@ -126,8 +128,8 @@ public class MultiblockStructure {
         }
         
         public CuboidBuilder withBlockAt(PositionUtil.PositionRange range, BlockState block) {
-            for (Triple<Integer, Integer, Integer> pos : range.getPositions()) {
-                structure.add(Map.of(translateToMaster(pos.getFirst(), pos.getSecond(), pos.getThird()), block));
+            for (Triplet<Integer, Integer, Integer> pos : range.getPositions()) {
+                structure.add(Map.of(translateToMaster(pos.getA(), pos.getB(), pos.getC()), block));
             }
             return this;
         }

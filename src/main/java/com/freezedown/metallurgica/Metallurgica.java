@@ -132,7 +132,7 @@ public class Metallurgica
         AlloyMaterials.register();
         MineralMaterials.register();
         CompoundMaterials.register();
-        MetMaterials.register(modEventBus);
+        MetMaterials.register();
     }
     
     private void commonSetup(final FMLCommonSetupEvent event) {

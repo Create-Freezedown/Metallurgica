@@ -127,42 +127,7 @@ public class ElementCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
             Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
             return new ArrayList<>();
         }
-        Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
-        List<ItemStack> items = new ArrayList<>();
-        for (ItemEntry<? extends MaterialItem> item : MaterialHelper.getAllItems(material)) {
-            ItemStack itemStack = item.get().getDefaultInstance();
-            if (itemStack.isEmpty()) continue;
-            items.add(itemStack);
-        }
-        for (BlockEntry<? extends IMaterialBlock> block : MaterialHelper.getAllBlocks(material, true)) {
-            ItemStack itemStack = block.get().asItem().getDefaultInstance();
-            if (itemStack.isEmpty()) continue;
-            items.add(itemStack);
-        }
-        for (FlagKey<? extends IMaterialFlag> flagKey : material.getFlags().getNoRegister()) {
-            if (material.getFlag(flagKey) instanceof ItemFlag itemFlag) {
-                ResourceLocation itemId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : itemFlag.getExistingId(material);
-                Item item = BuiltInRegistries.ITEM.get(itemId);
-                if (item != null) {
-                    ItemStack itemStack = new ItemStack(item);
-                    items.add(itemStack);
-                } else {
-                    Metallurgica.LOGGER.warn("Item {} for material {} is not registered. Consider updating or removing the Material Flag's existing namespace", itemId, material.getName());
-                }
-            }
-            if (material.getFlag(flagKey) instanceof BlockFlag blockFlag) {
-                ResourceLocation blockId = existingIds.containsKey(flagKey) ? existingIds.get(flagKey) : blockFlag.getExistingId(material);
-                Block block = BuiltInRegistries.BLOCK.get(blockId);
-                if (block != null) {
-                    Item item = block.asItem();
-                    ItemStack itemStack = new ItemStack(item);
-                    items.add(itemStack);
-                } else {
-                    Metallurgica.LOGGER.warn("Block {} for material {} is not registered. Consider updating or removing the Material Flag's existing namespace", blockId, material.getName());
-                }
-            }
-        }
-        return items;
+        return MaterialHelper.getAllMaterialItems(material).stream().map(Item::getDefaultInstance).toList();
     }
 
 

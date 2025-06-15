@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.foundation.material.registry;
 import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.foundation.material.registry.flags.base.MaterialFlags;
+import com.freezedown.metallurgica.infastructure.IHasDescriptionId;
 import com.freezedown.metallurgica.infastructure.element.Element;
 import com.freezedown.metallurgica.infastructure.element.ElementEntry;
 import com.freezedown.metallurgica.infastructure.element.data.ElementData;
@@ -13,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.createmod.catnip.config.ConfigBase;
+import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 @Accessors(chain = true, fluent = true)
-public class Material implements Comparable<Material> {
+public class Material implements Comparable<Material>, IHasDescriptionId {
+
+    private String descriptionId;
 
     @NotNull
     @Getter
@@ -98,8 +102,13 @@ public class Material implements Comparable<Material> {
         return materialInfo.resourceLocation.toLanguageKey("material");
     }
 
-    public MutableComponent getLocalizedName() {
-        return Component.translatable(getUnlocalizedName());
+    @Override
+    public String getOrCreateDescriptionId() {
+        if (this.descriptionId == null) {
+            this.descriptionId = Util.makeDescriptionId("material", getId());
+        }
+
+        return this.descriptionId;
     }
 
     public static class Builder {

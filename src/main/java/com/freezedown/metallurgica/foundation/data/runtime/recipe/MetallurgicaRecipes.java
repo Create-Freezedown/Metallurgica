@@ -35,7 +35,7 @@ public class MetallurgicaRecipes {
             CrushingRecipeHandler.run(consumer, material);
             ItemApplicationHandler.run(consumer, material);
 
-            RecyclingHandler.run(consumer, material);
+            ScrappingHandler.run(consumer, material);
         }
 
     }

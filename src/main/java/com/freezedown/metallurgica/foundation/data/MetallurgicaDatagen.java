@@ -64,9 +64,6 @@ public class MetallurgicaDatagen {
             provideDefaultLang("interface", langConsumer);
             provideDefaultLang("tooltips", langConsumer);
             provideDefaultLang("materials", langConsumer);
-            for (Material material : MetMaterials.registeredMaterials.values()) {
-                provider.add(material.getUnlocalizedName(), toEnglishName(material.getName()));
-            }
             MetallurgicaRegistries.registeredElements.forEach((rl, e) -> {
                 provider.add(e.getOrCreateDescriptionId(), toEnglishName(rl.getPath()));
             });

@@ -44,7 +44,7 @@ public class MetallurgicaCreativeTab {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.metallurgica.materials"))
                     .withTabsBefore(MAIN_TAB.getId())
-                    .icon(MaterialHelper.getItem(MetMaterials.URANIUM, FlagKey.INGOT)::asStack)
+                    .icon(() -> MaterialHelper.getItem(MetMaterials.URANIUM.get(), FlagKey.INGOT).getDefaultInstance())
                     .displayItems(new RegistrateDisplayItemsGenerator(MetallurgicaCreativeTab.MATERIALS_TAB))
                     .build());
 

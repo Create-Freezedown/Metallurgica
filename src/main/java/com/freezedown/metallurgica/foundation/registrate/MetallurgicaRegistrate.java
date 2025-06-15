@@ -2,8 +2,6 @@ package com.freezedown.metallurgica.foundation.registrate;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.*;
-import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.FlowingGas;
-import com.freezedown.metallurgica.content.fluids.types.uf_backport.gas.GasBlock;
 import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.fluid.MaterialFluidType;
@@ -18,6 +16,7 @@ import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
 import com.freezedown.metallurgica.infastructure.element.Element;
 import com.freezedown.metallurgica.infastructure.element.ElementBuilder;
+import com.freezedown.metallurgica.infastructure.material.MaterialBuilder;
 import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.simibubi.create.AllTags;
@@ -107,20 +106,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     }
     
 
-    //GAS
-    public FluidBuilder<FlowingGas.Flowing, CreateRegistrate> gas(String name, int color) {
-        ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
-        ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
-        return fluid(name, still, flow, TransparentTintedFluidType.create(color), FlowingGas.Flowing::new).source(FlowingGas.Source::new).block(GasBlock::new).build();
-    }
-    
-    public FluidBuilder<ReactiveGas.Flowing, CreateRegistrate> reactiveGas(String name, int color) {
-        ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
-        ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
-        return fluid(name, still, flow, TransparentTintedFluidType.create(color), ReactiveGas.Flowing::new).source(ReactiveGas.Source::new).block(GasBlock::new).build();
-    }
-    
-    
+
     //FLUIDS
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualDust(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/dust_still");
@@ -215,6 +201,22 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
 
     public <T extends Conductor, P> ConductorBuilder<T, P> conductor(P parent, String name, NonNullFunction<Conductor.Properties, T> factory) {
         return entry(name, callback -> ConductorBuilder.create(this, parent, name, callback, factory));
+    }
+
+    public <T extends Material> MaterialBuilder<T, MetallurgicaRegistrate> material(NonNullFunction<Material.Builder, T> factory) {
+        return material((MetallurgicaRegistrate) self(), factory);
+    }
+
+    public <T extends Material> MaterialBuilder<T, MetallurgicaRegistrate> material(String name, NonNullFunction<Material.Builder, T> factory) {
+        return material((MetallurgicaRegistrate) self(), name, factory);
+    }
+
+    public <T extends Material, P> MaterialBuilder<T, P> material(P parent, NonNullFunction<Material.Builder, T> factory) {
+        return material(parent, currentName(), factory);
+    }
+
+    public <T extends Material, P> MaterialBuilder<T, P> material(P parent, String name, NonNullFunction<Material.Builder, T> factory) {
+        return entry(name, callback -> MaterialBuilder.create(this, parent, name, callback, factory));
     }
     
     public enum Dimension {

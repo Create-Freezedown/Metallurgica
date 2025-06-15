@@ -37,7 +37,7 @@ public abstract class ItemFlag implements IMaterialFlag {
     }
 
     public MutableComponent getLocalizedName(Material material) {
-        return Component.translatable(getUnlocalizedName(material), material.getLocalizedName());
+        return Component.translatable(getUnlocalizedName(material), material.getDisplayName());
     }
 
     public String getUnlocalizedName(Material material) {

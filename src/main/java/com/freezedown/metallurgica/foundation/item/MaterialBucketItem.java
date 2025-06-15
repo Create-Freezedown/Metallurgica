@@ -25,7 +25,7 @@ public class MaterialBucketItem extends BucketItem {
     }
 
     public MutableComponent getLocalizedName(Material material) {
-        return Component.translatable(getUnlocalizedName(), material.getLocalizedName());
+        return Component.translatable(getUnlocalizedName(), material.getDisplayName());
     }
 
     @Override
@@ -48,20 +48,4 @@ public class MaterialBucketItem extends BucketItem {
         return getDescription();
     }
 
-    public enum BucketType {
-        FLUID(""),
-        MOLTEN(".molten")
-        ;
-
-        private final String langSuffix;
-
-        BucketType(String langSuffix) {
-            this.langSuffix = langSuffix;
-        }
-
-        String getLangSuffix() {
-            return langSuffix;
-        }
-
-    }
 }

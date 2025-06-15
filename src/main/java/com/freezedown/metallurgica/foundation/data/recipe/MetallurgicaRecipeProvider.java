@@ -183,10 +183,10 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         }
         
         public static Fluid moltenIron() {
-            return MaterialHelper.getFluid(MetMaterials.IRON, FlagKey.MOLTEN).get();
+            return MaterialHelper.getFluid(MetMaterials.IRON.get(), FlagKey.MOLTEN);
         }
         public static Fluid moltenCopper() {
-            return MaterialHelper.getFluid(MetMaterials.COPPER, FlagKey.MOLTEN).get();
+            return MaterialHelper.getFluid(MetMaterials.COPPER.get(), FlagKey.MOLTEN);
         }
         
         public static FluidStack riverSandStack(String mineral, int amount) {

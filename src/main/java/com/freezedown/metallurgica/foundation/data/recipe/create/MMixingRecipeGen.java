@@ -64,7 +64,7 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .requiresHeat(HeatCondition.HEATED)),
     
     copperOxide = create(Metallurgica.asResource("copper_oxide"), b -> b
-            .require(MaterialHelper.getItem(MetMaterials.MALACHITE, FlagKey.MINERAL))
+            .require(MaterialHelper.getItem(MetMaterials.MALACHITE.get(), FlagKey.MINERAL))
             .require(I.cokeDust())
             .require(I.cokeDust())
             .output(F.carbonDioxide(), 90)
@@ -76,13 +76,13 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .require(I.copperOxide())
             .require(I.cokeDust())
             .output(F.carbonDioxide(), 90)
-            .output(MaterialHelper.getItem(MetMaterials.COPPER, FlagKey.RUBBLE), 1)
-            .output(0.05f, MaterialHelper.getItem(MetMaterials.COPPER, FlagKey.RUBBLE), 1)
+            .output(MaterialHelper.getItem(MetMaterials.COPPER.get(), FlagKey.RUBBLE), 1)
+            .output(0.05f, MaterialHelper.getItem(MetMaterials.COPPER.get(), FlagKey.RUBBLE), 1)
             .requiresHeat(HeatCondition.HEATED)),
     
     titaniumTetrachloride = create(Metallurgica.asResource("titanium_tetrachloride"), b -> b
-            .require(MaterialHelper.getItem(MetMaterials.RUTILE, FlagKey.DUST))
-            .require(MaterialHelper.getItem(MetMaterials.RUTILE, FlagKey.DUST))
+            .require(MaterialHelper.getItem(MetMaterials.RUTILE.get(), FlagKey.DUST))
+            .require(MaterialHelper.getItem(MetMaterials.RUTILE.get(), FlagKey.DUST))
             .require(F.chlorine(), 500)
             .require(I.cokeDust())
             .require(I.cokeDust())
@@ -91,7 +91,7 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .requiresHeat(HeatCondition.SUPERHEATED)),
     
     magnesiumChloride = create(Metallurgica.asResource("magnesium_chloride"), b -> b
-            .require(MaterialHelper.getItem(MetMaterials.MAGNESIUM_OXIDE, FlagKey.DUST))
+            .require(MaterialHelper.getItem(MetMaterials.MAGNESIUM_OXIDE.get(), FlagKey.DUST))
             .require(MetallurgicaFluids.hydrochloricAcid.get(), 100)
             .output(MetallurgicaFluids.magnesiumChloride.get(), 50)
             .requiresHeat(HeatCondition.HEATED)),

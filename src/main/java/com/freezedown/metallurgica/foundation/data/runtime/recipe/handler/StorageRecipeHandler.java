@@ -44,8 +44,8 @@ public class StorageRecipeHandler {
     private static void processSheet(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         if (material.hasFlag(FlagKey.SHEETMETAL)) {
             SheetmetalFlag sheetmetalFlag = material.getFlag(FlagKey.SHEETMETAL);
-            Item sheet = MaterialHelper.getCompatibleItem(material, FlagKey.SHEET);
-            Block sheetmetal = MaterialHelper.getCompatibleBlock(material, FlagKey.SHEETMETAL);
+            Item sheet = MaterialHelper.getItem(material, FlagKey.SHEET);
+            Block sheetmetal = MaterialHelper.getBlock(material, FlagKey.SHEETMETAL);
             if (sheetmetalFlag.isRequiresCompacting()) {
                 compact9(provider, sheet, sheetmetal, 9, material, "%s_sheetmetal_from_sheets");
                 decompact9(provider, sheetmetal, sheet, 9, material, "%s_sheets_from_sheetmetal");
@@ -60,13 +60,13 @@ public class StorageRecipeHandler {
         List<FlagKey<? extends ItemFlag>> toCheck = List.of(FlagKey.INGOT, FlagKey.GEM);
         if (material.hasFlag(FlagKey.NUGGET)) {
             NuggetFlag nuggetFlag = material.getFlag(FlagKey.NUGGET);
-            Item nugget = MaterialHelper.getCompatibleItem(material, FlagKey.NUGGET);
+            Item nugget = MaterialHelper.getItem(material, FlagKey.NUGGET);
             ResourceLocation inputId = new ResourceLocation(nuggetFlag.getExistingNamespace(), nuggetFlag.getIdPattern().formatted(material.getName()));
             Item result = null;
             String resultFlag = "";
             for (FlagKey<? extends ItemFlag> flagKey : toCheck) {
                 if (material.hasFlag(flagKey)) {
-                    result = MaterialHelper.getCompatibleItem(material, flagKey);
+                    result = MaterialHelper.getItem(material, flagKey);
                     resultFlag = flagKey.toString();
                     break;
                 }
@@ -92,21 +92,22 @@ public class StorageRecipeHandler {
     private static void processIngot(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         if (material.hasFlag(FlagKey.INGOT)) {
             IngotFlag ingotFlag = material.getFlag(FlagKey.INGOT);
-            ResourceLocation inputId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
-            Item ingot = MaterialHelper.getCompatibleItem(material, FlagKey.INGOT);
-            Block block = MaterialHelper.getCompatibleBlock(material, FlagKey.STORAGE_BLOCK);
-            if (!inputId.getNamespace().equals(Metallurgica.ID)) {
-                logRecipeSkip(inputId);
-                return;
+            ResourceLocation ingotId = new ResourceLocation(ingotFlag.getExistingNamespace(), ingotFlag.getIdPattern().formatted(material.getName()));
+            Item ingot = MaterialHelper.getItem(material, FlagKey.INGOT);
+            if (material.hasFlag(FlagKey.STORAGE_BLOCK)) {
+                Block block = MaterialHelper.getBlock(material, FlagKey.STORAGE_BLOCK);
+                if (!ingotId.getNamespace().equals(Metallurgica.ID)) {
+                    logRecipeSkip(ingotId);
+                    return;
+                }
+                if (ingotFlag.isRequiresCompacting()) {
+                    compact9(provider, ingot, block, 9, material, "%s_block_from_ingots");
+                    decompact9(provider, block, ingot, 9, material, "%s_ingots_from_block");
+                } else {
+                    craftCompact9(provider, ingot, block, 9, material, "%s_block_from_ingots");
+                    craftDecompact9(provider, block, ingot, 9, material, "%s_ingots_from_block");
+                }
             }
-            if (ingotFlag.isRequiresCompacting()) {
-                compact9(provider, ingot, block, 9, material, "%s_block_from_ingots");
-                decompact9(provider, block, ingot, 9, material, "%s_ingots_from_block");
-            } else {
-                craftCompact9(provider, ingot, block, 9, material, "%s_block_from_ingots");
-                craftDecompact9(provider, block, ingot, 9, material, "%s_ingots_from_block");
-            }
-
         }
     }
 

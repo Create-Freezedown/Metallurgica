@@ -32,9 +32,9 @@ public class SequencedAssemblyHandler {
                 return;
             }
             SheetFlag sheetFlag = material.getFlag(FlagKey.SHEET);
-            Item ingot = MaterialHelper.getCompatibleItem(material, FlagKey.INGOT);
-            Item sheet = MaterialHelper.getCompatibleItem(material, FlagKey.SHEET);
-            Item transitional = MaterialHelper.getCompatibleItem(material, FlagKey.SEMI_PRESSED_SHEET);
+            Item ingot = MaterialHelper.getItem(material, FlagKey.INGOT);
+            Item sheet = MaterialHelper.getItem(material, FlagKey.SHEET);
+            Item transitional = MaterialHelper.getItem(material, FlagKey.SEMI_PRESSED_SHEET);
             SequencedAssemblyRecipeBuilder builder = new SequencedAssemblyRecipeBuilder(Metallurgica.asResource("sequenced_assembly/runtime_generated/" + material.getNamespace() + "/" + material.getName() + "_sheet"));
             builder.transitionTo(transitional);
             builder.require(ingot);

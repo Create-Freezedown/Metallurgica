@@ -31,7 +31,7 @@ public class ItemApplicationHandler {
         if (material.hasFlag(FlagKey.CASING)) {
             CasingFlag casingFlag = material.getFlag(FlagKey.CASING);
             FlagKey<? extends ItemFlag> used = casingFlag.isUseSheet() ? FlagKey.SHEET : FlagKey.INGOT;
-            Item usedItem = MaterialHelper.getCompatibleItem(material, used);
+            Item usedItem = MaterialHelper.getItem(material, used);
             for (TagKey<Item> appliesOn : casingFlag.getToApplyOn()) {
                 String appliesOnPath = appliesOn.location().getPath().replace("/", "_");
                 ProcessingRecipeBuilder<ItemApplicationRecipe> builder = new Builder<>(material.getNamespace(), (params) -> new ItemApplicationRecipe(AllRecipeTypes.ITEM_APPLICATION, params), casingFlag.getIdPattern().formatted(material.getName()), appliesOnPath, provider);

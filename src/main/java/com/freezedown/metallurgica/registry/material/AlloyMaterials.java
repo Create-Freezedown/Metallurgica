@@ -16,7 +16,7 @@ import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
 
 public class AlloyMaterials {
     public static void register() {
-        TITANIUM_ALUMINIDE = new Material.Builder(Metallurgica.asResource("titanium_aluminide"))
+        TITANIUM_ALUMINIDE = createMaterial("titanium_aluminide", (b) -> b
                 .composition(MetallurgicaElements.TITANIUM, 2, MetallurgicaElements.ALUMINUM, 1)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
@@ -26,8 +26,8 @@ public class AlloyMaterials {
                         new MoltenFlag(1447.0),
                         new DustFlag(),
                         new SheetmetalFlag().requiresCompacting()
-                ).buildAndRegister();
-        NETHERITE = new Material.Builder(Metallurgica.asResource("netherite"))
+                ));
+        NETHERITE = createMaterial("netherite", (b) -> b
                 .composition(MetallurgicaElements.NETHERIUM, 1, MetallurgicaElements.GOLD, 1)
                 .noRegister(INGOT, STORAGE_BLOCK)
                 .addFlags(
@@ -36,8 +36,8 @@ public class AlloyMaterials {
                         new StorageBlockFlag("minecraft"),
                         new SheetFlag().pressTimes(2),
                         new MoltenFlag(3562.0)
-                ).buildAndRegister();
-        BRASS = new Material.Builder(Metallurgica.asResource("brass"))
+                ));
+        BRASS = createMaterial("brass", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 3, MetallurgicaElements.ZINC, 1)
                 .noRegister(NUGGET, INGOT, STORAGE_BLOCK, SHEET)
                 .addFlags(
@@ -47,8 +47,8 @@ public class AlloyMaterials {
                         new SheetFlag("create"),
                         new MoltenFlag(920.0),
                         new DustFlag()
-                ).buildAndRegister();
-        BRONZE = new Material.Builder(Metallurgica.asResource("bronze"))
+                ));
+        BRONZE = createMaterial("bronze", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 7, MetallurgicaElements.TIN, 2)
                 .addFlags(
                         new NuggetFlag(),
@@ -57,8 +57,8 @@ public class AlloyMaterials {
                         new SheetFlag(),
                         new MoltenFlag(950.0),
                         new DustFlag()
-                ).buildAndRegister();
-        ARSENICAL_BRONZE = new Material.Builder(Metallurgica.asResource("arsenical_bronze"))
+                ));
+        ARSENICAL_BRONZE = createMaterial("arsenical_bronze", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 4, MetallurgicaElements.TIN, 1, MetallurgicaElements.ARSENIC, 3)
                 .addFlags(
                         new NuggetFlag(),
@@ -67,8 +67,8 @@ public class AlloyMaterials {
                         new SheetFlag(),
                         new MoltenFlag(685.0),
                         new DustFlag()
-                ).buildAndRegister();
-        WROUGHT_IRON = new Material.Builder(Metallurgica.asResource("wrought_iron"))
+                ));
+        WROUGHT_IRON = createMaterial("wrought_iron", (b) -> b
                 .composition(MetallurgicaElements.IRON, 3, MetallurgicaElements.CARBON, 1)
                 .addFlags(
                         new NuggetFlag(),
@@ -76,6 +76,6 @@ public class AlloyMaterials {
                         new StorageBlockFlag().useColumnModel(),
                         new SheetFlag(),
                         new MoltenFlag(1482.0)
-                ).buildAndRegister();
+                ));
     }
 }

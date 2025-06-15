@@ -10,6 +10,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.items.IItemHandler;
@@ -25,7 +26,7 @@ public abstract class ReactiveItem extends MetallurgicaItem {
     private int maxAirExposure = 10;
     private boolean sensitiveToRain = false;
     private boolean sensitiveToHeat = false;
-    private Optional<ItemEntry<? extends Item>> result = Optional.empty();
+    private Optional<ItemLike> result = Optional.empty();
 
 
     public ReactiveItem(Properties pProperties) {
@@ -59,7 +60,7 @@ public abstract class ReactiveItem extends MetallurgicaItem {
         return this;
     }
 
-    public ReactiveItem withResult(ItemEntry<? extends Item> result) {
+    public ReactiveItem withResult(ItemLike result) {
         this.result = Optional.of(result);
         return this;
     }
@@ -125,7 +126,7 @@ public abstract class ReactiveItem extends MetallurgicaItem {
 
         if (this.sensitiveToAir && this.airExposureCounter(stack) >= maxAirExposure) {
             if (this.result.isPresent()) {
-                replaceStack(true, entity, stack, this.result.get().asStack());
+                replaceStack(true, entity, stack, this.result.get().asItem().getDefaultInstance());
             } else {
                 entity.remove(Entity.RemovalReason.DISCARDED);
             }
@@ -167,7 +168,7 @@ public abstract class ReactiveItem extends MetallurgicaItem {
 
             if (this.sensitiveToAir && this.airExposureCounter(stack) >= maxAirExposure) {
                 if (this.result.isPresent()) {
-                    replaceStack(false, entity, stack, this.result.get().asStack());
+                    replaceStack(false, entity, stack, this.result.get().asItem().getDefaultInstance());
                 } else {
                     stack.shrink(stack.getCount());
                 }
