@@ -1,8 +1,8 @@
 package com.freezedown.metallurgica.content.items.metals;
 
 import com.freezedown.metallurgica.foundation.item.ReactiveItem;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;

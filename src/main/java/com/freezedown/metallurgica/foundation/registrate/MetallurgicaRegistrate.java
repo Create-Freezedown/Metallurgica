@@ -2,22 +2,18 @@ package com.freezedown.metallurgica.foundation.registrate;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.*;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
-import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.fluid.MaterialFluidType;
 import com.freezedown.metallurgica.foundation.fluid.MoltenMetalFluid;
 import com.freezedown.metallurgica.foundation.fluid.VirtualMaterialFluid;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.base.FluidFlag;
-import com.freezedown.metallurgica.foundation.material.OreEntry;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
 import com.freezedown.metallurgica.infastructure.element.Element;
 import com.freezedown.metallurgica.infastructure.element.ElementBuilder;
 import com.freezedown.metallurgica.infastructure.material.MaterialBuilder;
-import com.freezedown.metallurgica.registry.MetallurgicaOre;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
@@ -33,28 +29,20 @@ import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.*;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.storage.loot.IntRange;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
-import net.minecraft.world.level.storage.loot.functions.LimitCount;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -235,14 +223,6 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         }
     }
     
-    public OreEntry material(String name, boolean richb) {
-        return new OreEntry(this, name, richb, false);
-    }
-
-    public OreEntry material(String name, boolean richb, boolean sideTop) {
-        return new OreEntry(this, name, richb, sideTop);
-    }
-    
 
     public ItemEntry<Item> simpleItem(String name, String... tags) {
         return item(name, Item::new, p->p, tags);
@@ -327,47 +307,47 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 (callback) -> CreateBlockEntityBuilder.create(this, parent, name, callback, factory));
     }
 
-    public <T extends BlockEntity> BlockEntityBuilder<T, CreateRegistrate> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, MetallurgicaOre[] blocks) {
+    public <T extends BlockEntity> BlockEntityBuilder<T, CreateRegistrate> simpleBlockEntity(String name, BlockEntityBuilder.BlockEntityFactory<T> factory, NonNullSupplier<? extends Block>[] blocks) {
         BlockEntityBuilder<T, CreateRegistrate> builder = blockEntity(self(), name, factory);
-        for (MetallurgicaOre ore : blocks) {
-            builder.validBlock(ore.ORE.depositBlock());
+        for (NonNullSupplier<? extends Block> block : blocks) {
+            builder.validBlock(block);
         }
         return builder;
     }
 
     //BLOCKS
-    public BlockEntry<MineralDepositBlock> depositBlock(String name, ItemEntry<MetallurgicaItem> mineral) {
-        return this.block(name, MineralDepositBlock::new)
-                .transform(MBuilderTransformers.mineralDeposit())
-                .loot((lt, bl) -> lt.add(bl, lt.createSingleItemTable(Items.COBBLESTONE)
-                        .withPool(lt.applyExplosionCondition(mineral.get(), LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(2.0f, 5.0f))
-                                .add(LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
-                .lang(autoLang(name))
-                .register();
-    }
+    //public BlockEntry<MineralDepositBlock> depositBlock(String name, ItemEntry<MetallurgicaItem> mineral) {
+    //    return this.block(name, MineralDepositBlock::new)
+    //            .transform(MBuilderTransformers.mineralDeposit())
+    //            .loot((lt, bl) -> lt.add(bl, lt.createSingleItemTable(Items.COBBLESTONE)
+    //                    .withPool(lt.applyExplosionCondition(mineral.get(), LootPool.lootPool()
+    //                            .setRolls(UniformGenerator.between(2.0f, 5.0f))
+    //                            .add(LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
+    //            .lang(autoLang(name))
+    //            .register();
+    //}
 
-    public BlockEntry<MineralDepositBlock> depositBlock(String name, ItemEntry<MetallurgicaItem> mineral, boolean sideTop) {
-        if (!sideTop)
-            return depositBlock(name, mineral);
-        return this.block(name, MineralDepositBlock::new)
-                .transform(MBuilderTransformers.mineralDepositSideTop())
-                .loot((lt, bl) -> lt.add(bl, lt.createSingleItemTable(Items.COBBLESTONE)
-                        .withPool(lt.applyExplosionCondition(mineral.get(), LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(2.0f, 5.0f))
-                                .add(LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
-                .lang(autoLang(name))
-                .register();
-    }
+    //public BlockEntry<MineralDepositBlock> depositBlock(String name, ItemEntry<MetallurgicaItem> mineral, boolean sideTop) {
+    //    if (!sideTop)
+    //        return depositBlock(name, mineral);
+    //    return this.block(name, MineralDepositBlock::new)
+    //            .transform(MBuilderTransformers.mineralDepositSideTop())
+    //            .loot((lt, bl) -> lt.add(bl, lt.createSingleItemTable(Items.COBBLESTONE)
+    //                    .withPool(lt.applyExplosionCondition(mineral.get(), LootPool.lootPool()
+    //                            .setRolls(UniformGenerator.between(2.0f, 5.0f))
+    //                            .add(LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))))))))
+    //            .lang(autoLang(name))
+    //            .register();
+    //}
 
-    public BlockEntry<Block> mineralBlock(String name, TagKey<Block> tag, ItemEntry<MetallurgicaItem> mineral) {
-        return this.block(name + "_rich_stone", Block::new)
-                .transform(MBuilderTransformers.mineralStone(name))
-                .loot((lt, bl) -> lt.add(bl, RegistrateBlockLootTables.createSilkTouchDispatchTable(bl, lt.applyExplosionDecay(bl, LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
-                .tag(tag)
-                .lang(autoLang(name + "_rich_stone"))
-                .register();
-    }
+    //public BlockEntry<Block> mineralBlock(String name, TagKey<Block> tag, ItemEntry<MetallurgicaItem> mineral) {
+    //    return this.block(name + "_rich_stone", Block::new)
+    //            .transform(MBuilderTransformers.mineralStone(name))
+    //            .loot((lt, bl) -> lt.add(bl, RegistrateBlockLootTables.createSilkTouchDispatchTable(bl, lt.applyExplosionDecay(bl, LootItem.lootTableItem(mineral.get()).apply(LimitCount.limitCount(IntRange.range(0, 1))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))))
+    //            .tag(tag)
+    //            .lang(autoLang(name + "_rich_stone"))
+    //            .register();
+    //}
 
     public <T extends Block> BlockEntry<T> simpleMachineBlock(
             String name,

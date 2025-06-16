@@ -2,9 +2,6 @@ package com.freezedown.metallurgica.foundation.util;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
-import com.freezedown.metallurgica.foundation.temperature.TemperatureUpdatePacket;
-import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

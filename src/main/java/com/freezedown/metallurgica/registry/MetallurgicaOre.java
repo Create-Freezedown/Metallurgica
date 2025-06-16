@@ -1,9 +1,8 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.foundation.material.OreEntry;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.DepositCapacity;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
@@ -13,7 +12,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -85,7 +83,7 @@ public enum MetallurgicaOre {
     //CUPRITE()
     ;
 
-    public final OreEntry ORE;
+    //public final OreEntry ORE;
     public final List<Material> METALS = new ArrayList<>();
     
     private static Block getBlock(ResourceLocation id) {
@@ -94,60 +92,60 @@ public enum MetallurgicaOre {
 
     MetallurgicaOre() {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), false);
+        //ORE = registrate.material(this.name().toLowerCase(), false);
     }
 
     MetallurgicaOre(Material... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), false);
-        METALS.addAll(Arrays.asList(materials));
+        //ORE = registrate.material(this.name().toLowerCase(), false);
+        //METALS.addAll(Arrays.asList(materials));
     }
 
     MetallurgicaOre(boolean richb, Material... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), richb);
-        METALS.addAll(Arrays.asList(materials));
+        //ORE = registrate.material(this.name().toLowerCase(), richb);
+        //METALS.addAll(Arrays.asList(materials));
     }
 
     MetallurgicaOre(boolean sideTop) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), false, sideTop);
+        //ORE = registrate.material(this.name().toLowerCase(), false, sideTop);
     }
 
     MetallurgicaOre(boolean richb, boolean sideTop, Material... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), richb, sideTop);
-        METALS.addAll(Arrays.asList(materials));
+        //ORE = registrate.material(this.name().toLowerCase(), richb, sideTop);
+        //METALS.addAll(Arrays.asList(materials));
     }
 
     MetallurgicaOre(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositChance, DepositCapacity capacity, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, Material... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), false);
+        //ORE = registrate.material(this.name().toLowerCase(), false);
         //DEPOSIT = ORE.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
-        METALS.addAll(Arrays.asList(materials));
+        //METALS.addAll(Arrays.asList(materials));
     }
     MetallurgicaOre(boolean richb, int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int maxWidth, int minWidth, int maxDepth, int minDepth, float depositChance, DepositCapacity capacity, int depositMinHeight, int depositMaxHeight, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, Material... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), richb);
+        //ORE = registrate.material(this.name().toLowerCase(), richb);
         //DEPOSIT = ORE.deposit(1, depositFrequency, depositMinHeight, depositMaxHeight);
-        METALS.addAll(Arrays.asList(materials));
+        //METALS.addAll(Arrays.asList(materials));
     }
 
     MetallurgicaOre(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, Material... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), false);
-        METALS.addAll(Arrays.asList(materials));
+        //ORE = registrate.material(this.name().toLowerCase(), false);
+        //METALS.addAll(Arrays.asList(materials));
     }
     
     MetallurgicaOre(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, Couple<NonNullSupplier<? extends Block>> accompanyingBlocks, float frequency, int chance, Material... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), richb);
-        METALS.addAll(Arrays.asList(materials));
+        //ORE = registrate.material(this.name().toLowerCase(), richb);
+        //METALS.addAll(Arrays.asList(materials));
     }
 
     MetallurgicaOre(int clusterSize, int clusterFrequency, int clusterMinHeight, int clusterMaxHeight, int depositFrequency, int depositMinHeight, int depositMaxHeight, boolean richb, Material... materials) {
         MetallurgicaRegistrate registrate = Metallurgica.registrate();
-        ORE = registrate.material(this.name().toLowerCase(), richb);
-        METALS.addAll(Arrays.asList(materials));
+        //ORE = registrate.material(this.name().toLowerCase(), richb);
+        //METALS.addAll(Arrays.asList(materials));
     }
 }

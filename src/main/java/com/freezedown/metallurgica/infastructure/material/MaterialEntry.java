@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.infastructure.material;
 
-import com.freezedown.metallurgica.foundation.material.registry.Material;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraftforge.registries.RegistryObject;

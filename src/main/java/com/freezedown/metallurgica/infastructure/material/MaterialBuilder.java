@@ -1,8 +1,5 @@
 package com.freezedown.metallurgica.infastructure.material;
 
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.infastructure.element.Element;
-import com.freezedown.metallurgica.infastructure.element.ElementBuilder;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.tterrag.registrate.AbstractRegistrate;

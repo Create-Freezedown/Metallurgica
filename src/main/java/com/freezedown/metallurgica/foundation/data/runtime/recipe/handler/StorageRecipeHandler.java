@@ -1,20 +1,17 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.block.SheetmetalFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.item.IngotFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.item.NuggetFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.block.StorageBlockFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.item.SheetFlag;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.block.SheetmetalFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.item.IngotFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.item.NuggetFlag;
 import com.simibubi.create.content.kinetics.mixer.CompactingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;

@@ -2,8 +2,8 @@ package com.freezedown.metallurgica.foundation.mixin;
 
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.MaterialCompositionManager;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
 import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;

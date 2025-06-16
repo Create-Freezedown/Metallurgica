@@ -1,11 +1,11 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.block.CasingFlag;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.block.CasingFlag;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;

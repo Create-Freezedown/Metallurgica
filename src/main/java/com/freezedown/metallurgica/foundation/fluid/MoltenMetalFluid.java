@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.fluid;
 
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.base.FluidFlag;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
 import lombok.Getter;
 
 public class MoltenMetalFluid extends VirtualMaterialFluid {

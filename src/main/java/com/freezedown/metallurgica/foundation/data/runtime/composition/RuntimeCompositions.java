@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.foundation.data.runtime.composition;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
 import com.freezedown.metallurgica.foundation.data.custom.composition.tooltip.MaterialCompositionBuilder;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.element.data.ElementData;
 import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.freezedown.metallurgica.registry.material.MetMaterials;

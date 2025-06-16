@@ -1,9 +1,9 @@
 package com.freezedown.metallurgica.registry.material.init;
 
-import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.material.registry.flags.base.BlockFlag;
+import com.freezedown.metallurgica.foundation.material.block.IMaterialBlock;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.common.collect.ImmutableTable;

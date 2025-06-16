@@ -1,13 +1,8 @@
 package com.freezedown.metallurgica.foundation.multiblock;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.item.MaterialItem;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.foundation.util.MetalLang;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
-import com.google.common.collect.Table;
-import com.tterrag.registrate.util.entry.ItemEntry;
 import net.createmod.catnip.ghostblock.GhostBlockParams;
 import net.createmod.catnip.ghostblock.GhostBlockRenderer;
 import net.createmod.catnip.lang.LangBuilder;
@@ -25,7 +20,6 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import org.antlr.v4.runtime.misc.Triple;
 import oshi.util.tuples.Triplet;
 
 import java.util.ArrayList;

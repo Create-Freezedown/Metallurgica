@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.registry.misc;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.element.Element;
 import net.minecraft.core.Registry;

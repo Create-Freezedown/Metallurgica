@@ -1,8 +1,8 @@
 package com.freezedown.metallurgica.infastructure;
 
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.createmod.catnip.gui.ScreenOpener;

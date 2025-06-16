@@ -2,7 +2,7 @@ package com.freezedown.metallurgica.content.metalworking.casting.ingot;
 
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.content.temperature.KineticTemperatureBlockEntity;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagItemOutput;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;

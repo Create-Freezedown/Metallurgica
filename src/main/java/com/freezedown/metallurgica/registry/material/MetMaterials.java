@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.infastructure.material.MaterialEntry;
 import com.freezedown.metallurgica.registry.MetallurgicaCreativeTab;

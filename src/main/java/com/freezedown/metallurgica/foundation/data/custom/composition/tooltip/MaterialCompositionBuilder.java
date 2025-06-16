@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.data.custom.composition.tooltip;
 
 import com.freezedown.metallurgica.foundation.data.custom.composition.FinishedComposition;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

@@ -1,17 +1,13 @@
 package com.freezedown.metallurgica.foundation.data.runtime.recipe.handler;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.foundation.material.MaterialHelper;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.material.registry.flags.item.IngotFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.item.SemiPressedSheetFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.item.SheetFlag;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.item.SheetFlag;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 

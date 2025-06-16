@@ -1,11 +1,12 @@
 package com.freezedown.metallurgica.foundation;
 
-import com.freezedown.metallurgica.foundation.block.IMaterialBlock;
-import com.freezedown.metallurgica.foundation.item.MaterialItem;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.foundation.material.registry.flags.base.BlockFlag;
-import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.foundation.material.block.IMaterialBlock;
+import com.freezedown.metallurgica.foundation.material.item.IMaterialItem;
+import com.freezedown.metallurgica.foundation.material.item.MaterialItem;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialItems;
 import com.google.common.collect.Table;
@@ -25,7 +26,7 @@ public class MixinHelpers {
 
     public static <T> void generateDynamicTags(Map<ResourceLocation, List<TagLoader.EntryWithSource>> tagMap, Registry<T> registry) {
         if (registry == BuiltInRegistries.ITEM) {
-            for (Table.Cell<FlagKey<?>, Material, ItemEntry<? extends MaterialItem>> entryCell : MetMaterialItems.MATERIAL_ITEMS.cellSet()) {
+            for (Table.Cell<FlagKey<?>, Material, ItemEntry<? extends IMaterialItem>> entryCell : MetMaterialItems.MATERIAL_ITEMS.cellSet()) {
                 FlagKey<?> flagKey = entryCell.getRowKey();
                 var material = entryCell.getColumnKey();
                 var itemEntry = entryCell.getValue();

@@ -5,29 +5,36 @@ import com.drmangotea.tfmg.blocks.electricity.base.IHaveCables;
 import com.drmangotea.tfmg.blocks.electricity.cable_blocks.copycat_cable_block.CopycatCableBlockEntity;
 import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlock;
 import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlockEntity;
-import com.freezedown.metallurgica.foundation.item.MaterialItem;
-import com.freezedown.metallurgica.foundation.material.registry.Material;
-import com.freezedown.metallurgica.foundation.material.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.foundation.material.item.IMaterialItem;
+import com.freezedown.metallurgica.foundation.material.item.MaterialItem;
+import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CableItem extends MaterialItem {
+public class CableItem extends Item implements IMaterialItem {
     public ConductorEntry<?> conductorEntry;
+    public final Material material;
+    public final ItemFlag itemFlag;
 
     public CableItem(Properties properties, ConductorEntry<?> conductorEntry, Material material, ItemFlag itemFlag) {
-        super(properties, material, itemFlag);
+        super(properties);
         this.conductorEntry = conductorEntry;
+        this.material = material;
+        this.itemFlag = itemFlag;
     }
 
     public InteractionResult useOn(UseOnContext context) {
@@ -146,5 +153,35 @@ public class CableItem extends MaterialItem {
         }
 
         return true;
+    }
+
+    @Override
+    public String getDescriptionId() {
+        return itemFlag.getUnlocalizedName(material);
+    }
+
+    @Override
+    public String getDescriptionId(ItemStack stack) {
+        return getDescriptionId();
+    }
+
+    @Override
+    public MutableComponent getDescription() {
+        return itemFlag.getLocalizedName(material);
+    }
+
+    @Override
+    public MutableComponent getName(ItemStack stack) {
+        return getDescription();
+    }
+
+    @Override
+    public Material getMaterial() {
+        return this.material;
+    }
+
+    @Override
+    public ItemFlag getFlag() {
+        return this.itemFlag;
     }
 }

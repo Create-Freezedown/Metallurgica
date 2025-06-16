@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.content.metalworking;
 
-import com.freezedown.metallurgica.foundation.material.registry.Material;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
 

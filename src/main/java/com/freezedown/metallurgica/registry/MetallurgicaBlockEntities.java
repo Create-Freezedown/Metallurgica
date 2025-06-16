@@ -19,7 +19,6 @@ import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryB
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlockEntity;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableVisual;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableRenderer;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
@@ -37,7 +36,6 @@ import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
-import static com.freezedown.metallurgica.registry.MetallurgicaOre.*;
 
 public class MetallurgicaBlockEntities {
     public static final BlockEntityEntry<DebugTempBlockEntity> debugTemp = registrate
@@ -104,7 +102,7 @@ public class MetallurgicaBlockEntities {
                     .validBlocks(MetallurgicaBlocks.drillTowerDeployer)
                     .register();
 
-    public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit = registrate.simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new, values()).register();
+    //public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit = registrate.simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new).register();
     
     public static final BlockEntityEntry<ChannelDepotBlockEntity> channelDepot =
             registrate.blockEntity("channel_depot", ChannelDepotBlockEntity::new)
