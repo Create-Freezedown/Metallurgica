@@ -50,6 +50,7 @@ public class CompositionBuilder {
             this.subCompositions = subCompositions;
             this.id = pId;
         }
+
         
         @Override
         public void serializeData(JsonObject json) {

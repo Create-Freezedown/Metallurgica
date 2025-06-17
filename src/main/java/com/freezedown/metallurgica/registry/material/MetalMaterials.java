@@ -277,5 +277,38 @@ public class MetalMaterials {
                         new MoltenFlag(1246.0),
                         new DustFlag()
                 ));
+        POTASSIUM = createMaterial("potassium", (b) -> b
+                .element(MetallurgicaElements.POTASSIUM)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new SheetFlag(),
+                        new MoltenFlag(63.5),
+                        new DustFlag()
+                ));
+        BERYLLIUM = createMaterial("beryllium", (b) -> b
+                .element(MetallurgicaElements.BERYLLIUM)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new SheetFlag(),
+                        new MoltenFlag(1287.0),
+                        new DustFlag()
+                ));
+        RADIUM = createMaterial("radium", (b) -> b
+                .element(MetallurgicaElements.RADAIUM)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new StorageBlockFlag(),
+                        new SheetFlag(),
+                        new MoltenFlag(700.00),
+                        new DustFlag()
+                ));
+        ARSENIC = createMaterial("arsenic", (b) -> b
+                .element(MetallurgicaElements.ARSENIC)
+                .addFlags(
+                        new IngotFlag()
+                ));
     }
 }

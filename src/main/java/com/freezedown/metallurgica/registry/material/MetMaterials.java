@@ -41,6 +41,10 @@ public class MetMaterials {
     public static MaterialEntry<Material> CHROMIUM;
     public static MaterialEntry<Material> VANADIUM;
     public static MaterialEntry<Material> MANGANESE;
+    public static MaterialEntry<Material> POTASSIUM;
+    public static MaterialEntry<Material> BERYLLIUM;
+    public static MaterialEntry<Material> RADIUM;
+    public static MaterialEntry<Material> ARSENIC;
 
     //Non-Metals
     public static MaterialEntry<Material> NULL;
@@ -65,6 +69,7 @@ public class MetMaterials {
     public static MaterialEntry<Material> BRONZE;
     public static MaterialEntry<Material> ARSENICAL_BRONZE;
     public static MaterialEntry<Material> WROUGHT_IRON;
+    public static MaterialEntry<Material> ANDESITE_ALLOY;
 
     //Minerals
     public static MaterialEntry<Material> MALACHITE;

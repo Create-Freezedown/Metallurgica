@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.infastructure.material;
 
+import com.freezedown.metallurgica.infastructure.element.data.SubComposition;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
@@ -63,9 +64,9 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
         shouldRegister(config.get());
     }
 
-    public List<ElementData> getComposition() {
+    public List<SubComposition> getComposition() {
         if (materialInfo.composition.isEmpty()) {
-            return List.of(new ElementData(MetallurgicaElements.NULL.getId(), 1));
+            return List.of(new SubComposition(List.of(new ElementData(MetallurgicaElements.NULL.getId(), 1)), 1));
         }
         return materialInfo.composition;
     }
@@ -164,7 +165,8 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
         }
 
         public Builder element(ElementEntry<?> entry) {
-            materialInfo.composition().add(new ElementData(entry.getId(), 1));
+            ElementData elementData = new ElementData(entry.getId(), 1);
+            materialInfo.composition().add(new SubComposition(List.of(elementData), 1));
             return this;
         }
 
@@ -172,13 +174,36 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
             Preconditions.checkArgument(
                     components.length % 2 == 0,
                     "Material Composition list malformed!");
-
+            List<ElementData> elementDataList = new ArrayList<>();
             for (int i = 0; i < components.length; i += 2) {
                 if (components[i] == null) {
                     throw new IllegalArgumentException(
                             "ElementData in Compositions List is null for Material " + this.materialInfo.resourceLocation);
                 }
-                materialInfo.composition().add(new ElementData(components[i] instanceof ElementEntry<?> entry ? entry.getId() : ((Element) components[i]).getId(), ((Number) components[i + 1]).intValue()));
+                ElementData elementData = new ElementData(components[i] instanceof ElementEntry<?> entry ? entry.getId() : ((Element) components[i]).getId(), ((Number) components[i + 1]).intValue());
+                elementDataList.add(elementData);
+            }
+            ElementData.createFromList(elementDataList).forEach(materialInfo.composition()::add);
+            return this;
+        }
+
+        public Builder alloyComposition(Object... components) {
+            Preconditions.checkArgument(
+                    components.length % 2 == 0,
+                    "Material Composition list malformed!");
+            for (int i = 0; i < components.length; i += 2) {
+                if (components[i] == null) {
+                    throw new IllegalArgumentException(
+                            "ElementData in Compositions List is null for Material " + this.materialInfo.resourceLocation);
+                }
+                MaterialEntry<Material> materialEntry = ((MaterialEntry<Material>) components[i]);
+                int amount = ((Number) components[i + 1]).intValue();
+                List<SubComposition> materialComp = materialEntry.get().getComposition();
+                List<ElementData> elementDataList = new ArrayList<>();
+                for (SubComposition subComposition : materialComp) {
+                    elementDataList.addAll(subComposition.getElements());
+                }
+                materialInfo.composition().add(new SubComposition(elementDataList, amount));
             }
             return this;
         }
@@ -207,7 +232,7 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
         @Getter
         public Map<FlagKey<?>, ResourceLocation> existingIds = new HashMap<>();
         @Getter
-        public List<ElementData> composition = new ArrayList<>();
+        public List<SubComposition> composition = new ArrayList<>();
         @Getter
         private int colour;
 

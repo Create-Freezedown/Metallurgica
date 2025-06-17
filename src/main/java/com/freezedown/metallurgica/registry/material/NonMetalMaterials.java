@@ -33,8 +33,10 @@ public class NonMetalMaterials {
         SILICON = createMaterial("silicon", (b) -> b
                 .element(MetallurgicaElements.SILICON)
                 .addFlags(
+                        new NuggetFlag(),
                         new IngotFlag(),
                         new StorageBlockFlag().useColumnModel(),
+                        new SheetFlag(),
                         new MoltenFlag(1414.0),
                         new DustFlag()
                 ));

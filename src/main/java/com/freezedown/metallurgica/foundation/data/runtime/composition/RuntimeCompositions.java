@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class RuntimeCompositions {
     public static void compositionAddition(Consumer<FinishedComposition> originalConsumer) {
         for (Material material : MetMaterials.registeredMaterials.values()) {
-            createComposition(originalConsumer, material, ElementData.createFromList(material.getComposition()));
+            createComposition(originalConsumer, material, material.getComposition());
         }
     }
 

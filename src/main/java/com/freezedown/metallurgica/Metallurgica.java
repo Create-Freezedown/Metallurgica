@@ -75,8 +75,7 @@ public class Metallurgica
         registrate.setTooltipModifierFactory((item) -> (new ItemDescription.Modifier(item, METALLURGICA_PALETTE)).andThen(TooltipModifier.mapNull(KineticStats.create(item))).andThen(TooltipModifier.mapNull(ConductorStats.create(item))));
     }
     
-    public Metallurgica()
-    {
+    public Metallurgica() {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
         IEventBus modEventBus = FMLJavaModLoadingContext.get()
                 .getModEventBus();
