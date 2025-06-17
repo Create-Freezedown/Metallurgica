@@ -148,7 +148,7 @@ public class TemperatureMap {
         }
 
         public BlockTemperatureData get(int x, int y, int z) {
-            return data[y + min][x % 17][z % 17];
+            return data[y + min][x % 16][z % 16];
         }
 
     }

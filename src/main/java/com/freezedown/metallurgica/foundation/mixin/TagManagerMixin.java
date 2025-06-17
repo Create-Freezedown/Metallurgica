@@ -28,7 +28,7 @@ public class TagManagerMixin {
                     by = 2),
             locals = LocalCapture.CAPTURE_FAILHARD)
     private <
-            T> void gtceu$saveRegistryToTagLoader(ResourceManager rm, Executor executor,
+            T> void metallurgica$saveRegistryToTagLoader(ResourceManager rm, Executor executor,
                                                   RegistryAccess.RegistryEntry<T> reg,
                                                   CallbackInfoReturnable<CompletableFuture<TagManager.LoadResult<T>>> cir,
                                                   ResourceKey<? extends Registry<T>> key, Registry<T> registry,

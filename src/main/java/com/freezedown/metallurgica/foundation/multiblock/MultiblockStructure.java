@@ -8,6 +8,7 @@ import net.createmod.catnip.ghostblock.GhostBlockRenderer;
 import net.createmod.catnip.lang.LangBuilder;
 import net.createmod.ponder.PonderClient;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -140,7 +141,7 @@ public class MultiblockStructure {
             return new MultiblockStructure(getMaster(), structure).addFluidOutputs(fluidOutputs);
         }
     }
-    
+
     public ArrayList<Map<BlockPos, BlockState>> getStructure() {
         return structure;
     }

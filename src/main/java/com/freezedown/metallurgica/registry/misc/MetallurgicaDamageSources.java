@@ -19,6 +19,10 @@ public class MetallurgicaDamageSources {
         return source(MetallurgicaDamageTypes.reverbaratory, level);
     }
 
+    public static DamageSource pressCrushing(Level level) {
+        return source(MetallurgicaDamageTypes.crushing, level);
+    }
+
     public static FluidDamageSource acidBurn(Level level, Entity entity, Fluid fluid) {
         Registry<DamageType> registry = level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE);
         return new FluidDamageSource(registry.getHolderOrThrow(MetallurgicaDamageTypes.acidBurn), fluid, entity);

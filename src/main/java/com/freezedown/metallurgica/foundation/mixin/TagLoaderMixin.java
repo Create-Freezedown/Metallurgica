@@ -24,7 +24,7 @@ public class TagLoaderMixin<T> implements IMetallurgicaTagLoader<T> {
     private Registry<T> metallurgica$storedRegistry;
 
     @Inject(method = "load", at = @At(value = "RETURN"))
-    public void gtceu$load(ResourceManager resourceManager,
+    public void metallurgica$load(ResourceManager resourceManager,
                            CallbackInfoReturnable<Map<ResourceLocation, List<TagLoader.EntryWithSource>>> cir) {
         var tagMap = cir.getReturnValue();
         if (metallurgica$getRegistry() == null) return;

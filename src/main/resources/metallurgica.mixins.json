@@ -15,8 +15,11 @@
     "TagManagerMixin",
     "TFMGBlastFurnaceBGone",
     "WorldGenRegionMixin",
+    "accessor.KineticBlockEntityAccessor",
     "emi.FluidEmiStackMixin",
-    "jei.FluidHelperMixin"
+    "jei.FluidHelperMixin",
+    "workplace_hazards.EntityMixin",
+    "workplace_hazards.PressingBehaviourMixin"
   ],
   "client": [
     "ModelManagerMixin",
