@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.mixin.workplace_hazards;
 
+import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.mixin.accessor.KineticBlockEntityAccessor;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaDamageSources;
 import com.simibubi.create.content.kinetics.belt.behaviour.BeltProcessingBehaviour;
@@ -55,6 +56,9 @@ public abstract class PressingBehaviourMixin extends BeltProcessingBehaviour {
     @Inject(at = @At("HEAD"), method = "tick", remap = false)
     void tick(CallbackInfo ci) {
         if (getWorld().isClientSide)
+            return;
+
+        if (!MetallurgicaConfigs.common().experiments.workplaceHazards.mechanicalPressCrushing.get())
             return;
 
         Level world = getWorld();

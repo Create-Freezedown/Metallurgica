@@ -101,6 +101,11 @@ public class MetallurgicaItems {
     public static final ItemEntry<Item>
             loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item??? Idk lol
 
+
+    // Kiln
+    public static final ItemEntry<MetallurgicaItem> ceramicClay = registrate.metallurgicaItem("ceramic_clay");
+    public static final ItemEntry<MetallurgicaItem> unfiredKilnBrick = registrate.metallurgicaItem("unfired_kiln_brick", "ingots");
+
     public static void register() {
         MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
         MetMaterialItems.generateMaterialItems(materialRegistrate);

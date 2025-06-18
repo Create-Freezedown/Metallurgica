@@ -101,7 +101,8 @@ public class NonMetalMaterials {
                 .noRegister(GEM)
                 .existingIds(GEM, "minecraft:quartz")
                 .addFlags(
-                        new GemFlag("minecraft")
+                        new GemFlag("minecraft"),
+                        new DustFlag()
                 ));
     }
 }

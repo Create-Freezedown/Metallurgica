@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.mixin.workplace_hazards;
 
+import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingBehaviour;
 import net.minecraft.core.BlockPos;
@@ -36,6 +37,7 @@ public abstract class EntityMixin {
 
     @Unique
     BlockEntity wpHaz$findPress() {
+
         BlockPos eyePos = new BlockPos((int) getX(), (int) getEyeY(), (int) getZ());
         BlockEntity entity = level.getBlockEntity(eyePos.above());
 
@@ -48,6 +50,9 @@ public abstract class EntityMixin {
 
     @Inject(method = "canEnterPose", at = @At("HEAD"), cancellable = true)
     public void canEnterPose(Pose pose, CallbackInfoReturnable<Boolean> cir) {
+        if (!MetallurgicaConfigs.common().experiments.workplaceHazards.mechanicalPressCrushing.get())
+            return;
+
         var entity = wpHaz$findPress();
 
         if(entity instanceof MechanicalPressBlockEntity pressEntity) { // fancy meeting you here
