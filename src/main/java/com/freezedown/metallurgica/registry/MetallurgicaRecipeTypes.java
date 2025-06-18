@@ -11,6 +11,7 @@ import com.freezedown.metallurgica.content.machines.kiln.BakingRecipe;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.content.machines.sluice_belt.SluicingRecipe;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
+import com.freezedown.metallurgica.content.primitive.pit_smelting.PitFuelRecipe;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
@@ -43,6 +44,7 @@ public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
     sluicing(SluicingRecipe::new),
     shaking(ShakingRecipe::new),
     ceramic_mixing(CeramicMixingRecipe::new),
+    pit_fuel(PitFuelRecipe::new)
     ;
     
     private final ResourceLocation id;

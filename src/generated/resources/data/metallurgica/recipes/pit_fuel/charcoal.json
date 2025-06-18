@@ -1,0 +1,9 @@
+{
+  "type": "metallurgica:pit_fuel",
+  "ingredients": [
+    {
+      "item": "minecraft:charcoal"
+    }
+  ],
+  "results": []
+}

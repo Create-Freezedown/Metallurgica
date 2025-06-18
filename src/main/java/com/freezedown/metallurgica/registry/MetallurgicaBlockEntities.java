@@ -23,6 +23,7 @@ import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillAc
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlockEntity;
+import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlockRenderer;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotVisual;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotRenderer;
@@ -62,6 +63,7 @@ public class MetallurgicaBlockEntities {
     public static final BlockEntityEntry<UnfiredCeramicBlockEntity> unfiredCeramic = registrate
             .blockEntity("unfired_ceramic", UnfiredCeramicBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.unfiredCeramicPot, MetallurgicaBlocks.unfiredCrucible)
+            .renderer(() -> UnfiredCeramicBlockRenderer::new)
             .register();
 
     

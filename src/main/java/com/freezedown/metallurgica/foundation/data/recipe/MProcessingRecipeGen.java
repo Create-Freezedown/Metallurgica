@@ -49,6 +49,7 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
         GENERATORS.add(new MSluicingGen(gen));
         GENERATORS.add(new MShakingGen(gen));
         GENERATORS.add(new MCeramicMixingGen(gen));
+        GENERATORS.add(new MPitFuelGen(gen));
         
         GENERATORS.add(new DistillationGen(gen));
         

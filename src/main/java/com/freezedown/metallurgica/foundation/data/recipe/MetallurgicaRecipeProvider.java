@@ -132,6 +132,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike sand() {
             return Items.SAND;
         }
+        public static ItemLike ceramicClay() {return MetallurgicaItems.ceramicClay.get();}
     }
     
     public static class F {

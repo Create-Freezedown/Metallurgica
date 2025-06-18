@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-17T12:47:37.8326843	Metallurgica's Processing Recipes
+// 1.20.1	2025-06-18T19:16:54.0131165	Metallurgica's Processing Recipes
 afccbcdff9a3598525bd2718cd3deac9a2d6255d data/metallurgica/recipes/ceramic_mixing/leather.json
 0f6c1d876cf3dca82db7bfd6c06d0789899b84b8 data/metallurgica/recipes/distillation/titanium_tetrachloride.json
 f3ea1a852208e44502fca5ec1e30472f7256d399 data/metallurgica/recipes/electrolysis/magnesium_chloride.json
@@ -24,6 +24,7 @@ ad8b9b1758756cd34d0907b4e45e460a4968b36e data/metallurgica/recipes/mixing/magnet
 464ef374df06287f3953b394466b23478e08747c data/metallurgica/recipes/mixing/sulfuric_acid.json
 3cd5a8f296d095e04678e4fcff368b674d3db941 data/metallurgica/recipes/mixing/sulfuric_acid_from_decontaminated_water.json
 db27245976e0f549e17e19d1ceba104fc633f57d data/metallurgica/recipes/mixing/titanium_tetrachloride.json
+20e818609baf88c1dffb9e53d994abea396e3b0d data/metallurgica/recipes/pit_fuel/charcoal.json
 7c85635a6d775ce1aa256c56fe833094a52b6d97 data/metallurgica/recipes/reverbaratory_cooking/molten_iron.json
 eec84b2a0935cbb5dd534519cb08c71af26f59e1 data/metallurgica/recipes/shaking/gold_nugget_from_red_sand.json
 23e8b176a238d6c5e117d132ee832a9f03b8a01e data/metallurgica/recipes/sluicing/gold.json
