@@ -32,7 +32,7 @@ public class PillarMaterialBlockRenderer {
             String side = sidePresent ? "metallurgica:block/materials/" + model.material.getName() + "/" + blockName + "_side" : "metallurgica:block/materials/null/" + blockName + "_side";
             String end = endPresent ? "metallurgica:block/materials/" + model.material.getName() + "/" + blockName + "_end" : "metallurgica:block/materials/null/" + blockName + "_end";
             ResourceLocation modelId = blockId.withPrefix("block/");
-            MetallurgicaDynamicResourcePack.addBlockModel(modelId, MetallurgicaModels.simplePillar(end, side));
+            MetallurgicaDynamicResourcePack.addBlockModel(blockId, MetallurgicaModels.simplePillar(end, side));
             MetallurgicaDynamicResourcePack.addBlockState(blockId, BlockModelGenerators.createSimpleBlock(model.block, modelId));
             MetallurgicaDynamicResourcePack.addItemModel(BuiltInRegistries.ITEM.getKey(model.block.asItem()), new DelegatedModel(ModelLocationUtils.getModelLocation(model.block)));
         }

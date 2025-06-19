@@ -36,7 +36,7 @@ public class MaterialBlockRenderer {
             boolean texturePresent = Minecraft.getInstance().getResourceManager().getResource(Metallurgica.asResource("textures/block/materials/" + model.material.getName() + "/%s.png".formatted(blockName))).isPresent();
             String texture = texturePresent ? "metallurgica:block/materials/" + model.material.getName() + "/" + blockName : "metallurgica:block/materials/null/" + blockName;
             ResourceLocation modelId = blockId.withPrefix("block/");
-            MetallurgicaDynamicResourcePack.addBlockModel(modelId, MetallurgicaModels.simpleCubeAll(texture));
+            MetallurgicaDynamicResourcePack.addBlockModel(blockId, MetallurgicaModels.simpleCubeAll(texture));
             MetallurgicaDynamicResourcePack.addBlockState(blockId, BlockModelGenerators.createSimpleBlock(model.block, modelId));
             MetallurgicaDynamicResourcePack.addItemModel(BuiltInRegistries.ITEM.getKey(model.block.asItem()), new DelegatedModel(ModelLocationUtils.getModelLocation(model.block)));
         }

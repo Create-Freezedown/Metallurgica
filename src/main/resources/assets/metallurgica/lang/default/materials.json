@@ -16,6 +16,9 @@
   "materialflag.sheetmetal": "%s Sheetmetal",
   "materialflag.shard": "%s Shard",
 
+  "materialflag.cog_wheel": "%s Cogwheel",
+  "materialflag.large_cog_wheel": "Large %s Cogwheel",
+
   "materialflag.bucket": "%s Bucket",
   "materialflag.liquid": "%s",
   "materialflag.bucket.liquid": "%s Bucket",

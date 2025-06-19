@@ -4,21 +4,23 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 public class MaterialBlockItem extends BlockItem {
-    protected MaterialBlockItem(MaterialBlock block, Properties properties) {
+    protected MaterialBlockItem(Block block, Properties properties) {
         super(block, properties);
     }
 
-    public static MaterialBlockItem create(MaterialBlock block, Item.Properties properties) {
+    public static MaterialBlockItem create(Block block, Item.Properties properties) {
+        if (!(block instanceof IMaterialBlock)) throw  new IllegalArgumentException("Block must implement IMaterialBlock");
         return new MaterialBlockItem(block, properties);
     }
 
     @Override
     @NotNull
-    public MaterialBlock getBlock() {
-        return (MaterialBlock) super.getBlock();
+    public Block getBlock() {
+        return super.getBlock();
     }
 
     @Override

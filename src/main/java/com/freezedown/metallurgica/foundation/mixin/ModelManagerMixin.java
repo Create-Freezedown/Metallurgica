@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.foundation.mixin;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.client.renderer.MaterialBlockRenderer;
+import com.freezedown.metallurgica.foundation.client.renderer.MaterialCogWheelBlockRenderer;
 import com.freezedown.metallurgica.foundation.client.renderer.PillarMaterialBlockRenderer;
 import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels;
 import net.minecraft.client.resources.model.ModelManager;
@@ -27,6 +28,7 @@ public abstract class ModelManagerMixin {
         long startTime = System.currentTimeMillis();
         MaterialBlockRenderer.reinitModels();
         PillarMaterialBlockRenderer.reinitModels();
+        MaterialCogWheelBlockRenderer.reinitModels();
         MetallurgicaModels.registerMaterialAssets();
         Metallurgica.LOGGER.info("Metallurgica Model loading took {}ms", System.currentTimeMillis() - startTime);
     }

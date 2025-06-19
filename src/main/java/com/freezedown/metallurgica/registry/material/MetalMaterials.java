@@ -2,9 +2,7 @@ package com.freezedown.metallurgica.registry.material;
 
 import com.freezedown.metallurgica.foundation.item.WireColours;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.CasingFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.SheetmetalFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.block.*;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.fluid.MoltenFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.item.*;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
@@ -53,7 +51,8 @@ public class MetalMaterials {
                         new WireFlag("tfmg"),
                         new CableFlag(0.0178, WireColours.copper),
                         new MineralFlag(true),
-                        new RubbleFlag().crushing().bonusChance(0.15f)
+                        new RubbleFlag().crushing().bonusChance(0.15f),
+                        new CogWheelFlag(), new LargeCogWheelFlag()
                 ));
         NETHERIUM = createMaterial("netherium", (b) -> b
                 .element(MetallurgicaElements.NETHERIUM)

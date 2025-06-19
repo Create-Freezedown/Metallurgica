@@ -34,6 +34,7 @@ import com.freezedown.metallurgica.content.temperature.DebugTempBlockEntity;
 import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlockEntity;
 import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorRenderer;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialBlockEntities;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.freezedown.metallurgica.Metallurgica.registrate;
@@ -161,5 +162,7 @@ public class MetallurgicaBlockEntities {
             registrate.blockEntity("charred_log_pile", CharredLogPileBlockEntity::new)
                     .validBlocks(MetallurgicaBlocks.charredLogPile).register();
 
-    public static void register() {}
+    public static void register() {
+        MetMaterialBlockEntities.register(registrate().getModEventBus());
+    }
 }

@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
@@ -49,7 +50,7 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
     
     }
-    
+
     @Override
     public void tick() {
         super.tick();
@@ -63,18 +64,28 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
         if (cookTime <= 0) cookTime = -15;
         if (fakeCookTime <= 0) fakeCookTime = -15;
 
+
         if (!isCooking()) return;
 
-        if (isEncased()) {
+        int countdown = 80;
+
+        if (!isEncased()) {
+            countdown--;
+            if (countdown <= 0) {
+                fakeCookTime = cookTime - this.level.random.nextInt(MetallurgicaConfigs.server().machineConfig.ceramicConfig.ceramicCookTime.get() / 2);
+                cookTime = -15;
+                countdown = 80;
+            }
+        }
+
+        if (!(fakeCookTime > 0)) {
             if (cookTime > 0) {
                 cookTime--;
             } else {
-                this.level.setBlock(this.worldPosition, Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(firedBlock)).defaultBlockState(), 3);
+                this.level.setBlock(this.worldPosition, Objects.requireNonNull(BuiltInRegistries.BLOCK.get(firedBlock)).defaultBlockState(), 3);
                 setHasFuel(false);
             }
-        } else {
-            fakeCookTime = cookTime - this.level.random.nextInt(MetallurgicaConfigs.server().machineConfig.ceramicConfig.ceramicCookTime.get() / 2);
-            cookTime = -15;
+        } else if (!(cookTime > 0)) {
             if (fakeCookTime > 0) {
                 fakeCookTime--;
             } else {

@@ -3,9 +3,7 @@ package com.freezedown.metallurgica.infastructure.material.registry.flags;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IMaterialFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.CasingFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.SheetmetalFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.block.*;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.fluid.LiquidFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.fluid.MoltenFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.item.*;
@@ -39,6 +37,8 @@ public class FlagKey<T extends IMaterialFlag> {
     public static final FlagKey<StorageBlockFlag> STORAGE_BLOCK = create("storage_block", StorageBlockFlag.class);
     public static final FlagKey<CasingFlag> CASING = create("casing", CasingFlag.class);
     public static final FlagKey<SheetmetalFlag> SHEETMETAL = create("sheetmetal", SheetmetalFlag.class);
+    public static final FlagKey<CogWheelFlag> COG_WHEEL = create("cog_wheel", CogWheelFlag.class);
+    public static final FlagKey<LargeCogWheelFlag> LARGE_COG_WHEEL = create("large_cog_wheel", LargeCogWheelFlag.class);
 
     private final String key;
     private final Class<T> type;
