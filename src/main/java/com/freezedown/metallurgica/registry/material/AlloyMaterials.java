@@ -72,7 +72,13 @@ public class AlloyMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1482.0)
                 ));
-
+        CAST_IRON = createMaterial("cast_iron",  (b) -> b
+                .element(MetallurgicaElements.IRON)
+                .addFlags(
+                        new IngotFlag("tfmg"),
+                        new StorageBlockFlag("tfmg"),
+                        new DustFlag()
+                ));
         STEEL = createMaterial("steel", (b) -> b
                 .element(MetallurgicaElements.IRON)
                 .noRegister(INGOT, SEMI_PRESSED_SHEET, SHEET, STORAGE_BLOCK, COG_WHEEL, LARGE_COG_WHEEL, CASING)
@@ -83,7 +89,15 @@ public class AlloyMaterials {
                         new SheetFlag("tfmg").pressTimes(3),
                         new StorageBlockFlag("tfmg"),
                         new CogWheelFlag("tfmg"), new LargeCogWheelFlag("tfmg"),
-                        new CasingFlag("tfmg")
+                        new CasingFlag("tfmg"),
+                        new DustFlag()
+                ));
+        CONSTANTAN = createMaterial("constantan", (b) -> b
+                .composition(MetallurgicaElements.COPPER, 1, MetallurgicaElements.NICKEL, 1)
+                .noRegister(INGOT, NUGGET, STORAGE_BLOCK)
+                .addFlags(
+                        //new SheetFlag(),
+                        new DustFlag()
                 ));
     }
 }

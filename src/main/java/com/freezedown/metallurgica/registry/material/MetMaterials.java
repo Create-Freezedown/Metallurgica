@@ -66,15 +66,20 @@ public class MetMaterials {
     public static MaterialEntry<Material> CHARCOAL;
     public static MaterialEntry<Material> DIAMOND;
 
+    //Irons
+    public static MaterialEntry<Material> CAST_IRON;
+    public static MaterialEntry<Material> WROUGHT_IRON;
+    public static MaterialEntry<Material> STEEL;
+
+
     //Alloys
     public static MaterialEntry<Material> TITANIUM_ALUMINIDE;
     public static MaterialEntry<Material> NETHERITE;
     public static MaterialEntry<Material> BRASS;
     public static MaterialEntry<Material> BRONZE;
     public static MaterialEntry<Material> ARSENICAL_BRONZE;
-    public static MaterialEntry<Material> WROUGHT_IRON;
     public static MaterialEntry<Material> ANDESITE_ALLOY;
-    public static MaterialEntry<Material> STEEL;
+    public static MaterialEntry<Material> CONSTANTAN;
 
     //Minerals
     public static MaterialEntry<Material> MALACHITE;
