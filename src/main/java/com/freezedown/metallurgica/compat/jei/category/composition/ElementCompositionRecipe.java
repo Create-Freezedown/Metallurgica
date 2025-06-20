@@ -117,7 +117,7 @@ public class ElementCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
             Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
             return new ArrayList<>();
         }
-        return MaterialHelper.getAllMaterialItems(material).stream().map(Item::getDefaultInstance).toList();
+        return MaterialHelper.getAllMaterialItemsForTooltips(material).stream().map(Item::getDefaultInstance).toList();
     }
 
 

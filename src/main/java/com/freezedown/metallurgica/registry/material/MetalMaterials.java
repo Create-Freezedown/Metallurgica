@@ -67,7 +67,7 @@ public class MetalMaterials {
                 ));
         ALUMINUM = createMaterial("aluminum", (b) -> b
                 .element(MetallurgicaElements.ALUMINUM)
-                .noRegister(INGOT, STORAGE_BLOCK, WIRE)
+                .noRegister(INGOT, STORAGE_BLOCK, WIRE, COG_WHEEL, LARGE_COG_WHEEL)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag("tfmg"),
@@ -77,7 +77,8 @@ public class MetalMaterials {
                         new DustFlag(),
                         new SheetmetalFlag(),
                         new WireFlag("tfmg"),
-                        new CableFlag(0.0276, WireColours.aluminum)
+                        new CableFlag(0.0276, WireColours.aluminum),
+                        new CogWheelFlag("tfmg"), new LargeCogWheelFlag("tfmg")
                 ));
         SCANDIUM = createMaterial("scandium", (b) -> b
                 .element(MetallurgicaElements.SCANDIUM)
@@ -204,7 +205,9 @@ public class MetalMaterials {
                         new SheetFlag().pressTimes(4),
                         new MoltenFlag(3422.0),
                         new DustFlag(),
-                        new SheetmetalFlag().requiresCompacting()
+                        new SheetmetalFlag().requiresCompacting(),
+                        new CogWheelFlag().variant("industrial"),
+                        new LargeCogWheelFlag().variant("industrial")
                 ));
         OSMIUM = createMaterial("osmium", (b) -> b
                 .element(MetallurgicaElements.OSMIUM)

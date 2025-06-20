@@ -5,6 +5,8 @@ import com.freezedown.metallurgica.foundation.material.block.AxisMaterialBlock;
 import com.freezedown.metallurgica.foundation.material.block.MaterialCogWheelBlock;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.block.CogWheelFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.block.LargeCogWheelFlag;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
@@ -29,7 +31,7 @@ public class MaterialCogWheelBlockRenderer {
             ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(model.block);
             Material material = model.material;
             FlagKey<?> flagKey = model.flagKey;
-            JsonElement obj = material.getFlag(flagKey) == FlagKey.COG_WHEEL ? modelSmall(material) : material.getFlag(flagKey) == FlagKey.LARGE_COG_WHEEL ? modelLarge(material) : null;
+            JsonElement obj = getModel(material, flagKey);
             if (obj == null) return;
             MetallurgicaDynamicResourcePack.addBlockModel(new ResourceLocation(material.getNamespace(), blockId.getPath()), obj);
             MetallurgicaDynamicResourcePack.addBlockState(new ResourceLocation(material.getNamespace(), blockId.getPath()), simpleAxisBlockstate("metallurgica:block/" + blockId));
@@ -47,22 +49,31 @@ public class MaterialCogWheelBlockRenderer {
         this.flagKey = flagKey;
     }
 
-    private static JsonElement modelLarge(Material material) {
+    private static JsonElement getModel(Material material, FlagKey<?> flagKey) {
+        if (material.getFlag(flagKey) instanceof LargeCogWheelFlag flag) {
+            return modelLarge(material, flag);
+        } else if (material.getFlag(flagKey) instanceof CogWheelFlag flag) {
+            return modelSmall(material, flag);
+        }
+        return  null;
+    }
+
+    private static JsonElement modelLarge(Material material, LargeCogWheelFlag flag) {
         boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/block/materials/" + material.getName() + "/large_cogwheel.png")).isPresent();
         String texture = texturePresent ? "metallurgica:block/materials/" + material.getName() + "/large_cogwheel" : "metallurgica:block/materials/null/large_cogwheel";
         JsonObject model = new JsonObject();
-        model.addProperty("parent", "metallurgica:block/template/cogwheel/large");
+        model.addProperty("parent", "metallurgica:block/template/cogwheel/"+flag.getCogWheelModelVariant()+"/large");
         JsonObject textures = new JsonObject();
         textures.addProperty("texture", texture);
         model.add("textures", textures);
         return model;
     }
 
-    private static JsonElement modelSmall(Material material) {
+    private static JsonElement modelSmall(Material material, CogWheelFlag flag) {
         boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/block/materials/" + material.getName() + "/cogwheel.png")).isPresent();
         String texture = texturePresent ? "metallurgica:block/materials/" + material.getName() + "/cogwheel" : "metallurgica:block/materials/null/cogwheel";
         JsonObject model = new JsonObject();
-        model.addProperty("parent", "metallurgica:block/template/cogwheel/small");
+        model.addProperty("parent", "metallurgica:block/template/cogwheel/"+flag.getCogWheelModelVariant()+"/small");
         JsonObject textures = new JsonObject();
         textures.addProperty("texture", texture);
         model.add("textures", textures);

@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.infastructure.material.registry.flags.block;
 
-import com.drmangotea.tfmg.config.StressConfig;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.data.runtime.MetallurgicaDynamicResourcePack;
 import com.freezedown.metallurgica.foundation.material.block.IMaterialBlock;
@@ -18,18 +17,29 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels.*;
 
 @SuppressWarnings("removal")
 public class CogWheelFlag extends BlockFlag implements IPartialHolder, ISpecialAssetGen {
+
+    @Getter
+    private String cogWheelModelVariant = "steel";
+
 
     public CogWheelFlag(String existingNamespace) {
         super("%s_cogwheel", existingNamespace);
@@ -41,9 +51,15 @@ public class CogWheelFlag extends BlockFlag implements IPartialHolder, ISpecialA
         this("metallurgica");
     }
 
+    public CogWheelFlag variant(String variant) {
+        this.cogWheelModelVariant = variant;
+        return this;
+    }
+
     @Override
     public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
-        return registrate.block(getIdPattern().formatted(material.getName()), (p) -> MaterialCogWheelBlock.small(material, flag, p))
+        NonNullFunction<BlockBehaviour.Properties, MaterialCogWheelBlock> factory = (p) -> MaterialCogWheelBlock.small(material, flag, p);
+        return registrate.block(getIdPattern().formatted(material.getName()), factory)
                 .initialProperties(SharedProperties::stone)
                 .properties((p) -> p.sound(SoundType.COPPER))
                 .setData(ProviderType.BLOCKSTATE, NonNullBiConsumer.noop())
@@ -76,7 +92,7 @@ public class CogWheelFlag extends BlockFlag implements IPartialHolder, ISpecialA
         boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/block/materials/" + material.getName() + "/cogwheel.png")).isPresent();
         String texture = texturePresent ? "metallurgica:item/materials/" + material.getName() + "/cogwheel" : "metallurgica:item/materials/null/cogwheel";
         JsonObject model = new JsonObject();
-        model.addProperty("parent", "metallurgica:block/template/cogwheel/small_shaftless");
+        model.addProperty("parent", "metallurgica:block/template/cogwheel/"+cogWheelModelVariant+"/small_shaftless");
         JsonObject textures = new JsonObject();
         textures.addProperty("texture", texture);
         model.add("textures", textures);
@@ -94,7 +110,7 @@ public class CogWheelFlag extends BlockFlag implements IPartialHolder, ISpecialA
         boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/block/materials/" + material.getName() + "/cogwheel.png")).isPresent();
         String texture = texturePresent ? "metallurgica:block/materials/" + material.getName() + "/cogwheel" : "metallurgica:block/materials/null/cogwheel";
         JsonObject model = new JsonObject();
-        model.addProperty("parent", "metallurgica:block/template/cogwheel/small");
+        model.addProperty("parent", "metallurgica:block/template/cogwheel/"+cogWheelModelVariant+"/small");
         JsonObject textures = new JsonObject();
         textures.addProperty("texture", texture);
         model.add("textures", textures);

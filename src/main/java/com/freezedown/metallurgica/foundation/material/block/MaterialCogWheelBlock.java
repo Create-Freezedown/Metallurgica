@@ -29,7 +29,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
@@ -42,7 +41,7 @@ public class MaterialCogWheelBlock extends AbstractSimpleShaftBlock implements I
     public final Material material;
     public final BlockFlag blockFlag;
 
-    protected MaterialCogWheelBlock(Material material, BlockFlag blockFlag, boolean large, BlockBehaviour.Properties properties, boolean registerModel) {
+    protected MaterialCogWheelBlock(Material material, BlockFlag blockFlag, boolean large, Properties properties, boolean registerModel) {
         super(properties);
         this.material = material;
         this.blockFlag = blockFlag;
@@ -52,11 +51,11 @@ public class MaterialCogWheelBlock extends AbstractSimpleShaftBlock implements I
         }
     }
 
-    public static MaterialCogWheelBlock small(Material material, BlockFlag blockFlag, BlockBehaviour.Properties properties) {
+    public static MaterialCogWheelBlock small(Material material, BlockFlag blockFlag, Properties properties) {
         return new MaterialCogWheelBlock(material, blockFlag, false, properties, true);
     }
 
-    public static MaterialCogWheelBlock large(Material material, BlockFlag blockFlag, BlockBehaviour.Properties properties) {
+    public static MaterialCogWheelBlock large(Material material, BlockFlag blockFlag, Properties properties) {
         return new MaterialCogWheelBlock(material, blockFlag, true, properties, true);
     }
 
@@ -69,7 +68,7 @@ public class MaterialCogWheelBlock extends AbstractSimpleShaftBlock implements I
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return (this.isLarge ? AllShapes.LARGE_GEAR : AllShapes.SMALL_GEAR).get((Direction.Axis)state.getValue(AXIS));
+        return (this.isLarge ? AllShapes.LARGE_GEAR : AllShapes.SMALL_GEAR).get(state.getValue(AXIS));
     }
 
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {

@@ -12,10 +12,16 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class SemiPressedSheetFlag extends ItemFlag {
 
+    public SemiPressedSheetFlag(String existingNamespace) {
+        super("semi_pressed_%s_sheet", existingNamespace);
+    }
+
     public SemiPressedSheetFlag() {
-        super("semi_pressed_%s_sheet");
+        this("metallurgica");
     }
 
     @Override

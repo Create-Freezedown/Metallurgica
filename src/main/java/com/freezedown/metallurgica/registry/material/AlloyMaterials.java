@@ -1,12 +1,8 @@
 package com.freezedown.metallurgica.registry.material;
 
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.SheetmetalFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.block.*;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.fluid.MoltenFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.item.DustFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.item.IngotFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.item.NuggetFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.item.SheetFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.item.*;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 
 import static com.freezedown.metallurgica.registry.material.MetMaterials.*;
@@ -75,6 +71,19 @@ public class AlloyMaterials {
                         new StorageBlockFlag().useColumnModel(),
                         new SheetFlag(),
                         new MoltenFlag(1482.0)
+                ));
+
+        STEEL = createMaterial("steel", (b) -> b
+                .element(MetallurgicaElements.IRON)
+                .noRegister(INGOT, SEMI_PRESSED_SHEET, SHEET, STORAGE_BLOCK, COG_WHEEL, LARGE_COG_WHEEL, CASING)
+                .existingIds(SEMI_PRESSED_SHEET, "tfmg:unprocessed_heavy_plate", SHEET, "tfmg:heavy_plate")
+                .addFlags(
+                        new IngotFlag("tfmg"),
+                        new SemiPressedSheetFlag("tfmg"),
+                        new SheetFlag("tfmg").pressTimes(3),
+                        new StorageBlockFlag("tfmg"),
+                        new CogWheelFlag("tfmg"), new LargeCogWheelFlag("tfmg"),
+                        new CasingFlag("tfmg")
                 ));
     }
 }
