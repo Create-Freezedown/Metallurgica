@@ -19,6 +19,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import lombok.Getter;
 import net.createmod.catnip.data.Pair;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -81,7 +82,7 @@ public class CableFlag extends ItemFlag implements IRecipeHandler, Scrappable {
         ShapedRecipeBuilder builder = new ShapedRecipeBuilder(RecipeCategory.MISC, cable, 4);
         builder.pattern(" W ").pattern("WSW").pattern(" W ")
                 .define('W', wire).define('S', Tags.Items.RODS_WOODEN);
-        builder.unlockedBy("has_wire", has(wire));
+        builder.unlockedBy("has_wire", InventoryChangeTrigger.TriggerInstance.hasItems(wire));
         builder.save(provider,  Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + material.getName() + "_cable_from_wire"));
     }
 

@@ -17,7 +17,14 @@ archivesBaseName = project.mod_id
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+def refmap
+mixin {
+    refmap = add sourceSets.main, 'metallurgica.refmap.json'
+    config 'metallurgica.mixins.json'
+}
+
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+
 idea {
     module {
         downloadJavadoc = true
@@ -188,13 +195,12 @@ dependencies {
 }
 
 compileJava.options.encoding = 'UTF-8'
-compileJava {
-    options.compilerArgs = ['-Xdiags:verbose']
-}
+
+
+
 processResources {
     def buildProps = project.properties.clone()
 
-    // Replaces FML's magic file.jarVersion string with the correct version at build time.
     buildProps.put('file', [jarVersion: project.version])
 
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
@@ -202,9 +208,31 @@ processResources {
     }
 }
 
-mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
+compileJava {
+    options.compilerArgs = ['-Xdiags:verbose']
 }
+
+jar {
+    //from('LICENSE') {
+    //    rename { "${it}_${archivesBaseName}" }
+    //}
+
+    manifest.attributes([
+            "MixinConfigs": "metallurgica.mixins.json"
+            //"Git-Hash"    : gitHash
+    ])
+}
+
+final slimJar = tasks.register("slimJar", Jar) {
+    archiveClassifier = "slim"
+    from(sourceSets.main.output)
+    from(refmap)
+    manifest.attributes([
+            "MixinConfigs": "metallurgica.mixins.json"
+            //"Git-Hash"    : gitHash
+    ])
+}
+obfuscation.reobfuscate(slimJar, sourceSets.main)
 
 
 tasks.withType(JavaCompile).configureEach {
