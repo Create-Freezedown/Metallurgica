@@ -12,6 +12,7 @@ import com.simibubi.create.content.kinetics.mixer.CompactingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -127,14 +128,14 @@ public class StorageRecipeHandler {
                 builder.pattern("###");
             }
             builder.define('#', input)
-                    .unlockedBy("has_input", has(input))
+                    .unlockedBy("has_input", InventoryChangeTrigger.TriggerInstance.hasItems(input))
                     .save(provider, Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + recipeId.formatted(material.getName())));
         } else {
             ShapelessRecipeBuilder builder = new ShapelessRecipeBuilder(RecipeCategory.MISC, output, amountIn);
             for (int i = 0; i < amountIn; i++) {
                 builder.requires(input);
             }
-            builder.unlockedBy("has_input", has(input))
+            builder.unlockedBy("has_input", InventoryChangeTrigger.TriggerInstance.hasItems(input))
                    .save(provider, Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + recipeId.formatted(material.getName())));
         }
     }
@@ -148,7 +149,7 @@ public class StorageRecipeHandler {
     private static void craftDecompact9(@NotNull Consumer<FinishedRecipe> provider, ItemLike input, ItemLike output, int amountOut, Material material, String recipeId) {
         ShapelessRecipeBuilder builder = new ShapelessRecipeBuilder(RecipeCategory.MISC, output, amountOut);
         builder.requires(input)
-               .unlockedBy("has_input", has(input))
+               .unlockedBy("has_input", InventoryChangeTrigger.TriggerInstance.hasItems(input))
                .save(provider, Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + recipeId.formatted(material.getName())));
     }
 
