@@ -7,10 +7,6 @@ import com.freezedown.metallurgica.infastructure.material.MaterialEntry;
 import com.freezedown.metallurgica.registry.MetallurgicaCreativeTab;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.HashMap;
 import java.util.Map;
