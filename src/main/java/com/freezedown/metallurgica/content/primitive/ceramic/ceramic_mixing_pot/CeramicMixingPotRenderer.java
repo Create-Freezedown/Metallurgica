@@ -13,6 +13,7 @@ import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.data.IntAttached;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.platform.ForgeCatnipServices;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.Minecraft;
@@ -187,8 +188,7 @@ public class CeramicMixingPotRenderer extends SmartBlockEntityRenderer<CeramicMi
                 
                 float partial = Mth.clamp(units / totalUnits, 0, 1);
                 xMax += partial * 8 / 16f;
-                FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light,
-                        false, false, renderedFluid.getTag());
+                ForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light, false, false);
                 
                 xMin = xMax;
             }

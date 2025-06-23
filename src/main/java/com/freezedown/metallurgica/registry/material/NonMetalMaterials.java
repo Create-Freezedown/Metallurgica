@@ -32,9 +32,10 @@ public class NonMetalMaterials {
         // --- Actual Non-Metal Materials --- //
         SILICON = createMaterial("silicon", (b) -> b
                 .element(MetallurgicaElements.SILICON)
+                .noRegister(INGOT)
                 .addFlags(
                         new NuggetFlag(),
-                        new IngotFlag(),
+                        new IngotFlag("tfmg"),
                         new StorageBlockFlag().useColumnModel(),
                         new SheetFlag(),
                         new MoltenFlag(1414.0),

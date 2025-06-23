@@ -1,26 +1,19 @@
 package com.freezedown.metallurgica.foundation.config;
 
-import com.drmangotea.tfmg.CreateTFMG;
-import com.freezedown.metallurgica.Metallurgica;
+import com.drmangotea.tfmg.TFMG;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.createmod.catnip.config.ConfigBase;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.RegistryManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoubleSupplier;
-
-import static com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries.CONDUCTOR_KEY;
 
 @SuppressWarnings("UnstableApiUsage")
 public class TFMGConductor extends ConfigBase {
@@ -72,7 +65,7 @@ public class TFMGConductor extends ConfigBase {
     public static <B extends Conductor, P> NonNullUnaryOperator<ConductorBuilder<B, P>> setResistivity(double value) {
         return builder -> {
             //assertFromCreate(builder);
-            ResourceLocation id = CreateTFMG.asResource(builder.getName());
+            ResourceLocation id = TFMG.asResource(builder.getName());
             DEFAULT_RESISTIVITIES.put(id, value);
             return builder;
         };
@@ -81,7 +74,7 @@ public class TFMGConductor extends ConfigBase {
     public static <B extends Conductor, P> NonNullUnaryOperator<ConductorBuilder<B, P>> setMaxLength(double value) {
         return builder -> {
             //assertFromCreate(builder);
-            ResourceLocation id = CreateTFMG.asResource(builder.getName());
+            ResourceLocation id = TFMG.asResource(builder.getName());
             DEFAULT_MAX_LENGTHS.put(id, value);
             return builder;
         };

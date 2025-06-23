@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.registry;
 
-import com.drmangotea.tfmg.CreateTFMG;
+import com.drmangotea.tfmg.TFMG;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.Acid;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid.*;
@@ -29,7 +29,7 @@ import java.util.List;
 public class MetallurgicaFluids {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
 
-    public static final ResourceLocation AIR_RL = CreateTFMG.asResource("fluid/air");
+    public static final ResourceLocation AIR_RL = TFMG.asResource("fluid/air");
     public static final ResourceLocation NITROGEN_RL = Metallurgica.asResource("fluid/nitrogen");
     public static final ResourceLocation BFG_RL = Metallurgica.asResource("fluid/bfg");
     public static final ResourceLocation RIVER_SAND_RL = Metallurgica.asResource("fluid/river_sand");

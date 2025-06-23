@@ -1,17 +1,11 @@
 package com.freezedown.metallurgica.registry;
 
+import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlockEntity;
+import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotRenderer;
 import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlockEntity;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlockEntity;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldRenderer;
-import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlockEntity;
-import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlockEntity;
-import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlockEntity;
-import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelRenderer;
-import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlockEntity;
-import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotRenderer;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlockEntity;
-import com.freezedown.metallurgica.content.metalworking.advanced_casting.CastingTableBlockEntity;
-import com.freezedown.metallurgica.content.metalworking.advanced_casting.CastingTableRenderer;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlockEntity;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerVisual;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
@@ -31,8 +25,6 @@ import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.Ceramic
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotRenderer;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlockEntity;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlockEntity;
-import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlockEntity;
-import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorRenderer;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlockEntities;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -48,12 +40,6 @@ public class MetallurgicaBlockEntities {
             .blockEntity("ingot_casting_mold", IngotCastingMoldBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.ingotCastingMold)
             .renderer(() -> IngotCastingMoldRenderer::new)
-            .register();
-
-    public static final BlockEntityEntry<TestCableConnectorBlockEntity> testCableConnector = registrate
-            .blockEntity("cable_connector", TestCableConnectorBlockEntity::new)
-            .validBlocks(MetallurgicaBlocks.testCableConnector)
-            .renderer(() -> TestCableConnectorRenderer::new)
             .register();
 
     public static final BlockEntityEntry<FluidShowerBlockEntity> fluidShower = registrate
@@ -106,29 +92,19 @@ public class MetallurgicaBlockEntities {
                     .register();
 
     //public static final BlockEntityEntry<MineralDepositBlockEntity> mineralDeposit = registrate.simpleBlockEntity("mineral_deposit", MineralDepositBlockEntity::new).register();
-    
+
     public static final BlockEntityEntry<ChannelDepotBlockEntity> channelDepot =
             registrate.blockEntity("channel_depot", ChannelDepotBlockEntity::new)
                     .renderer(() -> ChannelDepotRenderer::new)
                     .validBlocks(MetallurgicaBlocks.channelDepot)
                     .register();
-    
-    public static final BlockEntityEntry<ChannelBlockEntity> channel =
-            registrate.blockEntity("channel", ChannelBlockEntity::new)
-                    .renderer(() -> ChannelRenderer::new)
-                    .validBlocks(MetallurgicaBlocks.channelDepot)
-                    .register();
-    
+
+
     public static final BlockEntityEntry<FaucetBlockEntity> faucet =
             registrate.blockEntity("faucet", FaucetBlockEntity::new)
                     .validBlocks(MetallurgicaBlocks.faucet)
                     .register();
-    
-    public static final BlockEntityEntry<TuyereBlockEntity> tuyere =
-            registrate.blockEntity("tuyere", TuyereBlockEntity::new)
-                    .validBlocks(MetallurgicaBlocks.tuyere)
-                    .register();
-    
+
     public static final BlockEntityEntry<ReverbaratoryBlockEntity> reverbaratory = registrate
             .blockEntity("reverbaratory", ReverbaratoryBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.reverbaratory)
@@ -144,18 +120,6 @@ public class MetallurgicaBlockEntities {
                     .visual(() -> ShakingTableVisual::new)
                     .renderer(() -> ShakingTableRenderer::new)
                     .validBlocks(MetallurgicaBlocks.shakingTable)
-                    .register();
-
-
-
-    public static final BlockEntityEntry<HearthBlockEntity> hearth =
-            registrate.blockEntity("hearth", HearthBlockEntity::new)
-                    .validBlocks(MetallurgicaBlocks.hearth).register();
-
-    public static final BlockEntityEntry<CastingTableBlockEntity> castingTable =
-            registrate.blockEntity("casting_table", CastingTableBlockEntity::new)
-                    .renderer(() -> CastingTableRenderer::new)
-                    .validBlocks(MetallurgicaBlocks.castingTable)
                     .register();
     
     public static final BlockEntityEntry<CharredLogPileBlockEntity> charredLogPile =

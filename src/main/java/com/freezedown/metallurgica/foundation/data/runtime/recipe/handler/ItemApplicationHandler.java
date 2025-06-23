@@ -24,7 +24,7 @@ public class ItemApplicationHandler {
     private ItemApplicationHandler() {}
 
     public static void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
-        processApplication(provider, material);
+        //processApplication(provider, material);
     }
 
     private static void processApplication(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {

@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.content.entity.moltenShrapnel;
 
-import com.drmangotea.tfmg.CreateTFMG;
+import com.drmangotea.tfmg.TFMG;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -15,7 +15,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class MoltenShrapnelRenderer extends EntityRenderer<MoltenShrapnelEntity> {
-    private static final ResourceLocation TEXTURE_LOCATION = CreateTFMG.asResource("textures/entity/blue_spark.png");
+    private static final ResourceLocation TEXTURE_LOCATION = TFMG.asResource("textures/entity/blue_spark.png");
     private static final RenderType RENDER_TYPE;
 
     public MoltenShrapnelRenderer(EntityRendererProvider.Context p_173962_) {

@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.fluid.FluidRenderer;
+import net.createmod.catnip.platform.ForgeCatnipServices;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.util.Mth;
@@ -46,7 +47,7 @@ public class CeramicPotRenderer extends SafeBlockEntityRenderer<CeramicPotBlockE
         
         float partial = Mth.clamp(units / totalUnits, 0, 1);
         xMax += partial * 8 / 16f;
-        FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light,
+        ForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light,
                 false, false);
         xMin = xMax;
         

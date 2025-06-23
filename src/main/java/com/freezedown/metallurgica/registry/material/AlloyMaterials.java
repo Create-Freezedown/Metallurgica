@@ -34,12 +34,13 @@ public class AlloyMaterials {
                 ));
         BRASS = createMaterial("brass", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 3, MetallurgicaElements.ZINC, 1)
-                .noRegister(NUGGET, INGOT, STORAGE_BLOCK, SHEET)
+                .noRegister(NUGGET, INGOT, CASING, STORAGE_BLOCK, SHEET)
                 .addFlags(
                         new NuggetFlag("create"),
                         new IngotFlag("create"),
                         new StorageBlockFlag("create"),
                         new SheetFlag("create"),
+                        new CasingFlag("create"),
                         new MoltenFlag(920.0),
                         new DustFlag()
                 ));
@@ -74,29 +75,36 @@ public class AlloyMaterials {
                 ));
         CAST_IRON = createMaterial("cast_iron",  (b) -> b
                 .element(MetallurgicaElements.IRON)
+                .noRegister(INGOT, NUGGET, SHEET, STORAGE_BLOCK)
                 .addFlags(
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
+                        new NuggetFlag("tfmg"),
+                        new SheetFlag("tfmg"),
                         new DustFlag()
                 ));
         STEEL = createMaterial("steel", (b) -> b
                 .element(MetallurgicaElements.IRON)
-                .noRegister(INGOT, SEMI_PRESSED_SHEET, SHEET, STORAGE_BLOCK, COG_WHEEL, LARGE_COG_WHEEL, CASING)
+                .noRegister(INGOT, NUGGET, SEMI_PRESSED_SHEET, SHEET, STORAGE_BLOCK, COG_WHEEL, LARGE_COG_WHEEL, CASING)
                 .existingIds(SEMI_PRESSED_SHEET, "tfmg:unprocessed_heavy_plate", SHEET, "tfmg:heavy_plate")
                 .addFlags(
+                        new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
                         new SemiPressedSheetFlag("tfmg"),
                         new SheetFlag("tfmg").pressTimes(3),
                         new StorageBlockFlag("tfmg"),
-                        new CogWheelFlag("tfmg"), new LargeCogWheelFlag("tfmg"),
                         new CasingFlag("tfmg"),
+                        new CogWheelFlag("tfmg"), new LargeCogWheelFlag("tfmg"),
                         new DustFlag()
                 ));
         CONSTANTAN = createMaterial("constantan", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 1, MetallurgicaElements.NICKEL, 1)
                 .noRegister(INGOT, NUGGET, STORAGE_BLOCK)
                 .addFlags(
-                        //new SheetFlag(),
+                        new IngotFlag("tfmg"),
+                        new StorageBlockFlag("tfmg"),
+                        new NuggetFlag("tfmg"),
+                        new SheetFlag(),
                         new DustFlag()
                 ));
     }

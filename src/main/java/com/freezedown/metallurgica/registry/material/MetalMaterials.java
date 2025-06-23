@@ -40,7 +40,7 @@ public class MetalMaterials {
                 ));
         COPPER = createMaterial("copper", (b) -> b
                 .element(MetallurgicaElements.COPPER)
-                .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK, WIRE)
+                .noRegister(NUGGET, INGOT, SHEET, CASING, STORAGE_BLOCK, WIRE)
                 .addFlags(
                         new NuggetFlag("create"),
                         new IngotFlag("minecraft"),
@@ -48,6 +48,7 @@ public class MetalMaterials {
                         new SheetFlag("create"),
                         new MoltenFlag(1084.6),
                         new DustFlag(),
+                        new CasingFlag("create"),
                         new WireFlag("tfmg"),
                         new CableFlag(0.0178, WireColours.copper),
                         new MineralFlag(true),
@@ -67,14 +68,16 @@ public class MetalMaterials {
                 ));
         ALUMINUM = createMaterial("aluminum", (b) -> b
                 .element(MetallurgicaElements.ALUMINUM)
-                .noRegister(INGOT, STORAGE_BLOCK, WIRE, COG_WHEEL, LARGE_COG_WHEEL)
+                .noRegister(INGOT, NUGGET, CASING, SHEET, STORAGE_BLOCK, WIRE, COG_WHEEL, LARGE_COG_WHEEL)
+                .existingIds(CASING, "tfmg:industrial_aluminum_casing")
                 .addFlags(
-                        new NuggetFlag(),
+                        new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
-                        new SheetFlag(),
+                        new SheetFlag("tfmg"),
                         new MoltenFlag(660.3),
                         new DustFlag(),
+                        new CasingFlag("tfmg"),
                         new SheetmetalFlag(),
                         new WireFlag("tfmg"),
                         new CableFlag(0.0276, WireColours.aluminum),
@@ -93,12 +96,12 @@ public class MetalMaterials {
                 ));
         LEAD = createMaterial("lead", (b) -> b
                 .element(MetallurgicaElements.LEAD)
-                .noRegister(INGOT, STORAGE_BLOCK)
+                .noRegister(INGOT, NUGGET, SHEET, STORAGE_BLOCK)
                 .addFlags(
-                        new NuggetFlag(),
+                        new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
-                        new SheetFlag(),
+                        new SheetFlag("tfmg"),
                         new MoltenFlag(327.5),
                         new DustFlag()
                 ));
@@ -114,12 +117,12 @@ public class MetalMaterials {
                 ));
         NICKEL = createMaterial("nickel", (b) -> b
                 .element(MetallurgicaElements.NICKEL)
-                .noRegister(INGOT, STORAGE_BLOCK)
+                .noRegister(INGOT, NUGGET, SHEET, STORAGE_BLOCK)
                 .addFlags(
-                        new NuggetFlag(),
+                        new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
-                        new SheetFlag(),
+                        new SheetFlag("tfmg"),
                         new MoltenFlag(1455.0),
                         new DustFlag()
                 ));
@@ -177,9 +180,9 @@ public class MetalMaterials {
                 ));
         LITHIUM = createMaterial("lithium", (b) -> b
                 .element(MetallurgicaElements.LITHIUM)
-                .noRegister(INGOT, STORAGE_BLOCK)
+                .noRegister(INGOT, NUGGET, STORAGE_BLOCK)
                 .addFlags(
-                        new NuggetFlag(),
+                        new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
                         new SheetFlag(),

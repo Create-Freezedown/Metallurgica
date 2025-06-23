@@ -1,34 +1,46 @@
 package com.freezedown.metallurgica.infastructure.material.registry.flags.block;
 
+import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.ItemApplicationHandler;
 import com.freezedown.metallurgica.foundation.material.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.material.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.material.block.MaterialBlockItem;
 import com.freezedown.metallurgica.infastructure.material.Material;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IRecipeHandler;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
+import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
+import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import lombok.Getter;
+import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
-public class CasingFlag extends BlockFlag implements IHaveConnectedTextures{
+public class CasingFlag extends BlockFlag implements IHaveConnectedTextures, IRecipeHandler {
 
     @Getter
     private List<TagKey<Item>> toApplyOn = List.of(AllTags.AllItemTags.STRIPPED_LOGS.tag, AllTags.AllItemTags.STRIPPED_WOOD.tag);
@@ -90,11 +102,42 @@ public class CasingFlag extends BlockFlag implements IHaveConnectedTextures{
     }
 
     @Override
+    public void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
+        if (material.noRegister(getKey())) return;
+        FlagKey<? extends ItemFlag> used = isUseSheet() ? FlagKey.SHEET : FlagKey.INGOT;
+        Item usedItem = MaterialHelper.getItem(material, used);
+        for (TagKey<Item> appliesOn : getToApplyOn()) {
+            String appliesOnPath = appliesOn.location().getPath().replace("/", "_");
+            ProcessingRecipeBuilder<ItemApplicationRecipe> builder = new Builder<>(material.getNamespace(), (params) -> new ItemApplicationRecipe(AllRecipeTypes.ITEM_APPLICATION, params), getIdPattern().formatted(material.getName()), appliesOnPath, provider);
+            builder.require(appliesOn);
+            builder.require(usedItem);
+            builder.output(MaterialHelper.getBlock(material, FlagKey.CASING).asItem());
+            builder.build();
+        }
+    }
+
+    @Override
     public void verifyFlag(MaterialFlags flags) {
         if (useSheet) {
             flags.ensureSet(FlagKey.SHEET, true);
         } else {
             flags.ensureSet(FlagKey.INGOT, true);
+        }
+    }
+
+    private static class Builder<T extends ProcessingRecipe<?>> extends ProcessingRecipeBuilder<T> {
+        Consumer<FinishedRecipe> consumer;
+        public Builder(String modid, ProcessingRecipeBuilder.ProcessingRecipeFactory<T> factory, String casing, String tagPath, Consumer<FinishedRecipe> consumer) {
+            super(factory, Metallurgica.asResource("runtime_generated/" + modid + "/" + casing + "_from_" + tagPath));
+            this.consumer = consumer;
+        }
+
+        @Override
+        public T build() {
+            T t = super.build();
+            DataGenResult<T> result = new DataGenResult<>(t, Collections.emptyList());
+            consumer.accept(result);
+            return t;
         }
     }
 }

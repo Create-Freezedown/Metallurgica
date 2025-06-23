@@ -1,18 +1,13 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
+import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotGenerator;
 import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
-import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
-import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlock;
-import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlock;
-import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelGenerator;
-import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
-import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotGenerator;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
-import com.freezedown.metallurgica.content.metalworking.advanced_casting.CastingTable;
 import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinGenerator;
@@ -31,8 +26,6 @@ import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileGenerator;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlock;
-import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorBlock;
-import com.freezedown.metallurgica.experimental.cable_connector.TestCableConnectorGenerator;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
@@ -43,7 +36,6 @@ import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
-import com.simibubi.create.foundation.data.ModelGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
@@ -282,16 +274,16 @@ public class MetallurgicaBlocks {
     //        .lang("Rotary Kiln Heater Segment")
     //        .simpleItem()
     //        .register();
-    public static final BlockEntry<TestCableConnectorBlock> testCableConnector = registrate.block("cable_connector", TestCableConnectorBlock::new)
-            .initialProperties(() -> Blocks.IRON_BLOCK)
-            .properties(BlockBehaviour.Properties::requiresCorrectToolForDrops)
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .transform(TagGen.pickaxeOnly())
-            .blockstate((ctx, prov) -> new TestCableConnectorGenerator().generate(ctx, prov))
-            .item()
-            .transform(ModelGen.customItemModel())
-            .lang("Cable Connector")
-            .register();
+    //public static final BlockEntry<TestCableConnectorBlock> testCableConnector = registrate.block("cable_connector", TestCableConnectorBlock::new)
+    //        .initialProperties(() -> Blocks.IRON_BLOCK)
+    //        .properties(BlockBehaviour.Properties::requiresCorrectToolForDrops)
+    //        .properties(BlockBehaviour.Properties::noOcclusion)
+    //        .transform(TagGen.pickaxeOnly())
+    //        .blockstate((ctx, prov) -> new TestCableConnectorGenerator().generate(ctx, prov))
+    //        .item()
+    //        .transform(ModelGen.customItemModel())
+    //        .lang("Cable Connector")
+    //        .register();
     //MACHINES
     public static final BlockEntry<ShakingTableBlock> shakingTable = registrate.block("shaking_table", ShakingTableBlock::new)
             .initialProperties(SharedProperties::copperMetal)
@@ -418,8 +410,8 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<ChannelDepotBlock>
             channelDepot =             registrate.simpleMachineBlock("channel_depot", null, ChannelDepotBlock::new, SoundType.LODESTONE, new ChannelDepotGenerator()::generate);
     
-    public static final BlockEntry<ChannelBlock>
-            channel =                  registrate.simpleMachineBlock("channel", null, ChannelBlock::new, SoundType.LODESTONE, new ChannelGenerator()::generate);
+    //public static final BlockEntry<ChannelBlock>
+    //        channel =                  registrate.simpleMachineBlock("channel", null, ChannelBlock::new, SoundType.LODESTONE, new ChannelGenerator()::generate);
     //TODO
     //.properties(BlockBehaviour.Properties::requiresCorrectToolForDrops)
     // .properties(BlockBehaviour.Properties::noOcclusion)
@@ -427,17 +419,17 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<FaucetBlock>
             faucet =                   registrate.simpleMachineBlock("faucet", null, FaucetBlock::new, SoundType.LODESTONE, new FaucetGenerator()::generate);
     
-    public static final BlockEntry<TuyereBlock>
-            tuyere =                   registrate.simpleMachineBlock("tuyere", "Tuyere", TuyereBlock::new, SoundType.COPPER, (c, p) -> p.simpleBlock(c.get()));
-
-    public static final BlockEntry<HearthBlock>
-            hearth =                   registrate.simpleMachineBlock("hearth", "Hearth", HearthBlock::new, SoundType.COPPER, (c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/hearth"))));
+    //public static final BlockEntry<TuyereBlock>
+    //        tuyere =                   registrate.simpleMachineBlock("tuyere", "Tuyere", TuyereBlock::new, SoundType.COPPER, (c, p) -> p.simpleBlock(c.get()));
+//
+    //public static final BlockEntry<HearthBlock>
+    //        hearth =                   registrate.simpleMachineBlock("hearth", "Hearth", HearthBlock::new, SoundType.COPPER, (c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/hearth"))));
 
     public static final BlockEntry<Block>
             carbonBrick =              registrate.simpleMachineBlock("carbon_brick", "Carbon Brick", Block::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.get()));
 
-    public static final BlockEntry<CastingTable>
-            castingTable =             registrate.simpleMachineBlock("casting_table", null, CastingTable::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.getEntry(), p.models().getExistingFile(p.modLoc("block/casting_table"))));
+    //public static final BlockEntry<CastingTable>
+    //        castingTable =             registrate.simpleMachineBlock("casting_table", null, CastingTable::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.getEntry(), p.models().getExistingFile(p.modLoc("block/casting_table"))));
 
 
     public static void register() {

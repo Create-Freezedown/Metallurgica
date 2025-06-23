@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.recipe;
 
-import com.drmangotea.tfmg.CreateTFMG;
+import com.drmangotea.tfmg.TFMG;
 import com.drmangotea.tfmg.registry.TFMGFluids;
 import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
@@ -83,7 +83,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
             return MetallurgicaTags.forgeItemTag("material_rubble/native_gold");
         }
         public static TagKey<Item> bauxiteStone() {
-            return MetallurgicaTags.modItemTag(CreateTFMG.MOD_ID, "stone_types/bauxite");
+            return MetallurgicaTags.modItemTag(TFMG.MOD_ID, "stone_types/bauxite");
         }
         public static TagKey<Item> magnetiteStone() {
             return MetallurgicaTags.modItemTag("stone_types/magnetite");

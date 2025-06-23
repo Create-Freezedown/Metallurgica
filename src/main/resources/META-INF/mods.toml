@@ -28,7 +28,7 @@ side="BOTH"
 [[dependencies.metallurgica]]
 modId="tfmg"
 mandatory=true
-versionRange="[0.9.3b,1.0.0a)"
+versionRange="[1.0e,1.1)"
 ordering="AFTER"
 side="BOTH"
 [[dependencies.metallurgica]]
