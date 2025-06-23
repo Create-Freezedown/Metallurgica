@@ -68,7 +68,8 @@ legacyForge {
             client()
             ideName = "Client"
 
-            programArguments.addAll('--username', project.file('username.txt').readLines()[0])
+            //Uncomment when you want to use your username
+            //programArguments.addAll('--username', project.file('username.txt').readLines()[0])
 
             gameDirectory = project.file('run')
             systemProperty('forge.enabledGameTestNamespaces', "metallurgica")
