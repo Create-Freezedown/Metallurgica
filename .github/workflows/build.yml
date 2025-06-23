@@ -35,7 +35,7 @@ jobs:
           gradle-home-cache-includes: |
             caches
       - name: Build jar
-        run: ./gradlew buildAndCollect
+        run: ./gradlew build
       - name: Find jars
         id: find_jars
         run: |
