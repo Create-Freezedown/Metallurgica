@@ -13,7 +13,7 @@ jobs:
           fetch-depth: 0
       - name: Get branch name
         id: get_branch
-        run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPU
+        run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
       - name: Get MC version and mod version
         uses: christian-draeger/read-properties@908f99d3334be3802ec7cb528395a69d19914e7b
         id: read_properties
