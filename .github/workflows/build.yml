@@ -34,15 +34,15 @@ jobs:
         with:
           gradle-home-cache-includes: |
             caches
-      - name: Build jar
-        run: ./gradlew build
-      - name: Find jars
-        id: find_jars
-        run: |
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "jars<<$EOF" >> $GITHUB_OUTPUT
-          find ./build/libs/ -type f -name "*.jar" ! -name "*-sources.jar" >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
+      #- name: Build jar
+      #  run: ./gradlew build
+      #- name: Find jars
+      #  id: find_jars
+      #  run: |
+      #    EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+      #    echo "jars<<$EOF" >> $GITHUB_OUTPUT
+      #    find ./build/libs/ -type f -name "*.jar" ! -name "*-sources.jar" >> $GITHUB_OUTPUT
+      #    echo "$EOF" >> $GITHUB_OUTPUT
       - name: Send building message to discord
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -51,12 +51,12 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           message-title: Building mod from branch ${{ steps.get_branch.outputs.branch }}
-      - name: Send built file to discord
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        if: env.DISCORD_WEBHOOK != ''
-        run: |
-          while IFS= read -r f
-            do curl -F "file=@\"$f\";filename=\"$(echo ${f##*/} | sed 's/+/-/g')\"" $DISCORD_WEBHOOK
-          done <<< "${{ steps.find_jars.outputs.jars }}"
+      #- name: Send built file to discord
+      #  env:
+      #    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      #  if: env.DISCORD_WEBHOOK != ''
+      #  run: |
+      #    while IFS= read -r f
+      #      do curl -F "file=@\"$f\";filename=\"$(echo ${f##*/} | sed 's/+/-/g')\"" $DISCORD_WEBHOOK
+      #    done <<< "${{ steps.find_jars.outputs.jars }}"
       
