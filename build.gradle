@@ -3,6 +3,7 @@ plugins {
     id "me.shedaniel.unified-publishing" version "0.1.+"
     id "net.neoforged.moddev.legacyforge" version "2.0.74"
     id "dev.ithundxr.silk" version "0.11.15"
+    id "net.kyori.blossom" version "2.1.0" // https://github.com/KyoriPowered/blossom
     id "io.freefair.lombok" version "8.11"
 
 }
@@ -10,6 +11,7 @@ plugins {
 apply from: "./gradle/java.gradle"
 apply from: "gradle/property_loader.gradle"
 
+String gitHash = "${calculateGitHash() + (hasUnstaged() ? "-modified" : "")}"
 
 version = project.mod_version + "-forge-mc" + project.minecraft_version
 group = project.maven_group
@@ -109,6 +111,11 @@ sourceSets.main {
     resources {
         srcDir 'src/generated/resources'
         exclude '.cache/'
+    }
+
+    blossom.javaSources {
+        property("version", mod_version)
+        property("gitCommit", gitHash.toString())
     }
 }
 
@@ -218,8 +225,14 @@ jar {
     //}
 
     manifest.attributes([
-            "MixinConfigs": "metallurgica.mixins.json"
-            //"Git-Hash"    : gitHash
+            "MixinConfigs": "metallurgica.mixins.json",
+            "Git-Hash"    : gitHash
+    ])
+}
+
+tasks.named("sourcesJar") {
+    manifest.attributes([
+            "Git-Hash": gitHash
     ])
 }
 
@@ -228,8 +241,8 @@ final slimJar = tasks.register("slimJar", Jar) {
     from(sourceSets.main.output)
     from(refmap)
     manifest.attributes([
-            "MixinConfigs": "metallurgica.mixins.json"
-            //"Git-Hash"    : gitHash
+            "MixinConfigs": "metallurgica.mixins.json",
+            "Git-Hash"    : gitHash
     ])
 }
 obfuscation.reobfuscate(slimJar, sourceSets.main)
@@ -240,6 +253,31 @@ tasks.withType(JavaCompile).configureEach {
 }
 compileJava {
     options.compilerArgs = ['-Xdiags:verbose']
+}
+
+String calculateGitHash() {
+    try {
+        def output = providers.exec {
+            commandLine("git", "rev-parse", "HEAD")
+        }
+        return output.standardOutput.asText.get().trim()
+    } catch (Throwable ignored) {
+        return "unknown"
+    }
+}
+
+boolean hasUnstaged() {
+    try {
+        def output = providers.exec {
+            commandLine("git", "status", "--porcelain")
+        }
+        String result = output.standardOutput.asText.get().replace("/M gradlew(\\.bat)?/", "").trim()
+        if (!result.isEmpty())
+            println("Found stageable results:\n ${result}\n")
+        return !result.isEmpty()
+    } catch (Throwable ignored) {
+        return false
+    }
 }
 
 //publishing {
