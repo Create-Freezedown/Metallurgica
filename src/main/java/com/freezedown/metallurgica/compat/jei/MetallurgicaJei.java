@@ -4,7 +4,6 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.category.ceramic_mixing.CeramicMixingCategory;
 import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompositionCategory;
 import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompositionRecipe;
-import com.freezedown.metallurgica.compat.jei.category.electrolyzer.ElectrolysisCategory;
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
 import com.freezedown.metallurgica.compat.jei.category.reaction.fluid.FluidReactionCategory;
 import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
@@ -14,7 +13,6 @@ import com.freezedown.metallurgica.registry.*;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.forge.ForgeTypes;
@@ -98,14 +96,6 @@ public class MetallurgicaJei implements IModPlugin {
                         .addRecipes(() -> ElementCompositionCategory.COMPOSITIONS)
                         .emptyBackground(177, 103)
                         .build("item_compositions", ElementCompositionCategory::new)
-        );
-        allCategories.add(
-                builder(BasinRecipe.class)
-                        .addTypedRecipes(MetallurgicaRecipeTypes.electrolysis)
-                        .catalyst(MetallurgicaBlocks.electrolyzer::get)
-                        .doubleItemIcon(MetallurgicaBlocks.electrolyzer.get(), MetallurgicaItems.washedAlumina.get())
-                        .emptyBackground(177, 103)
-                        .build("electrolysis", ElectrolysisCategory::new)
         );
         allCategories.add(
                 builder(ShakingRecipe.class)

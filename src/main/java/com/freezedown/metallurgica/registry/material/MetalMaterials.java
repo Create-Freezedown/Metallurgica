@@ -50,7 +50,7 @@ public class MetalMaterials {
                         new DustFlag(),
                         new CasingFlag("create"),
                         new WireFlag("tfmg"),
-                        new CableFlag(0.0178, WireColours.copper),
+                        new SpoolFlag("tfmg"),
                         new MineralFlag(true),
                         new RubbleFlag().crushing().bonusChance(0.15f),
                         new CogWheelFlag(), new LargeCogWheelFlag()
@@ -80,7 +80,7 @@ public class MetalMaterials {
                         new CasingFlag("tfmg"),
                         new SheetmetalFlag(),
                         new WireFlag("tfmg"),
-                        new CableFlag(0.0276, WireColours.aluminum),
+                        new SpoolFlag("tfmg"),
                         new CogWheelFlag("tfmg"), new LargeCogWheelFlag("tfmg")
                 ));
         SCANDIUM = createMaterial("scandium", (b) -> b
@@ -92,7 +92,7 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1541.0),
                         new DustFlag(),
-                        new CableFlag(0.0124, WireColours.scandium)
+                        new SpoolFlag(0.0124, WireColours.scandium)
                 ));
         LEAD = createMaterial("lead", (b) -> b
                 .element(MetallurgicaElements.LEAD)

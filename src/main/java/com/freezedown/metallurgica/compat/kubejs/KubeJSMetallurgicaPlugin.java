@@ -21,7 +21,6 @@ public class KubeJSMetallurgicaPlugin extends KubeJSPlugin {
     private static final Map<MetallurgicaRecipeTypes, RecipeSchema> recipeSchemas = new HashMap<>();
 
     static {
-        recipeSchemas.put(MetallurgicaRecipeTypes.electrolysis, ProcessingRecipeSchema.PROCESSING_DEFAULT);
         recipeSchemas.put(MetallurgicaRecipeTypes.shaking, ProcessingRecipeSchema.PROCESSING_DEFAULT);
     }
 

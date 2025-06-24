@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.infastructure.material.registry.flags.block;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.foundation.data.runtime.RuntimeProcessingRecipeBuilder;
 import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.ItemApplicationHandler;
 import com.freezedown.metallurgica.foundation.material.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.material.block.MaterialBlock;
@@ -107,8 +108,9 @@ public class CasingFlag extends BlockFlag implements IHaveConnectedTextures, IRe
         FlagKey<? extends ItemFlag> used = isUseSheet() ? FlagKey.SHEET : FlagKey.INGOT;
         Item usedItem = MaterialHelper.getItem(material, used);
         for (TagKey<Item> appliesOn : getToApplyOn()) {
-            String appliesOnPath = appliesOn.location().getPath().replace("/", "_");
-            ProcessingRecipeBuilder<ItemApplicationRecipe> builder = new Builder<>(material.getNamespace(), (params) -> new ItemApplicationRecipe(AllRecipeTypes.ITEM_APPLICATION, params), getIdPattern().formatted(material.getName()), appliesOnPath, provider);
+            String appliesOnPath = appliesOn.location().toString().replace("/", "_").replace(":", "_");
+            String recipePath = material.getNamespace() + "/" + getIdPattern().formatted(material.getName()) + "_from_" + appliesOnPath;
+            ProcessingRecipeBuilder<ItemApplicationRecipe> builder = new RuntimeProcessingRecipeBuilder<>((params) -> new ItemApplicationRecipe(AllRecipeTypes.ITEM_APPLICATION, params), provider, recipePath);
             builder.require(appliesOn);
             builder.require(usedItem);
             builder.output(MaterialHelper.getBlock(material, FlagKey.CASING).asItem());
@@ -122,22 +124,6 @@ public class CasingFlag extends BlockFlag implements IHaveConnectedTextures, IRe
             flags.ensureSet(FlagKey.SHEET, true);
         } else {
             flags.ensureSet(FlagKey.INGOT, true);
-        }
-    }
-
-    private static class Builder<T extends ProcessingRecipe<?>> extends ProcessingRecipeBuilder<T> {
-        Consumer<FinishedRecipe> consumer;
-        public Builder(String modid, ProcessingRecipeBuilder.ProcessingRecipeFactory<T> factory, String casing, String tagPath, Consumer<FinishedRecipe> consumer) {
-            super(factory, Metallurgica.asResource("runtime_generated/" + modid + "/" + casing + "_from_" + tagPath));
-            this.consumer = consumer;
-        }
-
-        @Override
-        public T build() {
-            T t = super.build();
-            DataGenResult<T> result = new DataGenResult<>(t, Collections.emptyList());
-            consumer.accept(result);
-            return t;
         }
     }
 }

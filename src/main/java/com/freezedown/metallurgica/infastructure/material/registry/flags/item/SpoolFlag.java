@@ -1,8 +1,13 @@
 package com.freezedown.metallurgica.infastructure.material.registry.flags.item;
 
+import com.drmangotea.tfmg.content.electricity.connection.cables.CableConnection;
+import com.drmangotea.tfmg.registry.TFMGItems;
+import com.drmangotea.tfmg.registry.TFMGPartialModels;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.TFMGConductor;
 import com.freezedown.metallurgica.foundation.material.item.IMaterialItem;
+import com.freezedown.metallurgica.foundation.material.item.MaterialSpoolItem;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.block.IPartialHolder;
 import com.freezedown.metallurgica.infastructure.material.scrapping.Scrappable;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
@@ -11,30 +16,37 @@ import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IR
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import com.freezedown.metallurgica.infastructure.conductor.CableItem;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorEntry;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialPartialModels;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import lombok.Getter;
 import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.theme.Color;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.client.Minecraft;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.Tags;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import static com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels.isDeleteMePresent;
 import static com.tterrag.registrate.providers.RegistrateRecipeProvider.has;
 
-public class CableFlag extends ItemFlag implements IRecipeHandler, Scrappable {
+public class SpoolFlag extends ItemFlag implements IRecipeHandler, Scrappable, IPartialHolder {
 
     @Getter
     private Pair<int[],int[]> colors;
@@ -42,29 +54,38 @@ public class CableFlag extends ItemFlag implements IRecipeHandler, Scrappable {
     @Getter
     private double resistivity;
 
-    @Getter
-    private final String idPattern;
-
-    public CableFlag(double resistivity, Pair<int[],int[]> colors) {
-        super("%s_cable", "metallurgica");
-        this.idPattern = "%s_cable";
+    public SpoolFlag(double resistivity, Pair<int[],int[]> colors) {
+        this("metallurgica");
         this.resistivity = resistivity;
         this.colors = colors;
-        this.setTagPatterns(List.of("metallurgica:cables", "metallurgica:cables/%s"));
+        this.setTagPatterns(List.of("metallurgica:spools", "metallurgica:spools/%s"));
+    }
+
+    public SpoolFlag(String existingNamespace) {
+        super("%s_spool", existingNamespace);
     }
 
     @Override
     public FlagKey<?> getKey() {
-        return FlagKey.CABLE;
+        return FlagKey.SPOOL;
     }
 
     @Override
     public ItemEntry<? extends IMaterialItem> registerItem(@NotNull Material material, ItemFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+        PartialModel model = null;
+        if (MetMaterialPartialModels.MATERIAL_PARTIALS != null)
+            model = MetMaterialPartialModels.getPartial(material, getKey());
+        if (colors == null) {
+            colors = Pair.of(new int[]{0,0,0}, new int[]{0,0,0});
+        }
         ConductorEntry<Conductor> conductor = registrate.conductor(material.getName(), Conductor::new)
                 .properties(p -> p.color1(getColors().getFirst()).color2(getColors().getSecond()))
                 .transform(TFMGConductor.setResistivity(getResistivity()))
                 .register();
-        return registrate.item("%s_cable".formatted(material.getName()), (p) -> new CableItem(p, conductor, material, flag))
+        Color colour = new Color(colors.getFirst()[0], colors.getFirst()[1], colors.getFirst()[2]);
+        if (model == null) model = TFMGPartialModels.COPPER_SPOOL;
+        PartialModel finalModel = model;
+        return registrate.item(getIdPattern().formatted(material.getName()), (p) -> new MaterialSpoolItem(p, finalModel, colour.getRGB(), CableConnection.CableType.COPPER, material, flag))
                 .setData(ProviderType.LANG, NonNullBiConsumer.noop())
                 .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                 .register();
@@ -79,11 +100,11 @@ public class CableFlag extends ItemFlag implements IRecipeHandler, Scrappable {
     public void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         var wire = MaterialHelper.getItem(material, FlagKey.WIRE);
         var cable = MaterialHelper.getItem(material, getKey());
-        ShapedRecipeBuilder builder = new ShapedRecipeBuilder(RecipeCategory.MISC, cable, 4);
-        builder.pattern(" W ").pattern("WSW").pattern(" W ")
-                .define('W', wire).define('S', Tags.Items.RODS_WOODEN);
+        ShapedRecipeBuilder builder = new ShapedRecipeBuilder(RecipeCategory.MISC, cable, 1);
+        builder.pattern("WWW").pattern("WSW").pattern("WWW")
+                .define('W', wire).define('S', TFMGItems.EMPTY_SPOOL);
         builder.unlockedBy("has_wire", InventoryChangeTrigger.TriggerInstance.hasItems(wire));
-        builder.save(provider,  Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + material.getName() + "_cable_from_wire"));
+        builder.save(provider,  Metallurgica.asResource("runtime_generated/" + material.getNamespace() + "/" + material.getName() + "_spool_from_wires"));
     }
 
     @Override
@@ -98,6 +119,23 @@ public class CableFlag extends ItemFlag implements IRecipeHandler, Scrappable {
 
     @Override
     public Map<ItemLike, Pair<Integer, Float>> extraItems(Material mainMaterial) {
-        return Map.of(Items.STICK, Pair.of(1, 0.25f), MaterialHelper.getItem(mainMaterial, FlagKey.WIRE), Pair.of(1, 0.15f));
+        return Map.of(TFMGItems.EMPTY_SPOOL, Pair.of(1, 0.25f), MaterialHelper.getItem(mainMaterial, FlagKey.WIRE), Pair.of(1, 0.15f));
+    }
+
+    @Override
+    public ResourceLocation getModelLocation(Material material) {
+        return new ResourceLocation(material.getNamespace(), "winding_machine/%s_spool".formatted(material.getName()));
+    }
+
+    @Override
+    public JsonElement createModel(Material material) {
+        boolean texturePresent = isDeleteMePresent() && Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(material.getNamespace() + ":textures/item/materials/" + material.getName() + "/spool_partial.png")).isPresent();
+        String texture = texturePresent ? "metallurgica:item/materials/" + material.getName() + "/spool_partial" : "metallurgica:item/materials/null/spool_partial";
+        JsonObject model = new JsonObject();
+        model.addProperty("parent", "metallurgica:block/template/spool/spool");
+        JsonObject textures = new JsonObject();
+        textures.addProperty("texture", texture);
+        model.add("textures", textures);
+        return model;
     }
 }

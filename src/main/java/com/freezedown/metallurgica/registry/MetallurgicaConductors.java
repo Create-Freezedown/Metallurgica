@@ -46,8 +46,8 @@ public class MetallurgicaConductors {
     public static void register() {
         registrate.setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
         //for (Material material : MetMaterials.registeredMaterials.values()) {
-        //    if (!material.hasFlag(FlagKey.CABLE)) continue;
-        //    CableFlag cableFlag = material.getFlag(FlagKey.CABLE);
+        //    if (!material.hasFlag(FlagKey.SPOOL)) continue;
+        //    SpoolFlag cableFlag = material.getFlag(FlagKey.SPOOL);
         //    ConductorEntry<Conductor> conductor = registrate.conductor(material.getName(), Conductor::new)
         //            .properties(p -> p.color1(cableFlag.getColors().getFirst()).color2(cableFlag.getColors().getSecond()))
         //            .transform(TFMGConductor.setResistivity(cableFlag.getResistivity()))

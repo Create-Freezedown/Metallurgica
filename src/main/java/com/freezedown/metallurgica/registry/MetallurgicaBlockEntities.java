@@ -6,9 +6,6 @@ import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlockE
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlockEntity;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldRenderer;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlockEntity;
-import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlockEntity;
-import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerVisual;
-import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerRenderer;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlockEntity;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableBlockEntity;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableVisual;
@@ -72,13 +69,6 @@ public class MetallurgicaBlockEntities {
             .validBlocks(MetallurgicaBlocks.ceramicMixingPot)
             .renderer(() -> CeramicMixingPotRenderer::new)
             .register();
-    
-    public static final BlockEntityEntry<ElectrolyzerBlockEntity> electrolyzer =
-            registrate.blockEntity("electrolyzer", ElectrolyzerBlockEntity::new)
-                    .visual(() -> ElectrolyzerVisual::new)
-                    .renderer(() -> ElectrolyzerRenderer::new)
-                    .validBlocks(MetallurgicaBlocks.electrolyzer)
-                    .register();
     
     public static final BlockEntityEntry<DrillActivatorBlockEntity> drillActivator =
             registrate.blockEntity("drill_activator", DrillActivatorBlockEntity::new)

@@ -39,6 +39,12 @@ public class MetMaterialPartialModels {
         return MATERIAL_PARTIALS.get(flagKey, material);
     }
 
+    public static PartialModel getPartialUnsafe(Material material, FlagKey<?> flagKey) {
+        var builtTable = MATERIAL_PARTIALS_BUILDER.build();
+        if (!builtTable.contains(flagKey, material)) throw new IllegalArgumentException("No such partial model is present");
+        return builtTable.get(flagKey, material);
+    }
+
     public static void clientInit() {
         generateMaterialPartials();
         MATERIAL_PARTIALS = MATERIAL_PARTIALS_BUILDER.build();

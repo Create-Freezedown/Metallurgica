@@ -24,7 +24,7 @@ public class NonMetalMaterials {
                         new SheetFlag().pressTimes(5),
                         new MoltenFlag(9999.0),
                         new DustFlag(),
-                        new CableFlag(1, WireColours.missing),
+                        new SpoolFlag(1, WireColours.missing),
                         new MineralFlag(true),
                         new RubbleFlag().crushing().bonusChance(0.001f)
                 ));

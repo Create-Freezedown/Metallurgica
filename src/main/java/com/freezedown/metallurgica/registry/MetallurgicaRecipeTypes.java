@@ -4,7 +4,6 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompositionRecipe;
 import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
 import com.freezedown.metallurgica.content.metalworking.advanced_casting.AdvancedCastingRecipe;
-import com.freezedown.metallurgica.content.machines.electolizer.ElectrolysisRecipe;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryCookingRecipe;
 import com.freezedown.metallurgica.content.machines.kiln.BakingRecipe;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
@@ -35,7 +34,6 @@ import java.util.function.Supplier;
 public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
     item_composition(ElementCompositionRecipe::new),
     advanced_casting(AdvancedCastingRecipe::new),
-    electrolysis(ElectrolysisRecipe::new),
     deposit_drilling(DrillingRecipe::new),
     reverbaratory_cooking(ReverbaratoryCookingRecipe::new),
     baking(BakingRecipe::new),

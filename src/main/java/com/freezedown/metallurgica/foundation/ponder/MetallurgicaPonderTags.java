@@ -54,7 +54,7 @@ public class MetallurgicaPonderTags {
 
         helper.registerTag(MACHINERY)
                 .addToIndex()
-                .item(MetallurgicaBlocks.electrolyzer.get(), true, false)
+                .item(MetallurgicaBlocks.drillActivator.get(), true, false)
                 .title("Machinery")
                 .description("Advanced Machines and Tools")
                 .register();

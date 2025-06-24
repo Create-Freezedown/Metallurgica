@@ -28,7 +28,7 @@ public class FlagKey<T extends IMaterialFlag> {
     public static final FlagKey<SheetFlag> SHEET = create("sheet", SheetFlag.class);
     public static final FlagKey<SemiPressedSheetFlag> SEMI_PRESSED_SHEET = create("semi_pressed_sheet", SemiPressedSheetFlag.class);
     public static final FlagKey<WireFlag> WIRE = create("wire", WireFlag.class);
-    public static final FlagKey<CableFlag> CABLE = create("cable", CableFlag.class);
+    public static final FlagKey<SpoolFlag> SPOOL = create("spool", SpoolFlag.class);
     public static final FlagKey<RubbleFlag> RUBBLE = create("rubble", RubbleFlag.class);
     public static final FlagKey<MoltenFlag> MOLTEN = create("molten", MoltenFlag.class);
 

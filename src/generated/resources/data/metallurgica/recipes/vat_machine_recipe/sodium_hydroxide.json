@@ -1,24 +1,36 @@
 {
-  "type": "metallurgica:electrolysis",
+  "type": "tfmg:vat_machine_recipe",
+  "allowedVatTypes": [
+    "tfmg:steel_vat",
+    "tfmg:firebrick_lined_vat"
+  ],
   "heatRequirement": "heated",
   "ingredients": [
     {
       "item": "metallurgica:salt"
     },
     {
-      "amount": 500,
+      "item": "metallurgica:salt"
+    },
+    {
+      "amount": 1000,
       "fluid": "minecraft:water",
       "nbt": {}
     }
   ],
+  "machines": [
+    "tfmg:electrode",
+    "tfmg:electrode"
+  ],
+  "minSize": 1,
   "processingTime": 200,
   "results": [
     {
-      "amount": 300,
+      "amount": 600,
       "fluid": "metallurgica:sodium_hydroxide"
     },
     {
-      "amount": 200,
+      "amount": 400,
       "fluid": "metallurgica:chlorine"
     }
   ]

@@ -8,7 +8,6 @@ import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCasti
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
-import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinGenerator;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
@@ -33,7 +32,6 @@ import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
-import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -312,17 +310,6 @@ public class MetallurgicaBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .simpleItem()
-            .register();
-
-    public static final BlockEntry<ElectrolyzerBlock> electrolyzer = registrate.block("electrolyzer", ElectrolyzerBlock::new)
-            .initialProperties(SharedProperties::copperMetal)
-            .blockstate(BlockStateGen.horizontalBlockProvider(true))
-            .transform(TagGen.pickaxeOnly())
-            .transform(MStress.setImpact(8.0))
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .addLayer(() -> RenderType::cutoutMipped)
-            .item(AssemblyOperatorBlockItem::new)
-            .transform(customItemModel())
             .register();
     
     public static final BlockEntry<DrillActivatorBlock> drillActivator = registrate.block("drill_activator", DrillActivatorBlock::new)
