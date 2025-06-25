@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @Getter
-public abstract class ItemFlag implements IMaterialFlag {
+public abstract class ItemFlag implements IMaterialFlag, IIdPattern {
 
     private final String idPattern;
     private String existingNamespace = "metallurgica";

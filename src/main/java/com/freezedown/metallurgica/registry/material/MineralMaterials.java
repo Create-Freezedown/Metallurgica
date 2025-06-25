@@ -49,5 +49,8 @@ public class MineralMaterials {
                 .noRegister(DUST)
                 .existingIds(DUST, "minecraft:redstone")
                 .addFlags(new MineralFlag(), new DustFlag()));
+        VANADINITE = createMaterial("vanadinite", (b) -> b
+                .composition(MetallurgicaElements.LEAD, 5, MetallurgicaElements.VANADIUM, 1, MetallurgicaElements.OXYGEN, 4, MetallurgicaElements.CHLORINE, 1)
+                .addFlags(new MineralFlag(), new DustFlag(), new RubbleFlag().crushing().bonusChance(0.15f)));
     }
 }

@@ -60,7 +60,8 @@ public class MetallurgicaItems {
     public static final ItemEntry<MetallurgicaItem>
             sodiumOrthovanadate=registrate.powder("sodium_orthovanadate"),
             ammoniumMetavanadate=registrate.powder("ammonium_metavanadate"),
-            vanadiumPentoxide=registrate.powder("vanadium_pentoxide")
+            vanadiumPentoxide=registrate.powder("vanadium_pentoxide"),
+            quickLime=registrate.powder("quicklime")
             ;
     public static final ItemEntry<MetallurgicaItem>
             sodiumCarbonate=registrate.powder("sodium_carbonate"),

@@ -47,4 +47,9 @@ public class MaterialSpoolItem extends SpoolItem implements IMaterialItem {
     public ItemFlag getFlag() {
         return this.itemFlag;
     }
+
+    @Override
+    public boolean isBarVisible(ItemStack stack) {
+        return true;
+    }
 }

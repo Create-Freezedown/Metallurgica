@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static com.freezedown.metallurgica.infastructure.material.MaterialHelper.getNameForRecipe;
 import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -109,7 +110,8 @@ public class CasingFlag extends BlockFlag implements IHaveConnectedTextures, IRe
         Item usedItem = MaterialHelper.getItem(material, used);
         for (TagKey<Item> appliesOn : getToApplyOn()) {
             String appliesOnPath = appliesOn.location().toString().replace("/", "_").replace(":", "_");
-            String recipePath = material.getNamespace() + "/" + getIdPattern().formatted(material.getName()) + "_from_" + appliesOnPath;
+
+            String recipePath = material.asResourceString(getNameForRecipe(material, getKey()) + "_from_" + appliesOnPath);
             ProcessingRecipeBuilder<ItemApplicationRecipe> builder = new RuntimeProcessingRecipeBuilder<>((params) -> new ItemApplicationRecipe(AllRecipeTypes.ITEM_APPLICATION, params), provider, recipePath);
             builder.require(appliesOn);
             builder.require(usedItem);

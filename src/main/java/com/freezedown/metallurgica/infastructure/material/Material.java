@@ -56,6 +56,14 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
         return materialInfo.resourceLocation;
     }
 
+    public ResourceLocation asResource(String path) {
+        return new ResourceLocation(getNamespace(), path);
+    }
+
+    public String asResourceString(String path) {
+        return asResource(path).toString().replace(":", "/");
+    }
+
     public boolean noRegister(FlagKey<? extends IMaterialFlag> flag) {
         return flags.getNoRegister().contains(flag);
     }
@@ -125,6 +133,11 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
 
         public Builder colour(int rgb) {
             materialInfo.withColour(rgb);
+            return this;
+        }
+
+        public Builder meltingPoint(double meltingPoint) {
+            materialInfo.meltingPoint(meltingPoint);
             return this;
         }
 
@@ -235,6 +248,8 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
         public List<SubComposition> composition = new ArrayList<>();
         @Getter
         private int colour;
+        @Getter
+        private double meltingPoint;
 
         private MaterialInfo(ResourceLocation resourceLocation) {
             this.resourceLocation = resourceLocation;
@@ -255,6 +270,11 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
 
         public MaterialInfo withColour(int rgb) {
             colour = rgb;
+            return this;
+        }
+
+        public MaterialInfo meltingPoint(double mp) {
+            this.meltingPoint = mp;
             return this;
         }
 

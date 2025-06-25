@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.data.recipe.tfmg;
 
+import com.drmangotea.tfmg.content.machinery.vat.base.VatBlockEntity;
 import com.drmangotea.tfmg.datagen.recipes.builder.VatMachineRecipeBuilder;
 import com.drmangotea.tfmg.registry.TFMGRecipeTypes;
 import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;

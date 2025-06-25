@@ -4,20 +4,19 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IIdPattern;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class MaterialHelper {
 
@@ -150,5 +149,18 @@ public class MaterialHelper {
             items.add(block.asItem());
         }
         return items;
+    }
+
+    public static String getNameForRecipe(Material material, FlagKey<?> flagKey) {
+        if (material.getFlag(flagKey) instanceof IIdPattern idPattern) {
+            String namespacePrefix = Objects.equals(material.getNamespace(), "metallurgica") ? "" : material.getNamespace() + "_";
+            return namespacePrefix + idPattern.getIdPattern().formatted(material.getName());
+        } else throw new IllegalArgumentException("FlagKey: " + flagKey.toString() + " does not implement IIdPattern and thus cannot be used for a recipe path.");
+    }
+
+    public static class FluidValues {
+        public static int NUGGET = 16;
+        public static int INGOT = 144;
+        public static int BLOCK = 1296;
     }
 }

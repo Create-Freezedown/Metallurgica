@@ -57,7 +57,7 @@ public class MetallurgicaDynamicResourcePack implements PackResources {
 
     public static void addBlockModel(ResourceLocation loc, JsonElement obj) {
         ResourceLocation l = getBlockModelLocation(loc);
-        //if (MetallurgicaConfigs.common().dev.dumpRecipes.get()) {
+        //if (MetallurgicaConfigs.client().dumpAssets.get()) {
         //    Path parent = Metallurgica.getGameDir().resolve("metallurgica/dumped/assets");
         //    writeJson(l, null, parent, obj);
         //}
@@ -70,7 +70,7 @@ public class MetallurgicaDynamicResourcePack implements PackResources {
 
     public static void addItemModel(ResourceLocation loc, JsonElement obj) {
         ResourceLocation l = getItemModelLocation(loc);
-        //if (MetallurgicaConfigs.common().dev.dumpRecipes.get()) {
+        //if (MetallurgicaConfigs.client().dumpAssets.get()) {
         //    Path parent = Metallurgica.getGameDir().resolve("metallurgica/dumped/assets");
         //    writeJson(l, null, parent, obj);
         //}
@@ -83,7 +83,7 @@ public class MetallurgicaDynamicResourcePack implements PackResources {
 
     public static void addBlockState(ResourceLocation loc, JsonElement stateJson) {
         ResourceLocation l = getBlockStateLocation(loc);
-        //if (MetallurgicaConfigs.common().dev.dumpRecipes.get()) {
+        //if (MetallurgicaConfigs.client().dumpAssets.get()) {
         //    Path parent = Metallurgica.getGameDir().resolve("metallurgica/dumped/assets");
         //    writeJson(l, null, parent, stateJson);
         //}
@@ -96,6 +96,10 @@ public class MetallurgicaDynamicResourcePack implements PackResources {
 
     public static void addPartialModel(ResourceLocation loc, JsonElement obj) {
         ResourceLocation l = getBlockModelLocation(loc);
+        //if (MetallurgicaConfigs.client().dumpAssets.get()) {
+        //    Path parent = Metallurgica.getGameDir().resolve("metallurgica/dumped/assets");
+        //    writeJson(l, null, parent, obj);
+        //}
         CONTENTS.addToData(l, obj.toString().getBytes(StandardCharsets.UTF_8));
     }
 
@@ -105,7 +109,7 @@ public class MetallurgicaDynamicResourcePack implements PackResources {
 
     public static void addBlockTexture(ResourceLocation loc, byte[] data) {
         ResourceLocation l = getTextureLocation("block", loc);
-        //if (MetallurgicaConfigs.common().dev.dumpRecipes.get()) {
+        //if (MetallurgicaConfigs.client().dumpAssets.get()) {
         //    Path parent = Metallurgica.getGameDir().resolve("metallurgica/dumped/assets");
         //    writeByteArray(l, null, parent, data);
         //}
@@ -114,7 +118,7 @@ public class MetallurgicaDynamicResourcePack implements PackResources {
 
     public static void addItemTexture(ResourceLocation loc, byte[] data) {
         ResourceLocation l = getTextureLocation("item", loc);
-        //if (MetallurgicaConfigs.common().dev.dumpRecipes.get()) {
+        //if (MetallurgicaConfigs.client().dumpAssets.get()) {
         //    Path parent = Metallurgica.getGameDir().resolve("metallurgica/dumped/assets");
         //    writeByteArray(l, null, parent, data);
         //}

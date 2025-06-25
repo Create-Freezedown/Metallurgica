@@ -63,7 +63,7 @@ public class MetallurgicaJei implements IModPlugin {
         ingredientManager = registration.getIngredientManager();
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
         allCategories.forEach(c -> c.registerRecipes(registration));
-        registration.addRecipes(MetallurgicaJeiRecipeTypes.FLUID_REACTION, recipeManager.getAllRecipesFor(MetallurgicaSpecialRecipes.FLUID_REACTION.get()));
+        //registration.addRecipes(MetallurgicaJeiRecipeTypes.FLUID_REACTION, recipeManager.getAllRecipesFor(MetallurgicaSpecialRecipes.FLUID_REACTION.get()));
     }
     
     @Override

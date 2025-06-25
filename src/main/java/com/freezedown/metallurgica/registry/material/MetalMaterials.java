@@ -16,6 +16,7 @@ public class MetalMaterials {
         IRON = createMaterial("iron", (b) -> b
                 .element(MetallurgicaElements.IRON)
                 .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK)
+                .meltingPoint(1538.0)
                 .addFlags(
                         new NuggetFlag("minecraft"),
                         new IngotFlag("minecraft"),
@@ -28,6 +29,7 @@ public class MetalMaterials {
                 .element(MetallurgicaElements.GOLD)
                 .nameAlternatives(FlagKey.SHEET, "golden")
                 .noRegister(NUGGET, INGOT, SHEET, STORAGE_BLOCK)
+                .meltingPoint(1064.2)
                 .addFlags(
                         new NuggetFlag("minecraft"),
                         new IngotFlag("minecraft"),
@@ -41,6 +43,7 @@ public class MetalMaterials {
         COPPER = createMaterial("copper", (b) -> b
                 .element(MetallurgicaElements.COPPER)
                 .noRegister(NUGGET, INGOT, SHEET, CASING, STORAGE_BLOCK, WIRE)
+                .meltingPoint(1084.6)
                 .addFlags(
                         new NuggetFlag("create"),
                         new IngotFlag("minecraft"),
@@ -57,6 +60,7 @@ public class MetalMaterials {
                 ));
         NETHERIUM = createMaterial("netherium", (b) -> b
                 .element(MetallurgicaElements.NETHERIUM)
+                .meltingPoint(3962.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -70,6 +74,7 @@ public class MetalMaterials {
                 .element(MetallurgicaElements.ALUMINUM)
                 .noRegister(INGOT, NUGGET, CASING, SHEET, STORAGE_BLOCK, WIRE, COG_WHEEL, LARGE_COG_WHEEL)
                 .existingIds(CASING, "tfmg:industrial_aluminum_casing")
+                .meltingPoint(660.3)
                 .addFlags(
                         new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
@@ -85,6 +90,7 @@ public class MetalMaterials {
                 ));
         SCANDIUM = createMaterial("scandium", (b) -> b
                 .element(MetallurgicaElements.SCANDIUM)
+                .meltingPoint(1541.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -97,6 +103,7 @@ public class MetalMaterials {
         LEAD = createMaterial("lead", (b) -> b
                 .element(MetallurgicaElements.LEAD)
                 .noRegister(INGOT, NUGGET, SHEET, STORAGE_BLOCK)
+                .meltingPoint(327.5)
                 .addFlags(
                         new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
@@ -107,6 +114,7 @@ public class MetalMaterials {
                 ));
         SILVER = createMaterial("silver", (b) -> b
                 .element(MetallurgicaElements.SILVER)
+                .meltingPoint(961.8)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -118,6 +126,7 @@ public class MetalMaterials {
         NICKEL = createMaterial("nickel", (b) -> b
                 .element(MetallurgicaElements.NICKEL)
                 .noRegister(INGOT, NUGGET, SHEET, STORAGE_BLOCK)
+                .meltingPoint(1455.0)
                 .addFlags(
                         new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
@@ -128,6 +137,7 @@ public class MetalMaterials {
                 ));
         TIN = createMaterial("tin", (b) -> b
                 .element(MetallurgicaElements.TIN)
+                .meltingPoint(231.9)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -139,6 +149,7 @@ public class MetalMaterials {
         ZINC = createMaterial("zinc", (b) -> b
                 .element(MetallurgicaElements.ZINC)
                 .noRegister(NUGGET, INGOT, STORAGE_BLOCK)
+                .meltingPoint(419.5)
                 .addFlags(
                         new NuggetFlag("create"),
                         new IngotFlag("create"),
@@ -149,6 +160,7 @@ public class MetalMaterials {
                 ));
         PLATINUM = createMaterial("platinum", (b) -> b
                 .element(MetallurgicaElements.PLATINUM)
+                .meltingPoint(1768.3)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -159,6 +171,7 @@ public class MetalMaterials {
                 ));
         TITANIUM = createMaterial("titanium", (b) -> b
                 .element(MetallurgicaElements.TITANIUM)
+                .meltingPoint(1668.0)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
                         new IngotFlag().requiresCompacting(),
@@ -170,6 +183,7 @@ public class MetalMaterials {
                 ));
         URANIUM = createMaterial("uranium", (b) -> b
                 .element(MetallurgicaElements.URANIUM)
+                .meltingPoint(1132.3)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -181,6 +195,7 @@ public class MetalMaterials {
         LITHIUM = createMaterial("lithium", (b) -> b
                 .element(MetallurgicaElements.LITHIUM)
                 .noRegister(INGOT, NUGGET, STORAGE_BLOCK)
+                .meltingPoint(180.5)
                 .addFlags(
                         new NuggetFlag("tfmg"),
                         new IngotFlag("tfmg"),
@@ -191,6 +206,7 @@ public class MetalMaterials {
                 ));
         MAGNESIUM = createMaterial("magnesium", (b) -> b
                 .element(MetallurgicaElements.MAGNESIUM)
+                .meltingPoint(650.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -201,6 +217,7 @@ public class MetalMaterials {
                 ));
         TUNGSTEN = createMaterial("tungsten", (b) -> b
                 .element(MetallurgicaElements.TUNGSTEN)
+                .meltingPoint(3422.0)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
                         new IngotFlag().requiresCompacting(),
@@ -214,6 +231,7 @@ public class MetalMaterials {
                 ));
         OSMIUM = createMaterial("osmium", (b) -> b
                 .element(MetallurgicaElements.OSMIUM)
+                .meltingPoint(3033.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -224,6 +242,7 @@ public class MetalMaterials {
                 ));
         THORIUM = createMaterial("thorium", (b) -> b
                 .element(MetallurgicaElements.THORIUM)
+                .meltingPoint(1750.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -234,6 +253,7 @@ public class MetalMaterials {
                 ));
         TANTALUM = createMaterial("tantalum", (b) -> b
                 .element(MetallurgicaElements.TANTALUM)
+                .meltingPoint(3020.0)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
                         new IngotFlag().requiresCompacting(),
@@ -254,6 +274,7 @@ public class MetalMaterials {
                 ));
         CHROMIUM = createMaterial("chromium", (b) -> b
                 .element(MetallurgicaElements.CHROMIUM)
+                .meltingPoint(1907.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -264,6 +285,7 @@ public class MetalMaterials {
                 ));
         VANADIUM = createMaterial("vanadium", (b) -> b
                 .element(MetallurgicaElements.VANADIUM)
+                .meltingPoint(1910.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -274,6 +296,7 @@ public class MetalMaterials {
                 ));
         MANGANESE = createMaterial("manganese", (b) -> b
                 .element(MetallurgicaElements.MANGANESE)
+                .meltingPoint(1246.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -284,6 +307,7 @@ public class MetalMaterials {
                 ));
         POTASSIUM = createMaterial("potassium", (b) -> b
                 .element(MetallurgicaElements.POTASSIUM)
+                .meltingPoint(63.5)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -293,6 +317,7 @@ public class MetalMaterials {
                 ));
         BERYLLIUM = createMaterial("beryllium", (b) -> b
                 .element(MetallurgicaElements.BERYLLIUM)
+                .meltingPoint(1287.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -302,6 +327,7 @@ public class MetalMaterials {
                 ));
         RADIUM = createMaterial("radium", (b) -> b
                 .element(MetallurgicaElements.RADAIUM)
+                .meltingPoint(700.00)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),

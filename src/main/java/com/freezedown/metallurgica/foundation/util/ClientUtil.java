@@ -5,6 +5,7 @@ import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
 import net.createmod.catnip.lang.LangBuilder;
 import net.createmod.catnip.lang.LangNumberFormat;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -211,8 +212,8 @@ public class ClientUtil {
     }
     
     public static boolean currentTemperatureTooltip(List<Component> tooltip, double temperature) {
-        lang().translate("gui.goggles.temperature").forGoggles(tooltip);
-        temperature(temperature).forGoggles(tooltip);
+        lang().translate("gui.goggles.temperature").style(ChatFormatting.GRAY).forGoggles(tooltip);
+        temperature(temperature).style(ChatFormatting.GOLD).forGoggles(tooltip, 1);
         return true;
     }
     

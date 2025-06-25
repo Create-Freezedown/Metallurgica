@@ -23,25 +23,7 @@ public class CrushingRecipeHandler {
     }
 
     private static void processCrushing(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
-        if (material.hasFlag(FlagKey.RUBBLE)) {
-            var rubbleFlag = material.getFlag(FlagKey.RUBBLE);
-            var mineralFlag = material.getFlag(FlagKey.MINERAL);
-            ResourceLocation rubbleId = new ResourceLocation(rubbleFlag.getExistingNamespace(), rubbleFlag.getIdPattern().formatted(material.getName()));
-            ResourceLocation mineralId = new ResourceLocation(mineralFlag.getExistingNamespace(), mineralFlag.getIdPattern().formatted(material.getName()));
-            if (!rubbleId.getNamespace().equals(Metallurgica.ID)) {
-                logRecipeSkip(rubbleId);
-            }
-            if (rubbleFlag.isCrushing()) {
-                ProcessingRecipeBuilder<CrushingRecipe> builder = new Builder<>(mineralId.getNamespace(), CrushingRecipe::new, mineralId.getPath(), rubbleId.getPath(), provider);
-                builder.require(BuiltInRegistries.ITEM.get(mineralId));
-                builder.output(BuiltInRegistries.ITEM.get(rubbleId));
-                if (rubbleFlag.getBonusChance() > 0) {
-                    builder.output(rubbleFlag.getBonusChance(), BuiltInRegistries.ITEM.get(rubbleId));
-                }
-                builder.averageProcessingDuration();
-                builder.build();
-            }
-        }
+
     }
 
     private static void logRecipeSkip(ResourceLocation rubbleId) {

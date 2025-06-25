@@ -7,6 +7,8 @@ public class MClient extends ConfigBase {
     
     public final ConfigBool renderExcavationParticles = b(true, "renderExcavationParticles", Comments.renderExcavationParticles);
     public final ConfigBool appendTextToItems = b(true, "appendTextToItems", Comments.appendTextToItems);
+    public final ConfigBool dumpAssets = this.b(false,"dump_assets", "Dump Runtime Generated Assets to the local files");
+
 
     public final ConfigBool debugInfo = b(true, "debugInfo", "Whether or not to display our debug information in the debug menu");
 

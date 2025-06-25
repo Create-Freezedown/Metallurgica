@@ -5,6 +5,7 @@ import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.infastructure.material.MaterialEntry;
 import com.freezedown.metallurgica.registry.MetallurgicaCreativeTab;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.resources.ResourceLocation;
 
@@ -90,6 +91,7 @@ public class MetMaterials {
     public static MaterialEntry<Material> CASSITERITE;
     public static MaterialEntry<Material> FLUORITE;
     public static MaterialEntry<Material> CUPRITE;
+    public static MaterialEntry<Material> VANADINITE;
 
     //Compounds
     public static MaterialEntry<Material> MAGNESIUM_OXIDE;

@@ -12,7 +12,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class FluidFlag implements IMaterialFlag {
+public abstract class FluidFlag implements IMaterialFlag, IIdPattern {
     @Getter
     private final String idPattern;
     private String existingNamespace = "metallurgica";

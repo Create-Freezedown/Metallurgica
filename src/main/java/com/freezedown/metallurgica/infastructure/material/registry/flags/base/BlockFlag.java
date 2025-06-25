@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @Getter
-public abstract class BlockFlag implements IMaterialFlag {
+public abstract class BlockFlag implements IMaterialFlag, IIdPattern {
 
     private final String idPattern;
     private String existingNamespace = "metallurgica";
@@ -43,7 +43,7 @@ public abstract class BlockFlag implements IMaterialFlag {
     }
 
     public String getUnlocalizedName(Material material) {
-        String matSpecificKey = String.format("item.%s.%s", material.getNamespace(), this.idPattern.formatted(material.getName()));
+        String matSpecificKey = String.format("block.%s.%s", material.getNamespace(), this.idPattern.formatted(material.getName()));
         if (TextUtil.langExists(matSpecificKey)) {
             return matSpecificKey;
         }

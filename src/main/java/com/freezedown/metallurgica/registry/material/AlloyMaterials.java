@@ -13,6 +13,7 @@ public class AlloyMaterials {
     public static void register() {
         TITANIUM_ALUMINIDE = createMaterial("titanium_aluminide", (b) -> b
                 .composition(MetallurgicaElements.TITANIUM, 2, MetallurgicaElements.ALUMINUM, 1)
+                .meltingPoint(1447.0)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
                         new IngotFlag().requiresCompacting(),
@@ -24,6 +25,7 @@ public class AlloyMaterials {
                 ));
         NETHERITE = createMaterial("netherite", (b) -> b
                 .composition(MetallurgicaElements.NETHERIUM, 1, MetallurgicaElements.GOLD, 1)
+                .meltingPoint(3562.0)
                 .noRegister(INGOT, STORAGE_BLOCK)
                 .addFlags(
                         new NuggetFlag(),
@@ -34,6 +36,7 @@ public class AlloyMaterials {
                 ));
         BRASS = createMaterial("brass", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 3, MetallurgicaElements.ZINC, 1)
+                .meltingPoint(920.0)
                 .noRegister(NUGGET, INGOT, CASING, STORAGE_BLOCK, SHEET)
                 .addFlags(
                         new NuggetFlag("create"),
@@ -46,6 +49,7 @@ public class AlloyMaterials {
                 ));
         BRONZE = createMaterial("bronze", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 7, MetallurgicaElements.TIN, 2)
+                .meltingPoint(950.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -56,6 +60,7 @@ public class AlloyMaterials {
                 ));
         ARSENICAL_BRONZE = createMaterial("arsenical_bronze", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 4, MetallurgicaElements.TIN, 1, MetallurgicaElements.ARSENIC, 3)
+                .meltingPoint(685.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),
@@ -66,6 +71,7 @@ public class AlloyMaterials {
                 ));
         WROUGHT_IRON = createMaterial("wrought_iron", (b) -> b
                 .composition(MetallurgicaElements.IRON, 3, MetallurgicaElements.CARBON, 1)
+                .meltingPoint(1482.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag(),

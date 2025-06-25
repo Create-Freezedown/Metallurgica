@@ -16,6 +16,7 @@ public class NonMetalMaterials {
         // Null :3
         NULL = createMaterial("null", (b) -> b
                 .element(MetallurgicaElements.NULL)
+                .meltingPoint(9999.0)
                 .addFlags(
                         new NuggetFlag().requiresCompacting(),
                         new IngotFlag().requiresCompacting(),
@@ -33,6 +34,7 @@ public class NonMetalMaterials {
         SILICON = createMaterial("silicon", (b) -> b
                 .element(MetallurgicaElements.SILICON)
                 .noRegister(INGOT)
+                .meltingPoint(1414.0)
                 .addFlags(
                         new NuggetFlag(),
                         new IngotFlag("tfmg"),
@@ -44,6 +46,7 @@ public class NonMetalMaterials {
 
         GRAPHITE = createMaterial("graphite", (b) -> b
                 .element(MetallurgicaElements.CARBON)
+                .meltingPoint(3652.0)
                 .addFlags(
                         new MineralFlag(),
                         new MoltenFlag(3652.0),
