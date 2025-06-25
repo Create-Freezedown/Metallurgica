@@ -7,10 +7,13 @@ import com.freezedown.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.registry.MetallurgicaFluids;
+import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.ArrayList;
 
@@ -41,6 +44,45 @@ public class VatGen extends MProcessingRecipeGen {
             .output(MaterialHelper.getFluid(MetMaterials.MAGNESIUM.get(), FlagKey.MOLTEN), 300)
             .output(F.chlorine(), 200)
             .requiresHeat(HeatCondition.HEATED)
+            .duration(600), this.electrolysis()),
+
+    sodiumOrthovanadate = createVatRecipe("vanadium_processing/sodium_othrovanadate", (b) -> (VatMachineRecipeBuilder)b
+            .require(Ingredient.of(I.salt(), MetallurgicaItems.sodiumCarbonate))
+            .require(MaterialHelper.getItem(MetMaterials.VANADINITE.get(), FlagKey.RUBBLE))
+            .output(MetallurgicaItems.sodiumOrthovanadate)
+            .requiresHeat(HeatCondition.SUPERHEATED)
+            .duration(400), this.mixing()),
+
+    ammoniumMetavanadate = createVatRecipe("vanadium_processing/ammonium_metavanadate", (b) -> (VatMachineRecipeBuilder)b
+            .require(MetallurgicaItems.sodiumOrthovanadate)
+            .require(MetallurgicaItems.ammoniumChloride)
+            .require(Fluids.WATER, 1000)
+            .output(MetallurgicaItems.ammoniumMetavanadate)
+            .duration(200), this.mixing()),
+
+    ammoniumMetavanadateDecontaminated = createVatRecipe("vanadium_processing/ammonium_metavanadate_from_decontaminated_water", (b) -> (VatMachineRecipeBuilder)b
+            .require(MetallurgicaItems.sodiumOrthovanadate)
+            .require(MetallurgicaItems.ammoniumChloride)
+            .require(MetallurgicaFluids.decontaminatedWater.get(), 1000)
+            .output(MetallurgicaItems.ammoniumMetavanadate)
+            .output(0.25f, MetallurgicaItems.ammoniumMetavanadate)
+            .duration(200), this.mixing()),
+
+    vanadiumPentoxide = createVatRecipe("vanadium_processing/vanadium_pentoxide", (b) -> (VatMachineRecipeBuilder)b
+            .require(MetallurgicaItems.ammoniumMetavanadate)
+            .require(MetallurgicaItems.ammoniumMetavanadate)
+            .output(MetallurgicaItems.vanadiumPentoxide)
+            .duration(200), this.arcBlasting()),
+
+    vanadium = createVatRecipe("vanadium_processing/molten_vanadium", (b) -> (VatMachineRecipeBuilder)b
+            .require(MetallurgicaItems.vanadiumPentoxide)
+            .require(MetallurgicaItems.calciumPowder)
+            .require(MetallurgicaItems.calciumPowder)
+            .require(MetallurgicaItems.calciumPowder)
+            .require(MetallurgicaItems.calciumPowder)
+            .require(MetallurgicaItems.calciumPowder)
+            .output(MaterialHelper.getFluid(MetMaterials.VANADIUM.get(), FlagKey.MOLTEN), MaterialHelper.FluidValues.INGOT * 2)
+            .output(MetallurgicaItems.calciumOxide, 5)
             .duration(600), this.electrolysis())
 
             ;

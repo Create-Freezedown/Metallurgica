@@ -44,7 +44,7 @@ public class MetallurgicaConductors {
     //}
 
     public static void register() {
-        registrate.setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
+        registrate.setCreativeTab(MCreativeTabs.MATERIALS);
         //for (Material material : MetMaterials.registeredMaterials.values()) {
         //    if (!material.hasFlag(FlagKey.SPOOL)) continue;
         //    SpoolFlag cableFlag = material.getFlag(FlagKey.SPOOL);

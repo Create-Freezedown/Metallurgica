@@ -57,7 +57,7 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
-    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MAIN);
 
     public static final BlockEntry<FluidShowerBlock> fluidShower = registrate.block("fluid_shower", FluidShowerBlock::new)
             .initialProperties(SharedProperties::copperMetal)
@@ -420,7 +420,7 @@ public class MetallurgicaBlocks {
 
 
     public static void register() {
-        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
+        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
         MetMaterialBlocks.generateMaterialBlocks(materialRegistrate);
         MetMaterialBlocks.MATERIAL_BLOCKS = MetMaterialBlocks.MATERIAL_BLOCKS_BUILDER.build();
 

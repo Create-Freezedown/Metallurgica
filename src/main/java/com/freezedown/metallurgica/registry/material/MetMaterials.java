@@ -4,8 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.infastructure.material.MaterialEntry;
-import com.freezedown.metallurgica.registry.MetallurgicaCreativeTab;
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+import com.freezedown.metallurgica.registry.MCreativeTabs;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.resources.ResourceLocation;
 
@@ -98,7 +97,7 @@ public class MetMaterials {
     public static MaterialEntry<Material> POTASSIUM_NITRATE;
     public static MaterialEntry<Material> CALCIUM_CARBONATE;
 
-    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
 
 
     static MaterialEntry<Material> createMaterial(String name, NonNullUnaryOperator<Material.Builder> builder) {

@@ -12,7 +12,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 
 public class MetallurgicaItems {
-    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MAIN);
 
     private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(String name) {
         return registrate.item(name, SequencedAssemblyItem::new)
@@ -61,7 +61,7 @@ public class MetallurgicaItems {
             sodiumOrthovanadate=registrate.powder("sodium_orthovanadate"),
             ammoniumMetavanadate=registrate.powder("ammonium_metavanadate"),
             vanadiumPentoxide=registrate.powder("vanadium_pentoxide"),
-            quickLime=registrate.powder("quicklime")
+            calciumOxide=registrate.powder("calcium_oxide")
             ;
     public static final ItemEntry<MetallurgicaItem>
             sodiumCarbonate=registrate.powder("sodium_carbonate"),
@@ -108,7 +108,7 @@ public class MetallurgicaItems {
     public static final ItemEntry<MetallurgicaItem> unfiredKilnBrick = registrate.metallurgicaItem("unfired_kiln_brick", "ingots");
 
     public static void register() {
-        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
+        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
         MetMaterialItems.generateMaterialItems(materialRegistrate);
         MetMaterialItems.MATERIAL_ITEMS = MetMaterialItems.MATERIAL_ITEMS_BUILDER.build();
 

@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-24T17:52:17.7905826	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-06-25T21:37:39.6604188	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 10811cfe0f93f3f9b8edaa6bdeccc627c164f73e assets/metallurgica/blockstates/ashed_charcoal_pile.json
 be9648772ff540c83f4ab5a59f92d7cd1913eca1 assets/metallurgica/blockstates/black_sand.json
 d5b7ece8eda61ba123c2b9483f2f203a12203353 assets/metallurgica/blockstates/blast_proof_glass.json
@@ -30,8 +30,8 @@ baec5ea0c30264c4d1ba93c0938e66034a32343e assets/metallurgica/blockstates/reactio
 c9fdb6302c46d54370ebc8b202b785c580834824 assets/metallurgica/blockstates/silicon_sand.json
 380932457c72e4938dae0375845c8763457e2646 assets/metallurgica/blockstates/unfired_ceramic_pot.json
 c6842eb42172f6deace17075963dd2133a607c52 assets/metallurgica/blockstates/unfired_crucible.json
-38ecea1fb952505aa23852a60e2e74cb235d400c assets/metallurgica/lang/en_ud.json
-9b8d0612ac8313078a4c330a326bc93e18512024 assets/metallurgica/lang/en_us.json
+f312965387a672e4ccabcd8a0abd977628634f44 assets/metallurgica/lang/en_ud.json
+b384426e1e0563f76aff32fad6ff552b9e412045 assets/metallurgica/lang/en_us.json
 0581a8cd954972a66911cbdfd289c634384eca1e assets/metallurgica/models/block/ashed_charcoal_pile_1.json
 23fbbe5d43ff05d8ad7e81dcf007051c4280de41 assets/metallurgica/models/block/ashed_charcoal_pile_2.json
 2fc947223161f7a58e789f6e66efea763155f02d assets/metallurgica/models/block/ashed_charcoal_pile_3.json
@@ -73,6 +73,7 @@ e0f4442b06af68e9d852e18683f1003c6740336c assets/metallurgica/models/item/amphibo
 c61efd923a7baaad25231bb9179c43bc51a4a3bd assets/metallurgica/models/item/black_sand.json
 9af99d825ba30d4cccf7da60f097b59204b409ee assets/metallurgica/models/item/blast_proof_glass.json
 301109e467863a88277c1ab569cfed6c49d2c997 assets/metallurgica/models/item/calcium.json
+4837a9ebb3ee5014be2dd7d406b6dec3f5ed6b79 assets/metallurgica/models/item/calcium_oxide.json
 ddb7fbbd37dbfe950dbc4dd0d3d6c9ee86130b23 assets/metallurgica/models/item/carbon_brick.json
 69dd70ed44c2541490bb74a04664b2af2c557677 assets/metallurgica/models/item/ceramic_clay.json
 234d04cbb33f50f4c78f22f1a49da71c36a53d98 assets/metallurgica/models/item/ceramic_mixing_pot.json
@@ -168,9 +169,10 @@ df613cfdcd3a9cba98096365fcee9782402a1235 data/forge/tags/items/loosened_material
 df613cfdcd3a9cba98096365fcee9782402a1235 data/forge/tags/items/loosened_materials/bauxite.json
 4fc0f44911da0ef56b3a6ff98d6ca00c309bf708 data/forge/tags/items/lumps.json
 4fc0f44911da0ef56b3a6ff98d6ca00c309bf708 data/forge/tags/items/lumps/magnetite.json
-4d24149ddf3a30668fc7525822be727fddbca625 data/forge/tags/items/powders.json
+c9fd6ec2b87ef4670139732df1d7c6378c8b3915 data/forge/tags/items/powders.json
 af64c5d13fbd718f795c37c769bd1139323bbfcf data/forge/tags/items/powders/ammonium_metavanadate.json
 874b09a96c5573c4ef95aef76779a6a67901e206 data/forge/tags/items/powders/calcium.json
+fd9a30ab8b715ed3a562f827b24e68a7e5ef3a79 data/forge/tags/items/powders/calcium_oxide.json
 a8af067a4b8970469b4e5da5a4f5b614d8e2a584 data/forge/tags/items/powders/sodium_carbonate.json
 ded980cc88cea6bdaeb4c1320b2bbd5a3885b3b7 data/forge/tags/items/powders/sodium_orthovanadate.json
 a0646f771064627dc918d0f4c6df6eb70a334621 data/forge/tags/items/powders/vanadium_pentoxide.json

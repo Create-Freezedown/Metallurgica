@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.registry.material;
 import com.freezedown.metallurgica.foundation.item.WireColours;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.block.SheetmetalFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.block.StorageBlockFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.fluid.LiquidFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.fluid.MoltenFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.item.*;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
@@ -33,7 +34,7 @@ public class NonMetalMaterials {
         // --- Actual Non-Metal Materials --- //
         SILICON = createMaterial("silicon", (b) -> b
                 .element(MetallurgicaElements.SILICON)
-                .noRegister(INGOT)
+                .noRegister(INGOT, LIQUID)
                 .meltingPoint(1414.0)
                 .addFlags(
                         new NuggetFlag(),
@@ -41,7 +42,8 @@ public class NonMetalMaterials {
                         new StorageBlockFlag().useColumnModel(),
                         new SheetFlag(),
                         new MoltenFlag(1414.0),
-                        new DustFlag()
+                        new DustFlag(),
+                        new LiquidFlag("tfmg")
                 ));
 
         GRAPHITE = createMaterial("graphite", (b) -> b

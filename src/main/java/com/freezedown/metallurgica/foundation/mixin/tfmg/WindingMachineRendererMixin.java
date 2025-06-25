@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.foundation.mixin.tfmg;
 
 import com.drmangotea.tfmg.content.machinery.misc.winding_machine.WindingMachineBlockEntity;
 import com.drmangotea.tfmg.content.machinery.misc.winding_machine.WindingMachineRenderer;
+import com.drmangotea.tfmg.registry.TFMGPartialModels;
 import com.freezedown.metallurgica.foundation.material.item.MaterialSpoolItem;
 import com.freezedown.metallurgica.foundation.mixin.accessor.WindingMachineBlockEntityAccessor;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialPartialModels;
@@ -12,6 +13,7 @@ import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -43,6 +45,9 @@ public abstract class WindingMachineRendererMixin extends KineticBlockEntityRend
             if (be.spool.getItem() instanceof MaterialSpoolItem materialSpoolItem) {
                 PartialModel model = MetMaterialPartialModels.getPartial(materialSpoolItem.getMaterial(), materialSpoolItem.getFlag().getKey());
                 CachedBuffers.partial(model, blockState).light(light).center().rotateYDegrees(blockState.getValue(HorizontalKineticBlock.HORIZONTAL_FACING).getAxis() == Direction.Axis.Z ? Math.abs(blockState.getValue(HorizontalDirectionalBlock.FACING).toYRot() - 180.0F) : blockState.getValue(HorizontalDirectionalBlock.FACING).toYRot()).translateZ(-0.4F).translateY(0.4F).rotateXDegrees(angle).uncenter().renderInto(ms, vb);
+                if (!be.inventory.isEmpty()) {
+                    CachedBuffers.partial(be.getSpeed() != 0.0F ? TFMGPartialModels.CONNNECTING_WIRE_ANIMATED : TFMGPartialModels.CONNNECTING_WIRE, blockState).light(light).center().rotateYDegrees(blockState.getValue(HorizontalKineticBlock.HORIZONTAL_FACING).getAxis() == Direction.Axis.Z ? Math.abs(blockState.getValue(HorizontalDirectionalBlock.FACING).toYRot() - 180.0F) : blockState.getValue(HorizontalDirectionalBlock.FACING).toYRot()).translateY(0.4F).translateZ(0.1F).color(be.spool.getBarColor()).rotateXDegrees(12.0F).uncenter().renderInto(ms, vb);
+                }
             }
         }
     }
@@ -52,7 +57,6 @@ public abstract class WindingMachineRendererMixin extends KineticBlockEntityRend
             target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z"
     ))
     public boolean metallurgica$ignoreSpoolIfMaterial(boolean original) {
-        if (metallurgica$blockEntity.spool.getItem() instanceof MaterialSpoolItem) return false;
-        return original;
+        return original && metallurgica$blockEntity.spool.getItem() instanceof MaterialSpoolItem;
     }
 }

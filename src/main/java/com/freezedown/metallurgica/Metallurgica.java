@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica;
 
+import com.drmangotea.tfmg.base.TFMGCreativeTabs;
 import com.freezedown.metallurgica.compat.cbc.BigCannonsCompat;
 import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
 import com.freezedown.metallurgica.events.CommonEvents;
@@ -88,7 +89,7 @@ public class Metallurgica
         //BIOME_MODIFIERS.register(modEventBus);
         initMaterials(modEventBus);
         MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
-        MetallurgicaCreativeTab.register(modEventBus);
+        MCreativeTabs.register(modEventBus);
         MetallurgicaBlockEntities.register();
         //modEventBus.addGenericListener(Conductor.class, MetallurgicaConductors::register);
         MetallurgicaConductors.register();
@@ -114,6 +115,7 @@ public class Metallurgica
         modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MetallurgicaClient::new);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(modEventBus, forgeEventBus));
+        modEventBus.addListener(MCreativeTabs::addCreative);
         MinecraftForge.EVENT_BUS.register(this);
     }
     

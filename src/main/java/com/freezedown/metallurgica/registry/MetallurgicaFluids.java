@@ -27,7 +27,7 @@ import java.util.List;
 
 
 public class MetallurgicaFluids {
-    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MAIN);
 
     public static final ResourceLocation AIR_RL = TFMG.asResource("fluid/air");
     public static final ResourceLocation NITROGEN_RL = Metallurgica.asResource("fluid/nitrogen");
@@ -180,7 +180,7 @@ public class MetallurgicaFluids {
     }
 
     public static void register() {
-        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MATERIALS_TAB);
+        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
         MetMaterialFluids.generateMaterialFluids(materialRegistrate);
         MetMaterialFluids.MATERIAL_FLUIDS = MetMaterialFluids.MATERIAL_FLUIDS_BUILDER.build();
 

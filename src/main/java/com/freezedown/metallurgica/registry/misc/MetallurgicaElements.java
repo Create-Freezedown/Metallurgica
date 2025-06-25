@@ -4,10 +4,10 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.infastructure.element.Element;
 import com.freezedown.metallurgica.infastructure.element.ElementEntry;
-import com.freezedown.metallurgica.registry.MetallurgicaCreativeTab;
+import com.freezedown.metallurgica.registry.MCreativeTabs;
 
 public class MetallurgicaElements {
-    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MAIN);
 
     public static final ElementEntry<Element>
             NULL = createElement("null", "?"),

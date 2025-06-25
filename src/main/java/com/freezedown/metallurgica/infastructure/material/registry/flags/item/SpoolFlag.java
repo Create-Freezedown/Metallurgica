@@ -95,6 +95,7 @@ public class SpoolFlag extends ItemFlag implements IRecipeHandler, Scrappable, I
     public void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         var wire = MaterialHelper.getItem(material, FlagKey.WIRE);
         var spool = MaterialHelper.getItem(material, getKey());
+        if (!material.getFlag(getKey()).getExistingId(material).getNamespace().equals(material.getNamespace())) return;
         ShapedRecipeBuilder builder = new ShapedRecipeBuilder(RecipeCategory.MISC, spool, 1);
         builder.pattern("WWW").pattern("WSW").pattern("WWW")
                 .define('W', wire).define('S', TFMGItems.EMPTY_SPOOL);

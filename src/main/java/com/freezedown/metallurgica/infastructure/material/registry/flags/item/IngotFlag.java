@@ -67,9 +67,9 @@ public class IngotFlag extends ItemFlag implements IRecipeHandler {
     @Override
     public void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         var ingot = MaterialHelper.getItem(material, getKey());
-
         if (material.hasFlag(FlagKey.MOLTEN)) {
             var molten = MaterialHelper.getFluid(material, FlagKey.MOLTEN);
+            if (!material.getFlag(FlagKey.MOLTEN).getExistingId(material).getNamespace().equals(material.getNamespace())) return;
             String recipePath = material.asResourceString(getNameForRecipe(material, getKey()) + "_from_" + getNameForRecipe(material, FlagKey.MOLTEN));
             ProcessingRecipeBuilder<CastingRecipe> builder = new RuntimeProcessingRecipeBuilder<>(CastingRecipe::new, provider, recipePath);
             builder.require(molten, MaterialHelper.FluidValues.INGOT);

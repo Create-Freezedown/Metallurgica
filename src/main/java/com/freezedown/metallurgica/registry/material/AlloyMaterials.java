@@ -91,7 +91,7 @@ public class AlloyMaterials {
                 ));
         STEEL = createMaterial("steel", (b) -> b
                 .element(MetallurgicaElements.IRON)
-                .noRegister(INGOT, NUGGET, SEMI_PRESSED_SHEET, SHEET, STORAGE_BLOCK, COG_WHEEL, LARGE_COG_WHEEL, CASING)
+                .noRegister(INGOT, NUGGET, SEMI_PRESSED_SHEET, SHEET, STORAGE_BLOCK, COG_WHEEL, LARGE_COG_WHEEL, CASING, MOLTEN)
                 .existingIds(SEMI_PRESSED_SHEET, "tfmg:unprocessed_heavy_plate", SHEET, "tfmg:heavy_plate")
                 .addFlags(
                         new NuggetFlag("tfmg"),
@@ -101,15 +101,18 @@ public class AlloyMaterials {
                         new StorageBlockFlag("tfmg"),
                         new CasingFlag("tfmg"),
                         new CogWheelFlag("tfmg"), new LargeCogWheelFlag("tfmg"),
+                        new MoltenFlag("tfmg"),
                         new DustFlag()
                 ));
         CONSTANTAN = createMaterial("constantan", (b) -> b
                 .composition(MetallurgicaElements.COPPER, 1, MetallurgicaElements.NICKEL, 1)
-                .noRegister(INGOT, NUGGET, STORAGE_BLOCK)
+                .noRegister(INGOT, NUGGET, STORAGE_BLOCK, WIRE, SPOOL)
                 .addFlags(
                         new IngotFlag("tfmg"),
                         new StorageBlockFlag("tfmg"),
                         new NuggetFlag("tfmg"),
+                        new WireFlag("tfmg"),
+                        new SpoolFlag("tfmg"),
                         new SheetFlag(),
                         new DustFlag()
                 ));

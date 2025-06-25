@@ -42,7 +42,7 @@ public class MetalMaterials {
                 ));
         COPPER = createMaterial("copper", (b) -> b
                 .element(MetallurgicaElements.COPPER)
-                .noRegister(NUGGET, INGOT, SHEET, CASING, STORAGE_BLOCK, WIRE)
+                .noRegister(NUGGET, INGOT, SHEET, CASING, STORAGE_BLOCK, WIRE, SPOOL)
                 .meltingPoint(1084.6)
                 .addFlags(
                         new NuggetFlag("create"),
@@ -72,7 +72,7 @@ public class MetalMaterials {
                 ));
         ALUMINUM = createMaterial("aluminum", (b) -> b
                 .element(MetallurgicaElements.ALUMINUM)
-                .noRegister(INGOT, NUGGET, CASING, SHEET, STORAGE_BLOCK, WIRE, COG_WHEEL, LARGE_COG_WHEEL)
+                .noRegister(INGOT, NUGGET, CASING, SHEET, STORAGE_BLOCK, WIRE, COG_WHEEL, LARGE_COG_WHEEL, WIRE, SPOOL)
                 .existingIds(CASING, "tfmg:industrial_aluminum_casing")
                 .meltingPoint(660.3)
                 .addFlags(

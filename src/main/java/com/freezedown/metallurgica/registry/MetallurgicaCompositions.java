@@ -197,6 +197,7 @@ public class MetallurgicaCompositions implements DataProvider {
                 builder().element(data(CHLORINE))));
 
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.calciumPowder.get(), ElementData.createComposition(builder().element(data(CALCIUM))));
+        createComposition(pFinishedCompositionConsumer, MetallurgicaItems.calciumOxide.get(), ElementData.createComposition(builder().element(data(CALCIUM), data(OXYGEN))));
         createComposition(pFinishedCompositionConsumer, MetallurgicaItems.sodiumCarbonate.get(), ElementData.createComposition(
                 builder().element(data(SODIUM, 2)),
                 builder().element(data(CARBON)),
