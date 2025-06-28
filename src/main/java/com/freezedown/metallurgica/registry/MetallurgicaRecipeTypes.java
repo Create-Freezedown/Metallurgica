@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.registry;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompositionRecipe;
 import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCatalyst;
 import com.freezedown.metallurgica.content.metalworking.advanced_casting.AdvancedCastingRecipe;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryCookingRecipe;
 import com.freezedown.metallurgica.content.machines.kiln.BakingRecipe;
@@ -40,7 +41,8 @@ public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
     sluicing(SluicingRecipe::new),
     shaking(ShakingRecipe::new),
     ceramic_mixing(CeramicMixingRecipe::new),
-    pit_fuel(PitFuelRecipe::new)
+    pit_fuel(PitFuelRecipe::new),
+    floatation_catalyst(FloatationCatalyst::new)
     ;
     
     private final ResourceLocation id;

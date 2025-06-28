@@ -1,0 +1,12 @@
+{
+  "type": "metallurgica:floatation_catalyst",
+  "ingredients": [
+    {
+      "amount": 1,
+      "fluid": "tfmg:air",
+      "nbt": {}
+    }
+  ],
+  "operationId": "metallurgica:air_floatation",
+  "results": []
+}

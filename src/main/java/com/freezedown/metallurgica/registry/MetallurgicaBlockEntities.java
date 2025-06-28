@@ -3,6 +3,8 @@ package com.freezedown.metallurgica.registry;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlockEntity;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotRenderer;
 import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlockEntity;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCellBlockEntity;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCellRenderer;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlockEntity;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldRenderer;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlockEntity;
@@ -42,6 +44,12 @@ public class MetallurgicaBlockEntities {
     public static final BlockEntityEntry<FluidShowerBlockEntity> fluidShower = registrate
             .blockEntity("fluid_shower", FluidShowerBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.fluidShower)
+            .register();
+
+    public static final BlockEntityEntry<FloatationCellBlockEntity> floatationCell = registrate
+            .blockEntity("floatation_cell", FloatationCellBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.floatationCell)
+            .renderer(() -> FloatationCellRenderer::new)
             .register();
      
     public static final BlockEntityEntry<UnfiredCeramicBlockEntity> unfiredCeramic = registrate

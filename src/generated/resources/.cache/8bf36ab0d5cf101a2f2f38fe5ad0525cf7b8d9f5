@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-25T22:14:35.4076498	Metallurgica's Processing Recipes
+// 1.20.1	2025-06-28T18:39:20.3387039	Metallurgica's Processing Recipes
 afccbcdff9a3598525bd2718cd3deac9a2d6255d data/metallurgica/recipes/ceramic_mixing/leather.json
 0f6c1d876cf3dca82db7bfd6c06d0789899b84b8 data/metallurgica/recipes/distillation/titanium_tetrachloride.json
 c4bfca1dc912b9cff422c90a25e7f9a9d1c14a29 data/metallurgica/recipes/emptying/magnetite_lumps.json
@@ -8,6 +8,7 @@ ffabb4898249eb498a4fdfb953486f9aceaca586 data/metallurgica/recipes/filling/chlor
 c38861aeb822d27dfe5bee360f6b81a7e7ccfd6d data/metallurgica/recipes/filling/silicon_tetrachloride_barrel.json
 ba9dce9d5c66b69318f2dccb5c0413a72dc3793a data/metallurgica/recipes/filling/tin_tetrachloride_barrel.json
 41fc14a191450e27a2f752e48daf321193c51eb2 data/metallurgica/recipes/filling/titanium_tetrachloride_barrel.json
+40b2dbb54e434f703bba4b79d43172838a4f61d7 data/metallurgica/recipes/floatation_catalyst/air.json
 0c0cddaeb5ea7849ebe45cb3600c8b05047ed317 data/metallurgica/recipes/mixing/ammonium_metavanadate.json
 c8a98f313ccb1c65678f6c55299a8140ea0ce4e0 data/metallurgica/recipes/mixing/ammonium_metavanadate_from_decontaminated_water.json
 30b6d6f7486301a41574e222b82eed7098dc7eae data/metallurgica/recipes/mixing/chlorine_disposal.json

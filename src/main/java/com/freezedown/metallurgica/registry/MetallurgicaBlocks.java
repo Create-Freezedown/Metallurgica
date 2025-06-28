@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotGenerator;
 import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlock;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCellBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
@@ -66,6 +67,16 @@ public class MetallurgicaBlocks {
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/fluid_shower"))))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/fluid_shower")))
+            .build()
+            .register();
+
+    public static final BlockEntry<FloatationCellBlock> floatationCell = registrate.block("floatation_cell", FloatationCellBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/floatation_cell"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/floatation_cell")))
             .build()
             .register();
 
