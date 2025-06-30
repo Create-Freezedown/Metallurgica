@@ -26,17 +26,11 @@ import java.util.Optional;
 public class FloatationCellBlockEntity extends SmartBlockEntity implements IVatMachine, IHaveGoggleInformation {
     SmartFluidTankBehaviour internalTank;
 
-    public int vatSize;
-    public int vatHeight;
-    public BlockPos vatPos;
     LerpedFloat vatFluidHeight;
-    VatBlockEntity vat;
+    VatBlockEntity vatController;
 
     public FloatationCellBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.vatSize = 1;
-        this.vatHeight = 1;
-        this.vatPos = null;
     }
 
     public FluidStack getInternalFluid() {
@@ -45,7 +39,13 @@ public class FloatationCellBlockEntity extends SmartBlockEntity implements IVatM
 
     @Override
     public void tick() {
-
+        if (level == null) return;
+        var beAbove = level.getBlockEntity(getBlockPos().above());
+        if (beAbove instanceof VatBlockEntity vatBe) {
+            var vatController = vatBe.getControllerBE();
+            this.vatController = vatController;
+            this.vatFluidHeight = vatController.getFluidLevel()[0];
+        }
     }
 
     //@OnlyIn(Dist.CLIENT)
@@ -58,11 +58,11 @@ public class FloatationCellBlockEntity extends SmartBlockEntity implements IVatM
 
     @Override
     public void vatUpdated(VatBlockEntity be) {
-        this.vatSize = be.getWidth();
-        this.vatHeight = be.getHeight();
-        this.vatPos = be.getBlockPos();
         this.vatFluidHeight = be.getFluidLevel()[0];
-        this.vat = be;
+        this.vatController = be.getControllerBE();
+    }
+
+    public void updateVentSize(int vatWidth, BlockPos vatPos) {
     }
 
     public IVatMachine.PositionRequirement getPositionRequirement() {
