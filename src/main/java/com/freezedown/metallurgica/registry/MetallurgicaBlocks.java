@@ -33,6 +33,7 @@ import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -200,6 +201,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<IgnitableLogPileBlock> logPile = registrate.block("log_pile", IgnitableLogPileBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.strength(2.0F).sound(SoundType.WOOD))
+            .loot((lt, b) -> lt.add(b, LogPileBlock.buildLootTable(b)))
             .transform(axeOnly())
             .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
             .item()
@@ -212,6 +214,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<CharredLogPileBlock> charredLogPile = registrate.block("charred_log_pile", CharredLogPileBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.strength(0.75F).sound(SoundType.WOOD))
+            .loot((lt, b) -> lt.add(b, RegistrateBlockLootTables.noDrop()))
             .transform(axeOrPickaxe())
             .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
             .item()
@@ -224,6 +227,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<AshedLogPileBlock> ashedCharcoalPile = registrate.block("ashed_charcoal_pile", AshedLogPileBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.strength(1.5F).sound(SoundType.WOOD))
+            .loot((lt, b) -> lt.add(b, LogPileBlock.buildLootTable(b)))
             .transform(axeOrPickaxe())
             .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
             .item()
@@ -236,6 +240,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<LogPileBlock> charcoalPile = registrate.block("charcoal_pile", LogPileBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.strength(1.5F).sound(SoundType.WOOD))
+            .loot((lt, b) -> lt.add(b, LogPileBlock.charcoalLootTable(b)))
             .transform(axeOrPickaxe())
             .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
             .item()

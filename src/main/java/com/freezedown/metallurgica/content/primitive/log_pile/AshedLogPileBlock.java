@@ -26,7 +26,6 @@ public class AshedLogPileBlock extends LogPileBlock {
     
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        super.use(state, world, pos, player, hand, hit);
         ItemStack heldItem = player.getItemInHand(hand);
         int layers = state.getValue(LogPileBlock.LAYERS);
         if (heldItem.is(MetallurgicaTags.AllItemTags.WATER_CONTAINERS.tag) || (heldItem.getItem() instanceof PotionItem && PotionUtils.getPotion(heldItem) == Potions.WATER)) {
@@ -48,7 +47,7 @@ public class AshedLogPileBlock extends LogPileBlock {
                 return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.FAIL;
+        return super.use(state, world, pos, player, hand, hit);
     }
     
 }
