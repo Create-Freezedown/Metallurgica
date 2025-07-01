@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-28T18:39:20.3407063	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-07-01T17:16:55.1888303	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 10811cfe0f93f3f9b8edaa6bdeccc627c164f73e assets/metallurgica/blockstates/ashed_charcoal_pile.json
 be9648772ff540c83f4ab5a59f92d7cd1913eca1 assets/metallurgica/blockstates/black_sand.json
 d5b7ece8eda61ba123c2b9483f2f203a12203353 assets/metallurgica/blockstates/blast_proof_glass.json
@@ -193,7 +193,7 @@ e19231b9d5d325de5dc3c75059d5e9fc2582f43f data/forge/tags/items/shards/orthopyrox
 35d3cc28c740ddf8b11af0fc010a8acd6ab6f566 data/forge/tags/items/washed_materials/alumina.json
 47aad8b72863f8a8cd5fa5d8cf54417a9ceb1475 data/metallurgica/loot_tables/blocks/aluminum_sheetmetal.json
 b47706a6f4e1a544bcccc0026107c7ec322055c6 data/metallurgica/loot_tables/blocks/arsenical_bronze_block.json
-1449c7b099c5af554372e42f46fa6ff39cfee014 data/metallurgica/loot_tables/blocks/ashed_charcoal_pile.json
+3d205807180ad2b83b6a77e7c28f9ed842d684f9 data/metallurgica/loot_tables/blocks/ashed_charcoal_pile.json
 6fe205f7af4c57e72efbe3c0eed203cd70c252c7 data/metallurgica/loot_tables/blocks/black_sand.json
 e6aac86ea170a4ce59c839a61bec05a7ffef2a26 data/metallurgica/loot_tables/blocks/blast_proof_glass.json
 fc2bc6e337c154f8ecc5ce6e4057519ab56b350a data/metallurgica/loot_tables/blocks/bronze_block.json
@@ -201,8 +201,8 @@ aca3a68796a52f236460b3cca0a5dea274dea419 data/metallurgica/loot_tables/blocks/ca
 f283f591e208291dc7224a4ac24ffe3794515b01 data/metallurgica/loot_tables/blocks/ceramic_mixing_pot.json
 6750fc8aa8ac3e3192979f0d6955be23445271f0 data/metallurgica/loot_tables/blocks/ceramic_pot.json
 18faf23a43849133da5bbd762bb74fd7b9d88c88 data/metallurgica/loot_tables/blocks/channel_depot.json
-5efe9778ae45ee74f175504706296ee0a0e37022 data/metallurgica/loot_tables/blocks/charcoal_pile.json
-6459db403522f728f6df006eb08e5392f7a1d278 data/metallurgica/loot_tables/blocks/charred_log_pile.json
+d7df13840c056426104f5f3dd560fc5cb3ea0173 data/metallurgica/loot_tables/blocks/charcoal_pile.json
+b5f1012c3e0bc93f6e511400b293b8c3af148f59 data/metallurgica/loot_tables/blocks/charred_log_pile.json
 7ed9d639cc1590f304c6251363fe39f0cde31d2d data/metallurgica/loot_tables/blocks/chromium_block.json
 ca04f99387b2b15a48febe266b9d7422ce49e750 data/metallurgica/loot_tables/blocks/copper_cogwheel.json
 b620785b0f77b29825452de3652691645e8aaa8d data/metallurgica/loot_tables/blocks/crucible.json
@@ -220,7 +220,7 @@ f2658212cebfd4109467e63745c1afc1b28c5d74 data/metallurgica/loot_tables/blocks/fl
 a1ff99a1cfa9fc3fac571f1b95647308be77150a data/metallurgica/loot_tables/blocks/ingot_casting_mold.json
 480be345f0b376334ca0f8d43f5bf6cff376a8d6 data/metallurgica/loot_tables/blocks/large_copper_cogwheel.json
 6b7a91759b9a5d2b1064af4551ce140d164bbe63 data/metallurgica/loot_tables/blocks/large_tungsten_cogwheel.json
-6d091c7eb00e1f8fab473934eabb18cf4361cb35 data/metallurgica/loot_tables/blocks/log_pile.json
+1611e1033a72ada7232a3d3f4ff2609fecd14c42 data/metallurgica/loot_tables/blocks/log_pile.json
 017227cb4da3b8df3bc464260652dcb44d26de51 data/metallurgica/loot_tables/blocks/magnesium_block.json
 c65a75d5f19002cccf5dc21cbea4c013814503e9 data/metallurgica/loot_tables/blocks/magnesium_oxide_block.json
 cce04f1dd231d807c3f316f26e5722a0a1b74928 data/metallurgica/loot_tables/blocks/magnetite_traced_sand.json
