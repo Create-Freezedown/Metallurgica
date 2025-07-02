@@ -1,14 +1,23 @@
 package com.freezedown.metallurgica.content.primitive.ceramic;
 
+import com.freezedown.metallurgica.content.primitive.pit_smelting.PitFuelRecipe;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.util.PistonPushable;
+import com.freezedown.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.*;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -16,25 +25,32 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HEAT_LEVEL;
 
 @PistonPushable
 public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
+    @Getter
     private float cookTime;
+    @Getter
+    private float fakeCookTime;
     private ResourceLocation firedBlock;
-    private HeatLevel heatLevel = HeatLevel.NONE;
+    @Getter
+    @Setter
+    private boolean hasFuel;
     
     public UnfiredCeramicBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         cookTime = -15;
+        fakeCookTime = -15;
     }
     
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
     
     }
-    
+
     @Override
     public void tick() {
         super.tick();
@@ -44,41 +60,89 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
         ResourceLocation thisBlock = ForgeRegistries.BLOCKS.getKey(this.getBlockState().getBlock());
         String firedBlockPath = thisBlock.getPath().replace("unfired_", "");
         firedBlock = new ResourceLocation(thisBlock.getNamespace(), firedBlockPath);
-        
-        
-        if (MetallurgicaConfigs.server().machineConfig.ceramicConfig.allowBlazeBurners.get()) {
-            heatLevel = getHeatLevelOf(level.getBlockState(worldPosition.below()));
-        } else {
-            if (level.getBlockState(worldPosition.below()).is(MetallurgicaTags.AllBlockTags.CERAMIC_HEAT_SOURCES.tag)) {
-                if (level.getBlockState(worldPosition.below()).hasProperty(BlockStateProperties.LIT)) {
-                    if (level.getBlockState(worldPosition.below()).getValue(BlockStateProperties.LIT)) {
-                        heatLevel = HeatLevel.KINDLED;
-                    }
-                } else {
-                    heatLevel = HeatLevel.KINDLED;
-                }
+
+        if (cookTime <= 0) cookTime = -15;
+        if (fakeCookTime <= 0) fakeCookTime = -15;
+
+
+        if (!isCooking()) return;
+
+        int countdown = 80;
+
+        if (!isEncased()) {
+            countdown--;
+            if (countdown <= 0) {
+                fakeCookTime = cookTime - this.level.random.nextInt(MetallurgicaConfigs.server().machineConfig.ceramicConfig.ceramicCookTime.get() / 2);
+                cookTime = -15;
+                countdown = 80;
             }
         }
-        
-        if (!heatLevel.isAtLeast(HeatLevel.SMOULDERING)) {
-            return;
+
+        if (!(fakeCookTime > 0)) {
+            if (cookTime > 0) {
+                cookTime--;
+            } else {
+                this.level.setBlock(this.worldPosition, Objects.requireNonNull(BuiltInRegistries.BLOCK.get(firedBlock)).defaultBlockState(), 3);
+                setHasFuel(false);
+            }
+        } else if (!(cookTime > 0)) {
+            if (fakeCookTime > 0) {
+                fakeCookTime--;
+            } else {
+                setHasFuel(false);
+            }
         }
-        
-        if (this.cookTime == -15) {
-            cookTime = MetallurgicaConfigs.server().machineConfig.ceramicConfig.ceramicCookTime.get();
-        }
-        
-        if (cookTime > 0) {
-            float toSubtract = heatLevel == HeatLevel.SEETHING ? 2 : (heatLevel == HeatLevel.KINDLED ? 1 : 0.5f);
-            cookTime -= toSubtract;
+    }
+
+    public InteractionResult addFuel(Player player) {
+        Inventory inventory = player.getInventory();
+        Optional<PitFuelRecipe> recipe = MetallurgicaRecipeTypes.pit_fuel.find(inventory, this.level);
+        if (recipe.isEmpty()) {
+            this.sendData();
+            return tryLight(player);
         } else {
-            this.level.setBlock(this.worldPosition, Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(firedBlock)).defaultBlockState(), 3);
+            inventory.getSelected().shrink(1);
+            setHasFuel(true);
+            this.sendData();
+            return InteractionResult.SUCCESS;
         }
+    }
+
+    public InteractionResult tryLight(Player player) {
+        Inventory inventory = player.getInventory();
+        if (inventory.getSelected().is(MetallurgicaTags.AllItemTags.IGNITES_LOG_PILE.tag)) {
+            if (this.cookTime == -15 && isHasFuel()) {
+                cookTime = MetallurgicaConfigs.server().machineConfig.ceramicConfig.ceramicCookTime.get();
+                this.sendData();
+                inventory.getSelected().hurtAndBreak(1, player, (p) -> {
+                    p.broadcastBreakEvent(player.getUsedItemHand());
+                });
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.FAIL;
+    }
+
+    public boolean isEncased() {
+        if (this.level == null) return false;
+        int coveredSides = 0;
+        for (Direction direction : Direction.values()) {
+            BlockState state = this.level.getBlockState(this.worldPosition.relative(direction));
+            if (state.isCollisionShapeFullBlock(this.level, this.worldPosition.relative(direction))) {
+                coveredSides++;
+            }
+        }
+        return  coveredSides >= Direction.values().length;
+    }
+
+    public boolean isCooking() {
+        return this.cookTime > 0 || this.fakeCookTime > 0;
     }
     
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         cookTime = compound.getFloat("CookTime");
+        fakeCookTime = compound.getFloat("FakeCookTime");
         if (compound.contains("FiredBlock"))
             firedBlock = new ResourceLocation(compound.getString("FiredBlock"));
         super.read(compound, clientPacket);
@@ -87,44 +151,9 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
         compound.putFloat("CookTime", cookTime);
+        compound.putFloat("FakeCookTime", fakeCookTime);
         if (firedBlock != null)
             compound.putString("FiredBlock", firedBlock.toString());
         super.write(compound, clientPacket);
     }
-    
-    public static HeatLevel getHeatLevelOf(BlockState state) {
-        if (MetallurgicaConfigs.server().machineConfig.ceramicConfig.allowBlazeBurners.get()) {
-            if (state.hasProperty(HEAT_LEVEL)) return state.getValue(HEAT_LEVEL);
-            return checkTag(state);
-        } else {
-            return checkTag(state);
-        }
-    }
-    
-    public static HeatLevel checkTag(BlockState state) {
-        if (state.is(MetallurgicaTags.AllBlockTags.CERAMIC_HEAT_SOURCES.tag)) {
-            if (state.is(MetallurgicaTags.AllBlockTags.LOW_HEAT_SOURCES.tag)) {
-                if (hasLit(state))
-                    return isLit(state) ? HeatLevel.SMOULDERING : HeatLevel.NONE;
-                return HeatLevel.SMOULDERING;
-            } else if (state.is(MetallurgicaTags.AllBlockTags.MEDIUM_HEAT_SOURCES.tag)) {
-                if (hasLit(state))
-                    return isLit(state) ? HeatLevel.KINDLED : HeatLevel.NONE;
-                return HeatLevel.KINDLED;
-            } else if (state.is(MetallurgicaTags.AllBlockTags.HIGH_HEAT_SOURCES.tag)) {
-                if (hasLit(state))
-                    return isLit(state) ? HeatLevel.SEETHING : HeatLevel.NONE;
-                return HeatLevel.SEETHING;
-            }
-        }
-        return HeatLevel.NONE;
-    }
-    
-    public static boolean hasLit(BlockState state) {
-        return state.hasProperty(BlockStateProperties.LIT);
-    }
-    public static boolean isLit(BlockState state) {
-        return state.getValue(BlockStateProperties.LIT);
-    }
-    
 }

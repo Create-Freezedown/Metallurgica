@@ -1,24 +1,22 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "magnesium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:magnesium"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "chlorine",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     }
   ],
   "item": "metallurgica:magnesium_chloride_bucket"

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "metallurgica:ceramic_clay"
+    }
+  },
+  "pattern": [
+    "   ",
+    "# #",
+    "###"
+  ],
+  "result": {
+    "item": "metallurgica:unfired_ceramic_pot"
+  },
+  "show_notification": true
+}

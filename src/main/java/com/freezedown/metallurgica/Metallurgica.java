@@ -1,7 +1,9 @@
 package com.freezedown.metallurgica;
 
+import com.drmangotea.tfmg.base.TFMGCreativeTabs;
 import com.freezedown.metallurgica.compat.cbc.BigCannonsCompat;
 import com.freezedown.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
+import com.freezedown.metallurgica.events.CommonEvents;
 import com.freezedown.metallurgica.experimental.ExperimentalEvents;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
@@ -9,8 +11,12 @@ import com.freezedown.metallurgica.foundation.data.MetallurgicaDatagen;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import com.freezedown.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorStats;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.registry.material.*;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
 import com.freezedown.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
 import com.freezedown.metallurgica.world.biome_modifier.SurfaceDepositsModifier;
 import com.google.gson.Gson;
@@ -38,9 +44,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import java.nio.file.Path;
 
 import static com.simibubi.create.foundation.item.TooltipHelper.styleFromColor;
 
@@ -67,8 +76,7 @@ public class Metallurgica
         registrate.setTooltipModifierFactory((item) -> (new ItemDescription.Modifier(item, METALLURGICA_PALETTE)).andThen(TooltipModifier.mapNull(KineticStats.create(item))).andThen(TooltipModifier.mapNull(ConductorStats.create(item))));
     }
     
-    public Metallurgica()
-    {
+    public Metallurgica() {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
         IEventBus modEventBus = FMLJavaModLoadingContext.get()
                 .getModEventBus();
@@ -77,16 +85,17 @@ public class Metallurgica
 
         registrate.registerEventListeners(modEventBus);
         MetallurgicaRegistries.register();
-        
+        MetallurgicaElements.register();
         //BIOME_MODIFIERS.register(modEventBus);
+        initMaterials(modEventBus);
         MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
-        MetallurgicaCreativeTab.register(modEventBus);
+        MCreativeTabs.register(modEventBus);
         MetallurgicaBlockEntities.register();
         //modEventBus.addGenericListener(Conductor.class, MetallurgicaConductors::register);
         MetallurgicaConductors.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
-
+        MetallurgicaSpecialRecipes.register(modEventBus);
         MetallurgicaFluids.register();
         MetallurgicaEffects.register(modEventBus);
         MetallurgicaRecipeTypes.register(modEventBus);
@@ -97,15 +106,16 @@ public class Metallurgica
         MetallurgicaEntityTypes.register();
 
         MetallurgicaConfigs.register(modLoadingContext);
-        
-        EventHandler commonHandler = new EventHandler();
-        MinecraftForge.EVENT_BUS.register(commonHandler);
+
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(new CommonEvents());
         
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(Metallurgica::init);
         modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MetallurgicaClient::new);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(modEventBus, forgeEventBus));
+        modEventBus.addListener(MCreativeTabs::addCreative);
         MinecraftForge.EVENT_BUS.register(this);
     }
     
@@ -116,9 +126,17 @@ public class Metallurgica
         MetallurgicaBlockSpoutingBehaviours.registerDefaults();
         MinecraftForge.EVENT_BUS.register(new ExperimentalEvents());
     };
+
+    public static void initMaterials(IEventBus modEventBus) {
+        MetalMaterials.register();
+        NonMetalMaterials.register();
+        AlloyMaterials.register();
+        MineralMaterials.register();
+        CompoundMaterials.register();
+        MetMaterials.register();
+    }
     
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("HELLO FROM COMMON SETUP");
     }
     
@@ -126,6 +144,7 @@ public class Metallurgica
     public void onServerStart(ServerAboutToStartEvent event)
     {
         LOGGER.info("Thanks for using Metallurgica! Expect a severe lack of ores in your world :3");
+        TemperatureHandler.generateMap(event.getServer());
         //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
         //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
     }
@@ -143,6 +162,10 @@ public class Metallurgica
 
     public static boolean isClientSide() {
         return FMLEnvironment.dist.isClient();
+    }
+
+    public static Path getGameDir() {
+        return FMLPaths.GAMEDIR.get();
     }
 
     @Mod.EventBusSubscriber(modid = ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

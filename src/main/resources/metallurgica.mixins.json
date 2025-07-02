@@ -6,21 +6,24 @@
   "refmap": "metallurgica.refmap.json",
   "plugin": "com.freezedown.metallurgica.foundation.mixin.plugin.MetallurgicaMixinsPlugin",
   "mixins": [
-    "AllBiomeModifiersMixin",
+    "BasinBlockEntityMixin",
     "ChemicalInfoTooltipMixin",
-    "DefaultOreFeaturesMixin",
-    "MixinOpenEndedPipe",
-    "MixinOpenEndFluidHandler",
-    "MixinVanillaFluidTargets",
-    "OreVeinifierHijacker",
     "PlayerListMixin",
-    "TFMGBlastFurnaceBGone",
+    "TagLoaderMixin",
+    "TagManagerMixin",
+    "VeinKiller",
     "WorldGenRegionMixin",
+    "accessor.KineticBlockEntityAccessor",
+    "accessor.WindingMachineBlockEntityAccessor",
     "emi.FluidEmiStackMixin",
-    "jei.FluidHelperMixin"
+    "jei.FluidHelperMixin",
+    "tfmg.CastingBasinBlockEntityMixin",
+    "tfmg.WindingMachineRendererMixin",
+    "workplace_hazards.EntityMixin",
+    "workplace_hazards.PressingBehaviourMixin"
   ],
   "client": [
-    "MixinLiquidBlockRenderer",
+    "ModelManagerMixin",
     "accessor.PostChainAccessor"
   ],
   "injectors": {

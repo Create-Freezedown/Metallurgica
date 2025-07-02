@@ -1,24 +1,22 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 2,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "aluminum",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 2,
+          "element": "metallurgica:aluminum"
+        }
+      ]
     },
     {
-      "amount": 3,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 3,
+          "element": "metallurgica:oxygen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:alumina"

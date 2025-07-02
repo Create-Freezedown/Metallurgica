@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.foundation.data.recipe.vanilla;
 import com.drmangotea.tfmg.registry.TFMGItems;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.MetallurgicaRecipeProvider;
+import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import com.google.common.base.Supplier;
 import com.google.gson.JsonArray;
@@ -40,11 +41,19 @@ public class MStandardRecipeGen extends MetallurgicaRecipeProvider {
             .viaCooking(() -> I.washedAlumina().asItem())
             .forDuration(200)
             .rewardXP(0.35f)
-            .inSmokerOnly(),
-    
-    aluminum_ingot = create(TFMGItems.ALUMINUM_INGOT::get)
-            .unlockedBy(MetallurgicaItems.aluminumNugget::get)
-            .viaShaped(b -> b.pattern("###").pattern("###").pattern("###").define('#', MetallurgicaItems.aluminumNugget.get()))
+            .inSmokerOnly();
+
+    private Marker ceramics = enterFolder("ceramics");
+
+    GeneratedRecipe
+
+    ceramicPot = create(() -> MetallurgicaBlocks.unfiredCeramicPot)
+            .unlockedBy(I::ceramicClay)
+            .viaShaped((b) -> b.pattern("   ").pattern("# #").pattern("###").define('#', I.ceramicClay())),
+
+    ceramicCrucible = create(() -> MetallurgicaBlocks.unfiredCrucible)
+            .unlockedBy(I::ceramicClay)
+            .viaShaped((b) -> b.pattern("# #").pattern("# #").pattern("###").define('#', I.ceramicClay()))
     
     ;
     

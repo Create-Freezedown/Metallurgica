@@ -18,43 +18,43 @@ public class MEmptyingGen extends MProcessingRecipeGen {
             .require(I.magnetite())
             .output(I.magnetiteLumps(), 1)
             .output(F.magnetiteFines(), 15)
-            .duration(200)),
+            .duration(200))
     
-    richMagnetiteLumps = create(Metallurgica.asResource("magnetite_lumps_from_rich"), b -> b
-            .require(I.richMagnetite())
-            .output(1.25f, I.magnetiteLumps(), 1)
-            .output(F.magnetiteFines(), 5)
-            .duration(200)),
+    //richMagnetiteLumps = create(Metallurgica.asResource("magnetite_lumps_from_rich"), b -> b
+    //        .require(I.richMagnetite())
+    //        .output(1.25f, I.magnetiteLumps(), 1)
+    //        .output(F.magnetiteFines(), 5)
+    //        .duration(200)),
     
-    chlorineTank = create(Metallurgica.asResource("chlorine_tank"), b -> b
-            .output(F.chlorine(), 1000)
-            .output(Items.BUCKET)
-            .require(getBucket("chlorine"))),
+    //chlorineTank = create(Metallurgica.asResource("chlorine_tank"), b -> b
+    //        .output(F.chlorine(), 1000)
+    //        .output(Items.BUCKET)
+    //        .require(getBucket("chlorine"))),
     
-    crudeTitaniumTetrachlorideBarrel = create(Metallurgica.asResource("crude_titanium_tetrachloride_barrel"), b -> b
-            .output(MetallurgicaFluids.crudeTitaniumTetrachloride.get(), 1000)
-            .output(Items.BUCKET)
-            .require(getBucket("crude_titanium_tetrachloride"))),
+    //crudeTitaniumTetrachlorideBarrel = create(Metallurgica.asResource("crude_titanium_tetrachloride_barrel"), b -> b
+    //        .output(MetallurgicaFluids.crudeTitaniumTetrachloride.get(), 1000)
+    //        .output(Items.BUCKET)
+    //        .require(getBucket("crude_titanium_tetrachloride"))),
     
-    titaniumTetrachlorideBarrel = create(Metallurgica.asResource("titanium_tetrachloride_barrel"), b -> b
-            .output(MetallurgicaFluids.titaniumTetrachloride.get(), 1000)
-            .output(Items.BUCKET)
-            .require(getBucket("titanium_tetrachloride"))),
+    //titaniumTetrachlorideBarrel = create(Metallurgica.asResource("titanium_tetrachloride_barrel"), b -> b
+    //        .output(MetallurgicaFluids.titaniumTetrachloride.get(), 1000)
+    //        .output(Items.BUCKET)
+    //        .require(getBucket("titanium_tetrachloride"))),
     
-    siliconTetrachlorideBarrel = create(Metallurgica.asResource("silicon_tetrachloride_barrel"), b -> b
-            .output(MetallurgicaFluids.siliconTetrachloride.get(), 1000)
-            .output(Items.BUCKET)
-            .require(getBucket("silicon_tetrachloride"))),
+    //siliconTetrachlorideBarrel = create(Metallurgica.asResource("silicon_tetrachloride_barrel"), b -> b
+    //        .output(MetallurgicaFluids.siliconTetrachloride.get(), 1000)
+    //        .output(Items.BUCKET)
+    //        .require(getBucket("silicon_tetrachloride"))),
     
-    tinTetrachlorideBarrel = create(Metallurgica.asResource("tin_tetrachloride_barrel"), b -> b
-            .output(MetallurgicaFluids.tinTetrachloride.get(), 1000)
-            .output(Items.BUCKET)
-            .require(getBucket("tin_tetrachloride"))),
+    //tinTetrachlorideBarrel = create(Metallurgica.asResource("tin_tetrachloride_barrel"), b -> b
+    //        .output(MetallurgicaFluids.tinTetrachloride.get(), 1000)
+    //        .output(Items.BUCKET)
+    //        .require(getBucket("tin_tetrachloride"))),
     
-    ironChlorideBarrel = create(Metallurgica.asResource("iron_chloride_barrel"), b -> b
-            .output(MetallurgicaFluids.ironChloride.get(), 1000)
-            .output(Items.BUCKET)
-            .require(getBucket("iron_chloride")))
+    //ironChlorideBarrel = create(Metallurgica.asResource("iron_chloride_barrel"), b -> b
+    //        .output(MetallurgicaFluids.ironChloride.get(), 1000)
+    //        .output(Items.BUCKET)
+    //        .require(getBucket("iron_chloride")))
     ;
     
     public static Item getBucket(String name) {

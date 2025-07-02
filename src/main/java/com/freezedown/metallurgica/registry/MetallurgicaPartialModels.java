@@ -9,7 +9,10 @@ public class MetallurgicaPartialModels {
             channelSide = block("channel/block_side"),
             shakerPlatform = block("shaking_table/platform"),
             ceramicMixerStirrer = block("ceramic_mixer/stirrer"),
-            workedMetal = block("metalworking/worked_metal")
+            workedMetal = block("metalworking/worked_metal"),
+            smallNozzle = block("nozzle/small"),
+            mediumNozzle = block("nozzle/medium"),
+            largeNozzle = block("nozzle/large")
             ;
     
     private static PartialModel block(String path) {

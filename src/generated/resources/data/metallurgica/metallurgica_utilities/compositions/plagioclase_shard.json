@@ -1,84 +1,40 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "sodium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "aluminum",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 3,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 8,
-      "appendDash": true,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:sodium"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "calcium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 2,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "aluminum",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 2,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:aluminum"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 3,
+          "element": "metallurgica:silicon"
+        }
+      ]
+    },
+    {
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 8,
+          "element": "metallurgica:oxygen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:plagioclase_shard"

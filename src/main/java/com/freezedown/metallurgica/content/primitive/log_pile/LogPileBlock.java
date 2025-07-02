@@ -1,22 +1,31 @@
 package com.freezedown.metallurgica.content.primitive.log_pile;
 
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -92,7 +101,6 @@ public class LogPileBlock extends Block {
     
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        super.use(state, world, pos, player, hand, hit);
         ItemStack heldItem = player.getItemInHand(hand);
         boolean isBlockItem = heldItem.is(this.asItem());
         if (isBlockItem) {
@@ -104,9 +112,42 @@ public class LogPileBlock extends Block {
                         heldItem.shrink(1);
                     }
                 }
-                return InteractionResult.SUCCESS;
+                return InteractionResult.CONSUME;
             }
         }
-        return InteractionResult.SUCCESS;
+        return super.use(state, world, pos, player, hand, hit);
+    }
+
+
+    public static LootTable.Builder buildLootTable(LogPileBlock block) {
+        LootItemCondition.Builder survivesExplosion = ExplosionCondition.survivesExplosion();
+        LootTable.Builder builder = LootTable.lootTable();
+        for (int level : LogPileBlock.LAYERS.getPossibleValues()) {
+            ItemLike drop = block.asItem();
+            LootPool.Builder poolBuilder = LootPool.lootPool();
+            poolBuilder.add(LootItem.lootTableItem(drop)
+                    .when(survivesExplosion)
+                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                            .setProperties(StatePropertiesPredicate.Builder.properties()
+                                    .hasProperty(LogPileBlock.LAYERS, level))));
+            builder.withPool(poolBuilder.apply(SetItemCountFunction.setCount(ConstantValue.exactly(level))));
+        }
+        return builder;
+    }
+
+    public static LootTable.Builder charcoalLootTable(LogPileBlock block) {
+        LootItemCondition.Builder survivesExplosion = ExplosionCondition.survivesExplosion();
+        LootTable.Builder builder = LootTable.lootTable();
+        for (int level : LogPileBlock.LAYERS.getPossibleValues()) {
+            ItemLike drop = Items.CHARCOAL;
+            LootPool.Builder poolBuilder = LootPool.lootPool();
+            poolBuilder.add(LootItem.lootTableItem(drop)
+                    .when(survivesExplosion)
+                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                            .setProperties(StatePropertiesPredicate.Builder.properties()
+                                    .hasProperty(LogPileBlock.LAYERS, level))));
+            builder.withPool(poolBuilder.apply(SetItemCountFunction.setCount(ConstantValue.exactly(level))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)));
+        }
+        return builder;
     }
 }

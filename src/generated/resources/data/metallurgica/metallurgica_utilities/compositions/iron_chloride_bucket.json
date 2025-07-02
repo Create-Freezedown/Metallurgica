@@ -1,24 +1,22 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:iron"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "chlorine",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     }
   ],
   "item": "metallurgica:iron_chloride_bucket"

@@ -1,24 +1,22 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:silicon"
+        }
+      ]
     },
     {
-      "amount": 4,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "chlorine",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 4,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     }
   ],
   "item": "metallurgica:silicon_tetrachloride_bucket"

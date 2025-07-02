@@ -36,9 +36,9 @@ public class BiomeTemperatureManager extends SimpleJsonResourceReloadListener {
                 BiomeTemperature biomeTemperature = BiomeTemperature.CODEC.parse(JsonOps.INSTANCE, entry.getValue()).getOrThrow(true, e -> {
                     throw new IllegalArgumentException("Parsing error loading biome temperatures " + resourceLocation);
                 });
-                biomeTemperatures.put(biomeTemperature.getLoc(), biomeTemperature);
-                biomes.add(biomeTemperature.getLoc());
-                Metallurgica.LOGGER.info("Loaded biome temperature for {} with temperature {}", biomeTemperature.getLoc().toString(), biomeTemperature.getSurfaceTemperature());
+                biomeTemperatures.put(biomeTemperature.getBiomeLoc(), biomeTemperature);
+                biomes.add(biomeTemperature.getBiomeLoc());
+                Metallurgica.LOGGER.info("Loaded biome temperature for {} with temperature {}", biomeTemperature.getBiomeLoc().toString(), biomeTemperature.getSurfaceTemperature());
             } catch (IllegalArgumentException | NullPointerException e) {
                 Metallurgica.LOGGER.error("Parsing error loading biome temperatures {}", resourceLocation, e);
             }

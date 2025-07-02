@@ -1,31 +1,31 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "sodium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:sodium"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:oxygen"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "hydrogen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:hydrogen"
+        }
+      ]
     }
   ],
   "fluid": {

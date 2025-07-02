@@ -10,7 +10,8 @@ import java.util.function.Supplier;
 
 public enum MMods {
     CREATEBIGCANNONS(),
-    SHIMMER()
+    SHIMMER(),
+    KUBEJS(),
     ;
     
     private final String id;

@@ -1,22 +1,22 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "tin",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:tin"
+        }
+      ]
     },
     {
-      "amount": 4,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "chlorine",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 4,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     }
   ],
   "fluid": {

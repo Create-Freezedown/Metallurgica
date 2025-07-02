@@ -1,18 +1,14 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
-import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
-import com.freezedown.metallurgica.content.machines.blast_furnace.hearth.HearthBlock;
-import com.freezedown.metallurgica.content.machines.blast_furnace.tuyere.TuyereBlock;
-import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelBlock;
-import com.freezedown.metallurgica.content.fluids.channel.channel.ChannelGenerator;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotGenerator;
+import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlock;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCellBlock;
+import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
+import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetGenerator;
-import com.freezedown.metallurgica.content.metalworking.advanced_casting.CastingTable;
-import com.freezedown.metallurgica.content.machines.electolizer.ElectrolyzerBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinBlock;
 import com.freezedown.metallurgica.content.machines.reaction_basin.ReactionBasinGenerator;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryBlock;
@@ -34,10 +30,10 @@ import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
+import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
-import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
-import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -63,8 +59,28 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 
 @SuppressWarnings("removal")
 public class MetallurgicaBlocks {
-    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MetallurgicaCreativeTab.MAIN_TAB);
-    
+    private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MAIN);
+
+    public static final BlockEntry<FluidShowerBlock> fluidShower = registrate.block("fluid_shower", FluidShowerBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/fluid_shower"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/fluid_shower")))
+            .build()
+            .register();
+
+    public static final BlockEntry<FloatationCellBlock> floatationCell = registrate.block("floatation_cell", FloatationCellBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/floatation_cell"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/floatation_cell")))
+            .build()
+            .register();
+
     public static final BlockEntry<ReactionBasinBlock> reactionBasin = registrate.block("reaction_basin", ReactionBasinBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
@@ -185,6 +201,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<IgnitableLogPileBlock> logPile = registrate.block("log_pile", IgnitableLogPileBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.strength(2.0F).sound(SoundType.WOOD))
+            .loot((lt, b) -> lt.add(b, LogPileBlock.buildLootTable(b)))
             .transform(axeOnly())
             .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
             .item()
@@ -197,6 +214,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<CharredLogPileBlock> charredLogPile = registrate.block("charred_log_pile", CharredLogPileBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.strength(0.75F).sound(SoundType.WOOD))
+            .loot((lt, b) -> lt.add(b, RegistrateBlockLootTables.noDrop()))
             .transform(axeOrPickaxe())
             .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
             .item()
@@ -209,6 +227,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<AshedLogPileBlock> ashedCharcoalPile = registrate.block("ashed_charcoal_pile", AshedLogPileBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.strength(1.5F).sound(SoundType.WOOD))
+            .loot((lt, b) -> lt.add(b, LogPileBlock.buildLootTable(b)))
             .transform(axeOrPickaxe())
             .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
             .item()
@@ -221,6 +240,7 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<LogPileBlock> charcoalPile = registrate.block("charcoal_pile", LogPileBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.strength(1.5F).sound(SoundType.WOOD))
+            .loot((lt, b) -> lt.add(b, LogPileBlock.charcoalLootTable(b)))
             .transform(axeOrPickaxe())
             .blockstate((ctx, prov) -> new LogPileGenerator().generateCustom(ctx, prov))
             .item()
@@ -268,7 +288,16 @@ public class MetallurgicaBlocks {
     //        .lang("Rotary Kiln Heater Segment")
     //        .simpleItem()
     //        .register();
-    
+    //public static final BlockEntry<TestCableConnectorBlock> testCableConnector = registrate.block("cable_connector", TestCableConnectorBlock::new)
+    //        .initialProperties(() -> Blocks.IRON_BLOCK)
+    //        .properties(BlockBehaviour.Properties::requiresCorrectToolForDrops)
+    //        .properties(BlockBehaviour.Properties::noOcclusion)
+    //        .transform(TagGen.pickaxeOnly())
+    //        .blockstate((ctx, prov) -> new TestCableConnectorGenerator().generate(ctx, prov))
+    //        .item()
+    //        .transform(ModelGen.customItemModel())
+    //        .lang("Cable Connector")
+    //        .register();
     //MACHINES
     public static final BlockEntry<ShakingTableBlock> shakingTable = registrate.block("shaking_table", ShakingTableBlock::new)
             .initialProperties(SharedProperties::copperMetal)
@@ -297,17 +326,6 @@ public class MetallurgicaBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .simpleItem()
-            .register();
-
-    public static final BlockEntry<ElectrolyzerBlock> electrolyzer = registrate.block("electrolyzer", ElectrolyzerBlock::new)
-            .initialProperties(SharedProperties::copperMetal)
-            .blockstate(BlockStateGen.horizontalBlockProvider(true))
-            .transform(TagGen.pickaxeOnly())
-            .transform(MStress.setImpact(8.0))
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .addLayer(() -> RenderType::cutoutMipped)
-            .item(AssemblyOperatorBlockItem::new)
-            .transform(customItemModel())
             .register();
     
     public static final BlockEntry<DrillActivatorBlock> drillActivator = registrate.block("drill_activator", DrillActivatorBlock::new)
@@ -354,20 +372,16 @@ public class MetallurgicaBlocks {
             .register();
 //METAL BLOCKS
     //CAST
-    public static final BlockEntry<Block>
-            bronzeBlock =              registrate.simpleMachineBlock("bronze_block", "Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
-    public static final BlockEntry<Block>
-            arsenicalBronzeBlock =              registrate.simpleMachineBlock("arsenical_bronze_block", "Arsenical Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
+    //public static final BlockEntry<Block>
+    //        bronzeBlock =              registrate.simpleMachineBlock("bronze_block", "Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
+    //public static final BlockEntry<Block>
+    //        arsenicalBronzeBlock =              registrate.simpleMachineBlock("arsenical_bronze_block", "Arsenical Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
     public static final BlockEntry<Block>
             impureBronzeBlock =              registrate.simpleMachineBlock("impure_bronze_block", "Impure Bronze Block", Block::new, SoundType.METAL, (c, p) -> p.simpleBlock(c.get()));
     //SMITHED
-    public static final BlockEntry<ConnectedPillarBlock>
-            wroughtIronBlock =              registrate.directionalMetalBlock("wrought_iron_block", "Wrought Iron Block", ConnectedPillarBlock::new, SoundType.METAL, (c, p) -> p.axisBlock(c.get()));
+    //public static final BlockEntry<ConnectedPillarBlock>
+    //        wroughtIronBlock =              registrate.directionalMetalBlock("wrought_iron_block", "Wrought Iron Block", ConnectedPillarBlock::new, SoundType.METAL, (c, p) -> p.axisBlock(c.get()));
 
-
-    //PURE
-    public static final BlockEntry<Block>
-            siliconBlock =              registrate.simpleMachineBlock("silicon_block", "Silicon Block", Block::new, SoundType.STONE, (c, p) -> p.simpleBlock(c.get()));
 
     //SAND
     public static final BlockEntry<SandBlock> quartzSand = registrate.block("quartz_sand", p -> new SandBlock(0x8D8388, p))
@@ -399,8 +413,8 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<ChannelDepotBlock>
             channelDepot =             registrate.simpleMachineBlock("channel_depot", null, ChannelDepotBlock::new, SoundType.LODESTONE, new ChannelDepotGenerator()::generate);
     
-    public static final BlockEntry<ChannelBlock>
-            channel =                  registrate.simpleMachineBlock("channel", null, ChannelBlock::new, SoundType.LODESTONE, new ChannelGenerator()::generate);
+    //public static final BlockEntry<ChannelBlock>
+    //        channel =                  registrate.simpleMachineBlock("channel", null, ChannelBlock::new, SoundType.LODESTONE, new ChannelGenerator()::generate);
     //TODO
     //.properties(BlockBehaviour.Properties::requiresCorrectToolForDrops)
     // .properties(BlockBehaviour.Properties::noOcclusion)
@@ -408,18 +422,24 @@ public class MetallurgicaBlocks {
     public static final BlockEntry<FaucetBlock>
             faucet =                   registrate.simpleMachineBlock("faucet", null, FaucetBlock::new, SoundType.LODESTONE, new FaucetGenerator()::generate);
     
-    public static final BlockEntry<TuyereBlock>
-            tuyere =                   registrate.simpleMachineBlock("tuyere", "Tuyere", TuyereBlock::new, SoundType.COPPER, (c, p) -> p.simpleBlock(c.get()));
-
-    public static final BlockEntry<HearthBlock>
-            hearth =                   registrate.simpleMachineBlock("hearth", "Hearth", HearthBlock::new, SoundType.COPPER, (c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/hearth"))));
+    //public static final BlockEntry<TuyereBlock>
+    //        tuyere =                   registrate.simpleMachineBlock("tuyere", "Tuyere", TuyereBlock::new, SoundType.COPPER, (c, p) -> p.simpleBlock(c.get()));
+//
+    //public static final BlockEntry<HearthBlock>
+    //        hearth =                   registrate.simpleMachineBlock("hearth", "Hearth", HearthBlock::new, SoundType.COPPER, (c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/hearth"))));
 
     public static final BlockEntry<Block>
             carbonBrick =              registrate.simpleMachineBlock("carbon_brick", "Carbon Brick", Block::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.get()));
 
-    public static final BlockEntry<CastingTable>
-            castingTable =             registrate.simpleMachineBlock("casting_table", null, CastingTable::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.getEntry(), p.models().getExistingFile(p.modLoc("block/casting_table"))));
+    //public static final BlockEntry<CastingTable>
+    //        castingTable =             registrate.simpleMachineBlock("casting_table", null, CastingTable::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.getEntry(), p.models().getExistingFile(p.modLoc("block/casting_table"))));
 
 
-    public static void register() {}
+    public static void register() {
+        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
+        MetMaterialBlocks.generateMaterialBlocks(materialRegistrate);
+        MetMaterialBlocks.MATERIAL_BLOCKS = MetMaterialBlocks.MATERIAL_BLOCKS_BUILDER.build();
+
+        MetMaterialBlocks.MATERIAL_BLOCKS_BUILDER = null;
+    }
 }

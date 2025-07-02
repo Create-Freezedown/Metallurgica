@@ -3,7 +3,7 @@
   "heatRequirement": "heated",
   "ingredients": [
     {
-      "item": "metallurgica:magnesium_oxide"
+      "item": "metallurgica:magnesium_oxide_dust"
     },
     {
       "amount": 100,

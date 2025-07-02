@@ -1,6 +1,5 @@
 package com.freezedown.metallurgica.content.items.sealed_storage;
 
-import com.drmangotea.tfmg.items.weapons.flamethrover.FlamethrowerItem;
 import com.freezedown.metallurgica.registry.MetallurgicaItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;

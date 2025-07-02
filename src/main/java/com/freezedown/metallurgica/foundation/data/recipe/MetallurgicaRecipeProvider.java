@@ -1,19 +1,31 @@
 package com.freezedown.metallurgica.foundation.data.recipe;
 
-import com.drmangotea.tfmg.CreateTFMG;
+import com.drmangotea.tfmg.TFMG;
+import com.drmangotea.tfmg.datagen.recipes.builder.VatMachineRecipeBuilder;
+import com.drmangotea.tfmg.recipes.VatMachineRecipe;
 import com.drmangotea.tfmg.registry.TFMGFluids;
 import com.drmangotea.tfmg.registry.TFMGItems;
+import com.drmangotea.tfmg.registry.TFMGRecipeTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCatalyst;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCatalystBuilder;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
 import com.freezedown.metallurgica.registry.*;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -23,6 +35,8 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public class MetallurgicaRecipeProvider extends RecipeProvider {
     
@@ -46,6 +60,64 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
     @FunctionalInterface
     public interface GeneratedRecipe {
         void register(Consumer<FinishedRecipe> consumer);
+    }
+
+    public GeneratedRecipe createVatRecipe(String namespace, Supplier<ItemLike> singleIngredient, UnaryOperator<VatMachineRecipeBuilder> transform, VatMachineRecipeBuilder.VatRecipeParams params) {
+        ProcessingRecipeSerializer<VatMachineRecipe> serializer = TFMGRecipeTypes.VAT_MACHINE_RECIPE.getSerializer();
+        GeneratedRecipe generatedRecipe = (c) -> {
+            ItemLike itemLike = singleIngredient.get();
+            transform.apply((VatMachineRecipeBuilder)(new VatMachineRecipeBuilder(serializer.getFactory(), params, new ResourceLocation(namespace, CatnipServices.REGISTRIES.getKeyOrThrow(itemLike.asItem()).getPath()))).withItemIngredients(new Ingredient[]{Ingredient.of(new ItemLike[]{itemLike})})).build(c);
+        };
+        this.all.add(generatedRecipe);
+        return generatedRecipe;
+    }
+
+    public GeneratedRecipe createVatRecipe(Supplier<ItemLike> singleIngredient, UnaryOperator<VatMachineRecipeBuilder> transform, VatMachineRecipeBuilder.VatRecipeParams params) {
+        return this.createVatRecipe("metallurgica", singleIngredient, transform, params);
+    }
+
+    protected <T extends ProcessingRecipe<?>> GeneratedRecipe createVatRecipeWithDeferredId(Supplier<ResourceLocation> name, UnaryOperator<VatMachineRecipeBuilder> transform, VatMachineRecipeBuilder.VatRecipeParams params) {
+        ProcessingRecipeSerializer<VatMachineRecipe> serializer = TFMGRecipeTypes.VAT_MACHINE_RECIPE.getSerializer();
+        GeneratedRecipe generatedRecipe = (c) -> transform.apply(new VatMachineRecipeBuilder(serializer.getFactory(), params, name.get())).build(c);
+        this.all.add(generatedRecipe);
+        return generatedRecipe;
+    }
+
+    public GeneratedRecipe createVatRecipe(ResourceLocation name, UnaryOperator<VatMachineRecipeBuilder> transform, VatMachineRecipeBuilder.VatRecipeParams params) {
+        return this.createVatRecipeWithDeferredId(() -> name, transform, params);
+    }
+
+    public GeneratedRecipe createVatRecipe(String name, UnaryOperator<VatMachineRecipeBuilder> transform, VatMachineRecipeBuilder.VatRecipeParams params) {
+        return this.createVatRecipe(Metallurgica.asResource(name), transform, params);
+    }
+
+    public GeneratedRecipe createFloatationCatalyst(String namespace, Supplier<ItemLike> singleIngredient, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
+        ProcessingRecipeSerializer<FloatationCatalyst> serializer = MetallurgicaRecipeTypes.floatation_catalyst.getSerializer();
+        GeneratedRecipe generatedRecipe = (c) -> {
+            ItemLike itemLike = singleIngredient.get();
+            transform.apply((FloatationCatalystBuilder)(new FloatationCatalystBuilder(serializer.getFactory(), params, new ResourceLocation(namespace, CatnipServices.REGISTRIES.getKeyOrThrow(itemLike.asItem()).getPath()))).withItemIngredients(new Ingredient[]{Ingredient.of(new ItemLike[]{itemLike})})).build(c);
+        };
+        this.all.add(generatedRecipe);
+        return generatedRecipe;
+    }
+
+    public GeneratedRecipe createFloatationCatalyst(Supplier<ItemLike> singleIngredient, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
+        return this.createFloatationCatalyst("metallurgica", singleIngredient, transform, params);
+    }
+
+    protected <T extends ProcessingRecipe<?>> GeneratedRecipe createFloatationCatalystWithDeferredId(Supplier<ResourceLocation> name, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
+        ProcessingRecipeSerializer<FloatationCatalyst> serializer = MetallurgicaRecipeTypes.floatation_catalyst.getSerializer();
+        GeneratedRecipe generatedRecipe = (c) -> transform.apply(new FloatationCatalystBuilder(serializer.getFactory(), params, name.get())).build(c);
+        this.all.add(generatedRecipe);
+        return generatedRecipe;
+    }
+
+    public GeneratedRecipe createFloatationCatalyst(ResourceLocation name, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
+        return this.createFloatationCatalystWithDeferredId(() -> name, transform, params);
+    }
+
+    public GeneratedRecipe createFloatationCatalyst(String name, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
+        return this.createFloatationCatalyst(Metallurgica.asResource(name), transform, params);
     }
     
     public static class Marker {
@@ -81,7 +153,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
             return MetallurgicaTags.forgeItemTag("material_rubble/native_gold");
         }
         public static TagKey<Item> bauxiteStone() {
-            return MetallurgicaTags.modItemTag(CreateTFMG.MOD_ID, "stone_types/bauxite");
+            return MetallurgicaTags.modItemTag(TFMG.MOD_ID, "stone_types/bauxite");
         }
         public static TagKey<Item> magnetiteStone() {
             return MetallurgicaTags.modItemTag("stone_types/magnetite");
@@ -89,10 +161,7 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static TagKey<Item> malachiteStone() {
             return MetallurgicaTags.modItemTag("stone_types/malachite");
         }
-        public static ItemLike copperRubble() {
-            return MetallurgicaItems.copperRubble.get();
-        }
-        public static ItemLike malachite() { return MetallurgicaOre.MALACHITE.ORE.raw().get(); }
+        //public static ItemLike malachite() { return MetallurgicaOre.MALACHITE.ORE.raw().get(); }
         public static ItemLike copperOxide() {
             return MetallurgicaItems.copperOxide.get();
         }
@@ -120,22 +189,20 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         public static ItemLike alumina() {
             return MetallurgicaItems.alumina.get();
         }
-        public static ItemLike aluminumDust() {
-            return MetallurgicaItems.aluminumDust.get();
-        }
         public static ItemLike redSand() {
             return Items.RED_SAND;
         }
         public static ItemLike magnetiteLumps() {
             return MetallurgicaItems.magnetiteLumps.get();
         }
-        public static ItemLike richMagnetite() { return MetallurgicaOre.MALACHITE.ORE.rich().get(); }
+        //public static ItemLike richMagnetite() { return MetallurgicaOre.MALACHITE.ORE.rich().get(); }
         public static ItemLike goldNugget() {
             return Items.GOLD_NUGGET;
         }
         public static ItemLike sand() {
             return Items.SAND;
         }
+        public static ItemLike ceramicClay() {return MetallurgicaItems.ceramicClay.get();}
     }
     
     public static class F {
@@ -187,10 +254,10 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         }
         
         public static Fluid moltenIron() {
-            return MetallurgicaMaterials.IRON.getMaterialEntry().molten().molten.get();
+            return MaterialHelper.getFluid(MetMaterials.IRON.get(), FlagKey.MOLTEN);
         }
         public static Fluid moltenCopper() {
-            return MetallurgicaMaterials.COPPER.getMaterialEntry().molten().molten.get();
+            return MaterialHelper.getFluid(MetMaterials.COPPER.get(), FlagKey.MOLTEN);
         }
         
         public static FluidStack riverSandStack(String mineral, int amount) {

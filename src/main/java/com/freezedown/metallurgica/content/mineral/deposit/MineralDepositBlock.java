@@ -17,6 +17,6 @@ public class MineralDepositBlock extends Block implements IBE<MineralDepositBloc
     
     @Override
     public BlockEntityType<? extends MineralDepositBlockEntity> getBlockEntityType() {
-        return MetallurgicaBlockEntities.mineralDeposit.get();
+        return null;//MetallurgicaBlockEntities.mineralDeposit.get();
     }
 }

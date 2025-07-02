@@ -1,17 +1,17 @@
 package com.freezedown.metallurgica.content.metalworking;
 
-import com.freezedown.metallurgica.foundation.material.MetalEntry;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
 
 public class ToolPartItem extends Item {
-    private MetalEntry[] metals;
+    private Material[] materialList;
     private Tier tier;
     private String moldType;
 
-    public ToolPartItem(Properties pProperties, Tier pTier, MetalEntry... metal) {
+    public ToolPartItem(Properties pProperties, Tier pTier, Material... materials) {
         super(pProperties);
-        metals = metal;
+        materialList = materials;
         tier = pTier;
     }
 

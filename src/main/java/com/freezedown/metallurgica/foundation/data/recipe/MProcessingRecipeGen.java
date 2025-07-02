@@ -4,10 +4,10 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.recipe.create.*;
 import com.freezedown.metallurgica.foundation.data.recipe.metallurgica.*;
 import com.freezedown.metallurgica.foundation.data.recipe.tfmg.DistillationGen;
+import com.freezedown.metallurgica.foundation.data.recipe.tfmg.VatGen;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
-import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.data.CachedOutput;
@@ -17,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.fluids.FluidType;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +43,15 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
         GENERATORS.add(new MMillingGen(gen));
         GENERATORS.add(new MFillingGen(gen));
         
-        GENERATORS.add(new MElectrolysisGen(gen));
         GENERATORS.add(new MReverbaratoryGen(gen));
         GENERATORS.add(new MSluicingGen(gen));
         GENERATORS.add(new MShakingGen(gen));
         GENERATORS.add(new MCeramicMixingGen(gen));
+        GENERATORS.add(new MPitFuelGen(gen));
+        GENERATORS.add(new MFlotationCatalystGen(gen));
         
         GENERATORS.add(new DistillationGen(gen));
+        GENERATORS.add(new VatGen(gen));
         
         gen.addProvider(true, new DataProvider() {
             
@@ -72,8 +73,7 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
      * Create a processing recipe with a single itemstack ingredient, using its id
      * as the name of the recipe
      */
-    protected <T extends ProcessingRecipe<?>> GeneratedRecipe create(String namespace,
-                                                                                          Supplier<ItemLike> singleIngredient, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
+    protected <T extends ProcessingRecipe<?>> GeneratedRecipe create(String namespace, Supplier<ItemLike> singleIngredient, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
         ProcessingRecipeSerializer<T> serializer = getSerializer();
         GeneratedRecipe generatedRecipe = c -> {
             ItemLike itemLike = singleIngredient.get();
@@ -91,13 +91,11 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
      * Create a processing recipe with a single itemstack ingredient, using its id
      * as the name of the recipe
      */
-    <T extends ProcessingRecipe<?>> GeneratedRecipe create(Supplier<ItemLike> singleIngredient,
-                                                                                UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
+    <T extends ProcessingRecipe<?>> GeneratedRecipe create(Supplier<ItemLike> singleIngredient, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
         return create(Metallurgica.ID, singleIngredient, transform);
     }
     
-    protected <T extends ProcessingRecipe<?>> GeneratedRecipe createWithDeferredId(Supplier<ResourceLocation> name,
-                                                                                                        UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
+    protected <T extends ProcessingRecipe<?>> GeneratedRecipe createWithDeferredId(Supplier<ResourceLocation> name, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
         ProcessingRecipeSerializer<T> serializer = getSerializer();
         GeneratedRecipe generatedRecipe =
                 c -> transform.apply(new ProcessingRecipeBuilder<>(serializer.getFactory(), name.get()))
@@ -110,8 +108,7 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
      * Create a new processing recipe, with recipe definitions provided by the
      * function
      */
-    protected <T extends ProcessingRecipe<?>> GeneratedRecipe create(ResourceLocation name,
-                                                                                          UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
+    protected <T extends ProcessingRecipe<?>> GeneratedRecipe create(ResourceLocation name, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
         return createWithDeferredId(() -> name, transform);
     }
     
@@ -119,8 +116,7 @@ public abstract class MProcessingRecipeGen extends MetallurgicaRecipeProvider {
      * Create a new processing recipe, with recipe definitions provided by the
      * function
      */
-    <T extends ProcessingRecipe<?>> GeneratedRecipe create(String name,
-                                                                                UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
+    <T extends ProcessingRecipe<?>> GeneratedRecipe create(String name, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
         return create(Metallurgica.asResource(name), transform);
     }
     

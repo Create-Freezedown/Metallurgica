@@ -1,16 +1,16 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
-import com.freezedown.metallurgica.compat.jei.category.composition.ItemCompositionRecipe;
+import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompositionRecipe;
 import com.freezedown.metallurgica.compat.jei.category.drill.DrillingRecipe;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCatalyst;
 import com.freezedown.metallurgica.content.metalworking.advanced_casting.AdvancedCastingRecipe;
-import com.freezedown.metallurgica.content.machines.blast_furnace.HeavyBlastingRecipe;
-import com.freezedown.metallurgica.content.machines.electolizer.ElectrolysisRecipe;
 import com.freezedown.metallurgica.content.machines.reverbaratory.ReverbaratoryCookingRecipe;
 import com.freezedown.metallurgica.content.machines.kiln.BakingRecipe;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.content.machines.sluice_belt.SluicingRecipe;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
+import com.freezedown.metallurgica.content.primitive.pit_smelting.PitFuelRecipe;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
@@ -33,16 +33,16 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public enum MetallurgicaRecipeTypes implements IRecipeTypeInfo {
-    item_composition(ItemCompositionRecipe::new),
-    heavy_blasting(HeavyBlastingRecipe::new),
+    item_composition(ElementCompositionRecipe::new),
     advanced_casting(AdvancedCastingRecipe::new),
-    electrolysis(ElectrolysisRecipe::new),
     deposit_drilling(DrillingRecipe::new),
     reverbaratory_cooking(ReverbaratoryCookingRecipe::new),
     baking(BakingRecipe::new),
     sluicing(SluicingRecipe::new),
     shaking(ShakingRecipe::new),
     ceramic_mixing(CeramicMixingRecipe::new),
+    pit_fuel(PitFuelRecipe::new),
+    floatation_catalyst(FloatationCatalyst::new)
     ;
     
     private final ResourceLocation id;

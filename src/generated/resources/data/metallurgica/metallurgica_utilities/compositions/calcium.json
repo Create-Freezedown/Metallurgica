@@ -1,0 +1,14 @@
+{
+  "compositions": [
+    {
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:calcium"
+        }
+      ]
+    }
+  ],
+  "item": "metallurgica:calcium"
+}

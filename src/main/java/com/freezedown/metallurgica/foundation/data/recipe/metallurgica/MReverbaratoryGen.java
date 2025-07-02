@@ -12,7 +12,7 @@ public class MReverbaratoryGen extends MProcessingRecipeGen {
     
     iron = create(Metallurgica.asResource("molten_iron"), b -> b
             .require(I.magnetiteLumps())
-            .output(F.moltenIron(), 45)
+            //.output(F.moltenIron(), 45)
             .output(F.slag(), 25)
             .duration(1200))
     

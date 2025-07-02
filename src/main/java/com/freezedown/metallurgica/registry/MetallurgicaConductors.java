@@ -1,9 +1,5 @@
 package com.freezedown.metallurgica.registry;
 
-import com.freezedown.metallurgica.foundation.config.TFMGConductor;
-import com.freezedown.metallurgica.infastructure.conductor.Conductor;
-import com.freezedown.metallurgica.infastructure.conductor.ConductorEntry;
-
 import static com.freezedown.metallurgica.Metallurgica.registrate;
 
 public class MetallurgicaConductors {
@@ -47,7 +43,21 @@ public class MetallurgicaConductors {
     //    event.register(scandium);
     //}
 
-    public static void register() {}
+    public static void register() {
+        registrate.setCreativeTab(MCreativeTabs.MATERIALS);
+        //for (Material material : MetMaterials.registeredMaterials.values()) {
+        //    if (!material.hasFlag(FlagKey.SPOOL)) continue;
+        //    SpoolFlag cableFlag = material.getFlag(FlagKey.SPOOL);
+        //    ConductorEntry<Conductor> conductor = registrate.conductor(material.getName(), Conductor::new)
+        //            .properties(p -> p.color1(cableFlag.getColors().getFirst()).color2(cableFlag.getColors().getSecond()))
+        //            .transform(TFMGConductor.setResistivity(cableFlag.getResistivity()))
+        //            .register();
+        //    registrate.item("%s_cable".formatted(material.getName()), (p) -> new CableItem(p, conductor))
+        //            .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
+        //            .tag(MetallurgicaTags.modItemTag("cables"))
+        //            .register();
+        //}
+    }
 
     //public static Conductor get(ResourceLocation key) {
     //    return MetallurgicaRegistries.CONDUCTOR.get(key);

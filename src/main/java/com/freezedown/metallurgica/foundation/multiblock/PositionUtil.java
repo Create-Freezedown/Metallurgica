@@ -2,7 +2,8 @@ package com.freezedown.metallurgica.foundation.multiblock;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import org.jgrapht.alg.util.Triple;
+import org.antlr.v4.runtime.misc.Triple;
+import oshi.util.tuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,15 +59,15 @@ public class PositionUtil {
             return zRange;
         }
         
-        public List<Triple<Integer, Integer, Integer>> getPositions() {
-            List<Triple<Integer, Integer, Integer>> positions = new ArrayList<>();
+        public List<Triplet<Integer, Integer, Integer>> getPositions() {
+            List<Triplet<Integer, Integer, Integer>> positions = new ArrayList<>();
             for (int x : xRange) {
                 for (int y : yRange) {
                     for (int z : zRange) {
                         if (x == 0 && y == 0 && z == 0) {
                             continue;
                         }
-                        positions.add(Triple.of(x, y, z));
+                        positions.add(new Triplet<>(x, y, z));
                     }
                 }
             }

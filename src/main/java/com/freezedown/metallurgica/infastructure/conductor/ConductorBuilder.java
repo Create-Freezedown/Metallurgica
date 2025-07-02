@@ -10,6 +10,7 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import com.tterrag.registrate.util.nullness.NonnullType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ConductorBuilder<T extends Conductor, P> extends AbstractBuilder<Conductor, T, P, ConductorBuilder<T, P>> {
@@ -60,6 +61,7 @@ public class ConductorBuilder<T extends Conductor, P> extends AbstractBuilder<Co
 
     @Override
     public ConductorEntry<T> register() {
+        MetallurgicaRegistries.registeredConductors.put(new ResourceLocation(getOwner().getModid(), getName()), createEntry());
         return (ConductorEntry<T>) super.register();
     }
 }

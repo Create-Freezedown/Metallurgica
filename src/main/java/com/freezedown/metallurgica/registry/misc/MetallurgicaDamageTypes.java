@@ -10,6 +10,7 @@ import net.minecraft.world.damagesource.DamageType;
 
 public class MetallurgicaDamageTypes {
     public static final ResourceKey<DamageType>
+        crushing = key("crushing"),
         reverbaratory = key("reverbaratory"),
         acidBurn = key("acid_burn");
 
@@ -20,5 +21,6 @@ public class MetallurgicaDamageTypes {
     public static void bootstrap(BootstapContext<DamageType> ctx) {
         new DamageTypeBuilder(reverbaratory).effects(DamageEffects.BURNING).register(ctx);
         new DamageTypeBuilder(acidBurn).effects(DamageEffects.BURNING).register(ctx);
+        new DamageTypeBuilder(crushing).effects(DamageEffects.HURT).register(ctx);
     }
 }

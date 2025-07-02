@@ -1,154 +1,44 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 7,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "magnesium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 8,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 22,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 7,
+          "element": "metallurgica:magnesium"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 8,
+          "element": "metallurgica:silicon"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": true,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "hydrogen",
-      "forceCloseBracket": true,
-      "groupedAmount": 2,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 22,
+          "element": "metallurgica:oxygen"
+        }
+      ]
     },
     {
-      "amount": 7,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 8,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 22,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 1,
-      "appendDash": true,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "hydrogen",
-      "forceCloseBracket": true,
-      "groupedAmount": 2,
-      "textColor": 5636095
-    },
-    {
-      "amount": 7,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "calcium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 8,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 22,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "oxygen",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "hydrogen",
-      "forceCloseBracket": true,
-      "groupedAmount": 2,
-      "textColor": 5636095
+      "amount": 2,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:oxygen"
+        },
+        {
+          "amount": 1,
+          "element": "metallurgica:hydrogen"
+        }
+      ]
     }
   ],
   "item": "metallurgica:amphibole_shard"

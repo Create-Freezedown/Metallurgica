@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.infastructure.loot_modifier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import lombok.Getter;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@Getter
 public class ReplaceItemLootModifier extends LootModifier {
     public List<ItemStackPair> itemPairs;
     
@@ -24,11 +26,7 @@ public class ReplaceItemLootModifier extends LootModifier {
         super(conditionsIn);
         this.itemPairs = itemPairs;
     }
-    
-    public List<ItemStackPair> getItemPairs() {
-        return itemPairs;
-    }
-    
+
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> loot, LootContext ctx) {
         List<ItemStack> toCheck = new ObjectArrayList<>(loot);

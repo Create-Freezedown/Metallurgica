@@ -2,11 +2,11 @@ package com.freezedown.metallurgica.content.metalworking.casting.ingot;
 
 import com.freezedown.metallurgica.content.fluids.types.MoltenMetal;
 import com.freezedown.metallurgica.content.temperature.KineticTemperatureBlockEntity;
-import com.freezedown.metallurgica.foundation.item.registry.MaterialEntry;
+import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.foundation.util.recipe.helper.TagItemOutput;
 import com.freezedown.metallurgica.registry.MetallurgicaTags;
-import com.freezedown.metallurgica.registry.misc.MetallurgicaMaterials;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
@@ -102,11 +102,13 @@ public class IngotCastingMoldBlockEntity extends KineticTemperatureBlockEntity i
             }
         }
         
-        for (MetallurgicaMaterials material : MetallurgicaMaterials.values()) {
-            MaterialEntry materialEntry = material.getMaterialEntry();
-            if (materialEntry.molten().molten.get().isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
-                metalName = materialEntry.getName();
-            }
+        for (Material material : MetMaterials.registeredMaterials.values()) {
+            //if (material.hasFlag(FlagKey.FLUID) && material.hasFlag(FlagKey.INGOT)) {
+            //    Fluid fluid = material.getFluid(MoltenMetal.class);
+            //    if (fluid.isSame(getTankInventory().getFluid().getFluid()) && getTankInventory().getFluidAmount() >= 90) {
+            //        metalName = material.getName();
+            //    }
+            //}
         }
         
         if (getTemperature() <= minTemperature && inventory.getStackInSlot(0).isEmpty()) {

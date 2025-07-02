@@ -12,21 +12,21 @@ import static com.freezedown.metallurgica.registry.MetallurgicaItems.*;
 
 public class MSequencedAssemblyGen extends MetallurgicaRecipeProvider {
     
-    GeneratedRecipe
+    //GeneratedRecipe
 
-    TiSheet = create("titanium_sheet", (b) -> b
-            .require(titaniumIngot.get())
-            .transitionTo(semiPressedTitaniumSheet.get())
-            .addOutput(titaniumSheet.get(), 120.0F)
-            .loops(3)
-            .addStep(PressingRecipe::new, (rb) -> rb)),
+    //TiSheet = create("titanium_sheet", (b) -> b
+    //        .require(titaniumIngot.get())
+    //        .transitionTo(semiPressedTitaniumSheet.get())
+    //        .addOutput(titaniumSheet.get(), 120.0F)
+    //        .loops(3)
+    //        .addStep(PressingRecipe::new, (rb) -> rb)),
 
-    TiAlSheet = create("titanium_aluminide_sheet", (b) -> b
-            .require(titaniumAluminideIngot.get())
-            .transitionTo(semiPressedTitaniumAluminideSheet.get())
-            .addOutput(titaniumAluminideSheet.get(), 120.0F)
-            .loops(3)
-            .addStep(PressingRecipe::new, (rb) -> rb));
+    //TiAlSheet = create("titanium_aluminide_sheet", (b) -> b
+    //        .require(titaniumAluminideIngot.get())
+    //        .transitionTo(semiPressedTitaniumAluminideSheet.get())
+    //        .addOutput(titaniumAluminideSheet.get(), 120.0F)
+    //        .loops(3)
+    //        .addStep(PressingRecipe::new, (rb) -> rb));
 
     //{
     //    for (MetallurgicaTools pTool : MetallurgicaTools.values()) {

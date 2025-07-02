@@ -1,76 +1,56 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
+      "amount": 6,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:iron"
+        },
+        {
+          "amount": 1,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     },
     {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "chlorine",
-      "forceCloseBracket": true,
-      "groupedAmount": 6
+      "amount": 24,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:titanium"
+        },
+        {
+          "amount": 4,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     },
     {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "titanium",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
+      "amount": 9,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:tin"
+        },
+        {
+          "amount": 4,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     },
     {
-      "amount": 4,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "chlorine",
-      "forceCloseBracket": true,
-      "groupedAmount": 24
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "tin",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
-    },
-    {
-      "amount": 4,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "chlorine",
-      "forceCloseBracket": true,
-      "groupedAmount": 9
-    },
-    {
-      "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "silicon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
-    },
-    {
-      "amount": 4,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": true,
-      "element": "chlorine",
-      "forceCloseBracket": true,
-      "groupedAmount": 3
+      "amount": 3,
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:silicon"
+        },
+        {
+          "amount": 4,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     }
   ],
   "fluid": {

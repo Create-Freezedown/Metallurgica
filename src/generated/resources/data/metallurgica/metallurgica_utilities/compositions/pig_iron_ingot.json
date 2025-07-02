@@ -1,24 +1,22 @@
 {
-  "elements": [
+  "compositions": [
     {
-      "amount": 3,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "iron",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "amount": 1,
+      "elements": [
+        {
+          "amount": 3,
+          "element": "metallurgica:iron"
+        }
+      ]
     },
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "carbon",
-      "forceCloseBracket": false,
-      "groupedAmount": 1,
-      "textColor": 5636095
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:carbon"
+        }
+      ]
     }
   ],
   "item": "metallurgica:pig_iron_ingot"

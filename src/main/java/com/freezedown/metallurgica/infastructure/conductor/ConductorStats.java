@@ -57,7 +57,7 @@ public class ConductorStats implements TooltipModifier {
         MetalLang.translate("tooltip.resistivity")
                 .style(GRAY)
                 .addTo(list);
-        double resistivity = WireConductorValues.getResistivity(cableItem.material.get());
+        double resistivity = WireConductorValues.getResistivity(cableItem.conductorEntry.get());
         Resistivity resistivityId = resistivity >= config.highResistivity.get() ? Resistivity.HIGH
                 : (resistivity >= config.mediumResistivity.get() ? Resistivity.MEDIUM : Resistivity.LOW);
 

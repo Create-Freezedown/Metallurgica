@@ -5,12 +5,14 @@ import com.freezedown.metallurgica.foundation.config.MetallurgicaConfigs;
 import com.freezedown.metallurgica.foundation.units.MetallurgicaUnits;
 import net.createmod.catnip.lang.LangBuilder;
 import net.createmod.catnip.lang.LangNumberFormat;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,12 +33,9 @@ public class ClientUtil {
     public static Player getPlayer() {
         return Minecraft.getInstance().player;
     }
-    
-    public static String fromId(String key) {
-        String s = key.replaceAll("_", " ");
-        s = Arrays.stream(StringUtils.splitByCharacterTypeCamelCase(s)).map(StringUtils::capitalize).collect(Collectors.joining(" "));
-        s = StringUtils.normalizeSpace(s);
-        return s;
+
+    public static boolean isClientSide() {
+        return FMLEnvironment.dist.isClient();
     }
     
     public static List<Double> generateSequenceDoubleStream(double start, double end, double step) {
@@ -203,6 +202,7 @@ public class ClientUtil {
     }
     
     public static LangBuilder temperature(double temperature) {
+        //                                    ????
         return MetallurgicaConfigs.client().imAmerican.get() ? CelciusToFahrenheit(temperature) : number(temperature).space().add(MetallurgicaUnits.C.UNIT.metricLang());
     }
     
@@ -212,8 +212,8 @@ public class ClientUtil {
     }
     
     public static boolean currentTemperatureTooltip(List<Component> tooltip, double temperature) {
-        lang().translate("gui.goggles.temperature").forGoggles(tooltip);
-        temperature(temperature).forGoggles(tooltip);
+        lang().translate("gui.goggles.temperature").style(ChatFormatting.GRAY).forGoggles(tooltip);
+        temperature(temperature).style(ChatFormatting.GOLD).forGoggles(tooltip, 1);
         return true;
     }
     

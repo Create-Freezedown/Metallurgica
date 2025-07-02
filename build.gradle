@@ -1,28 +1,17 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        mavenCentral()
-        jcenter()
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public' }
-        maven { url = 'https://maven.parchmentmc.org' }
-    }
-    dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:${forgegradle_version}"
-        classpath "org.spongepowered:mixingradle:${mixingradle_version}"
-        classpath "org.parchmentmc:librarian:${librarian_version}"
-    }
-}
 plugins {
     id "idea"
     id "me.shedaniel.unified-publishing" version "0.1.+"
     id "net.neoforged.moddev.legacyforge" version "2.0.74"
     id "dev.ithundxr.silk" version "0.11.15"
+    id "net.kyori.blossom" version "2.1.0" // https://github.com/KyoriPowered/blossom
     id "io.freefair.lombok" version "8.11"
 
 }
+
 apply from: "./gradle/java.gradle"
 apply from: "gradle/property_loader.gradle"
 
+String gitHash = "${calculateGitHash() + (hasUnstaged() ? "-modified" : "")}"
 
 version = project.mod_version + "-forge-mc" + project.minecraft_version
 group = project.maven_group
@@ -30,7 +19,14 @@ archivesBaseName = project.mod_id
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+def refmap
+mixin {
+    refmap = add sourceSets.main, 'metallurgica.refmap.json'
+    config 'metallurgica.mixins.json'
+}
+
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+
 idea {
     module {
         downloadJavadoc = true
@@ -70,25 +66,41 @@ legacyForge {
         }
         client {
             client()
+            ideName = "Client"
+
+            //Uncomment when you want to use your username
+            //programArguments.addAll('--username', project.file('username.txt').readLines()[0])
+
             gameDirectory = project.file('run')
+            systemProperty('forge.enabledGameTestNamespaces', "metallurgica")
         }
 
         server {
             server()
+            //sourceSet = sourceSets.main
+            ideName = "Server"
 
-            gameDirectory = project.file('run/server')
+            gameDirectory.set(file('run/server'))
+            //programArgument '--nogui'
+            //systemProperty('forge.enabledGameTestNamespaces', "metallurgica")
         }
 
         gameTestServer {
             type = "gameTestServer"
+            sourceSet = sourceSets.test
+            ideName = "Game Tests"
 
-            gameDirectory = project.file('run/gametest')
+            gameDirectory.set(file('run/gametest'))
+            systemProperty('forge.enabledGameTestNamespaces', "metallurgica")
         }
 
         data {
             data()
+            sourceSet = sourceSets.main
+            ideName = "Data Generation"
 
-            gameDirectory = project.file('run')
+            gameDirectory.set(file('run/data'))
+
             systemProperty 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             systemProperty 'forge.logging.console.level', 'debug'
             programArguments.addAll("--mod", mod_id as String, "--all", "--output", file("src/generated/resources/").getAbsolutePath(), "--existing", file("src/main/resources").getAbsolutePath())
@@ -101,6 +113,11 @@ sourceSets.main {
         srcDir 'src/generated/resources'
         exclude '.cache/'
     }
+
+    blossom.javaSources {
+        property("version", mod_version)
+        property("gitCommit", gitHash.toString())
+    }
 }
 
 repositories {
@@ -108,6 +125,19 @@ repositories {
     maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // ForgeConfigAPIPort
     maven { url = "https://maven.tterrag.com" } // Registrate
     maven { url = "https://maven.blamejared.com" } // JEI, Vazkii's Mods
+    maven {
+        // Shedaniel's maven (Architectury API)
+        url = "https://maven.architectury.dev"
+        content {
+            includeGroup "dev.architectury"
+        }
+    }
+    maven {
+            url "https://maven.latvian.dev/releases"
+        content {
+            includeGroup "dev.latvian.mods"
+        }
+    }
     maven {
         url = 'https://www.cursemaven.com'
         content {
@@ -140,7 +170,12 @@ dependencies {
 
     modImplementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${flywheel_minecraft_version}:${flywheel_version}")
-    modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
+    modRuntimeOnly(jarJar("dev.engine-room.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}") {
+        version {
+            strictly "[1.0,2.0)"
+            prefer flywheel_version
+        }
+    })
     modImplementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
@@ -152,7 +187,11 @@ dependencies {
 
     modCompileOnly("maven.modrinth:emi:${emi_version}")
 
-    modImplementation("maven.modrinth:create-tfmg:${tfmg_version}") //1.19
+    modImplementation("maven.modrinth:create-tfmg:${tfmg_version}")
+
+    modCompileOnly("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    modCompileOnly("dev.latvian.mods:rhino-forge:${rhino_version}")
+    modCompileOnly("dev.architectury:architectury-forge:${architectury_version}")
 
     modApi("org.apfloat:apfloat:1.11.0")
     modApi("org.jgrapht:jgrapht:1.5.2")
@@ -164,13 +203,12 @@ dependencies {
 }
 
 compileJava.options.encoding = 'UTF-8'
-compileJava {
-    options.compilerArgs = ['-Xdiags:verbose']
-}
+
+
+
 processResources {
     def buildProps = project.properties.clone()
 
-    // Replaces FML's magic file.jarVersion string with the correct version at build time.
     buildProps.put('file', [jarVersion: project.version])
 
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
@@ -178,9 +216,37 @@ processResources {
     }
 }
 
-mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
+compileJava {
+    options.compilerArgs = ['-Xdiags:verbose']
 }
+
+jar {
+    //from('LICENSE') {
+    //    rename { "${it}_${archivesBaseName}" }
+    //}
+
+    manifest.attributes([
+            "MixinConfigs": "metallurgica.mixins.json",
+            "Git-Hash"    : gitHash
+    ])
+}
+
+tasks.named("sourcesJar") {
+    manifest.attributes([
+            "Git-Hash": gitHash
+    ])
+}
+
+final slimJar = tasks.register("slimJar", Jar) {
+    archiveClassifier = "slim"
+    from(sourceSets.main.output)
+    from(refmap)
+    manifest.attributes([
+            "MixinConfigs": "metallurgica.mixins.json",
+            "Git-Hash"    : gitHash
+    ])
+}
+obfuscation.reobfuscate(slimJar, sourceSets.main)
 
 
 tasks.withType(JavaCompile).configureEach {
@@ -190,9 +256,30 @@ compileJava {
     options.compilerArgs = ['-Xdiags:verbose']
 }
 
+String calculateGitHash() {
+    try {
+        def output = providers.exec {
+            commandLine("git", "rev-parse", "HEAD")
+        }
+        return output.standardOutput.asText.get().trim()
+    } catch (Throwable ignored) {
+        return "unknown"
+    }
+}
 
-jar.finalizedBy('reobfJar')
-tasks.jarJar.finalizedBy('reobfJarJar')
+boolean hasUnstaged() {
+    try {
+        def output = providers.exec {
+            commandLine("git", "status", "--porcelain")
+        }
+        String result = output.standardOutput.asText.get().replace("/M gradlew(\\.bat)?/", "").trim()
+        if (!result.isEmpty())
+            println("Found stageable results:\n ${result}\n")
+        return !result.isEmpty()
+    } catch (Throwable ignored) {
+        return false
+    }
+}
 
 //publishing {
 //    publications {

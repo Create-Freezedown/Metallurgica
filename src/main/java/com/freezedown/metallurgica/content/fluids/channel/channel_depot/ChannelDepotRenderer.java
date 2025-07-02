@@ -1,9 +1,11 @@
 package com.freezedown.metallurgica.content.fluids.channel.channel_depot;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.simibubi.create.content.fluids.drain.ItemDrainRenderer;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.simibubi.create.foundation.fluid.FluidRenderer;
+import net.createmod.catnip.platform.ForgeCatnipServices;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -74,8 +76,7 @@ public class ChannelDepotRenderer extends SmartBlockEntityRenderer<ChannelDepotB
                 
                 float partial = Mth.clamp(units / totalUnits, 0, 1);
                 xMax += partial * 7 / 16f;
-                FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light, false, false);
-                
+                ForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light, false, false);
                 xMin = xMax;
             }
         }

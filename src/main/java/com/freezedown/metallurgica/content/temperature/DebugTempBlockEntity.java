@@ -1,20 +1,29 @@
 package com.freezedown.metallurgica.content.temperature;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.temperature.TempUtils;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
+import com.freezedown.metallurgica.foundation.temperature.server.TemperatureHandler;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, ITemperature {
-    private double temperature;
+
+    ///ONLY USE ON CLIENT-SIDE
+    @SideOnly(Side.CLIENT)
+    double temp;
+
     public DebugTempBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -22,9 +31,7 @@ public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggl
     @Override
     public void lazyTick() {
         super.lazyTick();
-        if (level == null)
-            return;
-        if (level.isClientSide)
+        if (level == null || level.isClientSide)
             return;
         sendStuff();
     }
@@ -32,28 +39,32 @@ public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggl
     @Override
     public void tick() {
         super.tick();
-        if (level == null)
+        if (level == null || level.isClientSide)
             return;
-        if (level.isClientSide)
-            return;
+        assert level instanceof ServerLevel;
         syncToClient(worldPosition, level);
-        temperature = TempUtils.getCurrentTemperature(worldPosition.mutable(), level);
     }
     
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-    
-    }
-    
-    public double getTemperature() {
-        return temperature;
-    }
-    
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+
     @Override
-    public void setTemperatureClient(double temperature) {
-        this.temperature = temperature;
+    public BlockPos getPos() {
+        return getBlockPos();
     }
-    
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void setTemp(double t) {
+        temp = t;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public double getTemp() {
+        return temp;
+    }
+
     @Override
     public void sendStuff() {
         sendData();
@@ -63,13 +74,21 @@ public class DebugTempBlockEntity extends SmartBlockEntity implements IHaveGoggl
     
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
-        temperature = compound.getDouble("Temperature");
+        if(this.level instanceof ServerLevel) {
+            TemperatureHandler.getHandler((ServerLevel) this.level).setBlockTemperature(this.getBlockPos(), compound.getDouble("temperature"));
+        } else {
+            temp = compound.getDouble("temperature");
+        }
         super.read(compound, clientPacket);
     }
     
     @Override
     protected void write(CompoundTag compound, boolean clientPacket) {
-        compound.putDouble("Temperature", temperature);
+        if(clientPacket) {
+            compound.putDouble("temperature", temp);
+        } else {
+            compound.putDouble("temperature", getTemperature());
+        }
         super.write(compound, clientPacket);
     }
     

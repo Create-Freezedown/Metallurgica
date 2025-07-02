@@ -1,13 +1,13 @@
 {
-  "elements": [
+  "compositions": [
     {
       "amount": 1,
-      "appendDash": false,
-      "areNumbersUp": false,
-      "bracketed": false,
-      "element": "chlorine",
-      "forceCloseBracket": false,
-      "groupedAmount": 1
+      "elements": [
+        {
+          "amount": 1,
+          "element": "metallurgica:chlorine"
+        }
+      ]
     }
   ],
   "fluid": {

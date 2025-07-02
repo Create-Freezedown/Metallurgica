@@ -1,5 +1,6 @@
 package com.freezedown.metallurgica.foundation.config.common;
 
+import com.freezedown.metallurgica.foundation.config.common.dev.DevConfig;
 import com.freezedown.metallurgica.foundation.config.common.experiments.MExperiments;
 import com.freezedown.metallurgica.foundation.config.common.subcat.MVanillaWorldGen;
 import com.freezedown.metallurgica.foundation.config.common.subcat.MWorldGen;
@@ -10,6 +11,7 @@ public class MCommon extends ConfigBase {
     public final MWorldGen worldGen = nested(0, MWorldGen::new, MCommon.Comments.worldGen);
     public final MVanillaWorldGen vanillaWorldGen = nested(0, MVanillaWorldGen::new, MCommon.Comments.vanillaWorldGen);
     public final MExperiments experiments = nested(0, MExperiments::new, Comments.experiments);
+    public final DevConfig dev = nested(0, DevConfig::new, "Developer Config");
     
     @Override
     public String getName() {

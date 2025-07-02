@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.content.mineral.drill.drill_tower;
 
 import com.freezedown.metallurgica.content.mineral.deposit.DepositManager;
-import com.freezedown.metallurgica.content.mineral.deposit.MineralDepositBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.foundation.util.SupportsDrillTower;
 import com.freezedown.metallurgica.registry.MetallurgicaBlocks;
@@ -30,7 +29,7 @@ public class DrillTowerBlock extends Block implements IWrenchable {
                 return true;
             }
         }
-        return pLevel.getBlockState(pPos.below()).getBlock() instanceof MineralDepositBlock || pLevel.getBlockState(pPos.below()).getBlock() instanceof DrillTowerBlock || pLevel.getBlockState(pPos.above()).getBlock() instanceof DrillTowerBlock || pLevel.getBlockState(pPos.above()).getBlock() instanceof DrillActivatorBlock;
+        return pLevel.getBlockState(pPos.below()).getBlock() instanceof DrillTowerBlock || pLevel.getBlockState(pPos.above()).getBlock() instanceof DrillTowerBlock || pLevel.getBlockState(pPos.above()).getBlock() instanceof DrillActivatorBlock;
     }
     public BlockState getStateForPlacement(BlockPlaceContext placeContext) {
         return this.defaultBlockState().setValue(PLACED_BY_TOWER_DEPLOYER, false);
