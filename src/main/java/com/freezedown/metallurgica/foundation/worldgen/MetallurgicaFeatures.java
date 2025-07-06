@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.worldgen;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.world.deposit.kimberlite.KimberlitePipeFeature;
 import com.freezedown.metallurgica.foundation.worldgen.feature.*;
 //import com.freezedown.metallurgica.foundation.worldgen.feature.SandDepositFeature;
 import com.freezedown.metallurgica.foundation.worldgen.feature.deposit.TypedDeposit;
@@ -16,6 +17,7 @@ public class MetallurgicaFeatures {
     public static final RegistryObject<MOreDepositFeature> ORE_DEPOSIT_SURFACE = REGISTER.register("surface_ore_deposit", MOreDepositFeature::new);
     public static final RegistryObject<MagmaConduitFeature> MAGMA_CONDUIT = REGISTER.register("magma_conduit", MagmaConduitFeature::new);
     public static final RegistryObject<TypedDeposit> LARGE_DEPOSIT = REGISTER.register("large_deposit", TypedDeposit::new);
+    public static final RegistryObject<KimberlitePipeFeature> KIMBERLITE_PIPE = REGISTER.register("kimberlite_pipe", KimberlitePipeFeature::new);
 
     public static final RegistryObject<LakeFeature> LAKE = REGISTER.register("lake", LakeFeature::new);
     //IGNORE THIS LOL

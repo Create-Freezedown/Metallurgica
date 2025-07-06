@@ -18,7 +18,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class MBiomeModifiers {
     public static final ResourceKey<BiomeModifier>
-            MAGNETITE_CONDUIT = key("magnetite_conduit");
+            MAGNETITE_CONDUIT = key("magnetite_conduit"),
+            KIMBERLITE_PIPE = key("kimberlite_pipe");
 
     private static ResourceKey<BiomeModifier> key(String name) {
         return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, Create.asResource(name));
@@ -30,12 +31,16 @@ public class MBiomeModifiers {
         HolderSet<Biome> isNether = biomeLookup.getOrThrow(BiomeTags.IS_NETHER);
 
         HolderGetter<PlacedFeature> featureLookup = ctx.lookup(Registries.PLACED_FEATURE);
-        //Holder<PlacedFeature> magnetiteConduit = featureLookup.getOrThrow(MetallurgicaPlacedFeatures.MAGNETITE_CONDUIT);
+        Holder<PlacedFeature> kimberlitePipe = featureLookup.getOrThrow(MetallurgicaPlacedFeatures.KIMBERLITE_PIPE);
 
-        //ctx.register(MAGNETITE_CONDUIT, addOre(isOverworld, magnetiteConduit));
+        ctx.register(KIMBERLITE_PIPE, addSurfaceFeature(isOverworld, kimberlitePipe));
     }
 
     private static ForgeBiomeModifiers.AddFeaturesBiomeModifier addOre(HolderSet<Biome> biomes, Holder<PlacedFeature> feature) {
         return new ForgeBiomeModifiers.AddFeaturesBiomeModifier(biomes, HolderSet.direct(feature), GenerationStep.Decoration.UNDERGROUND_ORES);
+    }
+
+    private static ForgeBiomeModifiers.AddFeaturesBiomeModifier addSurfaceFeature(HolderSet<Biome> biomes, Holder<PlacedFeature> feature) {
+        return new ForgeBiomeModifiers.AddFeaturesBiomeModifier(biomes, HolderSet.direct(feature), GenerationStep.Decoration.TOP_LAYER_MODIFICATION);
     }
 }

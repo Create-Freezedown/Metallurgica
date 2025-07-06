@@ -18,7 +18,8 @@ import static net.minecraft.data.worldgen.placement.PlacementUtils.register;
 
 public class MetallurgicaPlacedFeatures {
     public static final ResourceKey<PlacedFeature>
-            MAGNETITE_CONDUIT = key("magnetite_conduit");
+            MAGNETITE_CONDUIT = key("magnetite_conduit"),
+            KIMBERLITE_PIPE = key("kimberlite_pipe");
 
     private static ResourceKey<PlacedFeature> key(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, Create.asResource(name));
@@ -26,9 +27,9 @@ public class MetallurgicaPlacedFeatures {
 
     public static void bootstrap(BootstapContext<PlacedFeature> ctx) {
         HolderGetter<ConfiguredFeature<?, ?>> featureLookup = ctx.lookup(Registries.CONFIGURED_FEATURE);
-        //Holder<ConfiguredFeature<?, ?>> magnetiteConduit = featureLookup.getOrThrow(MetallurgicaConfiguredFeatures.MAGNETITE_CONDUIT);
+        Holder<ConfiguredFeature<?, ?>> kimberlitePipe = featureLookup.getOrThrow(MetallurgicaConfiguredFeatures.KIMBERLITE_PIPE);
 
-        //register(ctx, MAGNETITE_CONDUIT, magnetiteConduit, placement(CountPlacement.of(1), -63, 70));
+        register(ctx, KIMBERLITE_PIPE, kimberlitePipe, placement(CountPlacement.of(1), -63, 70));
     }
 
     private static List<PlacementModifier> placement(PlacementModifier frequency, int minHeight, int maxHeight) {
