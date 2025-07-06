@@ -1,7 +1,6 @@
 package com.freezedown.metallurgica.foundation.worldgen;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.infrastructure.worldgen.AllPlacedFeatures;
+import com.freezedown.metallurgica.Metallurgica;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -22,7 +21,7 @@ public class MBiomeModifiers {
             KIMBERLITE_PIPE = key("kimberlite_pipe");
 
     private static ResourceKey<BiomeModifier> key(String name) {
-        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, Create.asResource(name));
+        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, Metallurgica.asResource(name));
     }
 
     public static void bootstrap(BootstapContext<BiomeModifier> ctx) {

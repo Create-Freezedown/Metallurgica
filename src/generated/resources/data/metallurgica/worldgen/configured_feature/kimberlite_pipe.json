@@ -1,7 +1,7 @@
 {
   "type": "metallurgica:kimberlite_pipe",
   "config": {
-    "bottom_radius": 5,
+    "bottom_radius": 10,
     "top_radius": 18,
     "tuff_ring": true
   }

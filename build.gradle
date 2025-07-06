@@ -13,7 +13,7 @@ apply from: "gradle/property_loader.gradle"
 
 String gitHash = "${calculateGitHash() + (hasUnstaged() ? "-modified" : "")}"
 
-version = project.mod_version + "-forge-mc" + project.minecraft_version
+version = project.mod_version + "-neoforge-mc" + project.minecraft_version
 group = project.maven_group
 archivesBaseName = project.mod_id
 

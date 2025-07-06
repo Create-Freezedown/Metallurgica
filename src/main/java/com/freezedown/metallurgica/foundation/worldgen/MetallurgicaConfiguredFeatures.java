@@ -25,6 +25,6 @@ public class MetallurgicaConfiguredFeatures {
         RuleTest stoneOreReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         RuleTest deepslateOreReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
 
-        register(ctx, KIMBERLITE_PIPE, MetallurgicaFeatures.KIMBERLITE_PIPE.get(), new KimberlitePipeConfiguration(true, 18, 5));
+        register(ctx, KIMBERLITE_PIPE, MetallurgicaFeatures.KIMBERLITE_PIPE.get(), new KimberlitePipeConfiguration(true, 18, 10));
     }
 }

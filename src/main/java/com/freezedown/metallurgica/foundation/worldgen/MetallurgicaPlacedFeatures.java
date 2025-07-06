@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.worldgen;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.simibubi.create.Create;
-import com.simibubi.create.infrastructure.worldgen.AllConfiguredFeatures;
 import com.simibubi.create.infrastructure.worldgen.ConfigPlacementFilter;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -22,7 +22,7 @@ public class MetallurgicaPlacedFeatures {
             KIMBERLITE_PIPE = key("kimberlite_pipe");
 
     private static ResourceKey<PlacedFeature> key(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, Create.asResource(name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, Metallurgica.asResource(name));
     }
 
     public static void bootstrap(BootstapContext<PlacedFeature> ctx) {
