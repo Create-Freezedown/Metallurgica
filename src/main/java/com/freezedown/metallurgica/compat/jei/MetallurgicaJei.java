@@ -7,9 +7,12 @@ import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompos
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
 import com.freezedown.metallurgica.compat.jei.category.reaction.fluid.FluidReactionCategory;
 import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
+import com.freezedown.metallurgica.compat.jei.custom.element.ElementIngredientHelper;
+import com.freezedown.metallurgica.compat.jei.custom.element.ElementIngredientRenderer;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
@@ -17,11 +20,14 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
+import mezz.jei.common.platform.IPlatformFluidHelperInternal;
+import mezz.jei.common.platform.Services;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +40,7 @@ import net.minecraftforge.fluids.FluidType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @MethodsReturnNonnullByDefault
@@ -70,6 +77,12 @@ public class MetallurgicaJei implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         allCategories.forEach(c -> c.registerCatalysts(registration));
         registration.addRecipeCatalysts(MetallurgicaJeiRecipeTypes.FLUID_REACTION, new ItemStack(Items.BUCKET), new ItemStack(AllBlocks.BASIN));
+    }
+
+    @Override
+    public void registerIngredients(IModIngredientRegistration registration) {
+        IPlatformFluidHelperInternal<?> platformFluidHelper = Services.PLATFORM.getFluidHelper();
+        registration.register(MetallurgicaJeiConstants.ELEMENT, MetallurgicaRegistries.registeredElements.values(), new ElementIngredientHelper(), new ElementIngredientRenderer(16));
     }
 
     @Override

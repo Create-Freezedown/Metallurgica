@@ -13,10 +13,12 @@ public class Element implements IHasDescriptionId {
     private final ResourceLocation id;
 
     private final String symbol;
+    private final int color;
 
     public Element(Properties properties) {
         this.id = properties.id;
         this.symbol = properties.symbol;
+        this.color = properties.color;
     }
 
     public String getOrCreateDescriptionId() {
@@ -34,6 +36,7 @@ public class Element implements IHasDescriptionId {
     public static class Properties {
         private ResourceLocation id = Metallurgica.asResource("null");
         private String symbol = "null";
+        private int color = 0x818181; // Default color
 
         public Properties() {
 
@@ -41,6 +44,11 @@ public class Element implements IHasDescriptionId {
 
         public Properties symbol(String symbol) {
             this.symbol = symbol;
+            return this;
+        }
+
+        public Properties color(int color) {
+            this.color = color;
             return this;
         }
 

@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "metallurgica:minerals/layered_coal_0"
+      },
+      {
+        "model": "metallurgica:minerals/layered_coal_1"
+      },
+      {
+        "model": "metallurgica:minerals/layered_coal_2"
+      },
+      {
+        "model": "metallurgica:minerals/layered_coal_3"
+      }
+    ]
+  }
+}

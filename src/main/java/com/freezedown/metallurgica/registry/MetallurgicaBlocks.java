@@ -26,14 +26,17 @@ import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileGenerator;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlock;
+import com.freezedown.metallurgica.foundation.MBlockStateGen;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -434,6 +437,19 @@ public class MetallurgicaBlocks {
     //public static final BlockEntry<CastingTable>
     //        castingTable =             registrate.simpleMachineBlock("casting_table", null, CastingTable::new, SoundType.DEEPSLATE_BRICKS, (c, p) -> p.simpleBlock(c.getEntry(), p.models().getExistingFile(p.modLoc("block/casting_table"))));
 
+    public static final BlockEntry<Block> layeredCoal = registrate.block("layered_coal", Block::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.sound(MetallurgicaSoundTypes.COAL).requiresCorrectToolForDrops())
+            .transform(pickaxeOnly())
+            .blockstate(MBlockStateGen.variantMineralBottomTop("layered_coal", 4))
+            .loot((lt, b) -> lt.add(b,
+                    RegistrateBlockLootTables.createSilkTouchDispatchTable(b,
+                            lt.applyExplosionDecay(b, LootItem.lootTableItem(Items.COAL).apply(LimitCount.limitCount(IntRange.range(4, 9))))
+                                    .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))
+            .item()
+            .model((c, p) -> p.cubeColumn(c.getName(), p.modLoc("block/palettes/minerals/layered_coal/side_0"), p.modLoc("block/palettes/minerals/layered_coal/top_0")))
+            .build()
+            .register();
 
     public static void register() {
         MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
