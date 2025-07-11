@@ -155,6 +155,12 @@ repositories {
         name = "TerraformersMC"
         url = "https://maven.terraformersmc.com/"
     }
+    maven { // Ritchie's Projectile Library && CBC
+        url = "https://maven.realrobotix.me/master/"
+        content {
+            includeGroup("com.rbasamoyai")
+        }
+    }
     mavenLocal()
     flatDir {
         dirs 'libs'
@@ -192,6 +198,11 @@ dependencies {
     modCompileOnly("dev.latvian.mods:kubejs-forge:${kubejs_version}")
     modCompileOnly("dev.latvian.mods:rhino-forge:${rhino_version}")
     modCompileOnly("dev.architectury:architectury-forge:${architectury_version}")
+
+    modCompileOnly("maven.modrinth:create-big-cannons:${cbc_version}") { transitive = false }
+    modCompileOnly("maven.modrinth:rpl:${rpl_version}") { transitive = false }
+    modRuntimeOnly("maven.modrinth:create-big-cannons:${cbc_version}") { transitive = false }
+    modRuntimeOnly("maven.modrinth:rpl:${rpl_version}") { transitive = false }
 
     modApi("org.apfloat:apfloat:1.11.0")
     modApi("org.jgrapht:jgrapht:1.5.2")
