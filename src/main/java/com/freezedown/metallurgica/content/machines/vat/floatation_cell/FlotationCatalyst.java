@@ -5,14 +5,16 @@ import com.google.gson.JsonObject;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.item.SmartInventory;
+import lombok.Getter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 
-public class FloatationCatalyst extends ProcessingRecipe<SmartInventory> {
-    public String operationId;
+public class FlotationCatalyst extends ProcessingRecipe<SmartInventory> {
+    @Getter
+    public float efficiencyMultiplier = 1;
 
-    public FloatationCatalyst(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
-        super(MetallurgicaRecipeTypes.floatation_catalyst, params);
+    public FlotationCatalyst(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
+        super(MetallurgicaRecipeTypes.flotation_catalyst, params);
     }
 
     @Override
@@ -32,12 +34,12 @@ public class FloatationCatalyst extends ProcessingRecipe<SmartInventory> {
 
     public void readAdditional(JsonObject json) {
         super.readAdditional(json);
-        this.operationId = json.get("operationId").getAsString();
+        this.efficiencyMultiplier = json.get("efficiencyMultiplier").getAsFloat();
     }
 
     public void writeAdditional(JsonObject json) {
         super.writeAdditional(json);
-        json.addProperty("operationId", this.operationId);
+        json.addProperty("efficiencyMultiplier", this.efficiencyMultiplier);
     }
 
     @Override

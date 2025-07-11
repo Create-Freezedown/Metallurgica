@@ -1,14 +1,31 @@
 package com.freezedown.metallurgica.compat.jei.custom.element;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.compat.jei.MetallurgicaJeiConstants;
 import com.freezedown.metallurgica.infastructure.element.Element;
+import mezz.jei.api.helpers.IColorHelper;
 import mezz.jei.api.ingredients.IIngredientHelper;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.ingredients.subtypes.UidContext;
+import net.createmod.catnip.theme.Color;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+import java.util.Optional;
+
 public class ElementIngredientHelper implements IIngredientHelper<Element> {
+
+    private final IColorHelper colorHelper;
+
+    public ElementIngredientHelper(IColorHelper colorHelper) {
+        this.colorHelper = colorHelper;
+    }
+
     @Override
     public IIngredientType<Element> getIngredientType() {
         return MetallurgicaJeiConstants.ELEMENT;
@@ -40,5 +57,22 @@ public class ElementIngredientHelper implements IIngredientHelper<Element> {
             return "null";
         }
         return getResourceLocation(element).toString();
+    }
+
+    @Override
+    public Iterable<Integer> getColors(Element element) {
+        return getStillFluidSprite()
+                .map(fluidStillSprite -> {
+                    int renderColor = new Color(element.getColor(), true).getRGB();
+                    return colorHelper.getColors(fluidStillSprite, renderColor, 1);
+                })
+                .orElseGet(List::of);
+    }
+
+    public Optional<TextureAtlasSprite> getStillFluidSprite() {
+        return Optional.ofNullable(Minecraft.getInstance()
+                        .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
+                        .apply(Metallurgica.asResource("fluid/thin_fluid_still")))
+                .filter(s -> s.atlasLocation() != MissingTextureAtlasSprite.getLocation());
     }
 }

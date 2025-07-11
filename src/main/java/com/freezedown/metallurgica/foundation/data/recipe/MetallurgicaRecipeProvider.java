@@ -8,8 +8,8 @@ import com.drmangotea.tfmg.registry.TFMGItems;
 import com.drmangotea.tfmg.registry.TFMGRecipeTypes;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.types.RiverSandFluid;
-import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCatalyst;
-import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCatalystBuilder;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FlotationCatalyst;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FlotationCatalystBuilder;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
 import com.freezedown.metallurgica.registry.*;
@@ -91,32 +91,32 @@ public class MetallurgicaRecipeProvider extends RecipeProvider {
         return this.createVatRecipe(Metallurgica.asResource(name), transform, params);
     }
 
-    public GeneratedRecipe createFloatationCatalyst(String namespace, Supplier<ItemLike> singleIngredient, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
-        ProcessingRecipeSerializer<FloatationCatalyst> serializer = MetallurgicaRecipeTypes.floatation_catalyst.getSerializer();
+    public GeneratedRecipe createFloatationCatalyst(String namespace, Supplier<ItemLike> singleIngredient, UnaryOperator<FlotationCatalystBuilder> transform, FlotationCatalystBuilder.FlotationCatalystParams params) {
+        ProcessingRecipeSerializer<FlotationCatalyst> serializer = MetallurgicaRecipeTypes.flotation_catalyst.getSerializer();
         GeneratedRecipe generatedRecipe = (c) -> {
             ItemLike itemLike = singleIngredient.get();
-            transform.apply((FloatationCatalystBuilder)(new FloatationCatalystBuilder(serializer.getFactory(), params, new ResourceLocation(namespace, CatnipServices.REGISTRIES.getKeyOrThrow(itemLike.asItem()).getPath()))).withItemIngredients(new Ingredient[]{Ingredient.of(new ItemLike[]{itemLike})})).build(c);
+            transform.apply((FlotationCatalystBuilder)(new FlotationCatalystBuilder(serializer.getFactory(), params, new ResourceLocation(namespace, CatnipServices.REGISTRIES.getKeyOrThrow(itemLike.asItem()).getPath()))).withItemIngredients(new Ingredient[]{Ingredient.of(new ItemLike[]{itemLike})})).build(c);
         };
         this.all.add(generatedRecipe);
         return generatedRecipe;
     }
 
-    public GeneratedRecipe createFloatationCatalyst(Supplier<ItemLike> singleIngredient, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
+    public GeneratedRecipe createFloatationCatalyst(Supplier<ItemLike> singleIngredient, UnaryOperator<FlotationCatalystBuilder> transform, FlotationCatalystBuilder.FlotationCatalystParams params) {
         return this.createFloatationCatalyst("metallurgica", singleIngredient, transform, params);
     }
 
-    protected <T extends ProcessingRecipe<?>> GeneratedRecipe createFloatationCatalystWithDeferredId(Supplier<ResourceLocation> name, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
-        ProcessingRecipeSerializer<FloatationCatalyst> serializer = MetallurgicaRecipeTypes.floatation_catalyst.getSerializer();
-        GeneratedRecipe generatedRecipe = (c) -> transform.apply(new FloatationCatalystBuilder(serializer.getFactory(), params, name.get())).build(c);
+    protected <T extends ProcessingRecipe<?>> GeneratedRecipe createFloatationCatalystWithDeferredId(Supplier<ResourceLocation> name, UnaryOperator<FlotationCatalystBuilder> transform, FlotationCatalystBuilder.FlotationCatalystParams params) {
+        ProcessingRecipeSerializer<FlotationCatalyst> serializer = MetallurgicaRecipeTypes.flotation_catalyst.getSerializer();
+        GeneratedRecipe generatedRecipe = (c) -> transform.apply(new FlotationCatalystBuilder(serializer.getFactory(), params, name.get())).build(c);
         this.all.add(generatedRecipe);
         return generatedRecipe;
     }
 
-    public GeneratedRecipe createFloatationCatalyst(ResourceLocation name, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
+    public GeneratedRecipe createFloatationCatalyst(ResourceLocation name, UnaryOperator<FlotationCatalystBuilder> transform, FlotationCatalystBuilder.FlotationCatalystParams params) {
         return this.createFloatationCatalystWithDeferredId(() -> name, transform, params);
     }
 
-    public GeneratedRecipe createFloatationCatalyst(String name, UnaryOperator<FloatationCatalystBuilder> transform, FloatationCatalystBuilder.FloatationCatalystParams params) {
+    public GeneratedRecipe createFloatationCatalyst(String name, UnaryOperator<FlotationCatalystBuilder> transform, FlotationCatalystBuilder.FlotationCatalystParams params) {
         return this.createFloatationCatalyst(Metallurgica.asResource(name), transform, params);
     }
     

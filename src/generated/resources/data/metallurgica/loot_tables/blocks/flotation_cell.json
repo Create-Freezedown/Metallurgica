@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "metallurgica:floatation_cell"
+          "name": "metallurgica:flotation_cell"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "metallurgica:blocks/floatation_cell"
+  "random_sequence": "metallurgica:blocks/flotation_cell"
 }

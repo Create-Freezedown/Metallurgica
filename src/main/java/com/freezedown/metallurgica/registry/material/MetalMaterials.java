@@ -341,5 +341,15 @@ public class MetalMaterials {
                 .addFlags(
                         new IngotFlag()
                 ));
+        CADMIUM = createMaterial("cadmium", (b) -> b
+                .element(MetallurgicaElements.CADMIUM)
+                .meltingPoint(321.07)
+                .addFlags(
+                        new NuggetFlag(),
+                        new IngotFlag(),
+                        new SheetFlag(),
+                        new MoltenFlag(321.07),
+                        new DustFlag()
+                ));
     }
 }

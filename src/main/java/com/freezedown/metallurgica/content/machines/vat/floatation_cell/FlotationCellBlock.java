@@ -11,19 +11,19 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class FloatationCellBlock extends Block implements IBE<FloatationCellBlockEntity> {
+public class FlotationCellBlock extends Block implements IBE<FlotationCellBlockEntity> {
 
-    public FloatationCellBlock(Properties properties) {
+    public FlotationCellBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public Class<FloatationCellBlockEntity> getBlockEntityClass() {
-        return FloatationCellBlockEntity.class;
+    public Class<FlotationCellBlockEntity> getBlockEntityClass() {
+        return FlotationCellBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends FloatationCellBlockEntity> getBlockEntityType() {
+    public BlockEntityType<? extends FlotationCellBlockEntity> getBlockEntityType() {
         return MetallurgicaBlockEntities.floatationCell.get();
     }
 

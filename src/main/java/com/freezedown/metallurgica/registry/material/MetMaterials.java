@@ -45,6 +45,7 @@ public class MetMaterials {
     public static MaterialEntry<Material> BERYLLIUM;
     public static MaterialEntry<Material> RADIUM;
     public static MaterialEntry<Material> ARSENIC;
+    public static MaterialEntry<Material> CADMIUM;
 
     //Non-Metals
     public static MaterialEntry<Material> NULL;

@@ -21,15 +21,14 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
-import java.util.Optional;
 
-public class FloatationCellBlockEntity extends SmartBlockEntity implements IVatMachine, IHaveGoggleInformation {
+public class FlotationCellBlockEntity extends SmartBlockEntity implements IVatMachine, IHaveGoggleInformation {
     SmartFluidTankBehaviour internalTank;
 
     LerpedFloat vatFluidHeight;
     VatBlockEntity vatController;
 
-    public FloatationCellBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public FlotationCellBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
@@ -62,6 +61,11 @@ public class FloatationCellBlockEntity extends SmartBlockEntity implements IVatM
         this.vatController = be.getControllerBE();
     }
 
+    public int getWorkPercentage() {
+        float multiplier = getCatalyst() != null ? getCatalyst().getEfficiencyMultiplier() : 1.0f;
+        return (int) (100 * multiplier);
+    }
+
     public void updateVentSize(int vatWidth, BlockPos vatPos) {
     }
 
@@ -71,10 +75,13 @@ public class FloatationCellBlockEntity extends SmartBlockEntity implements IVatM
 
     @Override
     public String getOperationId() {
-        if (getLevel() == null) return "";
-        List<FloatationCatalyst> recipes = getLevel().getRecipeManager().getAllRecipesFor(MetallurgicaRecipeTypes.floatation_catalyst.getType());
-        Optional<FloatationCatalyst> firstCatalyst = recipes.stream().filter(r -> r.matches(getInternalFluid())).findFirst();
-        return firstCatalyst.isPresent() ? firstCatalyst.get().operationId : "";
+        return "metallurgica:flotation_cell";
+    }
+
+    private FlotationCatalyst getCatalyst() {
+        if (getLevel() == null) return null;
+        List<FlotationCatalyst> recipes = getLevel().getRecipeManager().getAllRecipesFor(MetallurgicaRecipeTypes.flotation_catalyst.getType());
+        return recipes.stream().filter(r -> r.matches(getInternalFluid())).findFirst().orElse(null);
     }
 
     @Override

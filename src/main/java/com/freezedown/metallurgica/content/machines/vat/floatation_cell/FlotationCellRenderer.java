@@ -13,14 +13,14 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class FloatationCellRenderer extends SmartBlockEntityRenderer<FloatationCellBlockEntity> {
+public class FlotationCellRenderer extends SmartBlockEntityRenderer<FlotationCellBlockEntity> {
 
-    public FloatationCellRenderer(BlockEntityRendererProvider.Context context) {
+    public FlotationCellRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    protected void renderSafe(FloatationCellBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay) {
+    protected void renderSafe(FlotationCellBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay) {
         if (be.getLevel() == null)
             return;
         if (!(be.getLevel().getBlockState(be.getBlockPos().above()).getBlock() instanceof VatBlock))

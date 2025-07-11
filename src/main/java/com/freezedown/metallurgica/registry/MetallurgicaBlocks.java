@@ -4,7 +4,7 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotGenerator;
 import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlock;
-import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FloatationCellBlock;
+import com.freezedown.metallurgica.content.machines.vat.floatation_cell.FlotationCellBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldBlock;
 import com.freezedown.metallurgica.content.metalworking.casting.ingot.IngotCastingMoldGenerator;
 import com.freezedown.metallurgica.content.fluids.faucet.FaucetBlock;
@@ -31,9 +31,6 @@ import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
-import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
@@ -74,7 +71,7 @@ public class MetallurgicaBlocks {
             .build()
             .register();
 
-    public static final BlockEntry<FloatationCellBlock> floatationCell = registrate.block("floatation_cell", FloatationCellBlock::new)
+    public static final BlockEntry<FlotationCellBlock> flotationCell = registrate.block("flotation_cell", FlotationCellBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .properties(p -> p.sound(SoundType.COPPER))
             .addLayer(() -> RenderType::cutoutMipped)

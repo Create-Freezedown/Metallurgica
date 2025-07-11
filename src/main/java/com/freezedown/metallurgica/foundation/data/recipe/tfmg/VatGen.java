@@ -145,4 +145,11 @@ public class VatGen extends MProcessingRecipeGen {
         params.allowedVatTypes.add("tfmg:firebrick_lined_vat");
         return params;
     }
+
+    public VatMachineRecipeBuilder.VatRecipeParams flotation() {
+        VatMachineRecipeBuilder.VatRecipeParams params = new VatMachineRecipeBuilder.VatRecipeParams();
+        params.machines.add("tfmg:mixing");
+        params.machines.add("metallurgica:flotation_cell");
+        return params;
+    }
 }

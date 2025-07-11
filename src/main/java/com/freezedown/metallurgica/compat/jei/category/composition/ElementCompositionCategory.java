@@ -35,6 +35,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -79,41 +82,26 @@ public class ElementCompositionCategory extends CreateRecipeCategory<ElementComp
         return icon;
     }
 
-    public void draw(ElementCompositionRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
-        int xPos = 0;
-        int yPos = slotBackground.getHeight() + 4;
-        Minecraft minecraft = Minecraft.getInstance();
-
-        //for(MutableComponent element : recipe.createElementLine()) {
-        //    int yOff = yPos += 10;
-        //    MutableComponent descriptionLine = element.copy();
-        //    graphics.drawString(Minecraft.getInstance().font, Language.getInstance().getVisualOrder(descriptionLine), xPos, yOff, 0xFFFFFF);
-        //    Objects.requireNonNull(minecraft.font);
-        //}
-    }
-
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ElementCompositionRecipe recipe, IFocusGroup iFocusGroup) {
         int xPos = 72;
         if (recipe.getItem() != null) {
-            if (recipe.getItem() instanceof BucketItem) {
-                int xOff = 18 * 4;
-                IRecipeSlotBuilder fluidSlotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, xPos - 9, 1).setBackground(slotBackground, -1, -1);
-                IIngredientAcceptor<?> fluidOutputSlotBuilder = builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT);
-                IRecipeSlotBuilder inputSlotBuilder2 = builder.addSlot(RecipeIngredientRole.INPUT, xPos + 9, 1).setBackground(slotBackground, -1, -1);
-                addBucketAndFluid(recipe.getItem(), inputSlotBuilder2, fluidSlotBuilder);
-                addOutput(recipe.getItem(), fluidOutputSlotBuilder);
-            } else {
-                IRecipeSlotBuilder inputSlotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, xPos, 1).setBackground(slotBackground, -1, -1);
-                IIngredientAcceptor<?> outputSlotBuilder = builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT);
-                addIngredient(recipe.getItem(), inputSlotBuilder);
-                addOutput(recipe.getItem(), outputSlotBuilder);
-            }
+            layoutItemFluidOutput(new ItemStack(recipe.getItem())).forEach(layoutEntry -> {
+                IRecipeSlotBuilder slotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, (getBackground().getWidth() / 2) + layoutEntry.posX() + 1, 1).setBackground(slotBackground, -1, -1);
+                if (layoutEntry.item != null) {
+                    addIngredient(layoutEntry.item.getItem(), slotBuilder);
+                }
+                if (layoutEntry.fluid != null) {
+                    slotBuilder.addFluidStack(layoutEntry.fluid.getFluid(), 1000);
+                }
+            });
         } else {
-            IRecipeSlotBuilder inputSlotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, xPos, 1).setBackground(slotBackground, -1, -1);
-            IIngredientAcceptor<?> outputSlotBuilder = builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT);
-            addListedIngredient(recipe.getAllMaterialItems(), inputSlotBuilder);
-            addListedOutput(recipe.getAllMaterialItems(), outputSlotBuilder);
+            layoutMaterialOutput(recipe.getAllMaterialItems()).forEach(layoutEntry -> {
+                IRecipeSlotBuilder slotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, (getBackground().getWidth() / 2) + layoutEntry.posX() + 1, 1).setBackground(slotBackground, -1, -1);
+                if (!layoutEntry.items.isEmpty()) {
+                    addListedOutput(layoutEntry.items, slotBuilder);
+                }
+            });
         }
 
         addElements(recipe.getSubCompositions(), builder);
@@ -122,27 +110,6 @@ public class ElementCompositionCategory extends CreateRecipeCategory<ElementComp
 
     private static <T> void addIngredient(Item item, IIngredientAcceptor<?> slotBuilder) {
         slotBuilder.addItemStack(item.getDefaultInstance());
-    }
-
-    private static <T> void addListedIngredient(List<ItemStack> stacks, IIngredientAcceptor<?> slotBuilder) {
-        slotBuilder.addItemStacks(stacks);
-    }
-
-    private static <T> void addBucketAndFluid(Item item, IIngredientAcceptor<?> slotBuilder, IIngredientAcceptor<?> fluidSlotBuilder) {
-        if (item instanceof BucketItem bucketItem) {
-            slotBuilder.addItemStack(bucketItem.getDefaultInstance());
-            fluidSlotBuilder.addFluidStack(bucketItem.getFluid(), 1000);
-        } else {
-            throw new IllegalArgumentException("Item must be a BucketItem");
-        }
-    }
-
-    private static <T> void addOutput(Item item, IIngredientAcceptor<?> slotBuilder) {
-        if (item instanceof BucketItem bucketItem) {
-            slotBuilder.addFluidStack(bucketItem.getFluid(), 1000).addItemStack(item.getDefaultInstance());
-        } else {
-            slotBuilder.addItemStack(item.getDefaultInstance());
-        }
     }
 
     private <T> void addElements(List<SubComposition> subCompositions, IRecipeLayoutBuilder builder) {
@@ -169,13 +136,44 @@ public class ElementCompositionCategory extends CreateRecipeCategory<ElementComp
     private List<LayoutEntry> layoutOutput(Map<Element, Integer> elements, int totalElementsAmount) {
         int size = elements.size();
         List<LayoutEntry> positions = new ArrayList<>(size);
-        LayoutHelper layout = LayoutHelper.centeredHorizontal(size, 1, 18, 18, 0);
+        LayoutHelper layout = LayoutHelper.centeredHorizontal(size, 1, 18, 18, 1);
         for (Map.Entry<Element, Integer> element : elements.entrySet()) {
             float percentage = (float) element.getValue() / totalElementsAmount;
             positions.add(new LayoutEntry(element.getKey(), percentage, layout.getX(), layout.getY()));
             layout.next();
         }
 
+        return positions;
+    }
+
+    private List<ItemFluidLayoutEntry> layoutItemFluidOutput(ItemStack item) {
+        int size = 1;
+        FluidStack fluid = item.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).map(handler -> {
+            if (handler.getFluidInTank(0).isEmpty()) {
+                return null;
+            }
+            return handler.getFluidInTank(0);
+        }).orElse(null);
+        if (fluid != null) size = 2;
+        List<ItemFluidLayoutEntry> positions = new ArrayList<>(size);
+        LayoutHelper layout = LayoutHelper.centeredHorizontal(size, 1, 18, 18, 1);
+        if (!item.isEmpty()) {
+            positions.add(new ItemFluidLayoutEntry(item, null, layout.getX(), layout.getY()));
+            layout.next();
+        }
+        if (fluid != null && !fluid.isEmpty()) {
+            positions.add(new ItemFluidLayoutEntry(null, fluid, layout.getX(), layout.getY()));
+            layout.next();
+        }
+        return positions;
+    }
+
+    private List<MaterialLayoutEntry> layoutMaterialOutput(List<ItemStack> items) {
+        int size = 1;
+        List<MaterialLayoutEntry> positions = new ArrayList<>(size);
+        LayoutHelper layout = LayoutHelper.centeredHorizontal(size, 1, 18, 18, 0);
+        positions.add(new MaterialLayoutEntry(items, layout.getX(), layout.getY()));
+        layout.next();
         return positions;
     }
 
@@ -193,6 +191,19 @@ public class ElementCompositionCategory extends CreateRecipeCategory<ElementComp
     private record LayoutEntry(
             Element output,
             float percentage,
+            int posX,
+            int posY
+    ) {}
+
+    private record ItemFluidLayoutEntry(
+            @Nullable ItemStack item,
+            @Nullable FluidStack fluid,
+            int posX,
+            int posY
+    ) {}
+
+    private record MaterialLayoutEntry(
+            List<ItemStack> items,
             int posX,
             int posY
     ) {}

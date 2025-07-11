@@ -12,6 +12,7 @@ import com.freezedown.metallurgica.compat.jei.custom.element.ElementIngredientRe
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
 import com.simibubi.create.AllBlocks;
@@ -19,11 +20,9 @@ import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.forge.ForgeTypes;
+import mezz.jei.api.helpers.IColorHelper;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.registration.IModIngredientRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
 import mezz.jei.common.platform.IPlatformFluidHelperInternal;
@@ -81,8 +80,16 @@ public class MetallurgicaJei implements IModPlugin {
 
     @Override
     public void registerIngredients(IModIngredientRegistration registration) {
-        IPlatformFluidHelperInternal<?> platformFluidHelper = Services.PLATFORM.getFluidHelper();
-        registration.register(MetallurgicaJeiConstants.ELEMENT, MetallurgicaRegistries.registeredElements.values(), new ElementIngredientHelper(), new ElementIngredientRenderer(16));
+        IColorHelper colorHelper = registration.getColorHelper();
+        registration.register(MetallurgicaJeiConstants.ELEMENT, MetallurgicaRegistries.registeredElements.values(), new ElementIngredientHelper(colorHelper), new ElementIngredientRenderer(16));
+    }
+
+    @Override
+    public void registerIngredientAliases(IIngredientAliasRegistration registration) {
+        registration.addAliases(
+                MetallurgicaJeiConstants.ELEMENT,
+                MetallurgicaRegistries.registeredElements.values(),
+                "element");
     }
 
     @Override
@@ -107,7 +114,7 @@ public class MetallurgicaJei implements IModPlugin {
         allCategories.add(
                 builder(ElementCompositionRecipe.class)
                         .addRecipes(() -> ElementCompositionCategory.COMPOSITIONS)
-                        .emptyBackground(177, 103)
+                        .emptyBackground(177, 50)
                         .build("item_compositions", ElementCompositionCategory::new)
         );
         allCategories.add(

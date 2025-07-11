@@ -1,5 +1,6 @@
 {
-  "type": "metallurgica:floatation_catalyst",
+  "type": "metallurgica:flotation_catalyst",
+  "efficiencyMultiplier": 1.0,
   "ingredients": [
     {
       "amount": 1,
@@ -7,6 +8,5 @@
       "nbt": {}
     }
   ],
-  "operationId": "metallurgica:air_floatation",
   "results": []
 }
