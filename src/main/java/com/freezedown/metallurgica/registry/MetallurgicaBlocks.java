@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.registry;
 
 import com.freezedown.metallurgica.Metallurgica;
+import com.freezedown.metallurgica.content.blocks.SaltBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
 import com.freezedown.metallurgica.content.fluids.channel.channel_depot.ChannelDepotGenerator;
 import com.freezedown.metallurgica.content.fluids.fluid_shower.FluidShowerBlock;
@@ -41,6 +42,7 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.*;
@@ -445,6 +447,16 @@ public class MetallurgicaBlocks {
                                     .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))
             .item()
             .model((c, p) -> p.cubeColumn(c.getName(), p.modLoc("block/palettes/minerals/layered_coal/side_0"), p.modLoc("block/palettes/minerals/layered_coal/top_0")))
+            .build()
+            .register();
+
+    public static final BlockEntry<SaltBlock> saltBlock = registrate.block("salt_block", SaltBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.sound(SoundType.SAND))
+            .tag(BlockTags.MINEABLE_WITH_SHOVEL)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/nozzle/small"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/nozzle/small")))
             .build()
             .register();
 

@@ -71,6 +71,7 @@ public class MetallurgicaFluids {
             chlorine = gas("chlorine", 0xffDBD971, AllTags.forgeFluidTag("chlorine"));
     
     public static final FluidEntry<ForgeFlowingFluid.Flowing> claySlip = flowing("clay_slip", 0xff725537);
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> brine = flowing("brine", 0xff599fd3, AllTags.forgeFluidTag("brine"));
 
     public static Collection<RegistryEntry<Fluid>> ALL = registrate.getAll(ForgeRegistries.FLUIDS.getRegistryKey());
 

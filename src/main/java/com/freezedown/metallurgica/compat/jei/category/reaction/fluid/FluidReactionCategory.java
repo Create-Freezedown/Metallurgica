@@ -56,6 +56,13 @@ public class FluidReactionCategory implements IRecipeCategory<FluidReactionRecip
         this.arrow = guiHelper.createDrawable(TEXTURE, 0, 0, ARROW_WIDTH, ARROW_HEIGHT);
     }
 
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    public int getHeight() {
+        return HEIGHT;
+    }
     @Override
     public RecipeType<FluidReactionRecipe> getRecipeType() {
         return MetallurgicaJeiRecipeTypes.FLUID_REACTION;
