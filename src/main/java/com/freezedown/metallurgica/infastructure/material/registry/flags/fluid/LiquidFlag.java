@@ -9,6 +9,7 @@ import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IS
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ISpecialLangSuffix;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IFluidRegistry;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +24,7 @@ public class LiquidFlag extends FluidFlag implements ISpecialAssetLocation, ISpe
     }
 
     @Override
-    public FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, IFluidRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
         return registrate.materialVirtualFluid(this.getIdPattern().formatted(material.getName()), Metallurgica.asResource("fluid/thin_fluid_still"), Metallurgica.asResource("fluid/thin_fluid_flow"), material, flag)
                 .register();
     }

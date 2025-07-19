@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.foundation.material.block;
 
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IBlockRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -11,12 +12,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 public class AxisMaterialBlock extends MaterialBlock{
 
-    public AxisMaterialBlock(Properties properties, Material material, BlockFlag blockFlag, boolean registerModel) {
+    public AxisMaterialBlock(Properties properties, Material material, IBlockRegistry blockFlag, boolean registerModel) {
         super(properties, material, blockFlag, registerModel);
         this.registerDefaultState(this.defaultBlockState().setValue(AXIS, Direction.Axis.Y));
     }
 
-    public AxisMaterialBlock(Properties properties, Material material, BlockFlag blockFlag) {
+    public AxisMaterialBlock(Properties properties, Material material, IBlockRegistry blockFlag) {
         this(properties, material, blockFlag, true);
     }
 

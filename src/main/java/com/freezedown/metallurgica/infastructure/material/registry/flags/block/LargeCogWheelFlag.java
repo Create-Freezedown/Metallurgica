@@ -10,6 +10,9 @@ import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IBlockRegistry;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IPartialHolder;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.ISpecialAssetGen;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockModel;
@@ -22,16 +25,12 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaModels.*;
 
@@ -56,7 +55,7 @@ public class LargeCogWheelFlag extends BlockFlag implements IPartialHolder, ISpe
     }
 
     @Override
-    public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, IBlockRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
         NonNullFunction<BlockBehaviour.Properties, MaterialCogWheelBlock> factory = (p) -> MaterialCogWheelBlock.large(material, flag, p);
         return registrate.block(getIdPattern().formatted(material.getName()), factory)
                 .initialProperties(SharedProperties::stone)

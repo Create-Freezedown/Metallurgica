@@ -8,6 +8,7 @@ import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IS
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IItemRegistry;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
@@ -37,7 +38,7 @@ public class MineralFlag extends ItemFlag implements ISpecialLangSuffix {
     }
 
     @Override
-    public ItemEntry<? extends IMaterialItem> registerItem(@NotNull Material material, ItemFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public ItemEntry<? extends IMaterialItem> registerItem(@NotNull Material material, IItemRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
         return registrate
                 .item(flag.getIdPattern().formatted(material.getName()), (p) -> new MaterialItem(p, material, flag))
                 .setData(ProviderType.LANG, NonNullBiConsumer.noop())

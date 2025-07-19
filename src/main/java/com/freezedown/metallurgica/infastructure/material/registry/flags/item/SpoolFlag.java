@@ -1,15 +1,14 @@
 package com.freezedown.metallurgica.infastructure.material.registry.flags.item;
 
 import com.drmangotea.tfmg.content.electricity.connection.cables.CableConnection;
-import com.drmangotea.tfmg.content.machinery.misc.winding_machine.WindingMachineRenderer;
 import com.drmangotea.tfmg.registry.TFMGItems;
-import com.drmangotea.tfmg.registry.TFMGPartialModels;
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.config.TFMGConductor;
 import com.freezedown.metallurgica.foundation.material.item.IMaterialItem;
 import com.freezedown.metallurgica.foundation.material.item.MaterialSpoolItem;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.IPartialHolder;
-import com.freezedown.metallurgica.infastructure.material.scrapping.Scrappable;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IItemRegistry;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IPartialHolder;
+import com.freezedown.metallurgica.infastructure.material.scrapping.IScrappable;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
@@ -19,13 +18,12 @@ import com.freezedown.metallurgica.infastructure.material.registry.flags.base.Ma
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorEntry;
-import com.freezedown.metallurgica.registry.material.init.MetMaterialPartialModels;
+import com.freezedown.metallurgica.infastructure.material.scrapping.ScrappingData;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import lombok.Getter;
 import net.createmod.catnip.data.Pair;
 import net.createmod.catnip.theme.Color;
@@ -46,7 +44,7 @@ import static com.freezedown.metallurgica.foundation.data.runtime.assets.Metallu
 import static com.freezedown.metallurgica.infastructure.material.MaterialHelper.getNameForRecipe;
 import static com.tterrag.registrate.providers.RegistrateRecipeProvider.has;
 
-public class SpoolFlag extends ItemFlag implements IRecipeHandler, Scrappable, IPartialHolder {
+public class SpoolFlag extends ItemFlag implements IRecipeHandler, IScrappable, IPartialHolder {
 
     @Getter
     private Pair<int[],int[]> colors;
@@ -71,7 +69,7 @@ public class SpoolFlag extends ItemFlag implements IRecipeHandler, Scrappable, I
     }
 
     @Override
-    public ItemEntry<? extends IMaterialItem> registerItem(@NotNull Material material, ItemFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public ItemEntry<? extends IMaterialItem> registerItem(@NotNull Material material, IItemRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
         if (colors == null) {
             colors = Pair.of(new int[]{0,0,0}, new int[]{0,0,0});
         }
@@ -95,7 +93,8 @@ public class SpoolFlag extends ItemFlag implements IRecipeHandler, Scrappable, I
     public void run(@NotNull Consumer<FinishedRecipe> provider, @NotNull Material material) {
         var wire = MaterialHelper.getItem(material, FlagKey.WIRE);
         var spool = MaterialHelper.getItem(material, getKey());
-        if (!material.getFlag(getKey()).getExistingId(material).getNamespace().equals(material.getNamespace())) return;
+        SpoolFlag spoolFlag = (SpoolFlag) material.getFlag(getKey());
+        if (!spoolFlag.getExistingId(material).getNamespace().equals(material.getNamespace())) return;
         ShapedRecipeBuilder builder = new ShapedRecipeBuilder(RecipeCategory.MISC, spool, 1);
         builder.pattern("WWW").pattern("WSW").pattern("WWW")
                 .define('W', wire).define('S', TFMGItems.EMPTY_SPOOL);
@@ -105,18 +104,11 @@ public class SpoolFlag extends ItemFlag implements IRecipeHandler, Scrappable, I
     }
 
     @Override
-    public Map<Material, Integer> scrapsInto(Material mainMaterial) {
-        return Map.of(mainMaterial, 3);
-    }
-
-    @Override
-    public Map<Material, Pair<Integer, Float>> discardChance(Material mainMaterial) {
-        return Map.of(mainMaterial, Pair.of(1, 0.5f));
-    }
-
-    @Override
-    public Map<ItemLike, Pair<Integer, Float>> extraItems(Material mainMaterial) {
-        return Map.of(TFMGItems.EMPTY_SPOOL, Pair.of(1, 0.25f), MaterialHelper.getItem(mainMaterial, FlagKey.WIRE), Pair.of(1, 0.15f));
+    public ScrappingData getScrappingData(Material mainMaterial) {
+        return ScrappingData.create()
+                .addOutput(mainMaterial, 3, 1, 0.5f)
+                .addExtraOutput(TFMGItems.EMPTY_SPOOL, 0.25f)
+                .addExtraOutput(mainMaterial, FlagKey.WIRE, 1, 0.15f);
     }
 
     @Override

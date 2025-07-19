@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.foundation.material.item;
 
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IFluidRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -16,9 +17,9 @@ import java.util.function.Supplier;
 
 public class MaterialBucketItem extends BucketItem {
     public final Material material;
-    public final FluidFlag fluidFlag;
+    public final IFluidRegistry fluidFlag;
 
-    public MaterialBucketItem(Supplier<? extends Fluid> supplier, Properties builder, Material material, FluidFlag flag) {
+    public MaterialBucketItem(Supplier<? extends Fluid> supplier, Properties builder, Material material, IFluidRegistry flag) {
         super(supplier, builder);
         this.material = material;
         this.fluidFlag = flag;

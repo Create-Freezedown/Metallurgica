@@ -1,9 +1,8 @@
 package com.freezedown.metallurgica.registry.material.init;
 
-import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.block.IPartialHolder;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IPartialHolder;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;

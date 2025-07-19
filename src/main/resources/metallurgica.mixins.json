@@ -16,6 +16,8 @@
     "accessor.KineticBlockEntityAccessor",
     "accessor.WindingMachineBlockEntityAccessor",
     "emi.FluidEmiStackMixin",
+    "jei.CreateRecipeCategoryAccessor",
+    "jei.CrushingCategoryMixin",
     "jei.FluidHelperMixin",
     "tfmg.CastingBasinBlockEntityMixin",
     "tfmg.WindingMachineRendererMixin",

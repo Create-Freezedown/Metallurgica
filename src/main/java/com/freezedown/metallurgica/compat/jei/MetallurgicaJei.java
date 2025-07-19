@@ -6,17 +6,24 @@ import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompos
 import com.freezedown.metallurgica.compat.jei.category.composition.ElementCompositionRecipe;
 import com.freezedown.metallurgica.compat.jei.category.RecipeCategoryBuilder;
 import com.freezedown.metallurgica.compat.jei.category.reaction.fluid.FluidReactionCategory;
+import com.freezedown.metallurgica.compat.jei.category.scrapping.ScrappingCategory;
 import com.freezedown.metallurgica.compat.jei.category.shaking.ShakingCategory;
 import com.freezedown.metallurgica.compat.jei.custom.element.ElementIngredientHelper;
 import com.freezedown.metallurgica.compat.jei.custom.element.ElementIngredientRenderer;
 import com.freezedown.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
+import com.freezedown.metallurgica.infastructure.material.MaterialHelper;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.registry.*;
+import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaElements;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.freezedown.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+import com.simibubi.create.content.kinetics.crusher.CrushingRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.forge.ForgeTypes;
@@ -111,6 +118,14 @@ public class MetallurgicaJei implements IModPlugin {
 
     private void loadCategories(IRecipeCategoryRegistration registration) {
         allCategories.clear();
+        allCategories.add(
+                builder(CrushingRecipe.class)
+                        .addTypedRecipes(AllRecipeTypes.CRUSHING)
+                        .catalyst(AllBlocks.CRUSHING_WHEEL::get)
+                        .doubleItemIcon(AllBlocks.CRUSHING_WHEEL.get(), MaterialHelper.getItem(MetMaterials.COPPER.get(), FlagKey.DUST))
+                        .emptyBackground(177, 100)
+                        .build("scrapping", ScrappingCategory::new)
+        );
         allCategories.add(
                 builder(ElementCompositionRecipe.class)
                         .addRecipes(() -> ElementCompositionCategory.COMPOSITIONS)

@@ -97,11 +97,6 @@ public class FlagKey<T extends IMaterialFlag> {
         }
 
         @Override
-        public ResourceLocation getExistingId(Material material) {
-            return new ResourceLocation("metallurgica", "empty");
-        }
-
-        @Override
         public FlagKey<?> getKey() {
             return FlagKey.EMPTY;
         }

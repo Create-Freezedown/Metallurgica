@@ -33,11 +33,7 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
     @NotNull
     private final MaterialFlags flags;
 
-    @Setter
-    @Getter
-    private boolean shouldRegister = true;
-
-    private Material(@NotNull MaterialInfo materialInfo, @NotNull MaterialFlags flags) {
+    public Material(@NotNull MaterialInfo materialInfo, @NotNull MaterialFlags flags) {
         this.materialInfo = materialInfo;
         this.flags = flags;
         this.flags.setMaterial(this);
@@ -65,11 +61,14 @@ public class Material implements Comparable<Material>, IHasDescriptionId {
     }
 
     public boolean noRegister(FlagKey<? extends IMaterialFlag> flag) {
+        if (!shouldRegister()) {
+            return true;
+        }
         return flags.getNoRegister().contains(flag);
     }
 
-    public void registerWhen(ConfigBase.ConfigBool config) {
-        shouldRegister(config.get());
+    public boolean shouldRegister() {
+        return true;
     }
 
     public List<SubComposition> getComposition() {

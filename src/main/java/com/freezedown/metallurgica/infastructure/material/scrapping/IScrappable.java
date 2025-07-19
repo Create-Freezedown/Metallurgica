@@ -6,9 +6,7 @@ import net.minecraft.world.level.ItemLike;
 
 import java.util.Map;
 
-public interface Scrappable {
+public interface IScrappable {
 
-    Map<Material, Integer> scrapsInto(Material mainMaterial);
-    Map<Material, Pair<Integer, Float>> discardChance(Material mainMaterial);
-    Map<ItemLike, Pair<Integer, Float>> extraItems(Material mainMaterial);
+    ScrappingData getScrappingData(Material mainMaterial);
 }

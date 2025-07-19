@@ -7,6 +7,7 @@ import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.RegisterElsewhere;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IItemRegistry;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
@@ -22,17 +23,17 @@ public class MetMaterialItems {
             for (FlagKey<?> flagKey : FlagKey.getAllFlags()) {
                 var flag = material.getFlag(flagKey);
                 if (!material.noRegister(flagKey)) {
-                    if (flag instanceof ItemFlag itemFlag) {
-                        if (itemFlag.getClass().isAnnotationPresent(RegisterElsewhere.class)) continue;
-                        registerMaterialItem(material, itemFlag, flagKey, registrate);
+                    if (flag instanceof IItemRegistry itemRegistry) {
+                        if (flag.getClass().isAnnotationPresent(RegisterElsewhere.class)) continue;
+                        registerMaterialItem(material, itemRegistry, flagKey, registrate);
                     }
                 }
             }
         }
     }
 
-    public static void registerMaterialItem(Material material, ItemFlag flag, FlagKey<?> flagKey, MetallurgicaRegistrate registrate) {
-        MATERIAL_ITEMS_BUILDER.put(flagKey, material, flag.registerItem(material, flag, registrate));
+    public static void registerMaterialItem(Material material, IItemRegistry itemRegistry, FlagKey<?> flagKey, MetallurgicaRegistrate registrate) {
+        MATERIAL_ITEMS_BUILDER.put(flagKey, material, itemRegistry.registerItem(material, itemRegistry, registrate));
     }
 
 }

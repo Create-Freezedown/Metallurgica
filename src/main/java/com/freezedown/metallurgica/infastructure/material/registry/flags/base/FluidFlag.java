@@ -5,6 +5,8 @@ import com.freezedown.metallurgica.foundation.data.runtime.assets.MetallurgicaMo
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.util.TextUtil;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IFluidRegistry;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IIdPattern;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import lombok.Getter;
 import net.minecraft.network.chat.Component;
@@ -12,8 +14,9 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class FluidFlag implements IMaterialFlag, IIdPattern {
-    @Getter
+@Getter
+
+public abstract class FluidFlag implements IMaterialFlag, IFluidRegistry {
     private final String idPattern;
     private String existingNamespace = "metallurgica";
 
@@ -26,23 +29,11 @@ public abstract class FluidFlag implements IMaterialFlag, IIdPattern {
         this.existingNamespace = existingNamespace;
     }
 
-    public abstract FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate);
+    public abstract FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, IFluidRegistry flag, @NotNull MetallurgicaRegistrate registrate);
 
+    @Override
     public String getUnlocalizedName() {
         return "materialflag." + (this instanceof ISpecialLangSuffix suffix ? suffix.getLangSuffix() : MetallurgicaModels.getFlagName(getKey()));
-    }
-
-    public MutableComponent getLocalizedName(Material material) {
-        return Component.translatable(getUnlocalizedName(material), material.getDisplayName());
-    }
-
-    public String getUnlocalizedName(Material material) {
-        String matSpecificKey = String.format("fluid.%s.%s", material.getNamespace(), this.idPattern.formatted(material.getName()));
-        if (TextUtil.langExists(matSpecificKey)) {
-            return matSpecificKey;
-        }
-
-        return getUnlocalizedName();
     }
 
     public ResourceLocation getExistingId(Material material) {

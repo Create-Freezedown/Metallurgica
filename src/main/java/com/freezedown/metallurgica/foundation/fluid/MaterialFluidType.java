@@ -2,6 +2,7 @@ package com.freezedown.metallurgica.foundation.fluid;
 
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IFluidRegistry;
 import com.tterrag.registrate.builders.FluidBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -16,12 +17,12 @@ import java.util.function.Consumer;
 
 public class MaterialFluidType extends FluidType {
     public final Material material;
-    public final FluidFlag fluidFlag;
+    public final IFluidRegistry fluidFlag;
     private ResourceLocation stillTexture;
     private ResourceLocation flowingTexture;
     private boolean shouldTint;
 
-    public MaterialFluidType(Properties properties, Material material, FluidFlag flag, ResourceLocation stillTexture, ResourceLocation flowingTexture, boolean shouldTint) {
+    public MaterialFluidType(Properties properties, Material material, IFluidRegistry flag, ResourceLocation stillTexture, ResourceLocation flowingTexture, boolean shouldTint) {
         super(properties);
         this.material = material;
         this.fluidFlag = flag;
@@ -30,11 +31,11 @@ public class MaterialFluidType extends FluidType {
         this.shouldTint = shouldTint;
     }
 
-    public static FluidBuilder.FluidTypeFactory create(Material material, FluidFlag flag) {
+    public static FluidBuilder.FluidTypeFactory create(Material material, IFluidRegistry flag) {
         return (p, s, f) -> new MaterialFluidType(p, material, flag, s, f, true);
     }
 
-    public static FluidBuilder.FluidTypeFactory create(Material material, FluidFlag flag, boolean shouldTint) {
+    public static FluidBuilder.FluidTypeFactory create(Material material, IFluidRegistry flag, boolean shouldTint) {
         return (p, s, f) -> new MaterialFluidType(p, material, flag, s, f, shouldTint);
     }
 

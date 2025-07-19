@@ -7,6 +7,7 @@ import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IFluidRegistry;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
@@ -48,7 +49,7 @@ public class MoltenFlag extends FluidFlag {
     }
 
     @Override
-    public FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, FluidFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, IFluidRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
         return registrate.moltenMetal(this.getIdPattern().formatted(material.getName()), material, flag, meltingPoint)
                 .bucket((sup, p) -> new MaterialBucketItem(sup, p, material, flag))
                 .setData(ProviderType.LANG, NonNullBiConsumer.noop())

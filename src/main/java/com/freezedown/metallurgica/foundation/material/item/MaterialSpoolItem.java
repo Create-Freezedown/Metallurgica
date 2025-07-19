@@ -4,15 +4,16 @@ import com.drmangotea.tfmg.content.electricity.connection.cables.CableConnection
 import com.drmangotea.tfmg.content.machinery.misc.winding_machine.SpoolItem;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IItemRegistry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 
 public class MaterialSpoolItem extends SpoolItem implements IMaterialItem {
     public final Material material;
-    public final ItemFlag itemFlag;
+    public final IItemRegistry itemFlag;
 
-    public MaterialSpoolItem(Properties properties, PartialModel model, int barColor, CableConnection.CableType type, Material material, ItemFlag itemFlag) {
+    public MaterialSpoolItem(Properties properties, PartialModel model, int barColor, CableConnection.CableType type, Material material, IItemRegistry itemFlag) {
         super(properties, model, barColor, type);
         this.material = material;
         this.itemFlag = itemFlag;
@@ -44,7 +45,7 @@ public class MaterialSpoolItem extends SpoolItem implements IMaterialItem {
     }
 
     @Override
-    public ItemFlag getFlag() {
+    public IItemRegistry getFlag() {
         return this.itemFlag;
     }
 

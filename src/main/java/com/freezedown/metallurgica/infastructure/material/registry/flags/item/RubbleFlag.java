@@ -11,6 +11,7 @@ import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IR
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IItemRegistry;
 import com.simibubi.create.content.kinetics.crusher.CrushingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.tterrag.registrate.providers.ProviderType;
@@ -53,7 +54,7 @@ public class RubbleFlag extends ItemFlag implements IRecipeHandler {
     }
 
     @Override
-    public ItemEntry<? extends IMaterialItem> registerItem(@NotNull Material material, ItemFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public ItemEntry<? extends IMaterialItem> registerItem(@NotNull Material material, IItemRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
         return registrate
                 .item(flag.getIdPattern().formatted(material.getName()), (p) -> new MaterialItem(p, material, flag))
                 .setData(ProviderType.LANG, NonNullBiConsumer.noop())

@@ -3,7 +3,7 @@ package com.freezedown.metallurgica.foundation.material.block;
 import com.freezedown.metallurgica.foundation.client.renderer.MaterialBlockRenderer;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.freezedown.metallurgica.infastructure.material.Material;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IBlockRegistry;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
@@ -39,9 +39,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class MaterialCogWheelBlock extends AbstractSimpleShaftBlock implements ICogWheel, EncasableBlock, IMaterialBlock {
     public boolean isLarge;
     public final Material material;
-    public final BlockFlag blockFlag;
+    public final IBlockRegistry blockFlag;
 
-    protected MaterialCogWheelBlock(Material material, BlockFlag blockFlag, boolean large, Properties properties, boolean registerModel) {
+    protected MaterialCogWheelBlock(Material material, IBlockRegistry blockFlag, boolean large, Properties properties, boolean registerModel) {
         super(properties);
         this.material = material;
         this.blockFlag = blockFlag;
@@ -51,11 +51,11 @@ public class MaterialCogWheelBlock extends AbstractSimpleShaftBlock implements I
         }
     }
 
-    public static MaterialCogWheelBlock small(Material material, BlockFlag blockFlag, Properties properties) {
+    public static MaterialCogWheelBlock small(Material material, IBlockRegistry blockFlag, Properties properties) {
         return new MaterialCogWheelBlock(material, blockFlag, false, properties, true);
     }
 
-    public static MaterialCogWheelBlock large(Material material, BlockFlag blockFlag, Properties properties) {
+    public static MaterialCogWheelBlock large(Material material, IBlockRegistry blockFlag, Properties properties) {
         return new MaterialCogWheelBlock(material, blockFlag, true, properties, true);
     }
 
@@ -185,7 +185,7 @@ public class MaterialCogWheelBlock extends AbstractSimpleShaftBlock implements I
     }
 
     @Override
-    public BlockFlag getFlag() {
+    public IBlockRegistry getFlag() {
         return this.blockFlag;
     }
 

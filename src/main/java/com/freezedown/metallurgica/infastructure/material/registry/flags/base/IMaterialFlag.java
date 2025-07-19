@@ -10,5 +10,5 @@ public interface IMaterialFlag {
 
     void verifyFlag(MaterialFlags flags);
 
-    ResourceLocation getExistingId(Material material);
+    //ResourceLocation getExistingId(Material material);
 }

@@ -4,6 +4,7 @@ import com.freezedown.metallurgica.foundation.client.renderer.MaterialBlockRende
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IBlockRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.Block;
@@ -12,11 +13,11 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public class MaterialBlock extends Block implements IMaterialBlock {
     public final Material material;
-    public final BlockFlag blockFlag;
+    public final IBlockRegistry blockFlag;
 
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
 
-    public MaterialBlock(Properties properties, Material material, BlockFlag blockFlag, boolean registerModel) {
+    public MaterialBlock(Properties properties, Material material, IBlockRegistry blockFlag, boolean registerModel) {
         super(properties);
         this.material = material;
         this.blockFlag = blockFlag;
@@ -35,7 +36,7 @@ public class MaterialBlock extends Block implements IMaterialBlock {
         return blockFlag.getLocalizedName(material);
     }
 
-    public MaterialBlock(Properties properties, Material material, BlockFlag blockFlag) {
+    public MaterialBlock(Properties properties, Material material, IBlockRegistry blockFlag) {
         this(properties, material, blockFlag, true);
     }
 
@@ -45,7 +46,7 @@ public class MaterialBlock extends Block implements IMaterialBlock {
     }
 
     @Override
-    public BlockFlag getFlag() {
+    public IBlockRegistry getFlag() {
         return this.blockFlag;
     }
 }

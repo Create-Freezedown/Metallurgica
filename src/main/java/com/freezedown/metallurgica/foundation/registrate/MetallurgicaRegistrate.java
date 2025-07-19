@@ -14,6 +14,7 @@ import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
 import com.freezedown.metallurgica.infastructure.element.Element;
 import com.freezedown.metallurgica.infastructure.element.ElementBuilder;
 import com.freezedown.metallurgica.infastructure.material.MaterialBuilder;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IFluidRegistry;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
@@ -110,15 +111,15 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return virtualFluid(name, still, flow, TransparentTintedFluidType.create(color), VirtualFluid::createSource, VirtualFluid::createFlowing);
     }
 
-    public FluidBuilder<VirtualMaterialFluid, CreateRegistrate> materialVirtualFluid(String name, ResourceLocation still, ResourceLocation flow, Material material, FluidFlag flag) {
+    public FluidBuilder<VirtualMaterialFluid, CreateRegistrate> materialVirtualFluid(String name, ResourceLocation still, ResourceLocation flow, Material material, IFluidRegistry flag) {
         return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow, MaterialFluidType.create(material, flag), (p) -> VirtualMaterialFluid.createSource(p, material, flag), (p) -> VirtualMaterialFluid.createFlowing(p, material, flag)));
     }
 
-    public FluidBuilder<VirtualMaterialFluid, CreateRegistrate> materialVirtualFluid(String name, ResourceLocation still, ResourceLocation flow, Material material, FluidFlag flag, boolean tint) {
+    public FluidBuilder<VirtualMaterialFluid, CreateRegistrate> materialVirtualFluid(String name, ResourceLocation still, ResourceLocation flow, Material material, IFluidRegistry flag, boolean tint) {
         return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow, MaterialFluidType.create(material, flag, tint), (p) -> VirtualMaterialFluid.createSource(p, material, flag), (p) -> VirtualMaterialFluid.createFlowing(p, material, flag)));
     }
 
-    public FluidBuilder<MoltenMetalFluid, CreateRegistrate> moltenMetal(String name, Material material, FluidFlag flag, double moltenTemperature) {
+    public FluidBuilder<MoltenMetalFluid, CreateRegistrate> moltenMetal(String name, Material material, IFluidRegistry flag, double moltenTemperature) {
         ResourceLocation still = Metallurgica.asResource("fluid/molten_metal_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/molten_metal_flow");
         return entry(name, c -> new VirtualFluidBuilder<>(self(), self(), name, c, still, flow,

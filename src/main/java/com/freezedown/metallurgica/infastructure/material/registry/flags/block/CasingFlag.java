@@ -1,8 +1,6 @@
 package com.freezedown.metallurgica.infastructure.material.registry.flags.block;
 
-import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.foundation.data.runtime.RuntimeProcessingRecipeBuilder;
-import com.freezedown.metallurgica.foundation.data.runtime.recipe.handler.ItemApplicationHandler;
 import com.freezedown.metallurgica.foundation.material.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.material.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.material.block.MaterialBlockItem;
@@ -14,12 +12,13 @@ import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IR
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IBlockRegistry;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IHaveConnectedTextures;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -33,7 +32,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -72,7 +70,7 @@ public class CasingFlag extends BlockFlag implements IHaveConnectedTextures, IRe
     }
 
     @Override
-    public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, IBlockRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
         CTSpriteShiftEntry spriteShift = getSpriteShiftEntry(material);
         return registrate.block(getIdPattern().formatted(material.getName()), (p) -> new MaterialBlock(p, material, flag))
                 .initialProperties(SharedProperties::stone)

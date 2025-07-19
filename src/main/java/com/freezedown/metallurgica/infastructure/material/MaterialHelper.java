@@ -4,12 +4,11 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.base.IIdPattern;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IIdPattern;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -98,8 +97,7 @@ public class MaterialHelper {
 
     public static Item getItem(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
-        if (!(material.getFlag(flagKey) instanceof ItemFlag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not an item flag");
-        var flag = material.getFlag(flagKey);
+        if (!(material.getFlag(flagKey) instanceof ItemFlag flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not an item flag");
         ResourceLocation resultId = flag.getExistingId(material);
         Item item = BuiltInRegistries.ITEM.get(resultId);
         if (item == null) throw new RuntimeException("No valid item of flag: " + flagKey.toString() + " found for material: " + material.getId());
@@ -108,8 +106,7 @@ public class MaterialHelper {
 
     public static Block getBlock(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
-        if (!(material.getFlag(flagKey) instanceof BlockFlag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a block flag");
-        var flag = material.getFlag(flagKey);
+        if (!(material.getFlag(flagKey) instanceof BlockFlag flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a block flag");
         ResourceLocation resultId = flag.getExistingId(material);
         Block block = BuiltInRegistries.BLOCK.get(resultId);
         if (block == null) throw new RuntimeException("No valid block of flag: " + flagKey.toString() + " found for material: " + material.getId());
@@ -118,8 +115,7 @@ public class MaterialHelper {
 
     public static Fluid getFluid(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
-        if (!(material.getFlag(flagKey) instanceof FluidFlag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a fluid flag");
-        var flag = material.getFlag(flagKey);
+        if (!(material.getFlag(flagKey) instanceof FluidFlag flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a fluid flag");
         ResourceLocation resultId = flag.getExistingId(material);
         Fluid fluid = BuiltInRegistries.FLUID.get(resultId);
         if (fluid == null) throw new RuntimeException("No valid fluid of flag: " + flagKey.toString() + " found for material: " + material.getId());

@@ -3,12 +3,15 @@ package com.freezedown.metallurgica.infastructure.material.registry.flags.block;
 import com.freezedown.metallurgica.foundation.material.block.IMaterialBlock;
 import com.freezedown.metallurgica.foundation.material.block.MaterialBlock;
 import com.freezedown.metallurgica.foundation.material.block.MaterialBlockItem;
-import com.freezedown.metallurgica.infastructure.material.scrapping.Scrappable;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IBlockRegistry;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IHaveConnectedTextures;
+import com.freezedown.metallurgica.infastructure.material.scrapping.IScrappable;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
+import com.freezedown.metallurgica.infastructure.material.scrapping.ScrappingData;
 import com.freezedown.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
@@ -29,7 +32,7 @@ import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnect
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
-public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures, Scrappable {
+public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures, IScrappable {
 
     @Getter
     private boolean requiresCompacting = false;
@@ -50,7 +53,7 @@ public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures,
     }
 
     @Override
-    public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, BlockFlag flag, @NotNull MetallurgicaRegistrate registrate) {
+    public BlockEntry<? extends IMaterialBlock> registerBlock(@NotNull Material material, IBlockRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
         CTSpriteShiftEntry spriteShift = getSpriteShiftEntry(material);
         return registrate.block(getIdPattern().formatted(material.getName()), (p) -> new MaterialBlock(p, material, flag))
                 .initialProperties(SharedProperties::copperMetal)
@@ -87,17 +90,7 @@ public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures,
     }
 
     @Override
-    public Map<Material, Integer> scrapsInto(Material mainMaterial) {
-        return Map.of(mainMaterial, 9);
-    }
-
-    @Override
-    public Map<Material, Pair<Integer, Float>> discardChance(Material mainMaterial) {
-        return Map.of(mainMaterial, Pair.of(1, 0.25f));
-    }
-
-    @Override
-    public Map<ItemLike, Pair<Integer, Float>> extraItems(Material mainMaterial) {
-        return Map.of();
+    public ScrappingData getScrappingData(Material mainMaterial) {
+        return ScrappingData.create().addOutput(mainMaterial, 9, 1, 0.25f);
     }
 }

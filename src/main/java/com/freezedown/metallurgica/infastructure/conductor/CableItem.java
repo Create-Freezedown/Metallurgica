@@ -3,6 +3,7 @@ package com.freezedown.metallurgica.infastructure.conductor;
 import com.freezedown.metallurgica.foundation.material.item.IMaterialItem;
 import com.freezedown.metallurgica.infastructure.material.Material;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IItemRegistry;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -10,9 +11,9 @@ import net.minecraft.world.item.ItemStack;
 public class CableItem extends Item implements IMaterialItem {
     public ConductorEntry<?> conductorEntry;
     public final Material material;
-    public final ItemFlag itemFlag;
+    public final IItemRegistry itemFlag;
 
-    public CableItem(Properties properties, ConductorEntry<?> conductorEntry, Material material, ItemFlag itemFlag) {
+    public CableItem(Properties properties, ConductorEntry<?> conductorEntry, Material material, IItemRegistry itemFlag) {
         super(properties);
         this.conductorEntry = conductorEntry;
         this.material = material;
@@ -45,7 +46,7 @@ public class CableItem extends Item implements IMaterialItem {
     }
 
     @Override
-    public ItemFlag getFlag() {
+    public IItemRegistry getFlag() {
         return this.itemFlag;
     }
 }
