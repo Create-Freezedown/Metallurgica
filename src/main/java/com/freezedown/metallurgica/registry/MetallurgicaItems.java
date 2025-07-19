@@ -4,6 +4,8 @@ import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.content.items.sealed_storage.SealedBundleItem;
 import com.freezedown.metallurgica.content.items.temperature.ThermometerItem;
 import com.freezedown.metallurgica.content.metalworking.forging.hammer.ForgeHammerItem;
+import com.freezedown.metallurgica.foundation.item.lining.tank_lining.TankLiningItem;
+import com.freezedown.metallurgica.foundation.item.lining.tank_lining.TankLiningStats;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialItems;
@@ -106,6 +108,10 @@ public class MetallurgicaItems {
     // Kiln
     public static final ItemEntry<MetallurgicaItem> ceramicClay = registrate.metallurgicaItem("ceramic_clay");
     public static final ItemEntry<MetallurgicaItem> unfiredKilnBrick = registrate.metallurgicaItem("unfired_kiln_brick", "ingots");
+
+    public static final ItemEntry<TankLiningItem> rubberTankLining = registrate.item("rubber_tank_lining", (p) -> new TankLiningItem(p, new TankLiningStats(new TankLiningStats.LiningProperties(1200).corrosionResistant(1.0f))))
+            .properties(p -> p.stacksTo(1))
+            .register();
 
     public static void register() {
         MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);

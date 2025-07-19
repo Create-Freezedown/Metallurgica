@@ -33,6 +33,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 
@@ -107,7 +108,7 @@ public class SpoolFlag extends ItemFlag implements IRecipeHandler, IScrappable, 
     public ScrappingData getScrappingData(Material mainMaterial) {
         return ScrappingData.create()
                 .addOutput(mainMaterial, 3, 1, 0.5f)
-                .addExtraOutput(TFMGItems.EMPTY_SPOOL, 0.25f)
+                .addExtraOutput(Items.STICK, 0.25f)
                 .addExtraOutput(mainMaterial, FlagKey.WIRE, 1, 0.15f);
     }
 
