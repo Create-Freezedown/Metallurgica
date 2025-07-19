@@ -6,6 +6,8 @@
     {"type": "single", "resource": "metallurgica:fluid/molten_metal_still"},
     {"type": "single", "resource": "metallurgica:fluid/thin_fluid_flow"},
     {"type": "single", "resource": "metallurgica:fluid/thin_fluid_still"},
+    {"type": "single", "resource": "metallurgica:fluid/slick_fluid_flow"},
+    {"type": "single", "resource": "metallurgica:fluid/slick_fluid_still"},
     {"type": "single", "resource": "metallurgica:fluid/river_sand_flow"},
     {"type": "single", "resource": "metallurgica:fluid/river_sand_still"}
   ]

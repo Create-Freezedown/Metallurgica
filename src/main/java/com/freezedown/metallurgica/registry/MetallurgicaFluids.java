@@ -121,6 +121,7 @@ public class MetallurgicaFluids {
         return  registrate.acid(name, color, ph)
                 .tag(tags)
                 .tag(MetallurgicaTags.AllFluidTags.ACID.tag)
+                .lang(TextUtil.fromId(name))
                 .bucket()
                 .lang(TextUtil.fromId(name)+" Barrel")
                 .tag(AllTags.forgeItemTag("buckets/"+name))
@@ -140,11 +141,11 @@ public class MetallurgicaFluids {
             
         }
         
-        return  registrate.tintedVirtualFluid(name, color)
+        return  registrate.tintedVirtualFluid(name, color, "slick_fluid")
                 .tag(tags)
                 .tag(MetallurgicaTags.AllFluidTags.CHLORIDE.tag)
                 //  .source(GasFluid.Source::new)
-                
+                .lang(TextUtil.fromId(name))
                 .bucket()
                 .lang(TextUtil.fromId(name)+" Barrel")
                 .tag(AllTags.forgeItemTag("buckets/"+name))
@@ -168,7 +169,7 @@ public class MetallurgicaFluids {
                 .tag(tags)
                 .tag(MetallurgicaTags.AllFluidTags.GAS.tag)
                 //  .source(GasFluid.Source::new)
-                
+                .lang(TextUtil.fromId(name))
                 .bucket()
                 .lang(TextUtil.fromId(name)+" Tank")
                 .tag(AllTags.forgeItemTag("buckets/"+name))

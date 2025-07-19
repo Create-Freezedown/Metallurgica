@@ -18,6 +18,8 @@
   "metallurgica.jei.required_efficiency": "Required Efficiency: %s",
   "metallurgica.gui.goggles.temperature": "Temperature:",
   "metallurgica.jei.category.element_composition": "Element Compositions",
+  "recipe.metallurgica.scrapping": "Scrapping",
+  "recipe.metallurgica.shaking": "Shaking",
   "metallurgica.upset_up": "Upset (Up)",
   "metallurgica.upset_down": "Upset (Down)",
   "metallurgica.upset_left": "Upset (Left)",

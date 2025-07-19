@@ -2,10 +2,7 @@ package com.freezedown.metallurgica.infastructure.material;
 
 import com.freezedown.metallurgica.Metallurgica;
 import com.freezedown.metallurgica.infastructure.material.registry.flags.FlagKey;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.base.BlockFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.IIdPattern;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
+import com.freezedown.metallurgica.infastructure.material.registry.flags.base.interfaces.*;
 import com.freezedown.metallurgica.registry.material.MetMaterials;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -20,11 +17,17 @@ import java.util.*;
 public class MaterialHelper {
 
     public static List<Item> getAllItems(Material material) {
+        return getAllItems(material, false);
+    }
+
+    public static List<Item> getAllItems(Material material, boolean onlyChemicalTooltippable) {
         List<Item> allItems = new ArrayList<>();
         Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
         for (var flagKey : material.getFlags().getFlagKeys()) {
             var flag = material.getFlag(flagKey);
-            if (flag instanceof ItemFlag itemFlag) {
+            if (flag instanceof IItemRegistry itemFlag) {
+                if (onlyChemicalTooltippable)
+                    if (itemFlag instanceof IConditionalComposition conditionalComposition && !conditionalComposition.shouldHaveComposition()) continue;
                 if (existingIds.containsKey(flagKey)) {
                     var item = BuiltInRegistries.ITEM.get(existingIds.get(flagKey));
                     if (item == null) continue;
@@ -48,9 +51,9 @@ public class MaterialHelper {
         Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
         for (var flagKey : material.getFlags().getFlagKeys()) {
             var flag = material.getFlag(flagKey);
-            if (flag instanceof BlockFlag blockFlag) {
+            if (flag instanceof IBlockRegistry blockFlag) {
                 if (onlyChemicalTooltippable)
-                    if (!blockFlag.shouldHaveComposition()) continue;
+                    if (blockFlag instanceof IConditionalComposition conditionalComposition && !conditionalComposition.shouldHaveComposition()) continue;
                 if (existingIds.containsKey(flagKey)) {
                     var block = BuiltInRegistries.BLOCK.get(existingIds.get(flagKey));
                     if (block == null) continue;
@@ -70,7 +73,7 @@ public class MaterialHelper {
         Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
         for (var flagKey : material.getFlags().getFlagKeys()) {
             var flag = material.getFlag(flagKey);
-            if (flag instanceof FluidFlag fluidFlag) {
+            if (flag instanceof IFluidRegistry fluidFlag) {
                 if (existingIds.containsKey(flagKey)) {
                     var fluid = BuiltInRegistries.FLUID.get(existingIds.get(flagKey));
                     if (fluid == null) continue;
@@ -97,7 +100,7 @@ public class MaterialHelper {
 
     public static Item getItem(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
-        if (!(material.getFlag(flagKey) instanceof ItemFlag flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not an item flag");
+        if (!(material.getFlag(flagKey) instanceof IItemRegistry flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not an item flag");
         ResourceLocation resultId = flag.getExistingId(material);
         Item item = BuiltInRegistries.ITEM.get(resultId);
         if (item == null) throw new RuntimeException("No valid item of flag: " + flagKey.toString() + " found for material: " + material.getId());
@@ -106,7 +109,7 @@ public class MaterialHelper {
 
     public static Block getBlock(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
-        if (!(material.getFlag(flagKey) instanceof BlockFlag flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a block flag");
+        if (!(material.getFlag(flagKey) instanceof IBlockRegistry flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a block flag");
         ResourceLocation resultId = flag.getExistingId(material);
         Block block = BuiltInRegistries.BLOCK.get(resultId);
         if (block == null) throw new RuntimeException("No valid block of flag: " + flagKey.toString() + " found for material: " + material.getId());
@@ -115,7 +118,7 @@ public class MaterialHelper {
 
     public static Fluid getFluid(Material material, FlagKey<?> flagKey) {
         if (!material.hasFlag(flagKey)) throw new IllegalArgumentException("Material: " + material.getId() + " does not have the flag: " + flagKey.toString());
-        if (!(material.getFlag(flagKey) instanceof FluidFlag flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a fluid flag");
+        if (!(material.getFlag(flagKey) instanceof IFluidRegistry flag)) throw new IllegalArgumentException("Flag: " + flagKey.toString() + " is not a fluid flag");
         ResourceLocation resultId = flag.getExistingId(material);
         Fluid fluid = BuiltInRegistries.FLUID.get(resultId);
         if (fluid == null) throw new RuntimeException("No valid fluid of flag: " + flagKey.toString() + " found for material: " + material.getId());
@@ -124,7 +127,7 @@ public class MaterialHelper {
 
     public static List<Item> getAllMaterialItems(Material material) {
         if (material == null) {
-            Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
+            cannotGetAllItemsForNullMaterial();
             return new ArrayList<>();
         }
         List<Item> items = new ArrayList<>(MaterialHelper.getAllItems(material));
@@ -136,15 +139,16 @@ public class MaterialHelper {
 
     public static List<Item> getAllMaterialItemsForTooltips(Material material) {
         if (material == null) {
-            Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
+            cannotGetAllItemsForNullMaterial();
             return new ArrayList<>();
         }
-        Map<FlagKey<?>, ResourceLocation> existingIds = material.materialInfo().existingIds;
-        List<Item> items = new ArrayList<>(MaterialHelper.getAllItems(material));
-        for (Block block : MaterialHelper.getAllBlocks(material, true)) {
-            items.add(block.asItem());
-        }
+        List<Item> items = new ArrayList<>(MaterialHelper.getAllItems(material, true));
+        MaterialHelper.getAllBlocks(material, true).forEach(block -> items.add(block.asItem()));
         return items;
+    }
+
+    private static void cannotGetAllItemsForNullMaterial() {
+        Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
     }
 
     public static String getNameForRecipe(Material material, FlagKey<?> flagKey) {
@@ -158,5 +162,15 @@ public class MaterialHelper {
         public static int NUGGET = 16;
         public static int INGOT = 144;
         public static int BLOCK = 1296;
+
+        public static int ingots(int amount) {
+            return INGOT * amount;
+        }
+        public static int nuggets(int amount) {
+            return NUGGET * amount;
+        }
+        public static int blocks(int amount) {
+            return BLOCK * amount;
+        }
     }
 }

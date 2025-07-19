@@ -81,7 +81,7 @@ public class VatGen extends MProcessingRecipeGen {
             .require(MetallurgicaItems.calciumPowder)
             .require(MetallurgicaItems.calciumPowder)
             .require(MetallurgicaItems.calciumPowder)
-            .output(MaterialHelper.getFluid(MetMaterials.VANADIUM.get(), FlagKey.MOLTEN), MaterialHelper.FluidValues.INGOT * 2)
+            .output(MaterialHelper.getFluid(MetMaterials.VANADIUM.get(), FlagKey.MOLTEN), MaterialHelper.FluidValues.ingots(2))
             .output(MetallurgicaItems.calciumOxide, 5)
             .duration(600), this.electrolysis())
 

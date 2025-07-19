@@ -7,7 +7,6 @@ import com.freezedown.metallurgica.foundation.fluid.MoltenMetalFluid;
 import com.freezedown.metallurgica.foundation.fluid.VirtualMaterialFluid;
 import com.freezedown.metallurgica.foundation.item.AlloyItem;
 import com.freezedown.metallurgica.infastructure.material.Material;
-import com.freezedown.metallurgica.infastructure.material.registry.flags.base.FluidFlag;
 import com.freezedown.metallurgica.foundation.item.MetallurgicaItem;
 import com.freezedown.metallurgica.infastructure.conductor.Conductor;
 import com.freezedown.metallurgica.infastructure.conductor.ConductorBuilder;
@@ -105,6 +104,10 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color) {
         return tintedVirtualFluid(name, color, Metallurgica.asResource("fluid/thin_fluid_still"), Metallurgica.asResource("fluid/thin_fluid_flow"));
+    }
+
+    public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, String textureType) {
+        return tintedVirtualFluid(name, color, Metallurgica.asResource("fluid/"+textureType+"_still"), Metallurgica.asResource("fluid/"+textureType+"_flow"));
     }
     
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
