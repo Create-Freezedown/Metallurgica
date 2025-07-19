@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -35,7 +36,7 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
     private float cookTime;
     @Getter
     private float fakeCookTime;
-    private ResourceLocation firedBlock;
+    private ResourceLocation firedBlockKey;
     @Getter
     @Setter
     private boolean hasFuel;
@@ -59,8 +60,8 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
         }
         ResourceLocation thisBlock = ForgeRegistries.BLOCKS.getKey(this.getBlockState().getBlock());
         String firedBlockPath = thisBlock.getPath().replace("unfired_", "");
-        firedBlock = new ResourceLocation(thisBlock.getNamespace(), firedBlockPath);
-
+        firedBlockKey = new ResourceLocation(thisBlock.getNamespace(), firedBlockPath);
+        Block firedBlock = BuiltInRegistries.BLOCK.get(firedBlockKey);
         if (cookTime <= 0) cookTime = -15;
         if (fakeCookTime <= 0) fakeCookTime = -15;
 
@@ -82,7 +83,9 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
             if (cookTime > 0) {
                 cookTime--;
             } else {
-                this.level.setBlock(this.worldPosition, Objects.requireNonNull(BuiltInRegistries.BLOCK.get(firedBlock)).defaultBlockState(), 3);
+                if (firedBlock != null) {
+                    this.level.setBlockAndUpdate(this.worldPosition, firedBlock.defaultBlockState());
+                }
                 setHasFuel(false);
             }
         } else if (!(cookTime > 0)) {
@@ -144,7 +147,7 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
         cookTime = compound.getFloat("CookTime");
         fakeCookTime = compound.getFloat("FakeCookTime");
         if (compound.contains("FiredBlock"))
-            firedBlock = new ResourceLocation(compound.getString("FiredBlock"));
+            firedBlockKey = new ResourceLocation(compound.getString("FiredBlock"));
         super.read(compound, clientPacket);
     }
     
@@ -152,8 +155,8 @@ public class UnfiredCeramicBlockEntity extends SmartBlockEntity {
     public void write(CompoundTag compound, boolean clientPacket) {
         compound.putFloat("CookTime", cookTime);
         compound.putFloat("FakeCookTime", fakeCookTime);
-        if (firedBlock != null)
-            compound.putString("FiredBlock", firedBlock.toString());
+        if (firedBlockKey != null)
+            compound.putString("FiredBlock", firedBlockKey.toString());
         super.write(compound, clientPacket);
     }
 }
