@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-19T21:19:49.6727011	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-07-20T16:10:14.263003	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 10811cfe0f93f3f9b8edaa6bdeccc627c164f73e assets/metallurgica/blockstates/ashed_charcoal_pile.json
 be9648772ff540c83f4ab5a59f92d7cd1913eca1 assets/metallurgica/blockstates/black_sand.json
 d5b7ece8eda61ba123c2b9483f2f203a12203353 assets/metallurgica/blockstates/blast_proof_glass.json
@@ -34,8 +34,8 @@ a7f031c630e113e6927bfb88be2d3f1580acb6a8 assets/metallurgica/blockstates/salt_bl
 c9fdb6302c46d54370ebc8b202b785c580834824 assets/metallurgica/blockstates/silicon_sand.json
 380932457c72e4938dae0375845c8763457e2646 assets/metallurgica/blockstates/unfired_ceramic_pot.json
 c6842eb42172f6deace17075963dd2133a607c52 assets/metallurgica/blockstates/unfired_crucible.json
-841ce6c452d822d12bf37752790e4554e137dff3 assets/metallurgica/lang/en_ud.json
-f560cd415eb3fd39d13e801dc47adc407771ea54 assets/metallurgica/lang/en_us.json
+7775701fb1e8837a7e1aaaac2f0ba09e99021f8f assets/metallurgica/lang/en_ud.json
+10707b2359edd81dc3251ce44824cb0b2501fb51 assets/metallurgica/lang/en_us.json
 0581a8cd954972a66911cbdfd289c634384eca1e assets/metallurgica/models/block/ashed_charcoal_pile_1.json
 23fbbe5d43ff05d8ad7e81dcf007051c4280de41 assets/metallurgica/models/block/ashed_charcoal_pile_2.json
 2fc947223161f7a58e789f6e66efea763155f02d assets/metallurgica/models/block/ashed_charcoal_pile_3.json
@@ -129,6 +129,7 @@ d39fe767adb64972860670cde619a9056b05d8fc assets/metallurgica/models/item/magnesi
 61f98ac5a3ca135c0bff666369e774bb8716498c assets/metallurgica/models/item/quartz_shard.json
 3f5baaa1948963532572f522fef8f6e7ef5264c5 assets/metallurgica/models/item/reaction_basin.json
 83722707c1105c1c96e3bbcbec06a4006bdd5438 assets/metallurgica/models/item/reverbaratory.json
+59810cd5314073d32bc9092bb0f725bed0b3585a assets/metallurgica/models/item/rubber_tank_lining.json
 fd71fe7bd796101edd5819534f897a7a0d391c55 assets/metallurgica/models/item/salt.json
 dae54962ff1015593adf393eaea6f69bb6a526a2 assets/metallurgica/models/item/salt_block.json
 ac25c34c7739934f6bfff4d5508f145333c582e9 assets/metallurgica/models/item/sand_pile.json

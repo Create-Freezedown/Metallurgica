@@ -1,12 +1,18 @@
 package com.freezedown.metallurgica.foundation.item.lining.tank_lining;
 
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.item.ItemHelper;
 import lombok.Getter;
 import lombok.Setter;
 import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.List;
 
@@ -43,6 +49,21 @@ public class TankLiningStats {
         }
         setDamage(newDamage);
         return false;
+    }
+
+    public InteractionResult applyToBE(SmartBlockEntity blockEntity, Player player) {
+        if (blockEntity.getBehaviour(TankLiningBehaviour.TYPE) != null) {
+            ItemStack toApply = player.getItemInHand(player.getUsedItemHand());
+            TankLiningBehaviour liningBehaviour = blockEntity.getBehaviour(TankLiningBehaviour.TYPE);
+            if (liningBehaviour.hasLining()) {
+                ItemStack newLining = liningBehaviour.removeLining();
+                ItemHandlerHelper.giveItemToPlayer(player, newLining, player.getInventory().selected);
+            }
+            liningBehaviour.setLining(toApply);
+            if (!player.getAbilities().instabuild) toApply.shrink(1);
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.PASS;
     }
 
     public void writeToNBT(CompoundTag tag) {
@@ -83,10 +104,23 @@ public class TankLiningStats {
         String durabilityText = currentDurability + "/" + getMaxDurability();
         ClientUtil.lang().text(durabilityText).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip, 1);
         if (getCorrosionResistance() != null) {
-            getCorrosionResistance().addToTooltip(tooltip);
+            getCorrosionResistance().addToTooltip(tooltip, 0);
         }
         if (getTemperatureResistance() != null) {
-            getTemperatureResistance().addToTooltip(tooltip);
+            getTemperatureResistance().addToTooltip(tooltip, 0);
+        }
+    }
+
+    public void addToGoggleTooltip(List<Component> tooltip, ItemStack liningStack) {
+        ClientUtil.lang().add(liningStack.getHoverName()).forGoggles(tooltip);
+        int currentDurability = (int) (getMaxDurability() - getDamage());
+        String durabilityText = currentDurability + "/" + getMaxDurability();
+        ClientUtil.lang().translate("tooltip.tank_lining.durability").style(ChatFormatting.GRAY).space().text(durabilityText).style(ChatFormatting.DARK_GREEN).forGoggles(tooltip, 1);
+        if (getCorrosionResistance() != null) {
+            getCorrosionResistance().addToTooltip(tooltip, 1);
+        }
+        if (getTemperatureResistance() != null) {
+            getTemperatureResistance().addToTooltip(tooltip, 1);
         }
     }
 
@@ -143,8 +177,8 @@ public class TankLiningStats {
             return resistance;
         }
 
-        public void addToTooltip(List<Component> tooltip) {
-            ClientUtil.lang().translate("tooltip.tank_lining.corrosion_resistant").style(ChatFormatting.GRAY).forGoggles(tooltip);
+        public void addToTooltip(List<Component> tooltip, int indent) {
+            ClientUtil.lang().translate("tooltip.tank_lining.corrosion_resistant").style(ChatFormatting.BLUE).forGoggles(tooltip, indent);
         }
     }
 
@@ -185,9 +219,9 @@ public class TankLiningStats {
             return resistance;
         }
 
-        public void addToTooltip(List<Component> tooltip) {
-            ClientUtil.lang().translate("tooltip.tank_lining.temperature_resistant").style(ChatFormatting.GRAY).forGoggles(tooltip);
-            ClientUtil.lang().translate("tooltip.tank_lining.temperature_resistant.max").space().style(ChatFormatting.GRAY).add(ClientUtil.temperature(maxTemperature)).style(ChatFormatting.GOLD).forGoggles(tooltip, 1);
+        public void addToTooltip(List<Component> tooltip, int indent) {
+            ClientUtil.lang().translate("tooltip.tank_lining.temperature_resistant").style(ChatFormatting.GRAY).forGoggles(tooltip, indent);
+            ClientUtil.lang().translate("tooltip.tank_lining.temperature_resistant.max").space().style(ChatFormatting.GRAY).add(ClientUtil.temperature(maxTemperature)).style(ChatFormatting.GOLD).forGoggles(tooltip, indent + 1);
         }
     }
 }
