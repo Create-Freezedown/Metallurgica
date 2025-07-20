@@ -59,8 +59,8 @@ public class TankLiningStats {
                 ItemStack newLining = liningBehaviour.removeLining();
                 ItemHandlerHelper.giveItemToPlayer(player, newLining, player.getInventory().selected);
             }
-            liningBehaviour.setLining(toApply);
-            if (!player.getAbilities().instabuild) toApply.shrink(1);
+            liningBehaviour.setLining(toApply.copy());
+            toApply.shrink(1);
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;

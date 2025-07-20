@@ -1,4 +1,4 @@
-package com.freezedown.metallurgica.foundation.mixin.create;
+package com.freezedown.metallurgica.foundation.mixin.create.block;
 
 import com.freezedown.metallurgica.foundation.item.lining.tank_lining.TankLiningBehaviour;
 import com.simibubi.create.content.fluids.drain.ItemDrainBlockEntity;

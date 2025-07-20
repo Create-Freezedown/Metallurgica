@@ -1,7 +1,7 @@
-package com.freezedown.metallurgica.foundation.mixin.create;
+package com.freezedown.metallurgica.foundation.mixin.create.block;
 
 import com.freezedown.metallurgica.foundation.item.lining.tank_lining.TankLiningBehaviour;
-import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
@@ -12,23 +12,24 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Mixin(value = FluidTankBlockEntity.class, remap = false)
-public abstract class FluidTankBlockEntityMixin extends SmartBlockEntity {
+@Mixin(value = BasinBlockEntity.class, remap = false)
+public abstract class BasinBlockEntityMixin extends SmartBlockEntity {
 
     @Unique
     TankLiningBehaviour metallurgica$tankLiningBehaviour;
 
-    public FluidTankBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public BasinBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
-    @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        behaviours.add(metallurgica$tankLiningBehaviour = new TankLiningBehaviour(this).forMultiblockContainer());
+    @Inject(method = "addBehaviours(Ljava/util/List;)V", at = @At("HEAD"))
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
+        behaviours.add(metallurgica$tankLiningBehaviour = new TankLiningBehaviour(this));
     }
 
     @Inject(method = "addToGoggleTooltip(Ljava/util/List;Z)Z", at = @At("TAIL"))

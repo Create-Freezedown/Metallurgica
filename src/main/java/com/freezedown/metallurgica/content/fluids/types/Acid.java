@@ -1,10 +1,12 @@
 package com.freezedown.metallurgica.content.fluids.types;
 
+import com.freezedown.metallurgica.content.fluids.effects.corrosion.Corrosive;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.content.fluids.potion.PotionFluid;
+import lombok.Getter;
 import net.minecraft.world.level.material.Fluid;
 
-public class Acid extends VirtualFluid {
+public class Acid extends VirtualFluid implements Corrosive {
 
     public static Acid createSource(Properties properties) {
         return new Acid(properties, true);
@@ -14,6 +16,7 @@ public class Acid extends VirtualFluid {
         return new Acid(properties, false);
     }
 
+    @Getter
     private float acidity = 7.0f;
     private boolean dousesFire = false;
     
@@ -30,32 +33,21 @@ public class Acid extends VirtualFluid {
         this.dousesFire = true;
         return this;
     }
-    
-    public float getAcidity() {
-        return acidity;
-    }
-    
+
     public boolean dousesFire() {
         return dousesFire;
     }
     
     public boolean isBase() {
-        return acidity > 7;
+        return getAcidity() > 7;
     }
     
     public boolean isAcid() {
-        return acidity < 7;
+        return getAcidity() < 7;
     }
     
     public boolean isNeutral() {
-        return acidity == 7;
-    }
-    
-    public float getAcidity(Fluid fluid) {
-        if (fluid instanceof Acid acid) {
-            return acid.getAcidity();
-        }
-        return 7.0f;
+        return getAcidity() == 7;
     }
     
 }

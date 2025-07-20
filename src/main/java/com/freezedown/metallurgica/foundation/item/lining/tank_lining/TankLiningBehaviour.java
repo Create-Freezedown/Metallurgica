@@ -1,6 +1,7 @@
 package com.freezedown.metallurgica.foundation.item.lining.tank_lining;
 
 import com.drmangotea.tfmg.content.machinery.vat.base.VatBlockEntity;
+import com.freezedown.metallurgica.content.fluids.effects.corrosion.CorrosionHandler;
 import com.simibubi.create.foundation.blockEntity.IMultiBlockEntityContainer;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
@@ -23,6 +24,8 @@ public class TankLiningBehaviour extends BlockEntityBehaviour {
 
     boolean isMultiblockContainer = false;
 
+    private CorrosionHandler corrosionHandler;
+
     public TankLiningBehaviour(SmartBlockEntity be) {
         super(be);
     }
@@ -40,6 +43,7 @@ public class TankLiningBehaviour extends BlockEntityBehaviour {
     @Override
     public void initialize() {
         super.initialize();
+        corrosionHandler = CorrosionHandler.create(this);
     }
 
     // Drop the lining item when the block is broken or destroyed. ONLY if it is the controller;
@@ -47,8 +51,10 @@ public class TankLiningBehaviour extends BlockEntityBehaviour {
     @Override
     public void destroy() {
         super.destroy();
-        ItemStack liningStack = applyStats(getLiningStack());
-        Containers.dropItemStack(getWorld(), getPos().getX(), getPos().getY(), getPos().getZ(), liningStack);
+        if (isController()) {
+            ItemStack liningStack = applyStats(getLiningStack());
+            Containers.dropItemStack(getWorld(), getPos().getX(), getPos().getY(), getPos().getZ(), liningStack);
+        }
     }
 
     // Use these for handling the lining and tank damage based on contained fluids and items.
@@ -56,11 +62,21 @@ public class TankLiningBehaviour extends BlockEntityBehaviour {
     @Override
     public void lazyTick() {
         super.lazyTick();
+
+        corrosionHandler.getInstance().tick();
+
     }
 
     @Override
     public void tick() {
         super.tick();
+
+        if (getLiningStats() != null) {
+            if (getLiningStats().getDamage() > getLiningStats().getMaxDurability()) {
+                setLiningStack(ItemStack.EMPTY);
+                setLiningStats(null);
+            }
+        }
     }
 
     // Everything beyond this point is specific to maintaining the data for the tank lining.
