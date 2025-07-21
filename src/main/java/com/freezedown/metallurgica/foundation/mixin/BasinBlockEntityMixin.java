@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(BasinBlockEntity.class)
+@Mixin(value = BasinBlockEntity.class, remap = false)
 public abstract class BasinBlockEntityMixin extends SmartBlockEntity {
 
     public BasinBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {

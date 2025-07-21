@@ -15,6 +15,8 @@ import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableRe
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlockEntity;
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorRenderer;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlockEntity;
+import com.freezedown.metallurgica.content.primitive.bellows.intake.BellowsIntakeBlockEntity;
+import com.freezedown.metallurgica.content.primitive.bellows.intake.BellowsIntakeRenderer;
 import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlockRenderer;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotBlockEntity;
@@ -50,6 +52,12 @@ public class MetallurgicaBlockEntities {
             .blockEntity("flotation_cell", FlotationCellBlockEntity::new)
             .validBlocks(MetallurgicaBlocks.flotationCell)
             .renderer(() -> FlotationCellRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<BellowsIntakeBlockEntity> bellowsIntake = registrate
+            .blockEntity("bellows_intake", BellowsIntakeBlockEntity::new)
+            .validBlocks(MetallurgicaBlocks.bellowsIntake)
+            .renderer(() -> BellowsIntakeRenderer::new)
             .register();
      
     public static final BlockEntityEntry<UnfiredCeramicBlockEntity> unfiredCeramic = registrate

@@ -1,16 +1,27 @@
 package com.freezedown.metallurgica.foundation.util;
 
+import com.freezedown.metallurgica.Metallurgica;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Optional;
 
 public class CommonUtil {
     
@@ -71,5 +82,42 @@ public class CommonUtil {
     public static double triangle(RandomSource random, double delta)
     {
         return (random.nextDouble() - random.nextDouble()) * delta;
+    }
+
+    public static BlockState readBlockState(CompoundTag tag) {
+        if (!tag.contains("Name", 8)) {
+            return Blocks.AIR.defaultBlockState();
+        } else {
+            ResourceLocation resourcelocation = new ResourceLocation(tag.getString("Name"));
+            Block block = BuiltInRegistries.BLOCK.get(ResourceKey.create(Registries.BLOCK, resourcelocation));
+            if (block == null) {
+                return Blocks.AIR.defaultBlockState();
+            } else {
+                BlockState blockstate = block.defaultBlockState();
+                if (tag.contains("Properties", 10)) {
+                    CompoundTag compoundtag = tag.getCompound("Properties");
+                    StateDefinition<Block, BlockState> statedefinition = block.getStateDefinition();
+
+                    for(String s : compoundtag.getAllKeys()) {
+                        Property<?> property = statedefinition.getProperty(s);
+                        if (property != null) {
+                            blockstate = setValueHelper(blockstate, property, s, compoundtag, tag);
+                        }
+                    }
+                }
+
+                return blockstate;
+            }
+        }
+    }
+
+    private static <T extends Comparable<T>> BlockState setValueHelper(BlockState stateHolder, Property<T> property, String propertyName, CompoundTag propertiesTag, CompoundTag blockStateTag) {
+        Optional<T> optional = property.getValue(propertiesTag.getString(propertyName));
+        if (optional.isPresent()) {
+            return stateHolder.setValue(property, optional.get());
+        } else {
+            Metallurgica.LOGGER.warn("Unable to read property: {} with value: {} for blockstate: {}", propertyName, propertiesTag.getString(propertyName), blockStateTag.toString());
+            return stateHolder;
+        }
     }
 }

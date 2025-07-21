@@ -1,6 +1,9 @@
 {
   "values": [
-    "metallurgica:reaction_basin",
+    "metallurgica:bellows_intake",
+    "metallurgica:brick_kiln_chamber",
+    "metallurgica:brick_kiln_base",
+    "metallurgica:refactory_bricks",
     "metallurgica:ingot_casting_mold",
     "metallurgica:unfired_ceramic_pot",
     "metallurgica:unfired_crucible",

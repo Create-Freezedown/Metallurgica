@@ -1,11 +1,10 @@
 package com.freezedown.metallurgica.foundation.item.lining.tank_lining;
 
+import com.freezedown.metallurgica.foundation.block_entity.behaviour.TankLiningBehaviour;
 import com.freezedown.metallurgica.foundation.util.ClientUtil;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.simibubi.create.foundation.item.ItemHelper;
 import lombok.Getter;
 import lombok.Setter;
-import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

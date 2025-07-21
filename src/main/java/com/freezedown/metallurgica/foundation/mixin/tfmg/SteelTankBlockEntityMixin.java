@@ -1,9 +1,8 @@
 package com.freezedown.metallurgica.foundation.mixin.tfmg;
 
 import com.drmangotea.tfmg.content.decoration.tanks.steel.SteelTankBlockEntity;
-import com.freezedown.metallurgica.foundation.item.lining.tank_lining.TankLiningBehaviour;
+import com.freezedown.metallurgica.foundation.block_entity.behaviour.TankLiningBehaviour;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

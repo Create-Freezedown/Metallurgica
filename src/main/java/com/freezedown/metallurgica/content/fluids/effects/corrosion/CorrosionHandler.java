@@ -1,6 +1,6 @@
 package com.freezedown.metallurgica.content.fluids.effects.corrosion;
 
-import com.freezedown.metallurgica.foundation.item.lining.tank_lining.TankLiningBehaviour;
+import com.freezedown.metallurgica.foundation.block_entity.behaviour.TankLiningBehaviour;
 import com.freezedown.metallurgica.foundation.item.lining.tank_lining.TankLiningStats;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;

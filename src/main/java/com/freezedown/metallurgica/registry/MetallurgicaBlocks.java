@@ -18,6 +18,12 @@ import com.freezedown.metallurgica.content.machines.shaking_table.ShakingTableGe
 import com.freezedown.metallurgica.content.mineral.drill.drill_activator.DrillActivatorBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerBlock;
 import com.freezedown.metallurgica.content.mineral.drill.drill_tower.DrillTowerDeployerBlock;
+import com.freezedown.metallurgica.content.primitive.bellows.intake.BellowsIntakeBlock;
+import com.freezedown.metallurgica.content.primitive.bellows.intake.BellowsIntakeGenerator;
+import com.freezedown.metallurgica.content.primitive.brick_kiln.base.BrickKilnBaseBlock;
+import com.freezedown.metallurgica.content.primitive.brick_kiln.base.BrickKilnBaseGenerator;
+import com.freezedown.metallurgica.content.primitive.brick_kiln.chamber.BrickKilnChamberBlock;
+import com.freezedown.metallurgica.content.primitive.brick_kiln.chamber.BrickKilnChamberGenerator;
 import com.freezedown.metallurgica.content.primitive.ceramic.UnfiredCeramicBlock;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingPotBlock;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotBlock;
@@ -39,14 +45,19 @@ import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
+import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -83,16 +94,49 @@ public class MetallurgicaBlocks {
             .build()
             .register();
 
-    public static final BlockEntry<ReactionBasinBlock> reactionBasin = registrate.block("reaction_basin", ReactionBasinBlock::new)
+    public static final BlockEntry<BellowsIntakeBlock> bellowsIntake = registrate.block("bellows_intake", BellowsIntakeBlock::new)
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
+            .properties(p -> p.strength(0.5F).sound(SoundType.STONE).noOcclusion())
             .transform(pickaxeOnly())
             .addLayer(() -> RenderType::cutoutMipped)
-            .blockstate((ctx, prov) -> new ReactionBasinGenerator().generate(ctx, prov))
+            .blockstate((ctx, prov) -> new BellowsIntakeGenerator("bronze").generate(ctx, prov))
             .item()
-            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/reaction_basin/block_single")))
+            .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
             .build()
             .register();
+
+    public static final BlockEntry<BrickKilnChamberBlock> brickKilnChamber = registrate.block("brick_kiln_chamber", BrickKilnChamberBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.strength(0.5F).sound(SoundType.STONE).noOcclusion())
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate(new BrickKilnChamberGenerator()::generateState)
+            .item()
+            .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
+            .build()
+            .register();
+
+    public static final BlockEntry<BrickKilnBaseBlock> brickKilnBase = registrate.block("brick_kiln_base", BrickKilnBaseBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.strength(0.5F).sound(SoundType.STONE).noOcclusion())
+            .transform(pickaxeOnly())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate(new BrickKilnBaseGenerator()::generateState)
+            .item()
+            .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
+            .build()
+            .register();
+
+    public static final BlockEntry<Block> refactoryBricks = registrate.block("refactory_bricks", Block::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.sound(SoundType.MUD_BRICKS).requiresCorrectToolForDrops())
+            .transform(pickaxeOnly())
+            .blockstate(MBlockStateGen.simpleCubeAllVariantBlock("block/decoration/bricks/refactory_bricks", 4))
+            .item()
+            .model((c, p) -> p.cubeAll(c.getName(), p.modLoc("block/decoration/bricks/refactory_bricks_0")))
+            .build()
+            .register();
+
     public static final BlockEntry<DebugTempBlock> debugTemp = registrate.block("debug_temp", DebugTempBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.strength(0.5F).sound(SoundType.STONE))
@@ -459,6 +503,10 @@ public class MetallurgicaBlocks {
             .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/nozzle/small")))
             .build()
             .register();
+
+    private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return false;
+    }
 
     public static void register() {
         MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);

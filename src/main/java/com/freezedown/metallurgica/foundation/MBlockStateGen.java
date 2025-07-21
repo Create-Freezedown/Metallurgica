@@ -38,4 +38,19 @@ public class MBlockStateGen {
                     .setModels(variants);
         };
     }
+
+    public static <P extends Block> NonNullBiConsumer<DataGenContext<Block, P>, RegistrateBlockstateProvider> simpleCubeAllVariantBlock(String path, int size) {
+        return (c, p) -> {
+            ConfiguredModel[] variants = new ConfiguredModel[size];
+            for (int i = 0; i < variants.length; i++) {
+                ResourceLocation texture = p.modLoc(path + "_" + i);
+                variants[i] = ConfiguredModel.builder()
+                        .modelFile(p.models().cubeAll(path + "_" + i, texture))
+                        .buildLast();
+            }
+            p.getVariantBuilder(c.get())
+                    .partialState()
+                    .setModels(variants);
+        };
+    }
 }

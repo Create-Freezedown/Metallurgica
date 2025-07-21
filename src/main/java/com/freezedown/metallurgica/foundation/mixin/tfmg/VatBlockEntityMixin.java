@@ -1,7 +1,7 @@
 package com.freezedown.metallurgica.foundation.mixin.tfmg;
 
 import com.drmangotea.tfmg.content.machinery.vat.base.VatBlockEntity;
-import com.freezedown.metallurgica.foundation.item.lining.tank_lining.TankLiningBehaviour;
+import com.freezedown.metallurgica.foundation.block_entity.behaviour.TankLiningBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;

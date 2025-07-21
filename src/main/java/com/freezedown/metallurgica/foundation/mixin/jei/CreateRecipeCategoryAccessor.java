@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import java.util.List;
 import java.util.function.Supplier;
 
-@Mixin(CreateRecipeCategory.class)
+@Mixin(value = CreateRecipeCategory.class, remap = false)
 public interface CreateRecipeCategoryAccessor<T extends Recipe<?>> {
 
     @Accessor

@@ -71,6 +71,15 @@ public class MetallurgicaShapes {
     public static VoxelShaper ingotMold(Direction direction) {
         return shape(3, 0, 1, 13, 6, 15).erase(5, 2, 3, 11, 6, 13).forHorizontal(direction);
     }
+
+    public static VoxelShaper kilnChamber() {
+        return shape(0, 0, 0, 16, 16, 16).erase(4, 0, 4, 16, 16, 16).forHorizontal(Direction.NORTH);
+    }
+
+    public static VoxelShaper kilnBase() {
+        return shape(0, 0, 0, 16, 16, 16).erase(4, 3, 4, 16, 16, 16).forHorizontal(Direction.NORTH);
+    }
+
     private static MetallurgicaShapes.Builder shape(VoxelShape shape) {
         return new MetallurgicaShapes.Builder(shape);
     }
