@@ -56,18 +56,18 @@ public abstract class BlockMixin implements IForgeBlock {
 
     @Unique
     private static void metallurgica$processDrops(BlockEntity blockEntity, LootParams.Builder lootParams, CallbackInfoReturnable<List<ItemStack>> cir) {
+        if (blockEntity == null) cir.setReturnValue(cir.getReturnValue());
+        List<ItemStack> drops = cir.getReturnValue();
         if (blockEntity instanceof SmartBlockEntity smart) {
             if (smart.getBehaviour(DisplayStateBehaviour.TYPE) != null) {
                 DisplayStateBehaviour displayStateBehaviour = smart.getBehaviour(DisplayStateBehaviour.TYPE);
                 if (!displayStateBehaviour.hasDisplayState()) cir.setReturnValue(List.of());
                 BlockState stateToDrop = displayStateBehaviour.getDisplayState();
-                cir.setReturnValue(stateToDrop.getDrops(lootParams));
-            } else {
-                cir.cancel();
+                drops = stateToDrop.getDrops(lootParams);
             }
-        } else {
-            cir.cancel();
         }
+        if (drops == null) drops = List.of();
+        cir.setReturnValue(drops);
     }
 
     @Unique
