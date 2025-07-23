@@ -27,10 +27,13 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("removal")
+@ParametersAreNonnullByDefault
 @RequiredArgsConstructor
 public class ElementIngredientRenderer implements IIngredientRenderer<Element> {
     private final int size;
@@ -145,7 +148,7 @@ public class ElementIngredientRenderer implements IIngredientRenderer<Element> {
     }
 
     @Override
-    public List<Component> getTooltip(Element element, TooltipFlag flag) {
+    public @NotNull List<Component> getTooltip(Element element, TooltipFlag flag) {
         List<Component> tooltip = new ArrayList<>();
         tooltip.add(element.getDisplayName());
         if (flag.isAdvanced()) {

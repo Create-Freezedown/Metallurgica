@@ -6,12 +6,17 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+
+import java.util.List;
 
 public class DisplayStateBehaviour extends BlockEntityBehaviour {
 
@@ -37,6 +42,21 @@ public class DisplayStateBehaviour extends BlockEntityBehaviour {
 
     public boolean hasDisplayState() {
         return getDisplayState() != null && !getDisplayState().isAir();
+    }
+
+    public SoundType getDisplayedSoundType() {
+        if (hasDisplayState()) return getDisplayState().getSoundType();
+        return blockEntity.getBlockState().getSoundType();
+    }
+
+    public boolean canHarvest(Level level, BlockPos blockPos, Player player) {
+        if (hasDisplayState()) return getDisplayState().canHarvestBlock(level, blockPos, player);
+        return blockEntity.getBlockState().canHarvestBlock(level, blockPos, player);
+    }
+
+    public List<ItemStack> getDrops(LootParams.Builder params) {
+        if (hasDisplayState()) return getDisplayState().getDrops(params);
+        return blockEntity.getBlockState().getDrops(params);
     }
 
     @Override

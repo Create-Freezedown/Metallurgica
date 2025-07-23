@@ -8,6 +8,7 @@
   "mixins": [
     "BasinBlockEntityMixin",
     "BlockMixin",
+    "BlockStateMixin",
     "ChemicalInfoTooltipMixin",
     "EntityMixin",
     "PlayerListMixin",
