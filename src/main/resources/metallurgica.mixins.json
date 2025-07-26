@@ -1,11 +1,12 @@
 {
   "required": true,
   "priority": 1100,
-  "package": "com.freezedown.metallurgica.foundation.mixin",
+  "package": "dev.metallurgists.metallurgica.foundation.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "metallurgica.refmap.json",
-  "plugin": "com.freezedown.metallurgica.foundation.mixin.plugin.MetallurgicaMixinsPlugin",
+  "plugin": "dev.metallurgists.metallurgica.foundation.mixin.plugin.MetallurgicaMixinsPlugin",
   "mixins": [
+    "BasinBlockEntityMixin",
     "BasinBlockEntityMixin",
     "BlockMixin",
     "BlockStateMixin",

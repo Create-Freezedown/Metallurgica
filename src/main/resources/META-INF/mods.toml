@@ -1,14 +1,14 @@
 modLoader="javafml"
 loaderVersion="[43,)"
 license="All rights reserved"
-issueTrackerURL="https://github.com/Create-Freezedown/Metallurgica/issues"
+issueTrackerURL="https://github.com/Metallurgists-of-Create/Metallurgica/issues"
 [[mods]]
 modId="metallurgica"
 version="${file.jarVersion}"
 displayName="Metallurgica"
-displayURL="https://github.com/Create-Freezedown/Metallurgica"
+displayURL="https://github.com/Metallurgists-of-Create/Metallurgica"
 logoFile="metallurgica.png"
-credits="cannonmoose, krystal, dacodia"
+credits="Metallurgists of Create"
 authors="PouffyDev"
 description='''
 Replaces the vanilla ore generation with a new system that requires large processing trees to get the most out of your ore deposits.
